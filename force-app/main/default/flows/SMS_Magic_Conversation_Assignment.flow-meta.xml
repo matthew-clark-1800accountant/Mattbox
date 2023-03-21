@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <description>Group Conversations by Sender ID</description>
+        <name>Sender_ID</name>
+        <label>Sender ID</label>
+        <locationX>314</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sales</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.smagicinteract__Sender__r.smagicinteract__Label__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Sales</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_Joshua</targetReference>
+            </connector>
+            <label>Sales</label>
+        </rules>
+        <rules>
+            <name>Fulfillment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.smagicinteract__Sender__r.smagicinteract__Label__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Fulfillment</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Fulfillment</label>
+        </rules>
+    </decisions>
+    <description>Assigns the conversations to the right users - switches to Joshua</description>
+    <environments>Default</environments>
+    <interviewLabel>SMS Magic Conversation Assignment {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SMS Magic Conversation Assignment</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Assigns the conversation to Joshua</description>
+        <name>Assign_to_Joshua</name>
+        <label>Assign to Joshua</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>0053Z00000JE7N9QAL</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Sender_ID</targetReference>
+        </connector>
+        <object>smagicinteract__Conversation__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

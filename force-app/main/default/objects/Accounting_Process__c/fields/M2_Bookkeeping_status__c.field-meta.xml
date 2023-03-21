@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M2_Bookkeeping_status__c</fullName>
+    <externalId>false</externalId>
+    <label>M2 Bookkeeping Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not started</fullName>
+                <default>true</default>
+                <label>Not started</label>
+            </value>
+            <value>
+                <fullName>Discovery</fullName>
+                <default>false</default>
+                <label>Discovery</label>
+            </value>
+            <value>
+                <fullName>No Info- Biz. account not linked</fullName>
+                <default>false</default>
+                <label>No Info- Biz. account not linked</label>
+            </value>
+            <value>
+                <fullName>Bank Syncing Issue</fullName>
+                <default>false</default>
+                <label>Bank Syncing Issue</label>
+            </value>
+            <value>
+                <fullName>Additional info requested</fullName>
+                <default>false</default>
+                <label>Additional info requested</label>
+            </value>
+            <value>
+                <fullName>Transactions Categorized</fullName>
+                <default>false</default>
+                <label>Transactions Categorized</label>
+            </value>
+            <value>
+                <fullName>Review</fullName>
+                <default>false</default>
+                <label>Review</label>
+            </value>
+            <value>
+                <fullName>Corrections Needed</fullName>
+                <default>false</default>
+                <label>Corrections Needed</label>
+            </value>
+            <value>
+                <fullName>Correction Addressed</fullName>
+                <default>false</default>
+                <label>Correction Addressed</label>
+            </value>
+            <value>
+                <fullName>To Be Posted</fullName>
+                <default>false</default>
+                <label>To Be Posted</label>
+            </value>
+            <value>
+                <fullName>Completed - no activity</fullName>
+                <default>false</default>
+                <label>Completed - no activity</label>
+            </value>
+            <value>
+                <fullName>Completed - f-s uploaded</fullName>
+                <default>false</default>
+                <label>Completed - f-s uploaded</label>
+            </value>
+            <value>
+                <fullName>15th Report Sent - Completed</fullName>
+                <default>false</default>
+                <label>15th Report Sent - Completed</label>
+            </value>
+            <value>
+                <fullName>15th Report Sent - Additional Info Needed</fullName>
+                <default>false</default>
+                <label>15th Report Sent - Additional Info Needed</label>
+            </value>
+            <value>
+                <fullName>15th Report Sent - Bank Sync Issue</fullName>
+                <default>false</default>
+                <label>15th Report Sent - Bank Sync Issue</label>
+            </value>
+            <value>
+                <fullName>Discard</fullName>
+                <default>false</default>
+                <label>Discard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

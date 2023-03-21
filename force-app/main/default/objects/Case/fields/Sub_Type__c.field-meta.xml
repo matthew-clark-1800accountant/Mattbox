@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type__c</fullName>
+    <description>Additional case hierarchy details dependent on the Type field value</description>
+    <externalId>false</externalId>
+    <label>Sub-Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Additional User</fullName>
+                <default>false</default>
+                <label>Additional User</label>
+            </value>
+            <value>
+                <fullName>Assignment Adjustment</fullName>
+                <default>false</default>
+                <label>Assignment Adjustment</label>
+            </value>
+            <value>
+                <fullName>Bank Sync</fullName>
+                <default>false</default>
+                <label>Bank Sync</label>
+            </value>
+            <value>
+                <fullName>Billing Inquiry</fullName>
+                <default>false</default>
+                <label>Billing Inquiry</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping</fullName>
+                <default>false</default>
+                <label>Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Cancel Request</fullName>
+                <default>false</default>
+                <label>Cancel Request</label>
+            </value>
+            <value>
+                <fullName>Changes to Portal Information</fullName>
+                <default>false</default>
+                <label>Changes to Portal Information</label>
+            </value>
+            <value>
+                <fullName>Chargeback</fullName>
+                <default>false</default>
+                <label>Chargeback</label>
+            </value>
+            <value>
+                <fullName>Client-Related</fullName>
+                <default>false</default>
+                <label>Client-Related</label>
+            </value>
+            <value>
+                <fullName>Communication / Timeliness</fullName>
+                <default>false</default>
+                <label>Communication / Timeliness</label>
+            </value>
+            <value>
+                <fullName>Compliance</fullName>
+                <default>false</default>
+                <label>Compliance</label>
+            </value>
+            <value>
+                <fullName>Connection Issue</fullName>
+                <default>false</default>
+                <label>Connection Issue</label>
+            </value>
+            <value>
+                <fullName>Dissolution</fullName>
+                <default>false</default>
+                <label>Dissolution</label>
+            </value>
+            <value>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+                <label>Downgrade</label>
+            </value>
+            <value>
+                <fullName>Duplicate Transactions</fullName>
+                <default>false</default>
+                <label>Duplicate Transactions</label>
+            </value>
+            <value>
+                <fullName>EIN</fullName>
+                <default>false</default>
+                <label>EIN</label>
+            </value>
+            <value>
+                <fullName>Entity Formation</fullName>
+                <default>false</default>
+                <label>Entity Formation</label>
+            </value>
+            <value>
+                <fullName>Fulfillment-Related</fullName>
+                <default>false</default>
+                <label>Fulfillment-Related</label>
+            </value>
+            <value>
+                <fullName>Improper Monetary Expectations</fullName>
+                <default>false</default>
+                <label>Improper Monetary Expectations</label>
+            </value>
+            <value>
+                <fullName>Improper Service Expectations</fullName>
+                <default>false</default>
+                <label>Improper Service Expectations</label>
+            </value>
+            <value>
+                <fullName>Incorrect Tax Advice</fullName>
+                <default>false</default>
+                <label>Incorrect Tax Advice</label>
+            </value>
+            <value>
+                <fullName>Invoice Issue</fullName>
+                <default>false</default>
+                <label>Invoice Issue</label>
+            </value>
+            <value>
+                <fullName>Issue with Service(s) Provided</fullName>
+                <default>false</default>
+                <label>Issue with Service(s) Provided</label>
+            </value>
+            <value>
+                <fullName>Lack of Follow-Through</fullName>
+                <default>false</default>
+                <label>Lack of Follow-Through</label>
+            </value>
+            <value>
+                <fullName>Lack of Services Thus Far</fullName>
+                <default>false</default>
+                <label>Lack of Services Thus Far</label>
+            </value>
+            <value>
+                <fullName>Missed / Rescheduled Appointments</fullName>
+                <default>false</default>
+                <label>Missed / Rescheduled Appointments</label>
+            </value>
+            <value>
+                <fullName>Missing Transactions</fullName>
+                <default>false</default>
+                <label>Missing Transactions</label>
+            </value>
+            <value>
+                <fullName>New Appointment</fullName>
+                <default>false</default>
+                <label>New Appointment</label>
+            </value>
+            <value>
+                <fullName>Non-Tax Prep</fullName>
+                <default>false</default>
+                <label>Non-Tax Prep</label>
+            </value>
+            <value>
+                <fullName>Notices</fullName>
+                <default>false</default>
+                <label>Notices</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Partial Cancel Request</fullName>
+                <default>false</default>
+                <label>Partial Cancel Request</label>
+            </value>
+            <value>
+                <fullName>Payment Issue</fullName>
+                <default>false</default>
+                <label>Payment Issue</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Portal Error</fullName>
+                <default>false</default>
+                <label>Portal Error</label>
+            </value>
+            <value>
+                <fullName>Portal Issues</fullName>
+                <default>false</default>
+                <label>Portal Issues</label>
+            </value>
+            <value>
+                <fullName>Registered Agent</fullName>
+                <default>false</default>
+                <label>Registered Agent</label>
+            </value>
+            <value>
+                <fullName>Sales-Related</fullName>
+                <default>false</default>
+                <label>Sales-Related</label>
+            </value>
+            <value>
+                <fullName>Tax Returns</fullName>
+                <default>false</default>
+                <label>Tax Returns</label>
+            </value>
+            <value>
+                <fullName>Tech-Related</fullName>
+                <default>false</default>
+                <label>Tech-Related</label>
+            </value>
+            <value>
+                <fullName>Unable to Provide Service</fullName>
+                <default>false</default>
+                <label>Unable to Provide Service</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Entity Management</controllingFieldValue>
+            <valueName>Compliance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Entity Management</controllingFieldValue>
+            <valueName>Dissolution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Entity Management</controllingFieldValue>
+            <valueName>EIN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Entity Management</controllingFieldValue>
+            <valueName>Entity Formation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Entity Management</controllingFieldValue>
+            <valueName>Registered Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Billing</controllingFieldValue>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <valueName>Improper Monetary Expectations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Billing</controllingFieldValue>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <valueName>Improper Service Expectations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Billing</controllingFieldValue>
+            <valueName>Lack of Follow-Through</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice &amp; Payments</controllingFieldValue>
+            <valueName>Billing Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice &amp; Payments</controllingFieldValue>
+            <valueName>Chargeback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice &amp; Payments</controllingFieldValue>
+            <valueName>Invoice Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice &amp; Payments</controllingFieldValue>
+            <valueName>Payment Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fulfillment</controllingFieldValue>
+            <valueName>Communication / Timeliness</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fulfillment</controllingFieldValue>
+            <valueName>Issue with Service(s) Provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fulfillment</controllingFieldValue>
+            <valueName>Lack of Services Thus Far</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fulfillment</controllingFieldValue>
+            <valueName>Missed / Rescheduled Appointments</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subscription Review</controllingFieldValue>
+            <valueName>Cancel Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subscription Review</controllingFieldValue>
+            <valueName>Partial Cancel Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Disputes</controllingFieldValue>
+            <valueName>Client-Related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Disputes</controllingFieldValue>
+            <valueName>Fulfillment-Related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Disputes</controllingFieldValue>
+            <valueName>Sales-Related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Disputes</controllingFieldValue>
+            <valueName>Tech-Related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Compliance</controllingFieldValue>
+            <controllingFieldValue>Advisory</controllingFieldValue>
+            <valueName>Assignment Adjustment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Compliance</controllingFieldValue>
+            <valueName>New Appointment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Compliance</controllingFieldValue>
+            <valueName>Non-Tax Prep</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Compliance</controllingFieldValue>
+            <valueName>Notices</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Compliance</controllingFieldValue>
+            <valueName>Tax Returns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Portal Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accountant Portal</controllingFieldValue>
+            <valueName>Additional User</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accountant Portal</controllingFieldValue>
+            <valueName>Changes to Portal Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accountant Portal</controllingFieldValue>
+            <valueName>Portal Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bank Sync</controllingFieldValue>
+            <valueName>Bank Sync</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bank Sync</controllingFieldValue>
+            <valueName>Connection Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bank Sync</controllingFieldValue>
+            <valueName>Duplicate Transactions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bank Sync</controllingFieldValue>
+            <valueName>Missing Transactions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <valueName>Incorrect Tax Advice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAS Management</controllingFieldValue>
+            <valueName>Bookkeeping</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CAS Management</controllingFieldValue>
+            <valueName>Payroll</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>of_Monthly_Bookkeeping_Transactions__c</fullName>
+    <description>The number of monthly bookkeeping transactions selected in the pricing calculator</description>
+    <externalId>false</externalId>
+    <label># of Monthly Bookkeeping Transactions</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0-75</fullName>
+                <default>false</default>
+                <label>0-75</label>
+            </value>
+            <value>
+                <fullName>76-150</fullName>
+                <default>false</default>
+                <label>76-150</label>
+            </value>
+            <value>
+                <fullName>151-250</fullName>
+                <default>false</default>
+                <label>151-250</label>
+            </value>
+            <value>
+                <fullName>251-500</fullName>
+                <default>false</default>
+                <label>251-500</label>
+            </value>
+            <value>
+                <fullName>501-750</fullName>
+                <default>false</default>
+                <label>501-750</label>
+            </value>
+            <value>
+                <fullName>751-1000</fullName>
+                <default>false</default>
+                <label>751-1000</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

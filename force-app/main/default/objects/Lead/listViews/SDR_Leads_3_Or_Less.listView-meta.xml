@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDR_Leads_3_Or_Less</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>of_Calls__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Call Back Set,1-1 No Show,Attempted</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notContain</operation>
+        <value>1-800Accountant,Archetype,GovDocFiling,Labor Poster Compliance</value>
+    </filters>
+    <filters>
+        <field>of_Calls__c</field>
+        <operation>lessOrEqual</operation>
+        <value>3</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterThan</operation>
+        <value>5/15/2021</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>lessThan</operation>
+        <value>7/2/2021</value>
+    </filters>
+    <label>SDR Leads 3 Or Less</label>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

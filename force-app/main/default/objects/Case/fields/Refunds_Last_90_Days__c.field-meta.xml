@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Refunds_Last_90_Days__c</fullName>
+    <description>Sum of refunds in last 90 days as of the day the case was created. Stamps upon case creation and is not updated.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Sum of refunds in last 90 days as of the day the case was created. Stamps upon case creation and is not updated.</inlineHelpText>
+    <label>Refunds - Last 90 Days</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Make_Blocks_For_Other_Reps</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISNEW(), 
+Owner:User.Profile.Name = &apos;InsideSalesUser - Zuora&apos;,  $Profile.Name = &apos;InsideSalesUser - Zuora&apos;,   ISPICKVAL ( Type_of_Appointment__c , &apos;Calendar Block&apos;), 
+$User.Id != Owner:User.Id)</errorConditionFormula>
+    <errorMessage>You cannot make Calendar Block appointments for other Sales Representatives.</errorMessage>
+</ValidationRule>

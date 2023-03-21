@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Training_1_800_Entity_Formation_HOT_list</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6</booleanFilter>
+    <columns>LEAD.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>of_Calls__c</columns>
+    <columns>utm_term__c</columns>
+    <columns>Expected_1st_year_revenue__c</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>State_of_Formation__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.LAST_UPDATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>Campaign_Last_Touch__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Campaign__c</field>
+        <operation>includes</operation>
+        <value>Call Entity Formation,Chat Entity Formation,Entity Formation</value>
+    </filters>
+    <filters>
+        <field>LEAD.CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>N_DAYS_AGO:30</value>
+    </filters>
+    <filters>
+        <field>LEAD.FIRST_NAME</field>
+        <operation>notContain</operation>
+        <value>insert</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>LEAD.CREATED_DATE</field>
+        <operation>lessThan</operation>
+        <value>N_DAYS_AGO:2</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>New,1-1 Cancelled,Bad Number,Not Interested,Do Not Call</value>
+    </filters>
+    <label>Training 1-800 Entity Formation HOT list</label>
+</ListView>

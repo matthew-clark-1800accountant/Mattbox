@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type_Other</fullName>
+    <active>true</active>
+    <description>RequiresOther if the Sub-Type is Other</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( Sub_Type__c,&apos;Other&apos;),ISBLANK( Other__c ))</errorConditionFormula>
+    <errorDisplayField>Other__c</errorDisplayField>
+    <errorMessage>Please enter details into the Other field to submit the case</errorMessage>
+</ValidationRule>

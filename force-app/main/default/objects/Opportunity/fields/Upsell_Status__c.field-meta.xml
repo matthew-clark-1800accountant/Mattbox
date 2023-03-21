@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsell_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Upsell Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Billing_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Billed</fullName>
+                <default>false</default>
+                <label>Not Billed</label>
+            </value>
+            <value>
+                <fullName>CC Paid</fullName>
+                <default>false</default>
+                <label>CC Paid</label>
+            </value>
+            <value>
+                <fullName>Partial CC</fullName>
+                <default>false</default>
+                <label>Partial CC</label>
+            </value>
+            <value>
+                <fullName>CC Rejected</fullName>
+                <default>false</default>
+                <label>CC Rejected</label>
+            </value>
+            <value>
+                <fullName>CC Refunded</fullName>
+                <default>false</default>
+                <label>CC Refunded</label>
+            </value>
+            <value>
+                <fullName>Waiting on Behalf</fullName>
+                <default>false</default>
+                <label>Waiting on Behalf</label>
+            </value>
+            <value>
+                <fullName>Waiting on Check</fullName>
+                <default>false</default>
+                <label>Waiting on Check</label>
+            </value>
+            <value>
+                <fullName>Behalf Paid - Need Monthly CC</fullName>
+                <default>false</default>
+                <label>Behalf Paid - Need Monthly CC</label>
+            </value>
+            <value>
+                <fullName>Behalf Paid</fullName>
+                <default>false</default>
+                <label>Behalf Paid</label>
+            </value>
+            <value>
+                <fullName>Behalf Refunded</fullName>
+                <default>false</default>
+                <label>Behalf Refunded</label>
+            </value>
+            <value>
+                <fullName>Behalf Rejected</fullName>
+                <default>false</default>
+                <label>Behalf Rejected</label>
+            </value>
+            <value>
+                <fullName>No Initial Billing</fullName>
+                <default>false</default>
+                <label>No Initial Billing</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Not Billed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>CC Paid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Partial CC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>CC Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>CC Refunded</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Waiting on Behalf</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Waiting on Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Behalf Paid - Need Monthly CC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Behalf Paid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Behalf Refunded</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>Behalf Rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Existing Client Upsell</controllingFieldValue>
+            <valueName>No Initial Billing</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

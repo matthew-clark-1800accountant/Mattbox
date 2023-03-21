@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Snowflakes</fullName>
+    <booleanFilter>(1 or 2) AND 3 AND 4 AND 5 AND 6</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>of_Calls__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>,kmarz,aking,smurp,jclem,sdeer,dcara,saaro,apost,dwald,dkush,jmila</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>,ddieg,gdaco,mandra</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterThan</operation>
+        <value>12/1/2019</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notEqual</operation>
+        <value>Data Partners,EZCorp</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Contacted,Call Back Set,1-1 No Show,1-1 Cancelled,Attempted</value>
+    </filters>
+    <label>Snowflakes</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

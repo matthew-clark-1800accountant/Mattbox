@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Skills__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(INCLUDES(  $User.Skills_Sales__c  , &quot;Paid Digital&quot;), &quot;Paid Digital&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Closer&quot;), &quot;Closer&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Manager&quot;), &quot;Manager&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Finance&quot;), &quot;Finance&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Corp Upsales&quot;), &quot;Corp Upsales&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Merchant&quot;), &quot;Merchant&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Dissolution&quot;), &quot;Dissolution&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;CAP&quot;), &quot;CAP&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Cross-Sale&quot;), &quot;Cross-Sales&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;ClientbooksConsult&quot;), &quot;ClientbooksConsult&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Clientbooks Cross-Sell&quot;), &quot;Clientbooks Cross-Sell&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Entity Formation Sales&quot;), &quot;Entity Formation Sales&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Equip Sales&quot;), &quot;Equip Sales&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c , &quot;Equip Setter&quot;), &quot;Equip Setter&quot;, NULL)  + BR() + 
+IF(INCLUDES( $User.Skills_Sales__c, &quot;CBCSched&quot;), &quot;CBCSched&quot;, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Sales Skills</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

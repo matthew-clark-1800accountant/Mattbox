@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Bucket__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Bucket</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PA - Portal Access</fullName>
+                <default>false</default>
+                <label>PA - Portal Access</label>
+            </value>
+            <value>
+                <fullName>PAQ - Portal Access Q</fullName>
+                <default>false</default>
+                <label>PAQ - Portal Access Q</label>
+            </value>
+            <value>
+                <fullName>CAB - Complete Accounting Both</fullName>
+                <default>false</default>
+                <label>CAB - Complete Accounting Both</label>
+            </value>
+            <value>
+                <fullName>CAP - Complete Accounting Personal</fullName>
+                <default>false</default>
+                <label>CAP - Complete Accounting Personal</label>
+            </value>
+            <value>
+                <fullName>BK - Bookkeeping</fullName>
+                <default>false</default>
+                <label>BK - Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>PR - Payroll</fullName>
+                <default>false</default>
+                <label>PR - Payroll</label>
+            </value>
+            <value>
+                <fullName>R - Renewals</fullName>
+                <default>false</default>
+                <label>R - Renewals</label>
+            </value>
+            <value>
+                <fullName>L - Legacy</fullName>
+                <default>false</default>
+                <label>L - Legacy</label>
+            </value>
+            <value>
+                <fullName>PS - Portal Storage</fullName>
+                <default>false</default>
+                <label>PS - Portal Storage</label>
+            </value>
+            <value>
+                <fullName>AP - Audit Protection</fullName>
+                <default>false</default>
+                <label>AP - Audit Protection</label>
+            </value>
+            <value>
+                <fullName>CB - Client Books</fullName>
+                <default>false</default>
+                <label>CB - Client Books</label>
+            </value>
+            <value>
+                <fullName>RA - Resident Agent</fullName>
+                <default>false</default>
+                <label>RA - Resident Agent</label>
+            </value>
+            <value>
+                <fullName>BKA - Bookkeeping Advisory Renewal</fullName>
+                <default>false</default>
+                <label>BKA - Bookkeeping Advisory Renewal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

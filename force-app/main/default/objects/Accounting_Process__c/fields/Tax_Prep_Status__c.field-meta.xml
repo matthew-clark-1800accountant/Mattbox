@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tax_Prep_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Tax Prep Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pre-Prep Comp Review</fullName>
+                <default>false</default>
+                <label>Pre-Prep Comp Review</label>
+            </value>
+            <value>
+                <fullName>Awaiting Auto-Flow</fullName>
+                <default>false</default>
+                <label>Awaiting Auto-Flow</label>
+            </value>
+            <value>
+                <fullName>Auto-Flowed Missing Documents</fullName>
+                <default>false</default>
+                <label>Auto-Flowed Missing Documents</label>
+            </value>
+            <value>
+                <fullName>Preparation</fullName>
+                <default>false</default>
+                <label>Preparation</label>
+            </value>
+            <value>
+                <fullName>Preparation - Data Entered</fullName>
+                <default>false</default>
+                <label>Preparation - Data Entered</label>
+            </value>
+            <value>
+                <fullName>Additional info Request Sent</fullName>
+                <default>false</default>
+                <label>Additional info Request Sent</label>
+            </value>
+            <value>
+                <fullName>Additional info Request Sent - No Notification</fullName>
+                <default>false</default>
+                <label>Additional info Request Sent - No Notification</label>
+            </value>
+            <value>
+                <fullName>Additional Info Received</fullName>
+                <default>false</default>
+                <label>Additional Info Received</label>
+            </value>
+            <value>
+                <fullName>Awaiting Internal Bookkeeping</fullName>
+                <default>false</default>
+                <label>Awaiting Internal Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Review</fullName>
+                <default>false</default>
+                <label>Review</label>
+            </value>
+            <value>
+                <fullName>Review - No Client Notification</fullName>
+                <default>false</default>
+                <label>Review - No Client Notification</label>
+            </value>
+            <value>
+                <fullName>Review - Owes</fullName>
+                <default>false</default>
+                <label>Review - Owes</label>
+            </value>
+            <value>
+                <fullName>Review- In Progress</fullName>
+                <default>false</default>
+                <label>Review- In Progress</label>
+            </value>
+            <value>
+                <fullName>Corrections Needed</fullName>
+                <default>false</default>
+                <label>Corrections Needed</label>
+            </value>
+            <value>
+                <fullName>Corrections Addressed</fullName>
+                <default>false</default>
+                <label>Corrections Addressed</label>
+            </value>
+            <value>
+                <fullName>To Be Posted</fullName>
+                <default>false</default>
+                <label>To Be Posted</label>
+            </value>
+            <value>
+                <fullName>To Be Posted - Owes</fullName>
+                <default>false</default>
+                <label>To Be Posted - Owes</label>
+            </value>
+            <value>
+                <fullName>Awaiting Client Approval</fullName>
+                <default>false</default>
+                <label>Awaiting Client Approval</label>
+            </value>
+            <value>
+                <fullName>Awaiting Client Approval - Owes</fullName>
+                <default>false</default>
+                <label>Awaiting Client Approval - Owes</label>
+            </value>
+            <value>
+                <fullName>Awaiting Client Approval - No Notification</fullName>
+                <default>false</default>
+                <label>Awaiting Client Approval - No Notification</label>
+            </value>
+            <value>
+                <fullName>Internal Completed - Govt forms unavailable</fullName>
+                <default>false</default>
+                <label>Internal Completed - Govt forms unavailable</label>
+            </value>
+            <value>
+                <fullName>E-Filed Awaiting Govt. Acceptance</fullName>
+                <default>false</default>
+                <label>E-Filed Awaiting Govt. Acceptance</label>
+            </value>
+            <value>
+                <fullName>Rejections</fullName>
+                <default>false</default>
+                <label>Rejections</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Completed - Paper Filed</fullName>
+                <default>false</default>
+                <label>Completed - Paper Filed</label>
+            </value>
+            <value>
+                <fullName>E-File Complete - State Paper Filed</fullName>
+                <default>false</default>
+                <label>E-File Complete - State Paper Filed</label>
+            </value>
+            <value>
+                <fullName>Extension Filed - Awaiting Client Info</fullName>
+                <default>false</default>
+                <label>Extension Filed - Awaiting Client Info</label>
+            </value>
+            <value>
+                <fullName>Long-Term Pending</fullName>
+                <default>false</default>
+                <label>Long-Term Pending</label>
+            </value>
+            <value>
+                <fullName>Discard</fullName>
+                <default>false</default>
+                <label>Discard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

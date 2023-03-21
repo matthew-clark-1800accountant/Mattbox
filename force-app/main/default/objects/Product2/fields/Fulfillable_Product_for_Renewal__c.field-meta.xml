@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fulfillable_Product_for_Renewal__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates that a product is fulfillable and needs a new Active Subscription Line upon a renewal</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If checked, will create a new Active Subscription Line upon renewal of the product</inlineHelpText>
+    <label>Fulfillable Product for Renewal</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

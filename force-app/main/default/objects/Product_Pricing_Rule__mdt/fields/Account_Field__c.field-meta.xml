@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Field__c</fullName>
+    <description>***Important***
+When adding a new value, the query in PostTSAEmail2ExtensionController needs to be adjusted to match</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>API Name Only</inlineHelpText>
+    <label>Account Field</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Campaign__c</fullName>
+                <default>false</default>
+                <label>Campaign__c</label>
+            </value>
+            <value>
+                <fullName>Lead_Type_New__c</fullName>
+                <default>false</default>
+                <label>Lead_Type_New__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

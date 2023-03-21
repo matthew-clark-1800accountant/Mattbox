@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Online_Marketing</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>Expected_1st_year_revenue__c</columns>
+    <columns>Making_Money_Yet_New__c</columns>
+    <columns>Making_Money_Yet__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <filterScope>Queue</filterScope>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>1-800Accountant</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>1-1 Request,1-1 No Show,Pitched,Attempted</value>
+    </filters>
+    <filters>
+        <field>LEAD.CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>4/1/2020 12:00 AM</value>
+    </filters>
+    <label>Online Marketing</label>
+    <queue>Online_Marketing</queue>
+    <sharedTo>
+        <group>Online_Marketing</group>
+    </sharedTo>
+</ListView>

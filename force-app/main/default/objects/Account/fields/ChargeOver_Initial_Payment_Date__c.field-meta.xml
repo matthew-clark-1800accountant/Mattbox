@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChargeOver_Initial_Payment_Date__c</fullName>
+    <description>The Transaction Date of the earliest ChargeOver Transaction related to the Account</description>
+    <externalId>false</externalId>
+    <label>ChargeOver Initial Payment Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

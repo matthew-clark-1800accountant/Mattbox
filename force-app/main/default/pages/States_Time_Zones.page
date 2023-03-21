@@ -1,0 +1,64 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>States and Time Zones</h1>
+  <br/><br/>
+   <h2>Central</h2>
+     <br/><br/>
+Alabama
+<br/>
+Arkansas
+<br/>
+Illinois
+<br/>
+Iowa
+<br/>
+Kansas
+<br/>
+Louisiana
+<br/>
+Minnesota
+<br/>
+Mississippi
+<br/>
+Missouri
+<br/>
+Nebraska
+<br/>
+North Dakota
+<br/>
+Oklahoma
+<br/>
+South Dakota
+<br/>
+Tennessee
+<br/>
+Texas
+<br/>
+Wisconsin
+<br/>
+Arizona
+<br/>
+Colorado
+<br/>
+Idaho
+<br/>
+Montana
+<br/>
+New Mexico
+<br/>
+Utah
+<br/>
+Wyoming
+<br/>
+
+
+<h2>Eastern</h2>
+
+
+
+
+<h2>Pacific</h2>
+
+
+
+</apex:page>

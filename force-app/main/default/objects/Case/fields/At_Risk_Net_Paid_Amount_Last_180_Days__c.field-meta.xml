@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Net_Paid_Amount_Last_180_Days__c</fullName>
+    <description>The total amount of Net Paid Amount over the last 180 days for all of the selected At-Risk Subscription line&apos;s related invoices</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The total amount of Net Paid Amount over the last 180 days for all of the selected At-Risk Subscription line&apos;s related invoices</inlineHelpText>
+    <label>At-Risk Net Paid Amount - Last 180 Days</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

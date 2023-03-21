@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Leaders__c</fullName>
+    <externalId>false</externalId>
+    <label>Team Leaders</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Adnan Rasul</fullName>
+                <default>false</default>
+                <label>Adnan Rasul</label>
+            </value>
+            <value>
+                <fullName>Alex Zhong</fullName>
+                <default>false</default>
+                <label>Alex Zhong</label>
+            </value>
+            <value>
+                <fullName>Christian TenEyck</fullName>
+                <default>false</default>
+                <label>Christian TenEyck</label>
+            </value>
+            <value>
+                <fullName>Donna Casey</fullName>
+                <default>false</default>
+                <label>Donna Casey</label>
+            </value>
+            <value>
+                <fullName>Ermal Kukaj</fullName>
+                <default>false</default>
+                <label>Ermal Kukaj</label>
+            </value>
+            <value>
+                <fullName>Gabriella Deville</fullName>
+                <default>false</default>
+                <label>Gabriella Deville</label>
+            </value>
+            <value>
+                <fullName>Gorson Qiao</fullName>
+                <default>false</default>
+                <label>Gorson Qiao</label>
+            </value>
+            <value>
+                <fullName>Jeff Yu</fullName>
+                <default>false</default>
+                <label>Jeff Yu</label>
+            </value>
+            <value>
+                <fullName>Joseph LaMantia</fullName>
+                <default>false</default>
+                <label>Joseph LaMantia</label>
+            </value>
+            <value>
+                <fullName>Joshua Meller</fullName>
+                <default>false</default>
+                <label>Joshua Meller</label>
+            </value>
+            <value>
+                <fullName>Kelley Poppert</fullName>
+                <default>false</default>
+                <label>Kelley Poppert</label>
+            </value>
+            <value>
+                <fullName>Kelvin Chen</fullName>
+                <default>false</default>
+                <label>Kelvin Chen</label>
+            </value>
+            <value>
+                <fullName>Kristopher Zentner</fullName>
+                <default>false</default>
+                <label>Kristopher Zentner</label>
+            </value>
+            <value>
+                <fullName>Kyle Guillou</fullName>
+                <default>false</default>
+                <label>Kyle Guillou</label>
+            </value>
+            <value>
+                <fullName>Lea De Leon</fullName>
+                <default>false</default>
+                <label>Lea De Leon</label>
+            </value>
+            <value>
+                <fullName>Leonid Sverdlov</fullName>
+                <default>false</default>
+                <label>Leonid Sverdlov</label>
+            </value>
+            <value>
+                <fullName>Maria Nunez</fullName>
+                <default>false</default>
+                <label>Maria Nunez</label>
+            </value>
+            <value>
+                <fullName>Nenita Juarez</fullName>
+                <default>false</default>
+                <label>Nenita Juarez</label>
+            </value>
+            <value>
+                <fullName>Pam Kaur</fullName>
+                <default>false</default>
+                <label>Pam Kaur</label>
+            </value>
+            <value>
+                <fullName>Rudy Robles</fullName>
+                <default>false</default>
+                <label>Rudy Robles</label>
+            </value>
+            <value>
+                <fullName>Sajjad Afzal</fullName>
+                <default>false</default>
+                <label>Sajjad Afzal</label>
+            </value>
+            <value>
+                <fullName>Sanch Sancho</fullName>
+                <default>false</default>
+                <label>Sanch Sancho</label>
+            </value>
+            <value>
+                <fullName>Solomon Sionov</fullName>
+                <default>false</default>
+                <label>Solomon Sionov</label>
+            </value>
+            <value>
+                <fullName>Sue Tse</fullName>
+                <default>false</default>
+                <label>Sue Tse</label>
+            </value>
+            <value>
+                <fullName>Taneka Deveaux</fullName>
+                <default>false</default>
+                <label>Taneka Deveaux</label>
+            </value>
+            <value>
+                <fullName>Sara Hussain</fullName>
+                <default>false</default>
+                <label>Sara Hussain</label>
+            </value>
+            <value>
+                <fullName>Deni Hamzaraj</fullName>
+                <default>false</default>
+                <label>Deni Hamzaraj</label>
+            </value>
+            <value>
+                <fullName>Gerard Murat</fullName>
+                <default>false</default>
+                <label>Gerard Murat</label>
+            </value>
+            <value>
+                <fullName>Jose Almonte</fullName>
+                <default>false</default>
+                <label>Jose Almonte</label>
+            </value>
+            <value>
+                <fullName>Mohammad Jamil</fullName>
+                <default>false</default>
+                <label>Mohammad Jamil</label>
+            </value>
+            <value>
+                <fullName>Reynard Lerot</fullName>
+                <default>false</default>
+                <label>Reynard Lerot</label>
+            </value>
+            <value>
+                <fullName>Robert Schreiber</fullName>
+                <default>false</default>
+                <label>Robert Schreiber</label>
+            </value>
+            <value>
+                <fullName>Vanessa Santiago</fullName>
+                <default>false</default>
+                <label>Vanessa Santiago</label>
+            </value>
+            <value>
+                <fullName>William Liu</fullName>
+                <default>false</default>
+                <label>William Liu</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

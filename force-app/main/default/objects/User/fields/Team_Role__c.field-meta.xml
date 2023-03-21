@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Role__c</fullName>
+    <externalId>false</externalId>
+    <label>Team Role</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Senior Tax Advisor</fullName>
+                <default>false</default>
+                <label>Senior Tax Advisor</label>
+            </value>
+            <value>
+                <fullName>Support Accountant</fullName>
+                <default>false</default>
+                <label>Support Accountant</label>
+            </value>
+            <value>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+                <label>Analyst</label>
+            </value>
+            <value>
+                <fullName>Admin</fullName>
+                <default>false</default>
+                <label>Admin</label>
+            </value>
+            <value>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+                <label>Customer Service</label>
+            </value>
+            <value>
+                <fullName>Intern</fullName>
+                <default>false</default>
+                <label>Intern</label>
+            </value>
+            <value>
+                <fullName>Seasonal</fullName>
+                <default>false</default>
+                <label>Seasonal</label>
+            </value>
+            <value>
+                <fullName>Tax Advisor</fullName>
+                <default>false</default>
+                <label>Tax Advisor</label>
+            </value>
+            <value>
+                <fullName>Entity Specialist</fullName>
+                <default>false</default>
+                <label>Entity Specialist</label>
+            </value>
+            <value>
+                <fullName>Billing Team</fullName>
+                <default>false</default>
+                <label>Billing Team</label>
+            </value>
+            <value>
+                <fullName>Retention team</fullName>
+                <default>false</default>
+                <label>Retention team</label>
+            </value>
+            <value>
+                <fullName>Legal Plan</fullName>
+                <default>false</default>
+                <label>Legal Plan</label>
+            </value>
+            <value>
+                <fullName>Remote LZ</fullName>
+                <default>false</default>
+                <label>Remote LZ</label>
+            </value>
+            <value>
+                <fullName>Auxiliary</fullName>
+                <default>false</default>
+                <label>Auxiliary</label>
+            </value>
+            <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <label>Inactive</label>
+            </value>
+            <value>
+                <fullName>VDI STA</fullName>
+                <default>false</default>
+                <label>VDI STA</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping</fullName>
+                <default>false</default>
+                <label>Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Remote Tax Advisor</fullName>
+                <default>false</default>
+                <label>Remote Tax Advisor</label>
+            </value>
+            <value>
+                <fullName>Remote Tax Preparer</fullName>
+                <default>false</default>
+                <label>Remote Tax Preparer</label>
+            </value>
+            <value>
+                <fullName>Senior TAS Supervisor</fullName>
+                <default>false</default>
+                <label>Senior TAS Supervisor</label>
+            </value>
+            <value>
+                <fullName>Senior Admin Support Manager</fullName>
+                <default>false</default>
+                <label>Senior Admin Support Manager</label>
+            </value>
+            <value>
+                <fullName>Admin Support Manager</fullName>
+                <default>false</default>
+                <label>Admin Support Manager</label>
+            </value>
+            <value>
+                <fullName>Admin Support Supervisor</fullName>
+                <default>false</default>
+                <label>Admin Support Supervisor</label>
+            </value>
+            <value>
+                <fullName>Senior Admin Support</fullName>
+                <default>false</default>
+                <label>Senior Admin Support</label>
+            </value>
+            <value>
+                <fullName>Admin Support II</fullName>
+                <default>false</default>
+                <label>Admin Support II</label>
+            </value>
+            <value>
+                <fullName>Admin Support I</fullName>
+                <default>false</default>
+                <label>Admin Support I</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,1182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tax_Consultation</fullName>
+    <active>true</active>
+    <label>Tax Consultation</label>
+    <picklistValues>
+        <picklist>Appointment_Disposition__c</picklist>
+        <values>
+            <fullName>Appointment Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bad Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CB Consulted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failure to Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow-Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Live Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Qualified</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Appointment_Setter_Role__c</picklist>
+        <values>
+            <fullName>BNA Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brian%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Floria%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inbound Support Rep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Israel%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JT%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marzi%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Michele%27s Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nesting Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sample%27s Team</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Assigned_To_Role__c</picklist>
+        <values>
+            <fullName>Billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Collections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retention</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Call_Result_Task__c</picklist>
+        <values>
+            <fullName>Call Back Set</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Live Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested in TSA Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not a Sales Opportunity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Appointment Scheduled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Campaign__c</picklist>
+        <values>
+            <fullName>Join Now</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Initial_Rejected_Reason__c</picklist>
+        <values>
+            <fullName>On Break</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Out of Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prior Appointment Running Long</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lead_Source__c</picklist>
+        <values>
+            <fullName>1-800Accountant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agents %26 Corporations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>All Florida Business Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BK Search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Better Legal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Betterfin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BizCounsel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BizFilings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Building Trades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Licenses</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Talent Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPAdirectory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ChaliceNetwork</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clearbanc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ClientBooks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company%2Ecom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corp Offer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverwallet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dun %26 Bradstreet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIN Tax Filing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EZCorp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Endurance International Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Everlance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FINSYNC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FJA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FileNow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First Data</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First Nationwide Payments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Florida Registrations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form A Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FormPros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FreeLogoServices%2Ecom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Get Motivated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Get Motivated Denver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Get Motivated Sacramento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GoDaddy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GovDocFiling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gusto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Help Me With My Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IMC Money</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inc%2E Authority</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorporate%2Ecom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intercom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International Lifestyle Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JazzHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KHM Travel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LZ - LegalPlan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laughlin USA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Nature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Zoom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LegalNature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LegalZoom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>License Logix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Live Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LogoWorks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MVFGlobal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing 360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merchant Advisor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merchant Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>My Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>My USA Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MyCompanyWorks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NATS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAV-2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Merchants Association</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Network Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nevada Corporate Planners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NewBusinessFormation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newtek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Depot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OpenSky</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Palo Alto Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PlateIQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-2015</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Register%2Ecom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ribbon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rocket Lawyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sam%27s Club</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Savify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seek Business Capital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Small Biz Expo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SmallBiz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sprout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Squarespace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swfyt Filings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swyft Filings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRUiC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSYS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Defense Network</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Defense Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Filing Forms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TripLog</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VCorp Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vistaprint</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volusion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web%2Ecom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wise Business Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wounded Warrior Project</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wyoming Registered Agent Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yelp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Your Key to Wealth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ZenBusiness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zoho Books</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lead_Type_New__c</picklist>
+        <values>
+            <fullName>Buyer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NVMConnect__Next_Action__c</picklist>
+        <values>
+            <fullName>Bad Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Busy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call in 7 days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call tomorrow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Don%27t call again</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Live Message</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Set Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update contact details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Number</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Performance_Tracking_ID__c</picklist>
+        <values>
+            <fullName>Company-Assigned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company-Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self-Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self-Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SMS_Type__c</picklist>
+        <values>
+            <fullName>Advisory Reminder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CB Invite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CB No Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CB Reminder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SDR No Answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Invite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA No Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Reminder</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Secondary_Disposition_Details__c</picklist>
+        <values>
+            <fullName>Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accounting Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Already Has Requested Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BNA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bad Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Billing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Back Set</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Did Not Qualify For Upsell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow-Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Follow-Up Reschedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Live Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NI- Bookkeeper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NI- Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NI- Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NI-Not Enough Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested in TSA Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not a Sales Opportunity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rescheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SDRs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Secured Payment Method</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Appointment Scheduled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wanted Meeting with Accountant</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subject</picklist>
+        <values>
+            <fullName>1-1 Follow Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2018 Tax Prep Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2018 Tax Season Jump Start</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annual Tax Prep Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merchant Services 1-1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding Appointment %28Dedicated%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rescheduled Discovery Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zero Return Appointment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>1-1 Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO Review</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Appointment__c</picklist>
+        <values>
+            <fullName>401k Rollover Options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A La Carte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Advisory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BNA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Backup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping Services Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calendar Block</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ClientBooks Bookkeeper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ClientBooks Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ClientBooks Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Integration Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital Business Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discovery Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equip Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Formation Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Managed Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NYSB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QBR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reassigned Discovery Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Follow Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Follow-Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Savings Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TaxSmart</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Vonage_Call_Disposition__c</picklist>
+        <values>
+            <fullName>Bad Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Back Set</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Voicemail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Live Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not A Sales Opportunity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested in TSA Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSA Appointment Scheduled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

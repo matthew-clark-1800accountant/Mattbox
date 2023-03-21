@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Risk_Subscription_Lines__c</fullName>
+    <description>A list of Subscription Line Items identified to be at-risk.</description>
+    <externalId>false</externalId>
+    <label>At-Risk Subscription Lines</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>1-800Accountant Access</fullName>
+                <default>false</default>
+                <label>1-800Accountant Access</label>
+            </value>
+            <value>
+                <fullName>Business Tax Preparation</fullName>
+                <default>false</default>
+                <label>Business Tax Preparation</label>
+            </value>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>Personal Tax Preparation</fullName>
+                <default>false</default>
+                <label>Personal Tax Preparation</label>
+            </value>
+            <value>
+                <fullName>Tax Advisory</fullName>
+                <default>false</default>
+                <label>Tax Advisory</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DArnold_c_cbs</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>of_Calls__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>12/22/2020</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>general,online marketing</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>2/11/2021</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Contacted,Call Back Set</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notEqual</operation>
+        <value>Tax Filing Forms</value>
+    </filters>
+    <filters>
+        <field>Rejection_Reason__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>12/20/2021</value>
+    </filters>
+    <label>DArnold c/cbs</label>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

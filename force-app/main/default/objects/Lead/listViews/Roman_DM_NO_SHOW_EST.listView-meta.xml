@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Roman_DM_NO_SHOW_EST</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Campaign_Last_Touch__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>of_Calls__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>Created_Date_Time__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>1-800Accountant,Bark</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>1-1 Request,Dupe,EF Request</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>1-1 No Show</value>
+    </filters>
+    <filters>
+        <field>Time_Zone__c</field>
+        <operation>equals</operation>
+        <value>Eastern</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>lessThan</operation>
+        <value>N_DAYS_AGO:1</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>LAST_MONTH</value>
+    </filters>
+    <label>Roman DM NO SHOW EST</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Foxtrot_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

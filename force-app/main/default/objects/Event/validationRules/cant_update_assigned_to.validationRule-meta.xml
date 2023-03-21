@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>cant_update_assigned_to</fullName>
+    <active>false</active>
+    <description>Prevents changing the Assigned To field unless certain conditions are met.</description>
+    <errorConditionFormula>AND(
+ISCHANGED( OwnerId ),
+NOT( 
+OR(
+$Permission.Admin_Validation_Rule_Override,
+BEGINS(PRIORVALUE(OwnerId),&apos;00G&apos;) /*Any Queue*/,
+PRIORVALUE(OwnerId) = &apos;005f100000HXqaD&apos; /*General Lead Queue*/,
+PRIORVALUE(OwnerId) = &apos;005j000000BODKS&apos; /*Do Not Reply*/,
+PRIORVALUE(OwnerId) = &apos;0055e000007DMn4&apos; /*SDR Manager Michele Myers*/,
+PRIORVALUE(OwnerId) =  $User.ManagerId)))</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>You do not have permission to update the Assigned To field</errorMessage>
+</ValidationRule>

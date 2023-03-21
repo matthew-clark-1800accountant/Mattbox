@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Team__c</fullName>
+    <externalId>false</externalId>
+    <label>Sales Team</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>BNA Team</fullName>
+                <default>false</default>
+                <label>BNA Team</label>
+            </value>
+            <value>
+                <fullName>Brian Labus</fullName>
+                <default>false</default>
+                <label>Brian Labus</label>
+            </value>
+            <value>
+                <fullName>Christopher Sample</fullName>
+                <default>false</default>
+                <label>Christopher Sample</label>
+            </value>
+            <value>
+                <fullName>Entity Formation Team</fullName>
+                <default>false</default>
+                <label>Entity Formation Team</label>
+            </value>
+            <value>
+                <fullName>Floria Royals</fullName>
+                <default>false</default>
+                <label>Floria Royals</label>
+            </value>
+            <value>
+                <fullName>Fulfillment</fullName>
+                <default>false</default>
+                <label>Fulfillment</label>
+            </value>
+            <value>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+                <label>Inbound</label>
+            </value>
+            <value>
+                <fullName>Israel Vazquez</fullName>
+                <default>false</default>
+                <label>Israel Vazquez</label>
+            </value>
+            <value>
+                <fullName>Jason Roman</fullName>
+                <default>false</default>
+                <label>Jason Roman</label>
+            </value>
+            <value>
+                <fullName>JT Keenan</fullName>
+                <default>false</default>
+                <label>JT Keenan</label>
+            </value>
+            <value>
+                <fullName>Keith Marzi</fullName>
+                <default>false</default>
+                <label>Keith Marzi</label>
+            </value>
+            <value>
+                <fullName>Michael Cashman</fullName>
+                <default>false</default>
+                <label>Michael Cashman</label>
+            </value>
+            <value>
+                <fullName>Michele Myers</fullName>
+                <default>false</default>
+                <label>Michele Myers</label>
+            </value>
+            <value>
+                <fullName>Nesting Team</fullName>
+                <default>false</default>
+                <label>Nesting Team</label>
+            </value>
+            <value>
+                <fullName>Training Team</fullName>
+                <default>false</default>
+                <label>Training Team</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

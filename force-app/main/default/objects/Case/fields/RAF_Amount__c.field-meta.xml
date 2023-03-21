@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RAF_Amount__c</fullName>
+    <description>The dollar amount retained that is applied to the resource allocation fee</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the dollar amount retained that is for the resource allocation fee</inlineHelpText>
+    <label>RAF Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

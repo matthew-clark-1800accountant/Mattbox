@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>June_Bug</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>mcash,achar,amerc,dhans,gseym,jmcca,jphil,jblau,mmayn,mfred,ngrah,pkoon,stayl</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>greaterThan</operation>
+        <value>10/1/2020 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>Time_Zone__c</field>
+        <operation>equals</operation>
+        <value>eastern,central</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>1-1 No Show</value>
+    </filters>
+    <label>June Bug</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

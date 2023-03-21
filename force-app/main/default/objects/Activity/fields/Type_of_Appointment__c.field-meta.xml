@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Appointment__c</fullName>
+    <externalId>false</externalId>
+    <label>Type of Appointment</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>401k Rollover Options</fullName>
+                <default>false</default>
+                <label>401k Rollover Options</label>
+            </value>
+            <value>
+                <fullName>Accounting</fullName>
+                <default>false</default>
+                <label>Accounting</label>
+            </value>
+            <value>
+                <fullName>Advisory</fullName>
+                <default>false</default>
+                <label>Advisory</label>
+            </value>
+            <value>
+                <fullName>A La Carte</fullName>
+                <default>false</default>
+                <label>A La Carte</label>
+            </value>
+            <value>
+                <fullName>Backup</fullName>
+                <default>false</default>
+                <label>Backup</label>
+            </value>
+            <value>
+                <fullName>BNA</fullName>
+                <default>false</default>
+                <label>BNA</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping</fullName>
+                <default>false</default>
+                <label>Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Services Consultation</fullName>
+                <default>false</default>
+                <label>Bookkeeping Services Consultation</label>
+            </value>
+            <value>
+                <fullName>Calendar Block</fullName>
+                <default>false</default>
+                <label>Calendar Block</label>
+            </value>
+            <value>
+                <fullName>ClientBooks Bookkeeper</fullName>
+                <default>false</default>
+                <label>ClientBooks Bookkeeper</label>
+            </value>
+            <value>
+                <fullName>ClientBooks Consultation</fullName>
+                <default>false</default>
+                <label>ClientBooks Consultation</label>
+            </value>
+            <value>
+                <fullName>ClientBooks Demo</fullName>
+                <default>false</default>
+                <label>ClientBooks Demo</label>
+            </value>
+            <value>
+                <fullName>Customer Integration Specialist</fullName>
+                <default>false</default>
+                <label>Customer Integration Specialist</label>
+            </value>
+            <value>
+                <fullName>Digital Business Solutions</fullName>
+                <default>false</default>
+                <label>Digital Business Solutions</label>
+            </value>
+            <value>
+                <fullName>Discovery Call</fullName>
+                <default>false</default>
+                <label>Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Equip Consultation</fullName>
+                <default>false</default>
+                <label>Equip Consultation</label>
+            </value>
+            <value>
+                <fullName>Escalation</fullName>
+                <default>false</default>
+                <label>Escalation</label>
+            </value>
+            <value>
+                <fullName>Formation Consultation</fullName>
+                <default>false</default>
+                <label>Formation Consultation</label>
+            </value>
+            <value>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+                <label>Health Insurance</label>
+            </value>
+            <value>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+                <label>Inbound</label>
+            </value>
+            <value>
+                <fullName>Managed Services</fullName>
+                <default>false</default>
+                <label>Managed Services</label>
+            </value>
+            <value>
+                <fullName>NYSB</fullName>
+                <default>false</default>
+                <label>NYSB</label>
+            </value>
+            <value>
+                <fullName>Outbound</fullName>
+                <default>true</default>
+                <label>Outbound</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>QBR</fullName>
+                <default>false</default>
+                <label>QBR</label>
+            </value>
+            <value>
+                <fullName>Quarterly Estimated Taxes</fullName>
+                <default>false</default>
+                <label>Quarterly Estimated Taxes</label>
+            </value>
+            <value>
+                <fullName>Reassigned Discovery Call</fullName>
+                <default>false</default>
+                <label>Reassigned Discovery Call</label>
+            </value>
+            <value>
+                <fullName>Retirement Planning</fullName>
+                <default>false</default>
+                <label>Retirement Planning</label>
+            </value>
+            <value>
+                <fullName>Sales &amp; Use Tax</fullName>
+                <default>false</default>
+                <label>Sales &amp; Use Tax</label>
+            </value>
+            <value>
+                <fullName>Sales Follow Up</fullName>
+                <default>false</default>
+                <label>Sales Follow Up</label>
+            </value>
+            <value>
+                <fullName>Tax Planning</fullName>
+                <default>false</default>
+                <label>Tax Planning</label>
+            </value>
+            <value>
+                <fullName>Tax Savings Analysis</fullName>
+                <default>false</default>
+                <label>Tax Savings Analysis</label>
+            </value>
+            <value>
+                <fullName>TaxSmart</fullName>
+                <default>false</default>
+                <label>TaxSmart</label>
+            </value>
+            <value>
+                <fullName>TSA Follow-Up</fullName>
+                <default>false</default>
+                <label>TSA Follow-Up</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

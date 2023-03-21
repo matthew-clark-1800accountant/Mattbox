@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QA_Trends__c</fullName>
+    <externalId>false</externalId>
+    <label>QA Trends</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>All Included</fullName>
+                <default>false</default>
+                <label>All Included</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Software</fullName>
+                <default>false</default>
+                <label>Bookkeeping Software</label>
+            </value>
+            <value>
+                <fullName>Chargeback</fullName>
+                <default>false</default>
+                <label>Chargeback</label>
+            </value>
+            <value>
+                <fullName>Dedicated Bookkeeping</fullName>
+                <default>false</default>
+                <label>Dedicated Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Entity Formation Services</fullName>
+                <default>false</default>
+                <label>Entity Formation Services</label>
+            </value>
+            <value>
+                <fullName>Filings (BTP)</fullName>
+                <default>false</default>
+                <label>Filings (BTP)</label>
+            </value>
+            <value>
+                <fullName>Filings (Other)</fullName>
+                <default>false</default>
+                <label>Filings (Other)</label>
+            </value>
+            <value>
+                <fullName>Filings (PTP)</fullName>
+                <default>false</default>
+                <label>Filings (PTP)</label>
+            </value>
+            <value>
+                <fullName>Fulfillment Issue(s)</fullName>
+                <default>false</default>
+                <label>Fulfillment Issue(s)</label>
+            </value>
+            <value>
+                <fullName>Misinformation</fullName>
+                <default>false</default>
+                <label>Misinformation</label>
+            </value>
+            <value>
+                <fullName>Monthly Fees</fullName>
+                <default>false</default>
+                <label>Monthly Fees</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Oversold</fullName>
+                <default>false</default>
+                <label>Oversold</label>
+            </value>
+            <value>
+                <fullName>Payment Authorization</fullName>
+                <default>false</default>
+                <label>Payment Authorization</label>
+            </value>
+            <value>
+                <fullName>Payment Plans</fullName>
+                <default>false</default>
+                <label>Payment Plans</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Portal Access</fullName>
+                <default>false</default>
+                <label>Portal Access</label>
+            </value>
+            <value>
+                <fullName>Pricing</fullName>
+                <default>false</default>
+                <label>Pricing</label>
+            </value>
+            <value>
+                <fullName>Professionalism</fullName>
+                <default>false</default>
+                <label>Professionalism</label>
+            </value>
+            <value>
+                <fullName>Quarterly Estimated Tax</fullName>
+                <default>false</default>
+                <label>Quarterly Estimated Tax</label>
+            </value>
+            <value>
+                <fullName>Refund Policy</fullName>
+                <default>false</default>
+                <label>Refund Policy</label>
+            </value>
+            <value>
+                <fullName>Sales and Use Tax</fullName>
+                <default>false</default>
+                <label>Sales and Use Tax</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

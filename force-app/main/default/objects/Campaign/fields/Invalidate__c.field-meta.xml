@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invalidate__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Suppress old campaign records from 2015 and before Marketing team started using the Campaign object for analyzing social media trends.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Suppress old campaign records from 2015 and before Marketing team started using the Campaign object for analyzing social media trends. Check this box if you want to discard the campaign record.</inlineHelpText>
+    <label>Invalidate</label>
+    <type>Checkbox</type>
+</CustomField>

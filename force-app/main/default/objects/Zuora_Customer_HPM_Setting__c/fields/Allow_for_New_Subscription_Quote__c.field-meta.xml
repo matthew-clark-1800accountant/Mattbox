@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allow_for_New_Subscription_Quote__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Allows the HPM Customization to work off of New Subscription Quotes</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Allows the HPM Customization to work off of New Subscription Quotes</inlineHelpText>
+    <label>Allow for New Subscription Quote</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

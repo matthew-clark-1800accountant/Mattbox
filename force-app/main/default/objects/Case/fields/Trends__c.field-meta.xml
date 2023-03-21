@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Trends__c</fullName>
+    <externalId>false</externalId>
+    <label>Trends</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>3 Business Day Cancel</fullName>
+                <default>false</default>
+                <label>3 Business Day Cancel</label>
+            </value>
+            <value>
+                <fullName>Account Placed on Hold</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Account Placed on Hold</label>
+            </value>
+            <value>
+                <fullName>All Included</fullName>
+                <default>false</default>
+                <label>All Included</label>
+            </value>
+            <value>
+                <fullName>Billing Error</fullName>
+                <default>false</default>
+                <label>Billing Error</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Features</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bookkeeping Features</label>
+            </value>
+            <value>
+                <fullName>Client felt like rep was misleading</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client felt like rep was misleading</label>
+            </value>
+            <value>
+                <fullName>Client Kept Getting Appts Rescheduled</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client Kept Getting Appts Rescheduled</label>
+            </value>
+            <value>
+                <fullName>Client stated they didn&apos;t get renewal email</fullName>
+                <default>false</default>
+                <label>Client Stated They Didn&apos;t Get Renewal Email</label>
+            </value>
+            <value>
+                <fullName>Crypto Complexities</fullName>
+                <default>false</default>
+                <label>Crypto Complexities</label>
+            </value>
+            <value>
+                <fullName>Dedicated Bookkeeping</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dedicated Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Equip Cancellation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Equip Cancellation</label>
+            </value>
+            <value>
+                <fullName>Filings (BTP)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Filings (BTP)</label>
+            </value>
+            <value>
+                <fullName>Filings (Other)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Filings (Other)</label>
+            </value>
+            <value>
+                <fullName>Filings (PTP)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Filings (PTP)</label>
+            </value>
+            <value>
+                <fullName>Fulfillment Did Not Call For Scheduled Appt</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fulfillment Did Not Call For Scheduled Appt</label>
+            </value>
+            <value>
+                <fullName>Fulfillment Issue(s)</fullName>
+                <default>false</default>
+                <label>Fulfillment Issue(s)</label>
+            </value>
+            <value>
+                <fullName>Fulfillment Said to Refund</fullName>
+                <default>false</default>
+                <label>Fulfillment Said to Refund</label>
+            </value>
+            <value>
+                <fullName>Issues with fulfillment appointments</fullName>
+                <default>false</default>
+                <label>Issues with fulfillment appointments</label>
+            </value>
+            <value>
+                <fullName>Lending PT: Attempt Payment within 30 days</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Lending PT: Attempt Payment within 30 days</label>
+            </value>
+            <value>
+                <fullName>Lending PT Cancellation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Lending PT Cancellation</label>
+            </value>
+            <value>
+                <fullName>Marketing Audit Email Scare</fullName>
+                <default>false</default>
+                <label>Marketing Audit Email Scare</label>
+            </value>
+            <value>
+                <fullName>Monthly Fee Not Disclosed by Sales</fullName>
+                <default>false</default>
+                <label>Monthly Fee Not Disclosed by Sales</label>
+            </value>
+            <value>
+                <fullName>Monthly Fees</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Monthly Fees</label>
+            </value>
+            <value>
+                <fullName>Multiple STA Reassignments</fullName>
+                <default>false</default>
+                <label>Multiple STA Reassignments</label>
+            </value>
+            <value>
+                <fullName>Option 1</fullName>
+                <default>false</default>
+                <label>No Fulfillment Contact in 3+ Months</label>
+            </value>
+            <value>
+                <fullName>No Response to Portal Messages and/or Emails</fullName>
+                <default>false</default>
+                <label>No Response to Portal Messages and/or Emails</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paid for Tax Prep in Portal - Already had the Service</fullName>
+                <default>false</default>
+                <label>Paid for Tax Prep in Portal - Already had the Service</label>
+            </value>
+            <value>
+                <fullName>Payment Authorization</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Payment Authorization</label>
+            </value>
+            <value>
+                <fullName>Payment Plans</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Payment Plans</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Gusto Won&apos;t Provide Payroll</fullName>
+                <default>false</default>
+                <label>Payroll/Gusto Issue</label>
+            </value>
+            <value>
+                <fullName>Pricing</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pricing</label>
+            </value>
+            <value>
+                <fullName>Professionalism</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Professionalism</label>
+            </value>
+            <value>
+                <fullName>Renewed service but no service provided the previous year</fullName>
+                <default>false</default>
+                <label>Renewed service but no service provided the previous year</label>
+            </value>
+            <value>
+                <fullName>Sales added different services than what was pitched</fullName>
+                <default>false</default>
+                <label>Sales Added Different Services Than What Was Pitched</label>
+            </value>
+            <value>
+                <fullName>Sales misleading or improper expectations</fullName>
+                <default>false</default>
+                <label>Sales misleading or improper expectations</label>
+            </value>
+            <value>
+                <fullName>Sales Pitched 30 Day Refund</fullName>
+                <default>false</default>
+                <label>Sales Pitched 30 Day Refund</label>
+            </value>
+            <value>
+                <fullName>Sales Processed Payment w/out Authorization</fullName>
+                <default>false</default>
+                <label>Sales Processed Payment w/out Authorization</label>
+            </value>
+            <value>
+                <fullName>Sales Rep Not Setting Proper Expectations</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sales Rep Not Setting Proper Expectations</label>
+            </value>
+            <value>
+                <fullName>Sales Sold a Service We Cannot Provide</fullName>
+                <default>false</default>
+                <label>Sales Sold a Service We Cannot Provide</label>
+            </value>
+            <value>
+                <fullName>Sales Sold Service They Do Not Need</fullName>
+                <default>false</default>
+                <label>Sales Sold Service They Do Not Need</label>
+            </value>
+            <value>
+                <fullName>Thought Bookkeeping was Included</fullName>
+                <default>false</default>
+                <label>Thought Bookkeeping was Included</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

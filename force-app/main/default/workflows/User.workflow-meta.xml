@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Deactivated_User_Email</fullName>
+        <description>Deactivated User Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>mharvey@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mnguyen@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sdunn@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Administrative/Termination_Date_Added</template>
+    </alerts>
+    <alerts>
+        <fullName>Marked_Unavailable</fullName>
+        <description>Marked Unavailable</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>salesforce@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/Marked_Unavailable</template>
+    </alerts>
+    <outboundMessages>
+        <fullName>NewClientPortal_UserSync</fullName>
+        <apiVersion>36.0</apiVersion>
+        <description>Endpoint to get user updates</description>
+        <endpointUrl>https://1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e</endpointUrl>
+        <fields>Id</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>api@1800accountant.com</integrationUser>
+        <name>NewClientPortal-UserSync</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>ClientBooks User</fullName>
+        <actions>
+            <name>NewClientPortal_UserSync</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <description>Syncs accountants to clientbooks</description>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Deactivated User</fullName>
+        <actions>
+            <name>Deactivated_User_Email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>User.Termination_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Sends an email alert when the termination date is updated with a new value.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Marked Unavailable</fullName>
+        <actions>
+            <name>Marked_Unavailable</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>User.Scheduler_Availability__c</field>
+            <operation>equals</operation>
+            <value>Unavailable</value>
+        </criteriaItems>
+        <description>Sends an email to the rep when their scheduler availability has been marked as unavailable.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

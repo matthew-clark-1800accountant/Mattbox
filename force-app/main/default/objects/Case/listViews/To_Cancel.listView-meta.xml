@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>To_Cancel</fullName>
+    <columns>Risk__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>How_Long_Have_They_Been_a_Client__c</columns>
+    <columns>Payments_Last_180_days__c</columns>
+    <columns>Net_Payments_Last_180_Days__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>Subscription_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Cancellation Requested,Save Attempt,To Be Assigned</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.Subscription_Review</value>
+    </filters>
+    <filters>
+        <field>Net_Payments_Last_180_Days__c</field>
+        <operation>lessThan</operation>
+        <value>300</value>
+    </filters>
+    <label>To Cancel</label>
+    <sharedTo>
+        <role>Manager</role>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X1800_Login</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>1800 Login</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>// create the form. Set it up to POST the transaction 
+f = document.createElement(&quot;form&quot;); 
+f.action = &quot;https://1800accountant.com/&quot;; 
+f.method = &quot;post&quot;; 
+f.target = &quot;_blank&quot;; 
+
+// add a parameter
+i = document.createElement(&quot;input&quot;); 
+i.id = &quot;y_un_sso&quot;;
+i.name = &quot;y_un_sso&quot;;
+i.type = &quot;hidden&quot;;
+i.value = &quot;{!Contact.Email}&quot;; 
+f.appendChild(i); 
+
+// add a parameter 
+i = document.createElement(&quot;input&quot;); 
+i.id = &quot;y_pw_sso&quot;; 
+i.name = &quot;y_pw_sso&quot;; 
+i.type = &quot;hidden&quot;; 
+i.value = &quot;{!Contact.X1800Password__c}&quot;;
+f.appendChild(i); 
+
+// add the form to the document.
+document.body.appendChild(f); 
+
+// submit the form 
+f.submit();</url>
+</WebLink>

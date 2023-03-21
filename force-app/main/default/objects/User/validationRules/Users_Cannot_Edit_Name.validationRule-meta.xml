@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Users_Cannot_Edit_Name</fullName>
+    <active>true</active>
+    <description>This rule prevents basic. users from changing their names in Salesforce</description>
+    <errorConditionFormula>AND(
+NOT($Profile.Name = &quot;System Admin&quot;),
+NOT($Profile.Name = &quot;API User&quot;),
+NOT($Profile.Name = &quot;System Administrator&quot;),
+NOT($Profile.Name = &quot;Sales Office Manager&quot;),
+OR(ISCHANGED( FirstName ),
+ISCHANGED(LastName))
+)</errorConditionFormula>
+    <errorMessage>Please contact an administrator to change your name</errorMessage>
+</ValidationRule>

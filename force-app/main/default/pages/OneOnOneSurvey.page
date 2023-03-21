@@ -1,0 +1,210 @@
+<apex:page doctype="html-5.0" standardStylesheets="false" controller="OneonOneRegistrationController" showHeader="false" sidebar="false" cache="false" applyBodyTag="false" applyHtmlTag="false" >
+    
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            
+            <title>Schedule Your 1 on 1 Consultation | 1800Accountant</title>
+            <link href="http://1800accountant.com/1on1nyc_1/css/styles.css" rel="stylesheet" type="text/css" media="all" />
+        </head>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>     
+        <script>
+            function setField(fieldId, val){
+                var fieldregex = '[id$=' + fieldId + ']';
+                jQuery(fieldregex).val(val);
+            }
+            </script>
+        <style>
+            .submitBtn{
+            border:0px;
+            padding:0px;
+            background:none;
+            margin-top:20px;
+            color:#fff;
+            font-size:17px;
+            font-weight:bold;
+            border-radius:5px;
+            moz-border-radius:5px;
+            webkit-border-radius:5px;
+            -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            padding: 20px;
+            width: 296px;
+            background: #33697c; /* Old browsers */
+            background: -moz-linear-gradient(top,  #33697c 0%, #295564 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#33697c), color-stop(100%,#295564)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #33697c 0%,#295564 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #33697c 0%,#295564 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #33697c 0%,#295564 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #33697c 0%,#295564 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33697c', endColorstr='#295564',GradientType=0 ); /* IE6-9 */
+            text-decoration:none;
+            }
+        </style>
+        <body>
+            <div id="wrapper">
+                <div id="container">
+                    <div id="pageRep">
+                        <div id="header">
+                            <div id="ctnLogo">
+                                <img src="http://1800accountant.com/1on1nyc_1/images/1800AccountantLogo.png" width="300" height="61" alt="1800Accountant" />
+                            </div><!--ctnLogo-->
+                        </div><!--header-->
+                        <!--hero-->
+                        <div id="formcontentCenter">
+                            <h1>You’re almost done!</h1>
+                            <p>Please answer the following questions to help us assign a specialist who will handle your consultation.  Your answers also enable us to better understand your business in order to provide you the most accurate tax and accounting advice possible.</p>
+                            <apex:form >
+                                <apex:actionFunction name="mySubmit" action="{!dosubmit}"/>
+                                <div class="center">
+                                    
+                                    
+                                    <div class="half">
+                                        <div>
+                                            <label>Expected 1st Year Revenue</label>
+                                            <apex:inputHidden value="{!expectedfirstyear}" id="expectedfirstyear"/>
+                                            <select name="radexpectedfirstyear" onchange="setField('expectedfirstyear',$(this).val())">
+                                                <option value="0 - $10,000">0 - $10,000</option>
+                                                <option value="$10,000 - $50,000">$10,000 - $50,000</option>
+                                                <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                                                <option value="> $100,000">&gt; $100,000</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>Industry Type</label>
+                                            <apex:inputHidden value="{!industry}" id="industry"/>
+                                            <select name="radindustry" onchange="setField('industry',$(this).val())">
+                                                <option value=''>Pick Industry</option>
+                                                <option value='Agriculture'>Agriculture</option>
+                                                <option value='Animal Services'>Animal Services</option>
+                                                <option value='Apparel'>Apparel</option>
+                                                <option value='Automotive'>Automotive</option>
+                                                <option value='Banking'>Banking</option>
+                                                <option value='Business'>Business</option>
+                                                <option value='Communications'>Communications</option>
+                                                <option value='Construction'>Construction</option>
+                                                <option value='Consulting'>Consulting</option>
+                                                <option value='E-commerce'>E-commerce</option>
+                                                <option value='Education'>Education</option>
+                                                <option value='Electronics'>Electronics</option>
+                                                <option value='Engineering'>Engineering</option>
+                                                <option value='Entertainment'>Entertainment</option>
+                                                <option value='Environmental'>Environmental</option>
+                                                <option value='Finance'>Finance</option>
+                                                <option value='Government'>Government</option>
+                                                <option value='Healthcare'>Healthcare</option>
+                                                <option value='Hospitality'>Hospitality</option>
+                                                <option value='Insurance'>Insurance</option>
+                                                <option value='Landscaping'>Landscaping</option>
+                                                <option value='Legal'>Legal</option>
+                                                <option value='Machinery'>Machinery</option>
+                                                <option value='Manufacturing'>Manufacturing</option>
+                                                <option value='Media'>Media</option>
+                                                <option value='Not for Profit'>Not for Profit</option>
+                                                <option value='Publishing'>Publishing</option>
+                                                <option value='Real Estate'>Real Estate</option>
+                                                <option value='Recreation'>Recreation</option>
+                                                <option value='Retail'>Retail</option>
+                                                <option value='Shipping'>Shipping</option>
+                                                <option value='Software and Internet'>Software and Internet</option>
+                                                <option value='Technology'>Technology</option>
+                                                <option value='Telecommunication'>Telecommunication</option>
+                                                <option value='Transportation'>Transportation</option>
+                                                <option value='Travel Recreation and Leisure'>Travel Recreation and Leisure</option>
+                                                <option value='Utilities'>Utilities</option>
+                                                <option value='Wholesale and Distribution'>Wholesale and Distribution</option> 
+                                                <option value='Other'>Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>Entity Type</label>
+                                            <apex:inputHidden value="{!entitytaxclass}" id="entitytaxclass"/>
+                                            <select name="radentitytaxclass" onchange="setField('entitytaxclass',$(this).val())">
+                                                <option value=''>Pick Classification</option>
+                                                  <option value='Undetermined'>Undetermined</option>
+                                                  <option value='Sole Proprietorship'>Sole Proprietorship</option>
+                                                  <option value='LLC - Single Member'>LLC - Single Member</option>
+                                                  <option value='LLC - Partnership'>LLC - Partnership</option>
+                                                  <option value='LLC electing S corp status'>LLC electing S corp status</option>
+                                                  <option value='LLC taxed as C Corp'>LLC taxed as C Corp</option>
+                                                  <option value='Partnership'>Partnership</option>
+                                                  <option value='C Corporation'>C Corporation</option>
+                                                  <option value='S Corporation'>S Corporation</option>
+                                                  <option value='Non-Profit'>Non-Profit</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>Number of Owners/Partners?</label>
+                                            <apex:inputHidden value="{!numberofowners}" id="numberofowners"/>
+                                            <select name="radnumberofowners" onchange="setField('numberofowners',$(this).val());if ($(this).val() > 1) { $('#partnernamecontain').css('display','block');$('#partnerphonecontain').css('display','block'); }">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div id='partnernamecontain' style='display:none;'>
+                                            <label>Partner Name </label>
+                                            <apex:inputText value="{!partnername}" />
+                                        </div>
+                                        <div id='partnerphonecontain' style='display:none;'>
+                                            <label>Partner Phone </label>
+                                            <apex:inputText value="{!partnerphone}" />
+                                        </div>
+                                        <div>
+                                            <label style='position:relative;top:-20px;'>Areas Needing Help</label>
+                                            <apex:inputHidden value="{!areasneedhelp}" id="areasneedhelp"/>
+                                            <select multiple="multiple" name="radareasneedhelp" onchange="setField('areasneedhelp',$(this).val())">
+                                                <option value="Sales Taxes">Sales Taxes</option>
+                                                <option value="How do I build business credit">How do I build business credit</option>
+                                                <option value="Raising capital to fund my business">Raising capital to fund my business</option>
+                                                <option value="Contractor vs. Employee – overview">Contractor vs. Employee – overview</option>
+                                                <option value="Bookkeeping">Bookkeeping</option>
+                                                <option value="Payroll">Payroll</option>
+                                                <option value="Estimated Taxes">Estimated Taxes</option>
+                                                <option value="ECE">ECE</option>
+                                                <option value="Deductions">Deductions</option>
+                                                <option value="Start-up Costs">Start-up Costs</option>
+                                                <option value="Retirement Planning">Retirement Planning</option>
+                                                <option value="Filing Dates">Filing Dates</option>
+                                                <option value="Tax Planning">Tax Planning</option>
+                                                <option value="Fair and reasonable salary">Fair and reasonable salary</option>
+                                                <option value="Paper Loss">Paper Loss</option>
+                                                <option value="Income Shifting">Income Shifting</option>
+                                                <option value="Multiple Entity Structures">Multiple Entity Structures</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>What are your total start up costs?</label>
+                                            <apex:inputHidden value="{!startUpCosts}" id="startupcosts"/>
+                                            <select name="radStartCost" onchange="setField('startupcosts',$(this).val())">
+                                                <option value="Less than $1,000">Less than $1,000</option>
+                                                <option value="$2,000 - $3,000">$2,000 - $3,000</option>
+                                                <option value="$4,000 - $5,000">$4,000 - $5,000</option>
+                                                <option value="Less than $10,000">Less than $10,000</option>
+                                                <option value="Less than $20,000">Less than $20,000</option>
+                                                <option value="Less than $50,000">Less than $50,000</option>
+                                                <option value="Greater than $50,000">Greater than $50,000</option>
+                                            </select>
+                                        </div>
+                                        
+
+                                        <apex:commandButton styleClass="submitBtn" action="{!doSubmit}" value="Submit" style="text-align:center"/>
+                                    </div>
+                                </div>
+                            </apex:form>
+                        </div>
+                        
+                        
+                    </div><!--pageRep-->
+                    
+                </div><!--container-->
+                
+                
+                <p style="color:#999; padding-bottom:20px;">Copyright 2014 - 1-800Accountant | 888-749-9094</p>
+            </div><!--wrapper-->
+        </body>
+    </html>
+    
+</apex:page>

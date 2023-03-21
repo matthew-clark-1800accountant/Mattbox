@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_List__c</fullName>
+    <externalId>false</externalId>
+    <label>Task List</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Additional Personal Return</fullName>
+                <default>false</default>
+                <label>Additional Personal Return</label>
+            </value>
+            <value>
+                <fullName>Amendment</fullName>
+                <default>false</default>
+                <label>Amendment</label>
+            </value>
+            <value>
+                <fullName>Articles of Organization</fullName>
+                <default>false</default>
+                <label>Articles of Organization</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Q1</fullName>
+                <default>false</default>
+                <label>Bookkeeping Q1</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Q2</fullName>
+                <default>false</default>
+                <label>Bookkeeping Q2</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Q3</fullName>
+                <default>false</default>
+                <label>Bookkeeping Q3</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping Q4</fullName>
+                <default>false</default>
+                <label>Bookkeeping Q4</label>
+            </value>
+            <value>
+                <fullName>Business Plan</fullName>
+                <default>false</default>
+                <label>Business Plan</label>
+            </value>
+            <value>
+                <fullName>Client Books</fullName>
+                <default>false</default>
+                <label>Client Books</label>
+            </value>
+            <value>
+                <fullName>Company Seal</fullName>
+                <default>false</default>
+                <label>Company Seal</label>
+            </value>
+            <value>
+                <fullName>Corporate Binder</fullName>
+                <default>false</default>
+                <label>Corporate Binder</label>
+            </value>
+            <value>
+                <fullName>EIN Number</fullName>
+                <default>false</default>
+                <label>EIN Number</label>
+            </value>
+            <value>
+                <fullName>Email / Priority Mail</fullName>
+                <default>false</default>
+                <label>Email / Priority Mail</label>
+            </value>
+            <value>
+                <fullName>Expedited Processing</fullName>
+                <default>false</default>
+                <label>Expedited Processing</label>
+            </value>
+            <value>
+                <fullName>Installment Agreement + Tax Consult</fullName>
+                <default>false</default>
+                <label>Installment Agreement + Tax Consult</label>
+            </value>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>New Entity Public Filing Notice</fullName>
+                <default>false</default>
+                <label>New Entity Public Filing Notice</label>
+            </value>
+            <value>
+                <fullName>Operating Agreement</fullName>
+                <default>false</default>
+                <label>Operating Agreement</label>
+            </value>
+            <value>
+                <fullName>Payroll 1</fullName>
+                <default>false</default>
+                <label>Payroll 1</label>
+            </value>
+            <value>
+                <fullName>Payroll 3</fullName>
+                <default>false</default>
+                <label>Payroll 3</label>
+            </value>
+            <value>
+                <fullName>Payroll 5</fullName>
+                <default>false</default>
+                <label>Payroll 5</label>
+            </value>
+            <value>
+                <fullName>Payroll 6</fullName>
+                <default>false</default>
+                <label>Payroll 6</label>
+            </value>
+            <value>
+                <fullName>Payroll 7</fullName>
+                <default>false</default>
+                <label>Payroll 7</label>
+            </value>
+            <value>
+                <fullName>Resident Agent</fullName>
+                <default>false</default>
+                <label>Resident Agent</label>
+            </value>
+            <value>
+                <fullName>Sales &amp; Use Tax</fullName>
+                <default>false</default>
+                <label>Sales &amp; Use Tax</label>
+            </value>
+            <value>
+                <fullName>Schedule Webinar</fullName>
+                <default>false</default>
+                <label>Schedule Webinar</label>
+            </value>
+            <value>
+                <fullName>Stock Certificates</fullName>
+                <default>false</default>
+                <label>Stock Certificates</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q1</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q1</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q2</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q2</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q3</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q3</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q4</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q4</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040 Individual</fullName>
+                <default>false</default>
+                <label>Tax - 1040 Individual</label>
+            </value>
+            <value>
+                <fullName>Tax - Business TBD</fullName>
+                <default>false</default>
+                <label>Tax - Business TBD</label>
+            </value>
+            <value>
+                <fullName>Tax Consulting - Unlimited</fullName>
+                <default>false</default>
+                <label>Tax Consulting - Unlimited</label>
+            </value>
+            <value>
+                <fullName>Tax Reduction Consultation</fullName>
+                <default>false</default>
+                <label>Tax Reduction Consultation</label>
+            </value>
+            <value>
+                <fullName>Two Year Tax Review</fullName>
+                <default>false</default>
+                <label>Two Year Tax Review</label>
+            </value>
+            <value>
+                <fullName>Unlimited Name Searches / Registration</fullName>
+                <default>false</default>
+                <label>Unlimited Name Searches / Registration</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>10</visibleLines>
+</CustomField>

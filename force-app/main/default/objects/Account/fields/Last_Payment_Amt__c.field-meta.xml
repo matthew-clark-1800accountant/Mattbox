@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Payment_Amt__c</fullName>
+    <description>Zuora Last Payment Amount with the status of processed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Zuora Last Payment Amount with the status of processed.</inlineHelpText>
+    <label>Last Payment Amt</label>
+    <summarizedField>Zuora__CustomerAccount__c.Last_Payment__c</summarizedField>
+    <summaryForeignKey>Zuora__CustomerAccount__c.Zuora__Account__c</summaryForeignKey>
+    <summaryOperation>max</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

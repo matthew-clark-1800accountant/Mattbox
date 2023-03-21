@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Today_s_Consultation__c</fullName>
+    <externalId>false</externalId>
+    <label>Today&apos;s Consultation</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Too Short</fullName>
+                <default>false</default>
+                <label>Too Short</label>
+            </value>
+            <value>
+                <fullName>Just Right</fullName>
+                <default>false</default>
+                <label>Just Right</label>
+            </value>
+            <value>
+                <fullName>Too Long</fullName>
+                <default>false</default>
+                <label>Too Long</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

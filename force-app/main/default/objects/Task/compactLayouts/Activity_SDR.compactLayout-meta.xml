@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_SDR</fullName>
+    <fields>Subject</fields>
+    <fields>WhoId</fields>
+    <fields>Type</fields>
+    <fields>Created_Date_Time__c</fields>
+    <fields>Type_of_Appointment__c</fields>
+    <fields>ActivityDate</fields>
+    <label>Activity-SDR</label>
+</CompactLayout>

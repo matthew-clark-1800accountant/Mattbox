@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_for_Amendments__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Whether or not to display this field for Amendment Quotes</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Whether or not to display this field for Amendment Quotes</inlineHelpText>
+    <label>Enable for Amendments</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

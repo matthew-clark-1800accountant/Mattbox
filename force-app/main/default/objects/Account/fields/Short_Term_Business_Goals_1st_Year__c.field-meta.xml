@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Short_Term_Business_Goals_1st_Year__c</fullName>
+    <description>Client Information</description>
+    <externalId>false</externalId>
+    <label>Short Term Business Goals (1st Year)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Leave W2 Job</fullName>
+                <default>false</default>
+                <label>Leave W2 Job</label>
+            </value>
+            <value>
+                <fullName>Become Profitable</fullName>
+                <default>false</default>
+                <label>Become Profitable</label>
+            </value>
+            <value>
+                <fullName>Hire Employees</fullName>
+                <default>false</default>
+                <label>Hire Employees</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

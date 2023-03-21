@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vonage_Call_Attempt__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox for a call where ring time &gt;0</description>
+    <externalId>false</externalId>
+    <label>Vonage Call Attempt</label>
+    <type>Checkbox</type>
+</CustomField>

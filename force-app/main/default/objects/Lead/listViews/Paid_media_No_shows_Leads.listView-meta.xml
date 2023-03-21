@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Paid_media_No_shows_Leads</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Type_New__c</field>
+        <operation>equals</operation>
+        <value>Marketing</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_UPDATE</field>
+        <operation>equals</operation>
+        <value>YESTERDAY</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>1-1 No Show,1-1 Cancelled</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>equals</operation>
+        <value>YESTERDAY</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Paid media No shows Leads 24 hrs</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Bravo_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Edit_of_Closed_Won_Opportunities</fullName>
+    <active>true</active>
+    <description>prevent anyone but system administrators from editing opportunities marked as &quot;Closed Won.&quot;</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(PRIORVALUE(StageName),&quot;Closed Won&quot;),
+NOT(OR(
+$Profile.Id = &quot;00e3Z000000YVtx&quot;,
+$Profile.Id = &quot;00ej0000000YPdc&quot;,
+$Profile.Id = &quot;00ej0000001GJ9j&quot;,
+$Profile.Id = &quot;00ej0000000VCC9&quot;))
+)</errorConditionFormula>
+    <errorMessage>Only System Administrators and Billing Reps may edit opportunities marked as &quot;Closed Won.&quot; Please contact an administrator or billing rep for assistance.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Permanent_Payroll</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Number__c</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Payroll_Interval__c</columns>
+    <columns>Payroll_Status__c</columns>
+    <columns>Payroll_Subscription_Status__c</columns>
+    <columns>Payroll_Set_up_Email_Sent__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Payroll</value>
+    </filters>
+    <filters>
+        <field>Payroll_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Suspended / Cancelled</value>
+    </filters>
+    <label>My Payroll</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Appointment_Setter_Role__c</fullName>
+    <description>The role of the user that set the appointment</description>
+    <externalId>false</externalId>
+    <label>Appointment Setter Role</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>BNA Team</fullName>
+                <default>false</default>
+                <label>BNA Team</label>
+            </value>
+            <value>
+                <fullName>Brian&apos;s Team</fullName>
+                <default>false</default>
+                <label>Brian&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>Floria&apos;s Team</fullName>
+                <default>false</default>
+                <label>Floria&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>Inbound Support Rep</fullName>
+                <default>false</default>
+                <label>Inbound Support Rep</label>
+            </value>
+            <value>
+                <fullName>Israel&apos;s Team</fullName>
+                <default>false</default>
+                <label>Israel&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>JT&apos;s Team</fullName>
+                <default>false</default>
+                <label>JT&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>Marzi&apos;s Team</fullName>
+                <default>false</default>
+                <label>Marzi&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>Michele&apos;s Team</fullName>
+                <default>false</default>
+                <label>Michele&apos;s Team</label>
+            </value>
+            <value>
+                <fullName>Nesting Team</fullName>
+                <default>false</default>
+                <label>Nesting Team</label>
+            </value>
+            <value>
+                <fullName>Sample&apos;s Team</fullName>
+                <default>false</default>
+                <label>Sample&apos;s Team</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

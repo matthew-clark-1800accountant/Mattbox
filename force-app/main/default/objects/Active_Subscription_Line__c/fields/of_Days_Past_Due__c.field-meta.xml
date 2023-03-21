@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>of_Days_Past_Due__c</fullName>
+    <description>The number of days that the oldest related ChargeOver Subscription Line is Past Due</description>
+    <externalId>false</externalId>
+    <formula>TODAY()- Oldest_Overdue_Due_Date__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>The number of days that the oldest related ChargeOver Subscription Line is Past Due</inlineHelpText>
+    <label># of Days Past Due</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cash_s_list_from_Terri</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Distribute_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>Call Back Set,1-1 No Show,1-1 Cancelled,Attempted</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>7/2/2022</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notContain</operation>
+        <value>1-800Accountant,Bark,Web.com</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>Inc. Authority,Swyft Filings,ZenBusiness</value>
+    </filters>
+    <filters>
+        <field>of_Calls__c</field>
+        <operation>lessOrEqual</operation>
+        <value>3</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>notContain</operation>
+        <value>dead,mmyer</value>
+    </filters>
+    <label>Cash&apos;s list from Terri</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Delta_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

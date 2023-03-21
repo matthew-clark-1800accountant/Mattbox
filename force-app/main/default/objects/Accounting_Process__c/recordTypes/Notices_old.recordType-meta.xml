@@ -1,0 +1,2113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notices_old</fullName>
+    <active>false</active>
+    <label>Notices old</label>
+    <picklistValues>
+        <picklist>Analyst__c</picklist>
+        <values>
+            <fullName>Daniel Amusin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ellen Cohen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ilona Nowak-Nagy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iryna Kuznietsova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Josue Hernandez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kelvin Chen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leslie Haywood</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trisha Wazid</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Aux__c</picklist>
+        <values>
+            <fullName>Deepashri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laxmipathy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mamatha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manasa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Niveditha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pavitra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prakash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Raja Manasa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shodhan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shruthi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shubha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shwetha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sumanth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venu</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Bookkeeping_Quarter__c</picklist>
+        <values>
+            <fullName>Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Q4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>City_County__c</picklist>
+        <values>
+            <fullName>Aberdeen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alamosa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arvada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ashley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aspen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aurora</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avondale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bainbridge Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baton Rouge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belfield</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bellevue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bellingham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beulah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bismarck</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Black Hawk3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bottineau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boulder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bowman</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Breckenridge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bremerton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brighton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broomfield</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broomfield Arista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broomfield Flatiron</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Burien*</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Burlington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canon City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carbondale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Castle Rock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centennial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chandler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cherry Hills Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chicago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colorado Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerce City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cook County</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cooperstown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cortez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cosmopolis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Crested Butte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Crosby</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dacono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Darrington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Des Moines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devils Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dickinson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Donnelly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Douglas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Drayton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Driggs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DuPont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Durango</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edgewater</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ellendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Englewood</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Everett</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Everson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federal Heights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flagstaff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fort Collins</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Frisco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Garrison</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Glen Ullin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Glendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Glenwood Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Golden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grafton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grand Junction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Granite Falls</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greeley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenwood Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gunnison</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gypsum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hailey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hankinson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Harvey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hazen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hettinger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hoquiam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ilwaco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Issaquah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jamestown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Junction</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Kelso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kent*</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ketchum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Killdeer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>La Junta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lacey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lafayette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lake Forest Park</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lakewood</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lakota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Langdon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Larkspur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lava Hot Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lisbon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Littleton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lone Tree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Long Beach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Longmont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Longview</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Louisville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loveland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mandan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>McCall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>McVille</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medora</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mercer Island *</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montrose</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mountain Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mt%2E Crested Butte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Orleans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Town</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nogales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Bend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northglenn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oakes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ocean Shores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Olympia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pacific</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parshall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phoenix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ponderay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Port Townsend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescott</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pueblo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rainier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ray</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Raymond</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ridgway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riggins</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riverdale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rugby</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ruston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rutland City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salmon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sandpoint</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scottsdale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seattle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sedona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shelton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sheridan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Silverthorne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Snoqualmie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Snowmass Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stanley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Steamboat Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Steele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sterling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sun Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tacoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telluride</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tempe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tenino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thornton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timnath</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tioga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tucson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tumwater</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Victor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wahpeton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walhalla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washburn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Watford City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Westminster</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Westport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheat Ridge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Williston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windsor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winter Park</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wishek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Woodland Park</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wyndmere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yelm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Est_Tax_Quarter__c</picklist>
+        <values>
+            <fullName>2015 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Est_Tax_Status__c</picklist>
+        <values>
+            <fullName>Calculations made - No Est Tax needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - Est Tax not needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - Left VM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email sent with organizer</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Extension_Filed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Extension_Status__c</picklist>
+        <values>
+            <fullName>Additional Info Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Federal_Notice_Type__c</picklist>
+        <values>
+            <fullName>1095 HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2553 Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CP2000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CP504</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Late Filing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transcript Request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Filing_Method__c</picklist>
+        <values>
+            <fullName>City %2F County</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Govt Filing - Federal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Govt Filing - State</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Initial_Bookkeeping_Status__c</picklist>
+        <values>
+            <fullName>Initial Consultation Scheduled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intern__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Interns__c</picklist>
+        <values>
+            <fullName>Ari Shala</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brandon Pilaza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Endrit Kukaj</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eric Schaeffer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Garrett Palmeri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haifeng %28Kevin%29 Hu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jared Gray</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jenny Choi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jialing Cai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jonathan Morales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jonathan Toolsee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kevin Sheskier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamin Camara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maria Klimenko</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mariem Tolba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nicole Kovalcik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richard Legnini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Samantha Pinkett</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shravan Khanna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tigran Vardanyan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tyler Sebastianelli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yao %28Emily%29 Feng</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yixi He</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intervals__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>M1_Bookkeeping_Status__c</picklist>
+        <values>
+            <fullName>Additional info requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Syncing Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed - f-s uploaded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed - no activity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correction Addressed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Info- Biz%2E account not linked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Posted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transactions Categorized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>M2_Bookkeeping_status__c</picklist>
+        <values>
+            <fullName>Additional info requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Syncing Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed - f-s uploaded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed - no activity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correction Addressed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Info- Biz%2E account not linked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Posted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transactions Categorized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>M3_Bookkeeping_Status__c</picklist>
+        <values>
+            <fullName>Additional info requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not started</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Mid_Year_Review_Status__c</picklist>
+        <values>
+            <fullName>Appointment Held</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Info In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Plan Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Return Received</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Notice_Status__c</picklist>
+        <values>
+            <fullName>Additional Info Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional info Request Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Info In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Notice_Type__c</picklist>
+        <values>
+            <fullName>Federal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Franchise Return</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Franchise Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>State</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OLD_Bookkeeping_Status__c</picklist>
+        <values>
+            <fullName>Awaiting Client Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Addressed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Filed - Awaiting Gov%27t Acceptance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Long-Term Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Info In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Points Awaiting Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Prep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Posted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OLD_Interval__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Portal_Status__c</picklist>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-File</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manager Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Quarter__c</picklist>
+        <values>
+            <fullName>2012 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2012 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2012 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2012 Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013 Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014 Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015 Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016 Q4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>STF_Status__c</picklist>
+        <values>
+            <fullName>Called - Left VM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - Needs Return</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - No Return Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New- Email Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return - Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return - In Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return - Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sales_and_Use_Tax_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete %2F Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On-Hold</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Software_currently_used__c</picklist>
+        <values>
+            <fullName>Quickbooks Desktop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quickbooks Online</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>State__c</picklist>
+        <values>
+            <fullName>Alabama</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alaska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arizona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arkansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colorado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connecticut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delaware</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Florida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Georgia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hawaii</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Idaho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illinois</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iowa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kentucky</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Louisiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maryland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Massachusetts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Michigan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minnesota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mississippi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missouri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nebraska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nevada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hampshire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Jersey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New York</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Carolina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Dakota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ohio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oregon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pennsylvania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rhode Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Carolina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Dakota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tennessee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Texas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vermont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virginia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West Virginia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wisconsin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wyoming</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status_Percent__c</picklist>
+        <values>
+            <fullName>10%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>55%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>75%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>90%25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tax_Prep_Status__c</picklist>
+        <values>
+            <fullName>Additional Info Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional info Request Sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Client Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Client Approval - Owes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Internal Bookkeeping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed - Paper Filed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Addressed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrections Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-File Complete - State Paper Filed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Filed Awaiting Govt%2E Acceptance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Long-Term Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Prep Comp Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preparation - Data Entered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejections</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review - No Client Notification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Review - Owes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Posted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>To Be Posted - Owes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tax_Software_Used__c</picklist>
+        <values>
+            <fullName>CCH Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lacerte</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>1099 Prep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estimated Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extension</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notices</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales %26 Use Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Prep</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>X1099_Prep_Status__c</picklist>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need More Information</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Year__c</picklist>
+        <values>
+            <fullName>2005</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2006</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2007</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2008</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2009</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2011</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2012</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2016</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>bookkeeping_interval__c</picklist>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>l_Task_Type__c</picklist>
+        <values>
+            <fullName>Tax - 1023%2F1024 NonProfit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040 Individual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1041%2F706%2F709%2FPayroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1065 Partnership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1120 Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1120 S Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 990 Tax Exempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - Amended Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - Amended Individual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - Business TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

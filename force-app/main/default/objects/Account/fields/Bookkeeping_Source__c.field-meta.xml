@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bookkeeping_Source__c</fullName>
+    <externalId>false</externalId>
+    <label>Bookkeeping Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Quickbooks</fullName>
+                <default>false</default>
+                <label>Quickbooks</label>
+            </value>
+            <value>
+                <fullName>Freshbooks</fullName>
+                <default>false</default>
+                <label>Freshbooks</label>
+            </value>
+            <value>
+                <fullName>Wave</fullName>
+                <default>false</default>
+                <label>Wave</label>
+            </value>
+            <value>
+                <fullName>Spreadsheets</fullName>
+                <default>false</default>
+                <label>Spreadsheets</label>
+            </value>
+            <value>
+                <fullName>1-800 Client Portal</fullName>
+                <default>false</default>
+                <label>1-800 Client Portal</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

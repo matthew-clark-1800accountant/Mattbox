@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Accounting_Process__c</columns>
+    <columns>Payroll_Process_Date__c</columns>
+    <columns>Processed__c</columns>
+    <columns>Payroll_Not_Needed__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Payroll_Process_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>All</label>
+    <language>en_US</language>
+</ListView>

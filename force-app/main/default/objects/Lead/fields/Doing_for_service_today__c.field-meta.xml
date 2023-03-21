@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Doing_for_service_today__c</fullName>
+    <externalId>false</externalId>
+    <label>Doing for service today</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I do it myself</fullName>
+                <default>false</default>
+                <label>I do it myself</label>
+            </value>
+            <value>
+                <fullName>I have an Accountant/Bookkeeper/CPA</fullName>
+                <default>false</default>
+                <label>I have an Accountant/Bookkeeper/CPA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

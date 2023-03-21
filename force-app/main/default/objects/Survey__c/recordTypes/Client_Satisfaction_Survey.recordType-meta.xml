@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Satisfaction_Survey</fullName>
+    <active>true</active>
+    <label>Survey</label>
+    <picklistValues>
+        <picklist>Continue_Service__c</picklist>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat likely</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat unlikely</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Very Likely</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Very unlikely</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Experience_Rating__c</picklist>
+        <values>
+            <fullName>Better than last year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New member</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat better than last year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The same</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Worse than last year</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>How_Often_Used_Service__c</picklist>
+        <values>
+            <fullName>Once per week or more</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Length_of_Time_Subscribed__c</picklist>
+        <values>
+            <fullName>Less than 1 month</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Primary_Cancellation_Reason__c</picklist>
+        <values>
+            <fullName>My company is no longer in business</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Wait_Time__c</picklist>
+        <values>
+            <fullName>About what I expected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Longer than  expected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Much longer than expected%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Much shorter than expected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shorter than expected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>interaction_level__c</picklist>
+        <values>
+            <fullName>Adequate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Frequent Enough</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Too Frequent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

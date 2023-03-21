@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDR_List_0_2_Times</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>of_Calls__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>5/28/2021</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notEqual</operation>
+        <value>1-800Accountant</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Contacted,Call Back Set,1-1 No Show,Attempted</value>
+    </filters>
+    <filters>
+        <field>of_Calls__c</field>
+        <operation>lessOrEqual</operation>
+        <value>3</value>
+    </filters>
+    <label>SDR List 0-3 Times</label>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

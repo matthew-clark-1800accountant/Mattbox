@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Reason__c</fullName>
+    <description>This field should be updated when an Opportunity&apos;s Stage is changed to Closed Lost</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Please select a value for Closed-Lost Reason in order to save Stage to Closed Lost.</inlineHelpText>
+    <label>Closed Lost Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Bad Reviews</fullName>
+                <default>false</default>
+                <label>Bad Reviews</label>
+            </value>
+            <value>
+                <fullName>Going Local</fullName>
+                <default>false</default>
+                <label>Going Local</label>
+            </value>
+            <value>
+                <fullName>Has Accountant</fullName>
+                <default>false</default>
+                <label>Has Accountant</label>
+            </value>
+            <value>
+                <fullName>No Business</fullName>
+                <default>false</default>
+                <label>No Business</label>
+            </value>
+            <value>
+                <fullName>No Money</fullName>
+                <default>false</default>
+                <label>No Money</label>
+            </value>
+            <value>
+                <fullName>Opportunity Expired</fullName>
+                <default>false</default>
+                <label>Opportunity Expired</label>
+            </value>
+            <value>
+                <fullName>Other Quote Accepted</fullName>
+                <default>false</default>
+                <label>Other Quote Accepted</label>
+            </value>
+            <value>
+                <fullName>TSA Consulted Cancelled</fullName>
+                <default>false</default>
+                <label>TSA Consulted Cancelled</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

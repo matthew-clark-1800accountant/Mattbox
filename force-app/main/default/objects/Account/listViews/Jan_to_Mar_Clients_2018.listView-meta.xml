@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Jan_to_Mar_Clients_2018</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Onboarding_Date__c</columns>
+    <columns>Account_Status__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Active_Products__c</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Onboarding_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2018</value>
+    </filters>
+    <filters>
+        <field>Onboarding_Date__c</field>
+        <operation>lessThan</operation>
+        <value>4/1/2018</value>
+    </filters>
+    <filters>
+        <field>Account_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Business Account</value>
+    </filters>
+    <filters>
+        <field>Active_Products__c</field>
+        <operation>notContain</operation>
+        <value>Dissolution,Articles,Final,Corp,None,Extension</value>
+    </filters>
+    <filters>
+        <field>BNA_Call_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Pitched,Not Interested,Do Not Call again,Cancelled</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Jan to Mar Clients 2018</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>BNA_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

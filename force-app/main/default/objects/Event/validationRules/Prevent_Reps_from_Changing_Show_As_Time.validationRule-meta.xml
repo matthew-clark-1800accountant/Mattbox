@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Reps_from_Changing_Show_As_Time</fullName>
+    <active>true</active>
+    <description>Prevents Sales Reps from changing the status of the field from Busy.</description>
+    <errorConditionFormula>AND(
+ISCHANGED(ShowAs),
+ ISPICKVAL(PRIORVALUE(ShowAs), &apos;Busy&apos;), 
+NOT( 
+OR( $Profile.Name = &apos;Inbound User&apos;, $Permission.Admin_Validation_Rule_Override )))</errorConditionFormula>
+    <errorDisplayField>ShowAs</errorDisplayField>
+    <errorMessage>You are unable to change the current appointment from &quot;Busy&quot; to &quot;Free&quot;.</errorMessage>
+</ValidationRule>

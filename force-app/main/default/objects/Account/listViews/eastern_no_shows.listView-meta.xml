@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>eastern_no_shows</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>of_Calls__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>general</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>1-1 No Show</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2020 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>lessThan</operation>
+        <value>4/27/2020 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>YESTERDAY</value>
+    </filters>
+    <filters>
+        <field>Time_Zone__c</field>
+        <operation>equals</operation>
+        <value>eastern,central</value>
+    </filters>
+    <filters>
+        <field>Rejection_Reason__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>eastern no shows</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

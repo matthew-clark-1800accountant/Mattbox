@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>ON24ID__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>Reg_Time__c</columns>
+    <columns>Minutes__c</columns>
+    <columns>Email__c</columns>
+    <columns>Lead__c</columns>
+    <columns>Appointment_Setter__c</columns>
+    <columns>OWNER.ALIAS</columns>
+    <columns>BROWSER__c</columns>
+    <columns>IP__c</columns>
+    <columns>OS__c</columns>
+    <columns>ENGAGEMENT__c</columns>
+    <columns>IS_BLOCKED__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+    <language>en_US</language>
+</ListView>

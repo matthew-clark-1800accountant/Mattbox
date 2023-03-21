@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Name__c</fullName>
+    <description>Matches the Calculator Location field on the Product OR the Product Name if the Calculator Location is a la carte</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Calculator Location field on the Product OR the Product Name</inlineHelpText>
+    <label>Product Name</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bookkeeping</fullName>
+                <default>false</default>
+                <label>Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Personal Return</fullName>
+                <default>false</default>
+                <label>Personal Return</label>
+            </value>
+            <value>
+                <fullName>Business Return</fullName>
+                <default>false</default>
+                <label>Business Return</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>LLC State Filing</fullName>
+                <default>false</default>
+                <label>LLC State Filing</label>
+            </value>
+            <value>
+                <fullName>Corp State Filing</fullName>
+                <default>false</default>
+                <label>Corp State Filing</label>
+            </value>
+            <value>
+                <fullName>Two-Year Review</fullName>
+                <default>false</default>
+                <label>Two-Year Review</label>
+            </value>
+            <value>
+                <fullName>EIN - Standard Processing</fullName>
+                <default>false</default>
+                <label>EIN - Standard Processing</label>
+            </value>
+            <value>
+                <fullName>Operating Agreement</fullName>
+                <default>false</default>
+                <label>Operating Agreement</label>
+            </value>
+            <value>
+                <fullName>Foreign State</fullName>
+                <default>false</default>
+                <label>Foreign State</label>
+            </value>
+            <value>
+                <fullName>Back Bookkeping</fullName>
+                <default>false</default>
+                <label>Back Bookkeping</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Facebook__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Follower on Facebook</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This is a Marketing Field for current clients.</inlineHelpText>
+    <label>Facebook</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Previous_Contact_Owner__c</fullName>
+    <description>Prev Contact Owner (field that is syncing to Portal&apos;s  Prev Contact Owner field)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Prev Contact Owner (field that is syncing to Portal&apos;s  Prev Contact Owner field)</inlineHelpText>
+    <label>Previous Contact Owner</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

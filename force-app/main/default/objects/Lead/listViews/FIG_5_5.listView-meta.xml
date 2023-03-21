@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FIG_5_5</fullName>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>Lead_Type_New__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>FULL_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>1-800Accountant,EIN Filing,EZCorp,Florida Registrations,NAV,Rocket Lawyer,Sprout,VCorp Services</value>
+    </filters>
+    <filters>
+        <field>Lead_Type_New__c</field>
+        <operation>equals</operation>
+        <value>Stimulus Disaster Relief,Accounting Services,Bookkeeping Services,Join Now,EIN</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Contacted,1-1 No Show,Attempted,Pitched</value>
+    </filters>
+    <label>FIG 5/5</label>
+    <sharedTo>
+        <role>Charlie_Team</role>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action__c</fullName>
+    <externalId>false</externalId>
+    <label>Action</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Remove Product</fullName>
+                <default>false</default>
+                <label>Remove Product</label>
+            </value>
+            <value>
+                <fullName>Disable Product</fullName>
+                <default>false</default>
+                <label>Disable Product</label>
+            </value>
+            <value>
+                <fullName>Stop</fullName>
+                <default>false</default>
+                <label>Stop</label>
+            </value>
+            <value>
+                <fullName>Disable Quantity</fullName>
+                <default>false</default>
+                <label>Disable Quantity</label>
+            </value>
+            <value>
+                <fullName>Default Product</fullName>
+                <default>false</default>
+                <label>Default Product</label>
+            </value>
+            <value>
+                <fullName>Flat Price Override</fullName>
+                <default>false</default>
+                <label>Flat Price Override</label>
+            </value>
+            <value>
+                <fullName>Environment Whitelist</fullName>
+                <default>false</default>
+                <label>Environment Whitelist</label>
+            </value>
+            <value>
+                <fullName>Remove Offer</fullName>
+                <default>false</default>
+                <label>Remove Offer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bark_Leads_Must_Have_Last_Name</fullName>
+    <active>false</active>
+    <description>Requires a last name to the record.</description>
+    <errorConditionFormula>AND( 
+ LastName = &quot;NoLastName&quot;, 
+OR( 
+ISPICKVAL(Status ,&quot;Pitched&quot;), 
+ISPICKVAL(Status ,&quot;Qualified&quot;)))</errorConditionFormula>
+    <errorMessage>Please put a last name in the record to save the record.</errorMessage>
+</ValidationRule>

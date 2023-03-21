@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Payment_Amount__c</fullName>
+    <externalId>false</externalId>
+    <label>Initial Payment Amount</label>
+    <summarizedField>Bill62__Subscription__c.CreatedDate</summarizedField>
+    <summaryForeignKey>Bill62__Subscription__c.Bill62__Customer__c</summaryForeignKey>
+    <summaryOperation>max</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

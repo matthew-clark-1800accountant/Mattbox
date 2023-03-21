@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Email_of_User__c</fullName>
+    <description>The email address of the new user to be created</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the email address of the requested new user</inlineHelpText>
+    <label>New Email of User</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

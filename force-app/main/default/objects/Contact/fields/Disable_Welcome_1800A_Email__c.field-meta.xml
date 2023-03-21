@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Welcome_1800A_Email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check-box determines if 1-800Accountant sends welcome &apos;Set Password&apos; email
+Type: Checkbox
+Unchecked by default
+
+ER: 
+false - Send &apos;1800A email&apos;
+true -  Do Not Send &apos;1800A email&apos;</description>
+    <externalId>false</externalId>
+    <label>Disable Welcome 1800A Email</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

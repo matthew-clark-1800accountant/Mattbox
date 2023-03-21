@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Business_or_Partner_Accounts</fullName>
+    <active>true</active>
+    <description>Prevents creation of an opportunity on Accounts that have an Account Status of Partner Account or Business Account</description>
+    <errorConditionFormula>OR(
+ISPICKVAL(Account.Account_Status__c,&quot;Partner Account&quot;),
+ISPICKVAL(Account.Account_Status__c,&quot;Business Account&quot;))</errorConditionFormula>
+    <errorMessage>This is a Partner or Business Account. Please create an opportunity on the proper Personal Account.</errorMessage>
+</ValidationRule>

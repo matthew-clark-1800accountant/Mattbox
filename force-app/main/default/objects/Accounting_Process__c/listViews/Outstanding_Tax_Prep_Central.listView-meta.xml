@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outstanding_Tax_Prep_Central</fullName>
+    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Customer_Number__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>state_address__c</columns>
+    <columns>l_Task_Type__c</columns>
+    <columns>Priority__c</columns>
+    <columns>Year__c</columns>
+    <columns>VTO_Submitted_Time__c</columns>
+    <columns>Tax_Prep_Status__c</columns>
+    <columns>Accountant_Assigned__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Tax_Prep</value>
+    </filters>
+    <filters>
+        <field>Tax_Prep_Status__c</field>
+        <operation>contains</operation>
+        <value>prep,additional,bookkeeping,corrections needed</value>
+    </filters>
+    <filters>
+        <field>Accountant_Assigned_Mitel_Team__c</field>
+        <operation>equals</operation>
+        <value>central team #1</value>
+    </filters>
+    <label>Outstanding Tax Prep Central</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>Tax_Management</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>How_Soon_Making_Money__c</fullName>
+    <externalId>false</externalId>
+    <label>How Soon Making Money</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>One Week</fullName>
+                <default>false</default>
+                <label>One Week</label>
+            </value>
+            <value>
+                <fullName>One Month</fullName>
+                <default>false</default>
+                <label>One Month</label>
+            </value>
+            <value>
+                <fullName>Three Months</fullName>
+                <default>false</default>
+                <label>Three Months</label>
+            </value>
+            <value>
+                <fullName>One Year</fullName>
+                <default>false</default>
+                <label>One Year</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

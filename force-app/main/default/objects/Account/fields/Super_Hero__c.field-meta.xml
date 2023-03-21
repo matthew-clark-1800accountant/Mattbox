@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Super_Hero__c</fullName>
+    <externalId>false</externalId>
+    <label>Super Hero</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Batman</fullName>
+                <default>false</default>
+                <label>Batman</label>
+            </value>
+            <value>
+                <fullName>Superman</fullName>
+                <default>false</default>
+                <label>Superman</label>
+            </value>
+            <value>
+                <fullName>Wonder Woman</fullName>
+                <default>false</default>
+                <label>Wonder Woman</label>
+            </value>
+            <value>
+                <fullName>Ironman</fullName>
+                <default>false</default>
+                <label>Ironman</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

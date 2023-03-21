@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Quote_With_Payment_Method_Id__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Whether or not the Customer HPM Customization will update the Quote field &quot;Electronic Payment Method Id&quot; with the Id of the newly captured payment method</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Whether or not the Customer HPM Customization will update the Quote field &quot;Electronic Payment Method Id&quot; with the Id of the newly captured payment method</inlineHelpText>
+    <label>Update Quote With Payment Method Id</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

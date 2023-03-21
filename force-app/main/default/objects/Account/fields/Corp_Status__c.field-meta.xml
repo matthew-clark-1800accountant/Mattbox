@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Corp_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Corp Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Status</fullName>
+                <default>true</default>
+                <label>No Status</label>
+            </value>
+            <value>
+                <fullName>Awaiting State Approval</fullName>
+                <default>false</default>
+                <label>Awaiting State Approval</label>
+            </value>
+            <value>
+                <fullName>Awaiting RA Signature</fullName>
+                <default>false</default>
+                <label>Awaiting RA Signature</label>
+            </value>
+            <value>
+                <fullName>Awaiting Clients Signature</fullName>
+                <default>false</default>
+                <label>Awaiting Clients Signature</label>
+            </value>
+            <value>
+                <fullName>Business Name Rejected</fullName>
+                <default>false</default>
+                <label>Business Name Rejected</label>
+            </value>
+            <value>
+                <fullName>CC Declined By State</fullName>
+                <default>false</default>
+                <label>CC Declined By State</label>
+            </value>
+            <value>
+                <fullName>EIN Issue</fullName>
+                <default>false</default>
+                <label>EIN Issue</label>
+            </value>
+            <value>
+                <fullName>Refer to Notes</fullName>
+                <default>false</default>
+                <label>Refer to Notes</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Discard</fullName>
+                <default>false</default>
+                <label>Discard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

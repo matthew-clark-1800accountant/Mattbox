@@ -1,0 +1,691 @@
+<apex:page standardController="Event" standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" extensions="PreTSAControllerExtension">
+    <link REL="SHORTCUT ICON" HREF="{!URLFOR($Resource.accountantLogoFavicon)}"/>
+        <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Tax Savings Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'/>
+        <apex:stylesheet value="{!URLFOR( $Resource.bootstrap, 'bootstrap-5.0.1-dist/css/bootstrap.min.css' )}" />
+        <link href="/PreTSA/slds/css/ow9l8zZWNn84MUcs05171A/min/scoped/one:oneNamespace,force:sldsTokens,force:base,force:formFactorLarge/slds.css" type="text/css" class="user" rel="stylesheet"/>
+        <apex:slds />
+        <style>
+            
+            body { 
+            font-family: 'Poppins';
+            margin: 0 auto;
+            float: center;
+            width: 1024px;
+            }
+            
+            .slds-scope button {
+            font-family: 'Poppins';
+            color: none;
+            }
+            
+            .slds-scope button, button {
+            font-size: 17px;
+            font-weight: 600;
+            color: #FFFFFF;
+            }
+            
+            .slds-scope hr {
+            color: grey;
+            margin: 0;
+            margin-top: 15px;
+            }
+            
+            .slds-scope {
+            font-family: 'Poppins';
+            font-weight: 400;
+            }
+            
+            .slds-scope .slds-box {
+            border: none;
+            }
+            
+            p {
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            font-family: 'Poppins';
+            font-weight: 400;
+            line-height: 1.8;
+            }
+            
+            #header {
+            background-color: #FFFFFF;
+            background: #FFFFFF;
+            margin: 0 auto;
+            position: fixed;  
+            z-index:1;
+            padding: 10px 0;
+            top: 0;
+            left: 2%;
+            right: 2%
+            }
+            
+            #titleTable {
+            margin-top: 20px;
+            }
+            
+            #titleTable td {
+            padding: 1%;
+            }
+            
+            #detail, #title {
+            text-align: center;
+            color: black;
+            }
+            
+            #title p {
+            line-height: 44px;
+            font-size: 29px;
+            font-style: normal;
+            font-weight: 300;
+            letter-spacing: 0.75px;
+            }
+            
+            #detail, .noteTxtDetail {
+            font-size: 15px;
+            line-height: 24px;
+            letter-spacing: 0.75px;
+            }
+            
+            #first {
+            margin-left: 40px;
+            }
+            
+            #second, #secondText {
+            margin-left: -70px;
+            }
+            
+            #third {
+            margin-left: 43%;
+            margin-top: -220px;
+            }
+            
+            form {
+            float: left;
+            }
+            
+            #formTitle {
+            position: static;
+            width: 286px;
+            height: 32px;
+            left: 0px;
+            top: 0px;
+            font-size: 20.16px;
+            line-height: 32px;
+            font-weight: 400;
+            font-feature-settings: 'ss02' on, 'ss01' on, 'ss04' on;
+            color: #000000;
+            flex: none;
+            flex-grow: 0;
+            margin: 24px 0px;
+            }
+            
+            .form-floating>.form-select~label {
+            transform: none;
+            opacity: 1;
+            }
+            
+            .form-select {
+            background-image: url({!$Resource.arrow});
+            height: 5px;
+            background-size: auto;
+            }
+            
+            .form-floating select {
+            font-weight: 400;
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            border: 1px solid rgba(18, 23, 36, 0.2);
+            border-radius: 4px;
+            height: 48px;
+            width: 320px;
+            margin: 16px 0px;
+            display: flex;
+            flex-direction: column;
+            }
+            
+            .form-floating label {
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.4px;
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            color: rgba(18, 23, 36, 0.65);
+            padding: 5px 8px 0;
+            }
+            
+            .slds-scope select {
+            color: rgba(18, 23, 36, 0.91);
+            }
+            
+            select {
+            font-size: 16px;
+            line-height: 20px;
+            border: 0px;
+            }
+            
+            #lightBox, #darkBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 461px;
+            border-radius: 8px;
+            }
+            
+            #lightBox {
+            height: 140px;
+            background: #EFF7FD;
+            }
+            
+            #darkBox {
+            background: #DBF6E7;
+            margin-top: 24px;
+            }
+            
+            #avTxSav, #yourSav {
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            margin: 8px;
+            padding: 16px;
+            }
+            
+            #taxTitle, #savTitle {
+            font-size: 16.8px;
+            line-height: 24px;
+            letter-spacing: 0.75px;
+            font-weight: 400;
+            color: #000000;
+            padding-bottom: 16px;
+            }
+            
+            #savAmount, #taxAmount  {
+            font-weight: 600;
+            color: rgba(18, 23, 36, 0.91);
+            }
+            
+            #savAmount {
+            font-size: 48px;
+            line-height: 64px;
+            }
+            
+            .savings {
+            font-size: 48px;
+            line-height: 64px;
+            font-weight: 600;
+            color: rgba(18, 23, 36, 0.91);
+            padding: 16px;
+            }
+            
+            #taxAmount {
+            font-size: 34.84px;
+            line-height: 48px;
+            }
+            
+            .note {
+            width: 445px;
+            margin-top: 142px;
+            float: center;
+            }
+            
+            .corpC {
+            width: 451px;
+            float: center;
+            }
+            
+            .noteTxt {
+            font-weight: 400;
+            color: rgba(18, 23, 36, 0.65);
+            font-size: 11.67px;
+            line-height: 20px;
+            letter-spacing: 0.75px;
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            text-align: left;
+            }
+            
+            .corpCTxt {
+            font-weight: normal;
+			font-size: 18px;
+			line-height: 28px;
+            color: #000000;
+            letter-spacing: 0.75px;
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            text-align: left;
+            } 
+            
+            #divBtn {
+            margin-top: 24px;
+            }
+            
+            .btnOrange {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.75px;
+            font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+            background-color: #EF541F;
+            background: #EF541F;
+            border: 1px solid #EF541F;
+            color: #FFFFFF;
+            border-radius: 36px;
+            padding: 10px;
+            float: left;
+            width: 351px;
+            }
+            
+            .btnOrange:hover {
+            background-color: #FFFFFF;
+            border: 1px solid #dddddd;
+            background: #FFFFFF;
+            color: #EF541F;
+            }
+            
+            #footer {
+            align-items: center;
+            padding: 0px 0px 14px;
+            left: 10%;
+            right: 10%
+            height: 76px;
+            }
+            
+            #footerText {
+            color: black;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.75px;
+            text-align: center;
+            width: 60%;
+            display: inline-block;
+            }
+            
+            #footerBtns, #contact, #privacy, #terms, .footerBtn, #pOne, #pTwo {
+            display: inline-block;
+            }
+            
+            button.footerBtn {
+            align-items: stretch;
+            font-size: 14px;
+            letter-spacing: 0.75px;
+            text-align: center;
+            padding: 5px;
+            background-color: white;
+            background: white;
+            border-style: none;
+            }
+            
+            .footerBtn:hover {
+            background-color: #BAE3FE;
+            background: #BAE3FE;
+            }
+            
+            .dividerFooter {
+            width: 5px;
+            height: auto;
+            display: inline-block;
+            }
+            
+            @media screen and (min-width: 1300px) {
+            body { 
+            float: center;
+            width: 1024px;
+            }
+            }
+            
+            @media screen and (max-width: 1300px) {
+            body { 
+            width: 90%;
+            margin-left: 5%;
+            margin-right: 5%;
+            float: center;
+            }
+            
+            #third {
+            margin-left: 50%;
+            margin-top: -200px;
+            }
+            
+            #title, #title p, #detail, .noteTxtDetail, .form-floating, .form-floating select, #formTitle, .note, .corpC {
+            width: 100%;
+            }
+            
+            #first, #second, #secondText {
+            margin-left: 0px;
+            }
+            
+            form {
+            width: 100%;
+            float: left;
+            }
+            
+            #lightBox, #darkBox {
+            width: 100%;
+            }
+            
+            #lightBox {
+            height: 160px;
+            }
+            
+            #footer {
+            width: 100%;
+            left: 5%;
+            right: 5%
+            }
+            }
+            
+            @media screen and (max-width: 850px) {
+            .btnOrange {
+            width: 100%;
+            }
+            }
+            
+            @media screen and (max-width: 768px) {
+            body { 
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 16px;
+            padding-right: 16px;
+            float: center;
+            }
+            
+            #title, #title p, #detail, .noteTxtDetail, .form-floating, #formTitle, #footer, #pOne, #pTwo {
+            text-align: left;
+            }
+            
+            #footerBtns, #contact, #privacy, #terms, .footerBtn, #pOne, #pTwo {
+            display: block;
+            }
+            
+            #footerText {
+            margin-left: 4px;
+            }
+            
+            #footerBtns {
+            margin-top: 10px;
+            }
+            
+            .note {
+            margin-top: 174px;
+            }
+            
+            #third {
+            margin-top: 0px;
+            }
+            
+            #lightBox, #darkBox {
+            flex-direction: row;
+            }
+            
+            #lightBox {
+            height: 80px;
+            }
+            
+            #taxTitle, #savTitle {
+            text-align: left;
+            font-size: 15px;
+            }
+            
+            #savAmount, #taxAmount  {
+            font-size: 24px;
+            }
+            
+            #sectionBoxTitleFirst, #sectionBoxTitleSecnd, #sectionBoxAmoFirst, #sectionBoxAmoSecnd {
+            float:left;
+            align-items: text-top;
+            justify-content: center;
+            }
+            
+            #avTxSav, #yourSav {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            vertical-align: text-top;
+            }
+            
+            #sectionBoxTitleFirst  {
+            width: 70%;
+            }
+            
+            #sectionBoxTitleSecnd {
+            width: 60%;
+            }
+            
+            #sectionBoxAmoFirst {
+            width: 30%;
+            }
+            
+            #sectionBoxAmoSecnd {
+            width: 40%;
+            }
+            
+            #third {
+            margin-left: 0;
+            }
+            
+            #column-reverse {
+            -webkit-flex-direction: column-reverse; 
+            flex-direction: column-reverse; 
+            }
+            
+            #footerText { 
+            width: 100%;
+            }
+            }
+            
+        </style>
+    </head>
+    <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"/>
+    <script type='text/javascript'>
+    function calculateSavings() {
+        document.getElementById('savAmount').innerHTML = 'Calculating...'
+        var entityType = $('[data-id="entityType"]').val();
+        
+        if (entityType == 'C Corporation' || entityType == 'Non-Profit') {
+            $('[data-id="profits"]').addClass('hidden').prop('disabled', true);
+            $('[data-id="startup"]').addClass('hidden').prop('disabled', true);
+            $('[data-id="mileage"]').addClass('hidden').prop('disabled', true);
+            $('[data-id="office"]').addClass('hidden').prop('disabled', true);
+            $('[data-id="filingStatus"]').addClass('hidden').prop('disabled', true);
+            $('[data-id="income"]').addClass('hidden').prop('disabled', true);
+            document.getElementById('second').style.display = "none";
+            document.getElementById('third').style.display = "none";
+            document.getElementById('secondText').style.display = "block";
+            document.getElementById("corpCTxt").innerHTML = entityType + "s can have many unique tax circumstances. Schedule a no-cost consultation with one of our tax experts to get the best service experience for your business";
+        } else {
+            var profits = $('[data-id="profits"]').val();
+            var startup = $('[data-id="startup"]').val();
+            var mileage = $('[data-id="mileage"]').val();
+            var office = $('[data-id="office"]').val();
+            var filingStatus = $('[data-id="filingStatus"]').val();
+            var income = $('[data-id="income"]').val();
+            var eventId = '{!$CurrentPage.parameters.id}';
+            var recordId = '{!$CurrentPage.parameters.recordId}';
+            Visualforce.remoting.Manager.invokeAction('PreTSAControllerExtension.calculateSavings', entityType, profits, startup, mileage, office, filingStatus, income, eventId, recordId, function(r,e){
+                document.getElementById('savAmount').innerHTML = '$'+e.result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            });
+            $('[data-id="profits"]').removeClass('hidden').prop('disabled', false);
+            $('[data-id="startup"]').removeClass('hidden').prop('disabled', false);
+            $('[data-id="mileage"]').removeClass('hidden').prop('disabled', false);
+            $('[data-id="office"]').removeClass('hidden').prop('disabled', false);
+            $('[data-id="filingStatus"]').removeClass('hidden').prop('disabled', false);
+            $('[data-id="income"]').removeClass('hidden').prop('disabled', false);
+            document.getElementById('second').style.display = "block";
+            document.getElementById('third').style.display = "block";
+            document.getElementById('secondText').style.display = "none";
+        }
+    }
+    </script>
+    <body class="body" id="" onload="calculateSavings()">
+        <div class="slds-scope">
+            <div class="myapp">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">
+                            <div >
+                                <table>
+                                    <tr> 
+                                        <td>
+                                            <img id="logo" src="{!$Resource.Logo}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <table id="titleTable">
+                                <tr> 
+                                    <td id="title">
+                                        <p>Instantly calculate your tax savings with us </p>
+                                    </td>
+                                </tr>
+                                <tr> 
+                                    <td id="detail">
+                                        <div>
+                                            <p class="noteTxtDetail">
+                                                Then schedule a no-cost Tax Savings analysis consultation where we cover all available deductions and tax planning 
+                                                strategies to save your small business money on taxes.
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap" Id="column-reverse">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small" id="first">
+                            <apex:form id="form">
+                                <spam id="formTitle">Enter your business details </spam>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="entityType" styleClass="form-select" value="{!defaultEntity}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!entityType}" id="set">
+                                        </apex:selectOptions>
+                                    </apex:selectList>
+                                    <label style="display:inline-block" for="set">Entity Type</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="profits" styleClass="form-select" value="{!defaultProfits}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!currency}" id="sfyp"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="sfyp">Estimated First Year Profits</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="startup" styleClass="form-select" value="{!defaultStartup}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!currency}" id="tsc"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="tsc">Total Startup Costs</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="mileage" styleClass="form-select" value="{!defaultMileage}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!mileage}" id="eabm"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="eabm">Estimated Annual Business Mileage</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="office" styleClass="form-select" value="{!defaultOffice}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!office}" id="hos"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="hos">Home Office Square Feet</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="filingStatus" styleClass="form-select" value="{!defaultFilingStatus}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!filingStatus}" id="fs"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="fs">Filing Status</label>
+                                </div>
+                                <div class="form-floating">
+                                    <apex:selectList html-data-id="income" styleClass="form-select" value="{!defaultIncome}" onchange="calculateSavings();" size="1">
+                                        <apex:selectOptions value="{!currency}" id="pi"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <label for="pi">Personal Income</label>
+                                </div>
+                                
+                            </apex:form>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="second">
+                            <div id="lightBox">
+                                <div id="avTxSav">
+                                    <div id="sectionBoxTitleFirst">
+                                        <p id="taxTitle">Average Tax Savings without expert planning</p>
+                                    </div>
+                                    <div id="sectionBoxAmoFirst">
+                                        <p id="taxAmount">$500</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <apex:form >
+                                <div id="darkBox">
+                                    <div id="yourSav">
+                                        <div id="sectionBoxTitleSecnd">
+                                            <p id="savTitle">Your estimated tax savings with <br/> 1-800Accountant</p>
+                                        </div>
+                                        <div id="sectionBoxAmoSecnd">
+                                            <p id = "savAmount">Calculating....</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:form>
+                        </div>
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="secondText">
+                            <div class="corpC">
+                                <p class="corpCTxt" id="corpCTxt"></p>
+                            </div>
+                            <div id="divBtn">
+                                <button class="btnOrange" onclick="window.open('{!schedulerURL}')">Schedule a No-Cost Consultation </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="third">
+                            <div id="divBtn">
+                                <button class="btnOrange" onclick="window.open('{!schedulerURL}')">Schedule a No-Cost Consultation </button>
+                            </div>
+                            
+                            <div class="note">
+                                <p class="noteTxt">
+                                    * This is an initial estimate for first-year business tax savings based on the information you enter on the left 
+                                    and calculations based on our best-practices in small business accounting and tax strategy. <br/> <br/>
+                                    Some industries and ownership configurations have unique requirements which impact tax savings. Schedule a consultation 
+                                    for further detail.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <hr/>
+                    </div>
+                    
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <div id="footer">
+                                <div id="footerText">
+                                    <p id="pOne">© 2021 All Rights Reserved.</p>
+                                    <p id="pTwo">1-800Accountant Business Services.</p>
+                                </div>
+                                <div id="footerBtns">
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="contact" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/contact')">Contact</button>
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="privacy" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/privacy-policy')">Privacy Policy</button>
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="terms" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/terms-of-services')">Terms of Service</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</apex:page>

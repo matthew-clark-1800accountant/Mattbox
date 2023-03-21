@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>NOC 41</label>
+    <protected>false</protected>
+    <values>
+        <field>Account_Field__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Field_Value__c</field>
+        <value xsi:type="xsd:string">41+</value>
+    </values>
+    <values>
+        <field>Flat_Price_Override__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Guided_Selling_Field__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Price_Adjustment__c</field>
+        <value xsi:type="xsd:double">185.0</value>
+    </values>
+    <values>
+        <field>Product_Name__c</field>
+        <value xsi:type="xsd:string">Business Return</value>
+    </values>
+    <values>
+        <field>Quote_Field2__c</field>
+        <value xsi:type="xsd:string">Calc_Number_of_Contractors__c</value>
+    </values>
+    <values>
+        <field>User_Field__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

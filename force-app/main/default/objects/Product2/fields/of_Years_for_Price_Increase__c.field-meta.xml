@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>of_Years_for_Price_Increase__c</fullName>
+    <description>The number of years in which we will increase the price on a yearly basis. Works with the Price Increase Percent and Year 2+ Price Increase Percent fields to determine how long we should increase the price for a product. A value of 0 means there&apos;s not limit to the number of years we will increase the price, a value of 1 means we will increase on the first renewal year, 2 would be the second, etc.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The number of years in which we will increase the price on a yearly basis.</inlineHelpText>
+    <label># of Years for Price Increase</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

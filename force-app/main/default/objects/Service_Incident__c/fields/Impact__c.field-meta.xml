@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Impact__c</fullName>
+    <externalId>false</externalId>
+    <label>Impact</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Customers</fullName>
+                <default>false</default>
+                <label>Customers</label>
+            </value>
+            <value>
+                <fullName>Internal</fullName>
+                <default>false</default>
+                <label>Internal</label>
+            </value>
+            <value>
+                <fullName>LegalZoom</fullName>
+                <default>false</default>
+                <label>LegalZoom</label>
+            </value>
+            <value>
+                <fullName>FirstData</fullName>
+                <default>false</default>
+                <label>FirstData</label>
+            </value>
+            <value>
+                <fullName>Other Partner</fullName>
+                <default>false</default>
+                <label>Other Partner</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

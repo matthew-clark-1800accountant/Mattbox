@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Purchased_Productrs__c</fullName>
+    <externalId>false</externalId>
+    <label>Purchased Products</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>-PKG: Basic</fullName>
+                <default>false</default>
+                <label>-PKG: Basic</label>
+            </value>
+            <value>
+                <fullName>-PKG: Basic (Finance)</fullName>
+                <default>false</default>
+                <label>-PKG: Basic (Finance)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Basic (Half Payment Plan)</fullName>
+                <default>false</default>
+                <label>-PKG: Basic (Half Payment Plan)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Basic + Est Taxes</fullName>
+                <default>false</default>
+                <label>-PKG: Basic + Est Taxes</label>
+            </value>
+            <value>
+                <fullName>-PKG: Basic + Est Taxes (Finance)</fullName>
+                <default>false</default>
+                <label>-PKG: Basic + Est Taxes (Finance)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Basic + Est Taxes (Half Payment)</fullName>
+                <default>false</default>
+                <label>-PKG: Basic + Est Taxes (Half Payment)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Entity Setup</fullName>
+                <default>false</default>
+                <label>-PKG: Entity Setup</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro</fullName>
+                <default>false</default>
+                <label>-PKG: Pro</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro (Finance)</fullName>
+                <default>false</default>
+                <label>-PKG: Pro (Finance)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro (Half Payment)</fullName>
+                <default>false</default>
+                <label>-PKG: Pro (Half Payment)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro Plus (Half Payment)</fullName>
+                <default>false</default>
+                <label>-PKG: Pro Plus (Half Payment)</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro + Est Taxes</fullName>
+                <default>false</default>
+                <label>-PKG: Pro + Est Taxes</label>
+            </value>
+            <value>
+                <fullName>-PKG: Pro + Est Taxes (Finance)</fullName>
+                <default>false</default>
+                <label>-PKG: Pro + Est Taxes (Finance)</label>
+            </value>
+            <value>
+                <fullName>Company Seal</fullName>
+                <default>false</default>
+                <label>Company Seal</label>
+            </value>
+            <value>
+                <fullName>Corporate Binder</fullName>
+                <default>false</default>
+                <label>Corporate Binder</label>
+            </value>
+            <value>
+                <fullName>EIN Number</fullName>
+                <default>false</default>
+                <label>EIN Number</label>
+            </value>
+            <value>
+                <fullName>Expedited Processing</fullName>
+                <default>false</default>
+                <label>Expedited Processing</label>
+            </value>
+            <value>
+                <fullName>Full Service Bookkeeping (10/100)</fullName>
+                <default>false</default>
+                <label>Full Service Bookkeeping (10/100)</label>
+            </value>
+            <value>
+                <fullName>Full Service Bookkeeping (5/50)</fullName>
+                <default>false</default>
+                <label>Full Service Bookkeeping (5/50)</label>
+            </value>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>LZ Biz Income Tax</fullName>
+                <default>false</default>
+                <label>LZ Biz Income Tax</label>
+            </value>
+            <value>
+                <fullName>LZ Compliance</fullName>
+                <default>false</default>
+                <label>LZ Compliance</label>
+            </value>
+            <value>
+                <fullName>LZ Legal Plan</fullName>
+                <default>false</default>
+                <label>LZ Legal Plan</label>
+            </value>
+            <value>
+                <fullName>New Entity Public Filing Notice</fullName>
+                <default>false</default>
+                <label>New Entity Public Filing Notice</label>
+            </value>
+            <value>
+                <fullName>Operating Agreement</fullName>
+                <default>false</default>
+                <label>Operating Agreement</label>
+            </value>
+            <value>
+                <fullName>Payroll - 1 Employee</fullName>
+                <default>false</default>
+                <label>Payroll - 1 Employee</label>
+            </value>
+            <value>
+                <fullName>Payroll - 3 Employees</fullName>
+                <default>false</default>
+                <label>Payroll - 3 Employees</label>
+            </value>
+            <value>
+                <fullName>Payroll - 5 employees</fullName>
+                <default>false</default>
+                <label>Payroll - 5 employees</label>
+            </value>
+            <value>
+                <fullName>Payroll - 6 employees</fullName>
+                <default>false</default>
+                <label>Payroll - 6 employees</label>
+            </value>
+            <value>
+                <fullName>Payroll - 7 employees</fullName>
+                <default>false</default>
+                <label>Payroll - 7 employees</label>
+            </value>
+            <value>
+                <fullName>Quarterly Estimated Taxes</fullName>
+                <default>false</default>
+                <label>Quarterly Estimated Taxes</label>
+            </value>
+            <value>
+                <fullName>Resident Agent</fullName>
+                <default>false</default>
+                <label>Resident Agent</label>
+            </value>
+            <value>
+                <fullName>Sales and Use Tax</fullName>
+                <default>false</default>
+                <label>Sales and Use Tax</label>
+            </value>
+            <value>
+                <fullName>Unlimited Tax Consulting</fullName>
+                <default>false</default>
+                <label>Unlimited Tax Consulting</label>
+            </value>
+            <value>
+                <fullName>Tax Prep 2014 - Business</fullName>
+                <default>false</default>
+                <label>Tax Prep 2014 - Business</label>
+            </value>
+            <value>
+                <fullName>Tax Prep 2014 - Personal</fullName>
+                <default>false</default>
+                <label>Tax Prep 2014 - Personal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>10</visibleLines>
+</CustomField>

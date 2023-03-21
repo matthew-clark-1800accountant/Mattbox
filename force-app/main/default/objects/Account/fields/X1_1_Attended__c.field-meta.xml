@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X1_1_Attended__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If BIT attended 1-1 sales consultation</description>
+    <externalId>false</externalId>
+    <label>1-1 Attended</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

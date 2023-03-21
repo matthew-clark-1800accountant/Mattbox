@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Task Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Annual Report/Franchise Tax</fullName>
+                <default>false</default>
+                <label>Annual Report/Franchise Tax</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping - Q1</fullName>
+                <default>false</default>
+                <label>Bookkeeping - Q1</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping - Q2</fullName>
+                <default>false</default>
+                <label>Bookkeeping - Q2</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping - Q3</fullName>
+                <default>false</default>
+                <label>Bookkeeping - Q3</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping - Q4</fullName>
+                <default>false</default>
+                <label>Bookkeeping - Q4</label>
+            </value>
+            <value>
+                <fullName>Business Plan</fullName>
+                <default>false</default>
+                <label>Business Plan</label>
+            </value>
+            <value>
+                <fullName>Corp Setup</fullName>
+                <default>false</default>
+                <label>Corp Setup</label>
+            </value>
+            <value>
+                <fullName>Dissolutions</fullName>
+                <default>false</default>
+                <label>Dissolutions</label>
+            </value>
+            <value>
+                <fullName>Financial Planning</fullName>
+                <default>false</default>
+                <label>Financial Planning</label>
+            </value>
+            <value>
+                <fullName>Loan Agreements</fullName>
+                <default>false</default>
+                <label>Loan Agreements</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Personal Tax Prep</fullName>
+                <default>false</default>
+                <label>Personal Tax Prep</label>
+            </value>
+            <value>
+                <fullName>Sales Tax</fullName>
+                <default>false</default>
+                <label>Sales Tax</label>
+            </value>
+            <value>
+                <fullName>Tax - 1023/1024 NonProfit</fullName>
+                <default>false</default>
+                <label>Tax - 1023/1024 NonProfit</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q1</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q1</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q2</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q2</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q3</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q3</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040-ES Estimated Q4</fullName>
+                <default>false</default>
+                <label>Tax - 1040-ES Estimated Q4</label>
+            </value>
+            <value>
+                <fullName>Tax - 1040 Individual</fullName>
+                <default>false</default>
+                <label>Tax - 1040 Individual</label>
+            </value>
+            <value>
+                <fullName>Tax - 1041/706/709/Payroll</fullName>
+                <default>false</default>
+                <label>Tax - 1041/706/709/Payroll</label>
+            </value>
+            <value>
+                <fullName>Tax - 1065 Partnership</fullName>
+                <default>false</default>
+                <label>Tax - 1065 Partnership</label>
+            </value>
+            <value>
+                <fullName>Tax - 1120 Corporation</fullName>
+                <default>false</default>
+                <label>Tax - 1120 Corporation</label>
+            </value>
+            <value>
+                <fullName>Tax - 1120 S Corporation</fullName>
+                <default>false</default>
+                <label>Tax - 1120 S Corporation</label>
+            </value>
+            <value>
+                <fullName>Tax - 990 Tax Exempt</fullName>
+                <default>false</default>
+                <label>Tax - 990 Tax Exempt</label>
+            </value>
+            <value>
+                <fullName>Tax - Business TBD</fullName>
+                <default>false</default>
+                <label>Tax - Business TBD</label>
+            </value>
+            <value>
+                <fullName>Tax Consulting - LZ Limited</fullName>
+                <default>false</default>
+                <label>Tax Consulting - LZ Limited</label>
+            </value>
+            <value>
+                <fullName>Tax Consulting - Unlimited</fullName>
+                <default>false</default>
+                <label>Tax Consulting - Unlimited</label>
+            </value>
+            <value>
+                <fullName>Tax Notice</fullName>
+                <default>false</default>
+                <label>Tax Notice</label>
+            </value>
+            <value>
+                <fullName>Tax Planning</fullName>
+                <default>false</default>
+                <label>Tax Planning</label>
+            </value>
+            <value>
+                <fullName>Trusts and Estates</fullName>
+                <default>false</default>
+                <label>Trusts and Estates</label>
+            </value>
+            <value>
+                <fullName>Two Year Tax Review</fullName>
+                <default>false</default>
+                <label>Two Year Tax Review</label>
+            </value>
+            <value>
+                <fullName>Prior-year return request</fullName>
+                <default>false</default>
+                <label>Prior-year return request</label>
+            </value>
+            <value>
+                <fullName>Reassign Legal Plan Appt.</fullName>
+                <default>false</default>
+                <label>Reassign Legal Plan Appt.</label>
+            </value>
+            <value>
+                <fullName>Reassign 1-on-1 Sales Appt.</fullName>
+                <default>false</default>
+                <label>Reassign 1-on-1 Sales Appt.</label>
+            </value>
+            <value>
+                <fullName>Client Contact ASAP</fullName>
+                <default>false</default>
+                <label>Client Contact ASAP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

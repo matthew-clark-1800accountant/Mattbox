@@ -1,0 +1,22 @@
+<apex:page title="Account Product Categories" standardController="Account" extensions="AccountProductCategoriesController" id="page" action="{!updateFields}">
+    <apex:pageBlock >
+        <apex:outputPanel rendered="{!listOutstandingPayments.size > 0}">
+            <script>
+                alert('Outstanding Payments – Please transfer client to the billing department before any work is done.');
+            </script>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!listPastQueuedPayments.size > 0}">
+            <script>
+                alert('Past Queued Payments - There are Payments on this Account that are queued but their Payment Date has passed.');
+            </script>
+        </apex:outputPanel>
+    
+        <apex:pageBlockSection columns="1">
+            <apex:outputText value="{!accountActiveCategories}" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection columns="1">
+            <apex:outputText value="{!accountOldCategories}" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

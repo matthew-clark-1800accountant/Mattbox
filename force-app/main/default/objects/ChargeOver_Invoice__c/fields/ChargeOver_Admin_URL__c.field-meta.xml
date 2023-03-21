@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChargeOver_Admin_URL__c</fullName>
+    <description>A link to the Invoice within the ChargeOver system</description>
+    <externalId>false</externalId>
+    <inlineHelpText>A link to the Invoice within the ChargeOver system</inlineHelpText>
+    <label>ChargeOver Admin URL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

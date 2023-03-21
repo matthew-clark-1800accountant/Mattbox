@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>JT_Pitched</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>contains</operation>
+        <value>general</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>Pitched</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessOrEqual</operation>
+        <value>N_DAYS_AGO:2</value>
+    </filters>
+    <filters>
+        <field>Expected_1st_year_revenue__c</field>
+        <operation>contains</operation>
+        <value>&quot;$10,000 - $50,000&quot;,&quot;$50,000 - $100,000&quot;,&quot;&gt; $100,000&quot;</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>12/1/2018 12:00 AM</value>
+    </filters>
+    <label>JT Pitched</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Charlie_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

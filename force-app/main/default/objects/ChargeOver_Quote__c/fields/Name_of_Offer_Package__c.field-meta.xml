@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Name_of_Offer_Package__c</fullName>
+    <description>The name of the offer or package that was selected either through the website or pricing calculator</description>
+    <externalId>false</externalId>
+    <label>Name of Offer/Package</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Customized LLC</fullName>
+                <default>false</default>
+                <label>Customized LLC</label>
+            </value>
+            <value>
+                <fullName>Economy</fullName>
+                <default>false</default>
+                <label>Economy</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

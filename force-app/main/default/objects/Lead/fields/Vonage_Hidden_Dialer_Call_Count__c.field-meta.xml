@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vonage_Hidden_Dialer_Call_Count__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>A checkbox to trigger a workflow which increments the field “Vonage dialer call count”</description>
+    <externalId>false</externalId>
+    <label>Vonage Hidden Dialer Call Count</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

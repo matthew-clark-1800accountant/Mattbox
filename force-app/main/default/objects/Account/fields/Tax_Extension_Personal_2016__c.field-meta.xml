@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tax_Extension_Personal_2016__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if user have purchased personal tax extension for 2016 year</description>
+    <externalId>false</externalId>
+    <label>Tax Extension Personal 2016</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

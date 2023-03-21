@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Leads_Agent_Referral</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Type_New__c</field>
+        <operation>equals</operation>
+        <value>Agent Referral</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>LegalZoom</value>
+    </filters>
+    <filters>
+        <field>Lead_OwnerID__c</field>
+        <operation>equals</operation>
+        <value>005f100000HXqaD</value>
+    </filters>
+    <label>Leads - Agent Referral</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>BNA_Team</role>
+        <role>Bravo_Team</role>
+        <role>Charlie_Team</role>
+        <role>Delta_Team</role>
+        <role>Inbound_Support_Rep</role>
+        <role>India_Team</role>
+        <role>Jason_s_Team</role>
+        <role>Manager</role>
+        <role>Office_Manager</role>
+    </sharedTo>
+</ListView>

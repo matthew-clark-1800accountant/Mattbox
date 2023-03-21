@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hopper_bring_them_back</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>of_Calls__c</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>Not Interested</value>
+    </filters>
+    <filters>
+        <field>Rejection_Reason__c</field>
+        <operation>equals</operation>
+        <value>Doesn&apos;t Want Webinar or Consultation</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>1/31/2020</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>greaterThan</operation>
+        <value>11/1/2019</value>
+    </filters>
+    <filters>
+        <field>of_Calls__c</field>
+        <operation>lessThan</operation>
+        <value>5</value>
+    </filters>
+    <label>Not interested back then</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Bravo_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

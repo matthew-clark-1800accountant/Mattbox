@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bill62__Related_Discount__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>A lookup utilized by the API getDiscount call to return Products associated with a Discount.</description>
+    <externalId>false</externalId>
+    <label>Related Discount</label>
+    <referenceTo>Bill62__Discount__c</referenceTo>
+    <relationshipLabel>Products (Related Discount)</relationshipLabel>
+    <relationshipName>Products1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

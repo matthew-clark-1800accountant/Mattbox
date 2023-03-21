@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IS_FROM_CHARGEOVER__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>INTERNAL SYNC - do not manually edit</description>
+    <externalId>false</externalId>
+    <label>Is from ChargeOver?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

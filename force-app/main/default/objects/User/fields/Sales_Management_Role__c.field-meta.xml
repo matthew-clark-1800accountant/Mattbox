@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Management_Role__c</fullName>
+    <description>Field to indicate whether the user has a role in sales management</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ UserRole.Name = &apos;Sales Manager&apos;, 
+&apos;Manager&apos;,
+
+IF(INCLUDES( Skills_Sales__c , &apos;Team Lead&apos;), &apos;Team Lead&apos;,null))</formula>
+    <inlineHelpText>Does the user have a role in sales management?</inlineHelpText>
+    <label>Sales Management Role</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

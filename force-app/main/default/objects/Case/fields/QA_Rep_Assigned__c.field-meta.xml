@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QA_Rep_Assigned__c</fullName>
+    <externalId>false</externalId>
+    <label>QA Rep Assigned</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Armand Bachaspatimayum</fullName>
+                <default>false</default>
+                <label>Armand Bachaspatimayum</label>
+            </value>
+            <value>
+                <fullName>Barry Martin</fullName>
+                <default>false</default>
+                <label>Barry Martin</label>
+            </value>
+            <value>
+                <fullName>Esther Gonzalez</fullName>
+                <default>false</default>
+                <label>Esther Gonzalez</label>
+            </value>
+            <value>
+                <fullName>Fong Saythanom</fullName>
+                <default>false</default>
+                <label>Fong Saythanom</label>
+            </value>
+            <value>
+                <fullName>Heather Blair</fullName>
+                <default>false</default>
+                <label>Heather Blair</label>
+            </value>
+            <value>
+                <fullName>Kevin Daniell</fullName>
+                <default>false</default>
+                <label>Kevin Daniell</label>
+            </value>
+            <value>
+                <fullName>MaiPhuong Nguyen</fullName>
+                <default>false</default>
+                <label>MaiPhuong Nguyen</label>
+            </value>
+            <value>
+                <fullName>Monica Warren</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Monica Warren</label>
+            </value>
+            <value>
+                <fullName>Netanel Pakanaev</fullName>
+                <default>false</default>
+                <label>Netanel Pakanaev</label>
+            </value>
+            <value>
+                <fullName>Steven Brock</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Steven Brock</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,127 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false" cache="false" StandardController="zqu__Quote__c" extensions="Z_PaymentMethodCaptureController" action="{!onload}" title="{!$Label.PAYMENT_METHOD_CAPTURE_PAGE_TITLE}">    
+
+    <apex:styleSheet value="{!URLFOR($Resource.z_Bootstrap, 'bootstrap/css/bootstrap.min.css')}" />
+    <apex:styleSheet value="{!URLFOR($Resource.z_Customer_Css)}" />
+
+    <nav class="navbar navbar-default" role="navigation" >
+        <div class="container-fluid col-md-offset-1">
+            <apex:image styleClass="img-responsive nav-logo" id="logo" value="https://1800accountant.com/sfapi/img/1-800accountant-logo.png" ></apex:image>
+        </div>
+    </nav> 
+
+    <!-- IFrame Section -->
+    <apex:outputPanel rendered="{!renderHPM && !hasConfigError && !showSuccessMessage}" id="mainPanel">
+
+        <apex:outputPanel layout="block" styleClass="row text-center col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
+        <apex:form >
+            <span>Select Payment Method: </span>
+            <apex:selectList value="{!paymentMethodType}" size="1">
+                <apex:selectOptions value="{!PaymentMethodList}" />
+                <apex:actionSupport event="onchange" reRender="iframeDiv"/>  
+            </apex:selectList>
+        </apex:form>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="row text-center col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" id="iframeDiv">
+            <!-- Render the payment page component, using the url parameters as attribute values -->
+            <apex:repeat value="{!pageIdMap}" var="key" >
+                <apex:repeat value="{!pageIdMap[key]}" var="keyvalue" >
+                    <zqu:PaymentPage zuoraPageId="{!keyvalue}" submitEnabled="true" style="inline" rendered="{!renderHPM && !hasConfigError && paymentMethodType==key}"/>
+               </apex:repeat>
+            </apex:repeat>
+        </apex:outputPanel>
+
+        <!-- Charge Information Section -->
+        <apex:outputPanel layout="block" styleClass="row col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 container well" id="chargeFieldsDiv" rendered="{!displayChargeInfo}">
+            <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{!displayChargeInfo}"> -->
+            <table class="table" id="chargeTable">
+                <thead>
+                    <tr>
+                        <apex:repeat value="{!chargeFieldSettings}" var="field" >
+                            <th>
+                                <apex:outputText value="{!field.Charge_Field_Display_Label__c}"/>
+                            </th>
+                        </apex:repeat>
+                    </tr> 
+                </thead>
+                <tbody> 
+                    <apex:repeat value="{!quoteChargeObjects}" var="charge">
+                    <tr>
+                        <apex:repeat value="{!chargeFieldSettings}" var="field" >
+                            <td>
+                                <apex:outputText value="{!charge[field.Charge_Field_API_Name__c]}" />
+                            </td>
+                        </apex:repeat>
+                    </tr>  
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <!-- </apex:outputPanel> -->
+
+            <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{!displayQuoteInfo}" >
+            <table class="table" id="quoteTable">
+                <thead>
+                    <tr>
+                        <apex:repeat value="{!quoteFieldSettings}" var="field" >
+                            <th>
+                                <apex:outputText value="{!field.Quote_Field_Display_Label__c}"/>
+                            </th>
+                        </apex:repeat>
+                    </tr> 
+                </thead>
+                <tbody> 
+                    <tr>
+                        <apex:repeat value="{!quoteFieldSettings}" var="field" >
+                            <td>
+                                <apex:outputText value="{!quote[field.Quote_Field_API_Name__c]}" />
+                            </td>
+                        </apex:repeat>
+                    </tr>  
+                </tbody>
+            </table>
+            </apex:outputPanel> -->
+        </apex:outputPanel>
+
+        <!-- Quote Information Section -->
+        <apex:outputPanel layout="block" styleClass="row col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 container well" id="quoteFieldsDiv" rendered="{!displayQuoteInfo}">
+
+            <table class="table" id="quoteTable">
+                <thead>
+                    <tr>
+                        <apex:repeat value="{!quoteFieldSettings}" var="field" >
+                            <th>
+                                <apex:outputText value="{!field.Quote_Field_Display_Label__c}"/>
+                            </th>
+                        </apex:repeat>
+                    </tr> 
+                </thead>
+                <tbody> 
+                    <tr>
+                        <apex:repeat value="{!quoteFieldSettings}" var="field" >
+                            <td>
+                                <apex:outputText value="{!quote[field.Quote_Field_API_Name__c]}" />
+                            </td>
+                        </apex:repeat>
+                    </tr>  
+                </tbody>
+            </table>
+        </apex:outputPanel>
+
+    </apex:outputPanel>
+
+    <!-- Configuration Error Section -->
+    <apex:outputPanel layout="block" styleClass="row alert alert-danger col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" html-role="alert" rendered="{!hasConfigError && !showSuccessMessage}" id="configErrorPanel">
+        <apex:pageMessage severity="info" summary="{!$Label.PM_CAPTURE_CONFIGURATION_ERROR}" />
+    </apex:outputPanel>
+
+    <!-- Customer Lookup Error Section -->
+    <apex:outputPanel layout="block" styleClass="row alert alert-danger col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" html-role="alert" rendered="{!!hasConfigError && NOT(renderHPM) && !showSuccessMessage}" id="customerLookupErrorPanel">
+        <apex:pageMessage severity="info" summary="{!$Label.PM_CAPTURE_CUSTOMER_LOOKUP_ERROR}" />
+    </apex:outputPanel>
+
+    <!-- Success Message Section -->
+    <apex:outputPanel layout="block" styleClass="row alert alert-success col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" html-role="alert" rendered="{!showSuccessMessage}">
+        <apex:pageMessage severity="info" summary="{!$Label.PM_CAPTURE_SUCCESS_MESSAGE}" />
+    </apex:outputPanel>
+     
+</apex:page>

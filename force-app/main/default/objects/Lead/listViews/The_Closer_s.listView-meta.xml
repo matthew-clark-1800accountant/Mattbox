@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>The_Closer_s</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.STATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>jroma</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>8/9/2019</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notContain</operation>
+        <value>1-1 Request,Pitched,Qualified</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notContain</operation>
+        <value>Data Partners,1-800Accountant,Bark</value>
+    </filters>
+    <label>The Closer&apos;s Leads - Last Issued</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Foxtrot_Team</roleAndSubordinates>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

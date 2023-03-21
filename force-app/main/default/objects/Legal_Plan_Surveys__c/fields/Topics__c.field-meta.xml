@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Topics__c</fullName>
+    <externalId>false</externalId>
+    <label>Topics</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Questions about trust</fullName>
+                <default>false</default>
+                <label>Questions about trust</label>
+            </value>
+            <value>
+                <fullName>How to get an ITIN</fullName>
+                <default>false</default>
+                <label>How to get an ITIN</label>
+            </value>
+            <value>
+                <fullName>Foreign Tax questions</fullName>
+                <default>false</default>
+                <label>Foreign Tax questions</label>
+            </value>
+            <value>
+                <fullName>Tax implications(status change)</fullName>
+                <default>false</default>
+                <label>Tax implications(status change)</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping questions</fullName>
+                <default>false</default>
+                <label>Bookkeeping questions</label>
+            </value>
+            <value>
+                <fullName>Business entity information</fullName>
+                <default>false</default>
+                <label>Business entity information</label>
+            </value>
+            <value>
+                <fullName>Business Deductions</fullName>
+                <default>false</default>
+                <label>Business Deductions</label>
+            </value>
+            <value>
+                <fullName>Bus. Income tax reductions strategies</fullName>
+                <default>false</default>
+                <label>Bus. Income tax reductions strategies</label>
+            </value>
+            <value>
+                <fullName>State specific business tax questions</fullName>
+                <default>false</default>
+                <label>State specific business tax questions</label>
+            </value>
+            <value>
+                <fullName>State specific personal tax questions</fullName>
+                <default>false</default>
+                <label>State specific personal tax questions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

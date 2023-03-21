@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Long_Term_Business_Goals_5_Years__c</fullName>
+    <externalId>false</externalId>
+    <label>Long Term Business Goals (5+ Years)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Leave W2 Job</fullName>
+                <default>false</default>
+                <label>Leave W2 Job</label>
+            </value>
+            <value>
+                <fullName>Become Profitable</fullName>
+                <default>false</default>
+                <label>Become Profitable</label>
+            </value>
+            <value>
+                <fullName>Hire Employees</fullName>
+                <default>false</default>
+                <label>Hire Employees</label>
+            </value>
+            <value>
+                <fullName>Have the Business Run itself</fullName>
+                <default>false</default>
+                <label>Have the Business Run itself</label>
+            </value>
+            <value>
+                <fullName>Sell the Business</fullName>
+                <default>false</default>
+                <label>Sell the Business</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>6</visibleLines>
+</CustomField>

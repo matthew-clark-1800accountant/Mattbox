@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <description>Runs when a ChargeOver Invoice Line has a related payment or refund processed.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>The At-Risk Balance for the Invoice Line</description>
+        <name>AtRiskBalance</name>
+        <dataType>Currency</dataType>
+        <expression>IF(
+OR(
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Overdue&quot;),
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Suspended&quot;),
+AND(
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Active&quot;),
+ISPICKVAL({!$Record.ChargeOver_Invoice_Line_Status__c},  &quot;Overdue&quot;))), ({!$Record.Total__c}-{!$Record.Total_Paid_Amount__c}),0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>The Expected Future Revenue of the particular Invoice Line</description>
+        <name>ExpectedFutureRevenue</name>
+        <dataType>Currency</dataType>
+        <expression>IF(
+AND(
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Active&quot;),
+ISPICKVAL({!$Record.ChargeOver_Invoice_Line_Status__c},  &quot;Unpaid&quot;)), IF(ISBLANK({!$Record.Total_Paid_Amount__c}), {!$Record.Total__c},
+({!$Record.Total__c}-{!$Record.Total_Paid_Amount__c})),0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Potential revenue lost because the client cancelled</description>
+        <name>LostRevenueDuetoCancellation</name>
+        <dataType>Currency</dataType>
+        <expression>IF(
+OR(
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Cancelled&quot;),
+ISPICKVAL({!$Record.ChargeOver_Subscription_Line_Item__r.Status__c}, &quot;Active – Pending Cancel&quot;)),
+({!$Record.Total__c}-{!$Record.Net_Paid_Amount__c}),0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>NetPaidAmount</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!$Record.Total_Paid_Amount__c}), 0,
+{!$Record.Total_Paid_Amount__c}+{!$Record.Total_Refund_Amount__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>The Net Paid Amount for the Invoice Line over the last 180 Days</description>
+        <name>NetPaidAmount_Last180Days</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!$Record.Net_Paid_Amount_Last_180_Days__c}), 0,
+{!$Record.Total_Paid_Amount_Last_180_Days__c}+{!$Record.Total_Refund_Amount_Last_180_Days__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>ChargeOver Invoice Line {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ChargeOver Invoice Line Item</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updates the calculated values on the Invoice Line</description>
+        <name>Update_Invoice_Line_Values</name>
+        <label>Update Invoice Line Values</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <inputAssignments>
+            <field>At_Risk_Future_Revenue__c</field>
+            <value>
+                <elementReference>AtRiskBalance</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Expected_Future_Revenue__c</field>
+            <value>
+                <elementReference>ExpectedFutureRevenue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lost_Future_Revenue_Due_to_Cancellation__c</field>
+            <value>
+                <elementReference>LostRevenueDuetoCancellation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Net_Paid_Amount_Last_180_Days__c</field>
+            <value>
+                <elementReference>NetPaidAmount_Last180Days</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Net_Paid_Amount__c</field>
+            <value>
+                <elementReference>NetPaidAmount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Invoice_Line_Values</targetReference>
+        </connector>
+        <filterFormula>OR(
+ISNEW(),
+ISCHANGED({!$Record.Historical_Update__c}),
+ISCHANGED({!$Record.ChargeOver_Invoice_Line_Status__c}),
+ISCHANGED({!$Record.Total_Paid_Amount__c}),
+ISCHANGED({!$Record.Total_Refund_Amount__c}),
+ISCHANGED({!$Record.Write_Off_Paid_Amount__c}),
+ISCHANGED({!$Record.Total_Paid_Amount_Last_180_Days__c}),
+ISCHANGED({!$Record.Total_Refund_Amount_Last_180_Days__c}))</filterFormula>
+        <object>ChargeOver_Invoice_Line_Item__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>RelatedSLI</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used in Update_Lead_Owner_to_Queue &amp; Update_Account_Owner_to_Lead_Queue &amp; trigger LeadPreventOwnerChange to access Queue information.</description>
+    <label>Lead Reassignment Queue</label>
+    <pluralLabel>Lead Reassignment Queues</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

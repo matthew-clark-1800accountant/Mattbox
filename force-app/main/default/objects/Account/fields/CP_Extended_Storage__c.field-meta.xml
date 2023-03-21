@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Extended_Storage__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Shows if customer can upload up to 10G of documents.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Shows if customer can upload up to 10G of documents.</inlineHelpText>
+    <label>CP Extended Storage</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Current_Accountant_Field</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED( Original_Accountant__c ),
+NOT(ISBLANK(PRIORVALUE( Original_Accountant__c ))))</errorConditionFormula>
+    <errorMessage>Can&apos;t change original accountant</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancellation_Must_Have_Service_Package</fullName>
+    <active>false</active>
+    <description>Require Service Package for Cancellation Cases</description>
+    <errorConditionFormula>AND( RecordType.Name = &apos;Cancellation&apos;, ISBLANK(Service_Package__c),
+TEXT(Status) = &apos;Save Attempt&apos; )</errorConditionFormula>
+    <errorDisplayField>Service_Package__c</errorDisplayField>
+    <errorMessage>You must select a Service Package for a Cancellation Case</errorMessage>
+</ValidationRule>

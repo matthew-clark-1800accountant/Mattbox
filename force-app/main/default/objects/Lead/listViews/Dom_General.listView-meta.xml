@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dom_General</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>of_Calls__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Attempted</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>lessOrEqual</operation>
+        <value>11/12/2021</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>9/15/2021</value>
+    </filters>
+    <filters>
+        <field>of_Calls__c</field>
+        <operation>lessOrEqual</operation>
+        <value>5</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>notContain</operation>
+        <value>1-800Accountant,Bark,EIN Tax Filing,Florida Registrations,GovDocFiling,ZenBusiness</value>
+    </filters>
+    <label>Dom General</label>
+    <sharedTo>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

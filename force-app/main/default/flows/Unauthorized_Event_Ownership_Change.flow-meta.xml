@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Unauthorized_Change_Email</name>
+        <label>Unauthorized Change Email</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <actionName>Event.Unauthorized_Change_of_Appointment_Owner</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <description>Flow to send email to managers if an event has an unauthorized owner change</description>
+    <environments>Default</environments>
+    <interviewLabel>Unauthorized Event Ownership Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Unauthorized Event Ownership Change</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Unauthorized_Change_Email</targetReference>
+        </connector>
+        <filterFormula>AND(
+{!$Profile.Name} != &apos;System Admin&apos;,
+{!$Profile.Name} != &apos;SDR Manager&apos;,
+{!$Profile.Name} != &apos;System Administrator&apos;,
+{!$Profile.Name} != &apos;Sales Manager&apos;,
+{!$Profile.Name} != &apos;API User&apos;,
+{!$Profile.Name} != &apos;Appointment Setter&apos;,  
+    OR(
+        ISPICKVAL({!$Record.Type_of_Appointment__c}, &apos;Tax Savings Analysis&apos;),
+        ISPICKVAL({!$Record.Type_of_Appointment__c}, &apos;Formation Consultation&apos;),
+        ISPICKVAL({!$Record.Type_of_Appointment__c}, &apos;BNA&apos;)
+    ),
+    ISCHANGED({!$Record.OwnerId}),
+NOT(INCLUDES({!$User.Skills_Sales__c}, &apos;Team Lead&apos;)),
+    NOT(CONTAINS({!$Record.Subject}, &apos;Live&apos;)),
+AND( /*Exclude initial rejections*/
+{!$Record.Initial_Rejected_By__c} = {!$User.Id},
+{!$Record__Prior.OwnerId} !=  {!$User.Id})
+
+
+)</filterFormula>
+        <object>Event</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

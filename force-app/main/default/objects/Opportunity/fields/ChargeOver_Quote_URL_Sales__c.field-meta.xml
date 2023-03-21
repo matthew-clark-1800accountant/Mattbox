@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChargeOver_Quote_URL_Sales__c</fullName>
+    <description>The ChargeOver Quote URL that contains a URL for pricing calculator attribution</description>
+    <externalId>false</externalId>
+    <label>ChargeOver Quote URL (Sales)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

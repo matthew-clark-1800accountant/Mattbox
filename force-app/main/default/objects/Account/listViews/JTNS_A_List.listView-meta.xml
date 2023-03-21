@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>JTNS_A_List</fullName>
+    <booleanFilter>(1 OR 4) AND 2 AND 3</booleanFilter>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>,kmarz,aking,afigu,dcara,dwolf,jclem,mnico,saaro,smurp,sdeer,tsloc,apost,dwald</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>New,Contacted,Call Back Set,1-1 No Show,1-1 Cancelled,Attempted</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2019</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>dkush,laran,jmila,ddieg,gdaco,jbowm,amoor,mandr,cbarn</value>
+    </filters>
+    <label>JTNS A List</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Portal_Issue__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Portal Issue</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client portal</fullName>
+                <default>false</default>
+                <label>Client portal</label>
+            </value>
+            <value>
+                <fullName>VTO Access</fullName>
+                <default>false</default>
+                <label>VTO Access</label>
+            </value>
+            <value>
+                <fullName>Password Reset</fullName>
+                <default>false</default>
+                <label>Password Reset</label>
+            </value>
+            <value>
+                <fullName>CP Access</fullName>
+                <default>false</default>
+                <label>CP Access</label>
+            </value>
+            <value>
+                <fullName>Cogniance ticket</fullName>
+                <default>false</default>
+                <label>Cogniance ticket</label>
+            </value>
+            <value>
+                <fullName>Add Partner</fullName>
+                <default>false</default>
+                <label>Add Partner</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

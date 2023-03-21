@@ -1,0 +1,10 @@
+<apex:page title="Create Payroll Dates" standardController="Account_Product__c" extensions="CreatePayrollDatesController" action="{!CreatePayrollDates}">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!goBack}" value="Return"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

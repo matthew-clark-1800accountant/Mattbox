@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejection_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Rejection Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bad Reviews</fullName>
+                <default>false</default>
+                <label>Bad Reviews</label>
+            </value>
+            <value>
+                <fullName>Going Local</fullName>
+                <default>false</default>
+                <label>Going Local</label>
+            </value>
+            <value>
+                <fullName>Has Accountant</fullName>
+                <default>false</default>
+                <label>Has Accountant</label>
+            </value>
+            <value>
+                <fullName>Mistake</fullName>
+                <default>false</default>
+                <label>Mistake</label>
+            </value>
+            <value>
+                <fullName>No Money</fullName>
+                <default>false</default>
+                <label>No Money</label>
+            </value>
+            <value>
+                <fullName>No Revenue</fullName>
+                <default>false</default>
+                <label>No Revenue</label>
+            </value>
+            <value>
+                <fullName>Out of Scope</fullName>
+                <default>false</default>
+                <label>Out of Scope</label>
+            </value>
+            <value>
+                <fullName>Personal Only</fullName>
+                <default>false</default>
+                <label>Personal Only</label>
+            </value>
+            <value>
+                <fullName>Doesn&apos;t Want Consultation</fullName>
+                <default>false</default>
+                <label>Doesn&apos;t Want Consultation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

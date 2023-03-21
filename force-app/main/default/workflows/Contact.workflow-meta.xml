@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>send_Corp_Setup</fullName>
+        <description>send Corp Setup</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Corp_Sales/Corp_Setup</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Bill62__JoinDateToday</fullName>
+        <field>Bill62__Join_Date__c</field>
+        <formula>today()</formula>
+        <name>JoinDateToday</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Date_Trial_Extended</fullName>
+        <description>The date the CB value was selected from the CB trial Ext field on the Contact object.</description>
+        <field>Date_Trial_Extended__c</field>
+        <formula>Today()</formula>
+        <name>Date Trial Extended</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sync_to_Marketo</fullName>
+        <field>Sync_to_Marketo__c</field>
+        <literalValue>1</literalValue>
+        <name>Sync to Marketo</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Sync_to_Marketo</fullName>
+        <field>Sync_to_Marketo__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Sync to Marketo</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>welcome_email</fullName>
+        <field>Welcome_Email_Sent_contact__c</field>
+        <literalValue>1</literalValue>
+        <name>welcome email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>welcome_email_contact</fullName>
+        <field>Welcome_Email_Sent_contact__c</field>
+        <literalValue>1</literalValue>
+        <name>welcome email - contact</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>welcome_email_sent_contacty</fullName>
+        <field>Welcome_Email_Sent_contact__c</field>
+        <literalValue>1</literalValue>
+        <name>welcome email sent - contacty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>NewClientPortal_ContactSync</fullName>
+        <apiVersion>34.0</apiVersion>
+        <endpointUrl>https://1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e</endpointUrl>
+        <fields>Id</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>api@1800accountant.com</integrationUser>
+        <name>NewClientPortal-ContactSync</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Bill62__C62Fill Member Id on Create</fullName>
+        <actions>
+            <name>Bill62__JoinDateToday</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When Member is created fill in the appropriate member id</description>
+        <formula>TRUE</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>CB Trial Date Extension</fullName>
+        <actions>
+            <name>Date_Trial_Extended</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Date that the CB value was selected from picklist on the Contact pbject.</description>
+        <formula>AND(
+    OR(
+        ISNEW(),
+        ISCHANGED( ClientBooks_Trial_Extension__c )
+    ),
+    CASE(
+         ClientBooks_Trial_Extension__c ,
+        &quot;15 Days&quot;,       1,
+        &quot;30 Days&quot;, 1,
+        0
+    ) == 1
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CB trial - Sync to Marketo</fullName>
+        <actions>
+            <name>Sync_to_Marketo</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.ClientBooks_Trial__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ClientBooks SSO Contact</fullName>
+        <actions>
+            <name>NewClientPortal_ContactSync</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <description>Synchronizes all contacts with new SSO</description>
+        <formula>AND( 
+
+NOT(ISNULL(Email)), 
+
+OR( 
+ISNEW(),
+ISCHANGED(AccountId), 
+ISCHANGED(Disable_Welcome_1800A_Email__c), 
+ISCHANGED(Email), 
+ISCHANGED(FirstName), 
+ISCHANGED(LastName), 
+ISCHANGED(MailingCity), 
+ISCHANGED(MailingCountry), 
+ISCHANGED(MailingPostalCode), 
+ISCHANGED(MailingState), 
+ISCHANGED(MailingStreet), 
+ISCHANGED(OwnerId),
+ISCHANGED(Customer_Number__c), 
+ISCHANGED(Phone) 
+) 
+
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email Opt Out</fullName>
+        <actions>
+            <name>Uncheck_Sync_to_Marketo</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contact.HasOptedOutOfEmail</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>When a Contact is marked as an Email Opt Out this workflow unchecks the Sync to Marketo box.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Mailing Address</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.BillingStreet</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.BillingState</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.BillingPostalCode</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.BillingCountry</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Fills in mailing address with billing address from account.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Mailing Street</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.BillingStreet</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Marketo on Contact</fullName>
+        <active>true</active>
+        <booleanFilter>1 or 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.Lead_Status__c</field>
+            <operation>equals</operation>
+            <value>Do Not Call</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.HasOptedOutOfEmail</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Uncheck Sync to Marketo on Contact</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Corp Docs</fullName>
+        <actions>
+            <name>send_Corp_Setup</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contact.Send_Corp_Docs__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.OwnerId</field>
+            <operation>equals</operation>
+            <value>Hera Soherwardy</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome email - contact - client</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contact.Welcome_Email_Sent_contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome email sent - account</fullName>
+        <actions>
+            <name>welcome_email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.send_welcome_email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Account_Status__c</field>
+            <operation>equals</operation>
+            <value>Onboarding</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

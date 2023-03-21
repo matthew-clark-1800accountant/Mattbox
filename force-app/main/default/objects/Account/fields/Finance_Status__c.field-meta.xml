@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Finance_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Finance Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Current</fullName>
+                <default>false</default>
+                <label>Current</label>
+            </value>
+            <value>
+                <fullName>Past Due</fullName>
+                <default>false</default>
+                <label>Past Due</label>
+            </value>
+            <value>
+                <fullName>Dormant</fullName>
+                <default>false</default>
+                <label>Dormant</label>
+            </value>
+            <value>
+                <fullName>Paused</fullName>
+                <default>false</default>
+                <label>Paused</label>
+            </value>
+            <value>
+                <fullName>Refunded</fullName>
+                <default>false</default>
+                <label>Refunded</label>
+            </value>
+            <value>
+                <fullName>Blacklisted</fullName>
+                <default>false</default>
+                <label>Blacklisted</label>
+            </value>
+            <value>
+                <fullName>Active</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Active</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

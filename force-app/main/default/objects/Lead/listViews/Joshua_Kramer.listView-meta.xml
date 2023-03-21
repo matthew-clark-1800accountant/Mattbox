@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Joshua_Kramer</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>CampaignID__c</columns>
+    <columns>Campaign_Last_Touch__c</columns>
+    <columns>Campaign_Text__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>Lead_Type_New__c</columns>
+    <columns>Marketing_Channel__c</columns>
+    <columns>Marketing_Channel_Last_Touch__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Type_New_Text__c</field>
+        <operation>contains</operation>
+        <value>Marketing</value>
+    </filters>
+    <label>Marketing Leads- Joshua Kramer</label>
+    <sharedTo>
+        <group>Communications</group>
+    </sharedTo>
+</ListView>

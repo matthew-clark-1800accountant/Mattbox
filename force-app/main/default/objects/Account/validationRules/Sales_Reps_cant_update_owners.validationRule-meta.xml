@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Reps_cant_update_owners</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId),
+PRIORVALUE(OwnerId)=&apos;005j000000Fm9Z9&apos;,
+$Profile.Name=&apos;InsideSalesUser&apos;, 
+$User.Id&lt;&gt;&apos;005j000000DMYKB&apos; ,
+$User.Id&lt;&gt;&apos;005j000000BNyQC&apos;,
+$User.Id&lt;&gt;&apos;005j000000DM82J&apos;
+)</errorConditionFormula>
+    <errorMessage>Sales Specialists cannot take ownership of this record</errorMessage>
+</ValidationRule>

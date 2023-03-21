@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>General_Collections_Queue</fullName>
+    <columns>Collections_Rep__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Account_Balance__c</columns>
+    <columns>Last_Collection_Call_Date__c</columns>
+    <columns>ChargeOver_Most_Recent_Payment_Date__c</columns>
+    <columns>Newest_Outstanding_ChargeOver_Invoice__c</columns>
+    <columns>Last_Login_Date__c</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Collections_Rep__c</field>
+        <operation>contains</operation>
+        <value>Kayla,William,Cynthia</value>
+    </filters>
+    <filters>
+        <field>Finance_Status__c</field>
+        <operation>equals</operation>
+        <value>Past Due</value>
+    </filters>
+    <filters>
+        <field>Last_Collection_Call_Date__c</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>ChargeOver_Most_Recent_Payment_Date__c</field>
+        <operation>lessThan</operation>
+        <value>6/1/2022</value>
+    </filters>
+    <label>General Collections Queue</label>
+    <sharedTo>
+        <group>Collections</group>
+    </sharedTo>
+</ListView>

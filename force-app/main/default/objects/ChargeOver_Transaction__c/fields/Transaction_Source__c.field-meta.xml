@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transaction_Source__c</fullName>
+    <description>The source of the transaction. Used by the ChargeOver system to indicate if the transaction was performed by a billing rep, client, automated process, API, etc</description>
+    <externalId>false</externalId>
+    <label>Transaction Source</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>admin</fullName>
+                <default>false</default>
+                <label>admin</label>
+            </value>
+            <value>
+                <fullName>api</fullName>
+                <default>false</default>
+                <label>api</label>
+            </value>
+            <value>
+                <fullName>cron</fullName>
+                <default>false</default>
+                <label>cron</label>
+            </value>
+            <value>
+                <fullName>integration</fullName>
+                <default>false</default>
+                <label>integration</label>
+            </value>
+            <value>
+                <fullName>other</fullName>
+                <default>false</default>
+                <label>other</label>
+            </value>
+            <value>
+                <fullName>resque</fullName>
+                <default>false</default>
+                <label>resque</label>
+            </value>
+            <value>
+                <fullName>user</fullName>
+                <default>false</default>
+                <label>user</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

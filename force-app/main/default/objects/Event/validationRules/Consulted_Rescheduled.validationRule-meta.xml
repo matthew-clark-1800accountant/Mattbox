@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Consulted_Rescheduled</fullName>
+    <active>true</active>
+    <description>Prevents any user aside from Admins from using Consulted - Rescheduled</description>
+    <errorConditionFormula>AND(
+ ISCHANGED(Secondary_Disposition_Details__c),
+ISPICKVAL(Secondary_Disposition_Details__c , &apos;Rescheduled&apos;),
+NOT( $Permission.Admin_Validation_Rule_Override ))</errorConditionFormula>
+    <errorDisplayField>Secondary_Disposition_Details__c</errorDisplayField>
+    <errorMessage>Only Admins can mark this Event as Rescheduled. Please use the Universal Scheduler to Reschedule the appointment</errorMessage>
+</ValidationRule>

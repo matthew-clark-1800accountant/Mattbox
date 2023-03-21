@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ASL_Renewal_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checking this box will trigger a manual run of the ASL Renewal code</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Checking this box will trigger a manual run of the ASL Renewal code</inlineHelpText>
+    <label>ASL Renewal Trigger</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

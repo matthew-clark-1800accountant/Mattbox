@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sync_to_Marketo__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Marker for Marketo to Sync records</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Value must be &quot;True&quot; to be synced to Marketo</inlineHelpText>
+    <label>Sync to Marketo</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

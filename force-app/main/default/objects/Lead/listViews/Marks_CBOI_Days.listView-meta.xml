@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Marks_CBOI_Days</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>of_2019_Calls__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>contains</operation>
+        <value>general</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>LegalZoom,Legal Zoom</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>of_2019_Calls__c</field>
+        <operation>equals</operation>
+        <value>0,1,2,3,4,5</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2020</value>
+    </filters>
+    <filters>
+        <field>BK_Stage__c</field>
+        <operation>notEqual</operation>
+        <value>FOP On File</value>
+    </filters>
+    <filters>
+        <field>BK_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Not Interested</value>
+    </filters>
+    <label>Marks Age Low Calls</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Mark_Stephen_s_team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Workflow_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Workflow Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>VTO Incomplete</fullName>
+                <default>false</default>
+                <label>VTO Incomplete</label>
+            </value>
+            <value>
+                <fullName>VTO Submitted</fullName>
+                <default>true</default>
+                <label>VTO Submitted</label>
+            </value>
+            <value>
+                <fullName>To Be Processed</fullName>
+                <default>false</default>
+                <label>To Be Processed</label>
+            </value>
+            <value>
+                <fullName>To Be Assigned</fullName>
+                <default>false</default>
+                <label>To Be Assigned</label>
+            </value>
+            <value>
+                <fullName>Pre Prep</fullName>
+                <default>false</default>
+                <label>Pre Prep</label>
+            </value>
+            <value>
+                <fullName>In Preparation</fullName>
+                <default>false</default>
+                <label>In Preparation</label>
+            </value>
+            <value>
+                <fullName>Open Points / Awaiting Client Info</fullName>
+                <default>false</default>
+                <label>Open Points / Awaiting Client Info</label>
+            </value>
+            <value>
+                <fullName>In Review</fullName>
+                <default>false</default>
+                <label>In Review</label>
+            </value>
+            <value>
+                <fullName>Corrections Needed</fullName>
+                <default>false</default>
+                <label>Corrections Needed</label>
+            </value>
+            <value>
+                <fullName>To Be Posted</fullName>
+                <default>false</default>
+                <label>To Be Posted</label>
+            </value>
+            <value>
+                <fullName>Client Review</fullName>
+                <default>false</default>
+                <label>Client Review</label>
+            </value>
+            <value>
+                <fullName>Client Approved</fullName>
+                <default>false</default>
+                <label>Client Approved</label>
+            </value>
+            <value>
+                <fullName>eFile OptedOut</fullName>
+                <default>false</default>
+                <label>eFile OptedOut</label>
+            </value>
+            <value>
+                <fullName>eFile Approved</fullName>
+                <default>false</default>
+                <label>eFile Approved</label>
+            </value>
+            <value>
+                <fullName>eFiled</fullName>
+                <default>false</default>
+                <label>eFiled</label>
+            </value>
+            <value>
+                <fullName>eFile Confirmation</fullName>
+                <default>false</default>
+                <label>eFile Confirmation</label>
+            </value>
+            <value>
+                <fullName>eFile Rejected</fullName>
+                <default>false</default>
+                <label>eFile Rejected</label>
+            </value>
+            <value>
+                <fullName>Complete</fullName>
+                <default>false</default>
+                <label>Complete</label>
+            </value>
+            <value>
+                <fullName>Emailed - No Response</fullName>
+                <default>false</default>
+                <label>Emailed - No Response</label>
+            </value>
+            <value>
+                <fullName>Discard</fullName>
+                <default>false</default>
+                <label>Discard</label>
+            </value>
+            <value>
+                <fullName>Called - Left VM</fullName>
+                <default>false</default>
+                <label>Called - Left VM</label>
+            </value>
+            <value>
+                <fullName>Called - Estimated Tax Not Needed</fullName>
+                <default>false</default>
+                <label>Called - Estimated Tax Not Needed</label>
+            </value>
+            <value>
+                <fullName>Accountant Assigned</fullName>
+                <default>false</default>
+                <label>Accountant Assigned</label>
+            </value>
+            <value>
+                <fullName>No Info in</fullName>
+                <default>false</default>
+                <label>No Info in</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

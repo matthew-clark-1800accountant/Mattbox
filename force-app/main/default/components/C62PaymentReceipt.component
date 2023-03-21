@@ -1,0 +1,104 @@
+<apex:component controller="C62PaymentReceiptController" access="global">
+
+<apex:attribute name="PayId" type="Id" description="Id of the Payment" assignTo="{!paymentId}" />
+
+<apex:repeat value="{!payment}" var="p"><!--something stupid you have to do to get this to actually work-->
+</apex:repeat>
+
+<!--{!debug}-->
+
+<span>
+Please review the receipt below to verify the correct billing information, if there are any discrepancies please contact us by email at 
+billing@1800accountant.com or by phone at 1-800-222-6868.
+</span>
+<br/>
+<br/>
+
+<span>
+<b>ORDER DETAILS</b>
+</span>
+
+<br/>
+<span>
+You have purchased: <b><apex:outputText value="{!purchased}"/></b>
+</span>
+
+<br/>
+<span>
+Amount Billed: <b><apex:outputText value="{0, number, currency}" label="Payment Amount">
+    <apex:param value="{!thePayment.Bill62__Amount__c}"/>
+</apex:outputText></b>
+</span>
+
+<br/>
+<span>
+Monthly Recurring Charge: <b><apex:outputText value="{0, number, currency}" label="Payment Amount">
+    <apex:param value="{!monthlyCharge}"/>
+</apex:outputText></b>
+</span>
+
+<br/>
+<span>
+Payment Method: <b><apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Name}"/></b>
+</span>
+
+<br/>
+<span>
+Payment Number: <b><apex:outputText value="{!thePayment.Name}"/></b>
+</span>
+
+<br/>
+<span>
+Order Date: <b><apex:outputText value="{0, date, MMMM d','  yyyy}">
+<apex:param value="{!thePayment.Bill62__Subscription__r.Bill62__Start_Date__c}"/>
+</apex:outputText></b>
+</span>
+
+<br/><br/>
+<span><b>Billing Address:</b></span><br/>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_1__c}"/><br/>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c}" 
+rendered="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c != null}"/>
+<apex:outputText value="" rendered="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c != null}"/>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__City__c}"/><span>, </span>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__State_Province__c}"/><span> </span>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Zip_Postal_Code__c}"/><br/>
+<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Country__c}"
+rendered="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Country__c != 'United States'}"/>
+
+<br/><br/>
+<span>-----------------------</span>
+<br/><br/>
+
+<span>If you have any general questions, please visit www.1800accountant.com or call one of 1800Accountant's representatives at 1-800-222-6868.</span>
+<br/><br/>
+
+<span>Cancellation and Refund Policy</span>
+<br/><br/>
+
+<p>Cancellations. Many of our products and services are available on a subscription basis, which you may cancel at any time. 
+In order to minimize any confusion, we can accept cancellations in writing ONLY. You can cancel by written notice to us by 
+e-mail billing@1800accountant.com or by FAX 646-381-9712 or by sending us a letter at the address listed below. Cancellation 
+will become effective as of the next monthly billing cycle following receipt. If you have purchased a service that requires your 
+participation, such as filing income tax returns or filing documents to establish a corporation, once our service is correctly 
+provided to you, you cannot cancel that previously provided service, even if you decide not to participate further. 
+Refunds. Monthly fees are non-refundable prior to cancellation, and are NOT pro-rated for partial months. All refunds will be 
+made using the same form of payment you used to pay the fees: if you paid via credit card, any refund will be credited to you 
+in the next monthly billing cycle following receipt of your cancellation notice. If you have paid any moneys your subscription 
+Services will be considered activated. If you have activated the Services, you acknowledge that we will retain the first month’s charges. 
+If you have purchased a service that requires your participation and we have yet to provide services you may request a full refund 
+within 30 days of activation. We may terminate all or part of your subscription with immediate effect and you will not be entitled 
+to a refund, by giving written notice to you if you commit a material breach of any provision of this Agreement, or a series of 
+breaches of this Agreement which when taken together amount to a material breach of this Agreement, provided that in the case of 
+a breach which is capable of remedy you fail to remedy the breach within fourteen (14) days of receiving a written request to do so.</p>
+<br/><br/>
+
+<span>1800Accountant</span><br/>
+<span>366 Madison Ave</span><br/>
+<span>New York, NY 10017</span><br/>
+<br/>
+<span>Phone: 1-800-222-6868</span><br/>
+<br/>
+<span>Email: Billing@1800accountant.com</span>
+
+</apex:component>

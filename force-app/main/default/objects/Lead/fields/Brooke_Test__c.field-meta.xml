@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Brooke_Test__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>to track unassigned appointments scheduled through emails</description>
+    <externalId>false</externalId>
+    <label>Brooke Test</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>f</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>lvala</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>equals</operation>
+        <value>7/22/2022</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>1-1 Request</value>
+    </filters>
+    <label>f</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Bravo_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

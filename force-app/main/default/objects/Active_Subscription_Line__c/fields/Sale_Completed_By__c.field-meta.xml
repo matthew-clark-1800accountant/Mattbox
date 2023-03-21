@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sale_Completed_By__c</fullName>
+    <description>The source of the subscription&apos;s original sale</description>
+    <externalId>false</externalId>
+    <formula>TEXT( ChargeOver_Subscription__r.Sale_Completed_By__c )</formula>
+    <label>Sale Completed By</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

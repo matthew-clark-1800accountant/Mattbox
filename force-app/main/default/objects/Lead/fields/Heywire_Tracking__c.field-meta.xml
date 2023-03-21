@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Heywire_Tracking__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>For reporting on text success</description>
+    <externalId>false</externalId>
+    <label>Heywire Tracking</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

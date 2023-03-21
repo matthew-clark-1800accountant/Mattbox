@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Permanent_Sales_Use_Tax</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Number__c</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Sales_and_Use_Tax_Status__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Sales_and_Use_Tax</value>
+    </filters>
+    <filters>
+        <field>Sales_and_Use_Tax_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Complete / Discard</value>
+    </filters>
+    <label>My Sales &amp; Use Tax</label>
+    <language>en_US</language>
+</ListView>

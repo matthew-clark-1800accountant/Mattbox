@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LA_s1800CST5</fullName>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>Lead_Type_New__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.UNREAD</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>1-800Accountant</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Attempted,Pitched,1-1 No Show</value>
+    </filters>
+    <filters>
+        <field>Time_Zone__c</field>
+        <operation>equals</operation>
+        <value>Central</value>
+    </filters>
+    <label>LA&apos;s1800CST!</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>Charlie_Team</role>
+    </sharedTo>
+</ListView>

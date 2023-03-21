@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Opp_Creation_on_Blacklisted_Acct</fullName>
+    <active>true</active>
+    <description>Prevent Accounts that are marked as Blacklisted from having opportunities created.</description>
+    <errorConditionFormula>AND (
+Account.Blacklisted__c = TRUE,
+NOT($Profile.Name = &quot;System Admin&quot;),
+NOT($Profile.Name = &quot;API User&quot;),
+NOT($Profile.Name = &quot;System Administrator&quot;)
+)</errorConditionFormula>
+    <errorMessage>This Account is blacklisted. You cannot create an opportunity. Please work with the Billing team.</errorMessage>
+</ValidationRule>

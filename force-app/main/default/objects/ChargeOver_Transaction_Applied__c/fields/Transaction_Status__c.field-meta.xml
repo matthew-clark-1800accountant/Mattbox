@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transaction_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Transaction Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Success</fullName>
+                <default>false</default>
+                <label>Success</label>
+            </value>
+            <value>
+                <fullName>Failed (decline)</fullName>
+                <default>false</default>
+                <label>Failed (decline)</label>
+            </value>
+            <value>
+                <fullName>Authorized</fullName>
+                <default>false</default>
+                <label>Authorized</label>
+            </value>
+            <value>
+                <fullName>Failed (unknown)</fullName>
+                <default>false</default>
+                <label>Failed (unknown)</label>
+            </value>
+            <value>
+                <fullName>Void</fullName>
+                <default>false</default>
+                <label>Void</label>
+            </value>
+            <value>
+                <fullName>Pending</fullName>
+                <default>false</default>
+                <label>Pending</label>
+            </value>
+            <value>
+                <fullName>Pending Batch</fullName>
+                <default>false</default>
+                <label>Pending Batch</label>
+            </value>
+            <value>
+                <fullName>Pending Settlement</fullName>
+                <default>false</default>
+                <label>Pending Settlement</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

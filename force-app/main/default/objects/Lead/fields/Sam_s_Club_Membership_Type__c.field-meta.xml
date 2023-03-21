@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sam_s_Club_Membership_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Sam&apos;s Club Membership Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Business Member Standard</fullName>
+                <default>false</default>
+                <label>Business Member Standard</label>
+            </value>
+            <value>
+                <fullName>Business Member Plus</fullName>
+                <default>false</default>
+                <label>Business Member Plus</label>
+            </value>
+            <value>
+                <fullName>Savings Member Standard</fullName>
+                <default>false</default>
+                <label>Savings Member Standard</label>
+            </value>
+            <value>
+                <fullName>Savings Member Plus</fullName>
+                <default>false</default>
+                <label>Savings Member Plus</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pitches_without_Follow_up</fullName>
+    <columns>Primary_Contact__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>Pitched</value>
+    </filters>
+    <filters>
+        <field>X1_1_Scheduled__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>10/15/2021 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>N_DAYS_AGO:14</value>
+    </filters>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>notEqual</operation>
+        <value>ZenBusiness</value>
+    </filters>
+    <filters>
+        <field>Sales_Rep__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>$$$Pitches WITHOUT Follow up$$$</label>
+    <sharedTo>
+        <roleAndSubordinates>Bravo_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

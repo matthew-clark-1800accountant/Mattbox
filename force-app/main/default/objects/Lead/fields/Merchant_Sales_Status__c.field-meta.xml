@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Merchant_Sales_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Merchant Sales Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New</fullName>
+                <default>true</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>Contacted</fullName>
+                <default>false</default>
+                <label>Contacted</label>
+            </value>
+            <value>
+                <fullName>1-1 Scheduled</fullName>
+                <default>false</default>
+                <label>1-1 Scheduled</label>
+            </value>
+            <value>
+                <fullName>1-1 No Show</fullName>
+                <default>false</default>
+                <label>1-1 No Show</label>
+            </value>
+            <value>
+                <fullName>Pitched</fullName>
+                <default>false</default>
+                <label>Pitched</label>
+            </value>
+            <value>
+                <fullName>Rate Review</fullName>
+                <default>false</default>
+                <label>Rate Review</label>
+            </value>
+            <value>
+                <fullName>App OUT</fullName>
+                <default>false</default>
+                <label>App OUT</label>
+            </value>
+            <value>
+                <fullName>App IN</fullName>
+                <default>false</default>
+                <label>App IN</label>
+            </value>
+            <value>
+                <fullName>Sold</fullName>
+                <default>false</default>
+                <label>Sold</label>
+            </value>
+            <value>
+                <fullName>Not Interested</fullName>
+                <default>false</default>
+                <label>Not Interested</label>
+            </value>
+            <value>
+                <fullName>Bad Number</fullName>
+                <default>false</default>
+                <label>Bad Number</label>
+            </value>
+            <value>
+                <fullName>Dead Lead</fullName>
+                <default>false</default>
+                <label>Dead Lead</label>
+            </value>
+            <value>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <label>Cancelled</label>
+            </value>
+            <value>
+                <fullName>Declined</fullName>
+                <default>false</default>
+                <label>Declined</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

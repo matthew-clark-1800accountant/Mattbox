@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Appt_Setters_cant_update_owners2</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(OwnerId),
+PRIORVALUE(OwnerId)=&apos;005j000000BODKS&apos;,
+$Profile.Name=&apos;Appointment Setter&apos;
+)</errorConditionFormula>
+    <errorMessage>Appt Setters cannot take ownership of this record</errorMessage>
+</ValidationRule>

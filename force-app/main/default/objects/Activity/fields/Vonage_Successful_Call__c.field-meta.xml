@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vonage_Successful_Call__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox for a call which has outcomes meaning the agent had a successful outcome e.g Sale Successful</description>
+    <externalId>false</externalId>
+    <label>Vonage Successful Call</label>
+    <type>Checkbox</type>
+</CustomField>

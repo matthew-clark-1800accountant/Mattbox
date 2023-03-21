@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FOPLIST</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7 and 8</booleanFilter>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Lead_Status__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>BK_Stage__c</field>
+        <operation>equals</operation>
+        <value>FOP On File</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>New,Contacted,1-1 No Show,Attempted</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>notEqual</operation>
+        <value>1-800,API</value>
+    </filters>
+    <filters>
+        <field>Account_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Cancelled,Cancel Pending</value>
+    </filters>
+    <filters>
+        <field>BK_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Not Interested</value>
+    </filters>
+    <filters>
+        <field>Rejection_Reason__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>Most_Recent_CB_Consult_Date__c</field>
+        <operation>lessThan</operation>
+        <value>4/16/2020 12:00 AM</value>
+    </filters>
+    <label>FOPLIST</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>Sales_Manager</role>
+        <roleAndSubordinates>India_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

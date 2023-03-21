@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subscription_Engagement_Rep__c</fullName>
+    <externalId>false</externalId>
+    <label>Subscription Engagement Rep</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Hayley Lambert</fullName>
+                <default>false</default>
+                <label>Hayley Lambert</label>
+            </value>
+            <value>
+                <fullName>Joseph Milana</fullName>
+                <default>false</default>
+                <label>Joseph Milana</label>
+            </value>
+            <value>
+                <fullName>Kayla Boles</fullName>
+                <default>false</default>
+                <label>Kayla Boles</label>
+            </value>
+            <value>
+                <fullName>Kenneth Meeks</fullName>
+                <default>false</default>
+                <label>Kenneth Meeks</label>
+            </value>
+            <value>
+                <fullName>Mark Johnson</fullName>
+                <default>false</default>
+                <label>Mark Johnson</label>
+            </value>
+            <value>
+                <fullName>Melanie Maynard</fullName>
+                <default>false</default>
+                <label>Melanie Maynard</label>
+            </value>
+            <value>
+                <fullName>Michael Richmond</fullName>
+                <default>false</default>
+                <label>Michael Richmond</label>
+            </value>
+            <value>
+                <fullName>Stacy McGinnis</fullName>
+                <default>false</default>
+                <label>Stacy McGinnis</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

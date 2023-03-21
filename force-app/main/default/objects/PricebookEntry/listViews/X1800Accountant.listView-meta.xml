@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X1800Accountant</fullName>
+    <columns>PRODUCT.NAME</columns>
+    <columns>PRODUCT.DEFAULT_PRICE</columns>
+    <columns>Product2.Monthly_Recurring__c</columns>
+    <columns>Product2.Quarterly_Recurring__c</columns>
+    <columns>Product2.Follow_Up_Billing__c</columns>
+    <columns>Product2.Renewal_Fee__c</columns>
+    <columns>Product2.Renewal_Rules__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRICEBOOK.ACTIVE</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>1800Accountant</label>
+</ListView>

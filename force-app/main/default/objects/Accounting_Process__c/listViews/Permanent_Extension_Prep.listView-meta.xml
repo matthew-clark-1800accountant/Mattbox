@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Permanent_Extension_Prep</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Number__c</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Extension_Status__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Extension</value>
+    </filters>
+    <filters>
+        <field>Extension_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Extension Info Unfinished,Complete,Discard</value>
+    </filters>
+    <label>My Extension Prep</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Zuora_Object__c</fullName>
+    <description>Which Zuora Object we should update (Account, Bill To Contact, Sold To Contact, Subscription)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Which Zuora Object we should update (Account, Bill To Contact, Sold To Contact, Subscription)</inlineHelpText>
+    <label>Zuora Object</label>
+    <length>255</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

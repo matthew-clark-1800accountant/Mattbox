@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Follow_ups_from_the_last_60_days</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>of_TSA_Follow_Up_Calls__c</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <columns>Days_Since_Last_Activity__c</columns>
+    <columns>Pitched_Date__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Lead_Status__c</columns>
+    <columns>Campaign__c</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>Time_Zone__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Pitched__c</field>
+        <operation>equals</operation>
+        <value>christopher diveris</value>
+    </filters>
+    <filters>
+        <field>Pitched_Date__c</field>
+        <operation>equals</operation>
+        <value>LAST_N_DAYS:60</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Qualified,Bad Number,Not Interested,Dupe,Do Not Call</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>Account_Status__c</field>
+        <operation>equals</operation>
+        <value>Prospect</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>General,Me</value>
+    </filters>
+    <label>My Follow-ups to Call OG</label>
+</ListView>

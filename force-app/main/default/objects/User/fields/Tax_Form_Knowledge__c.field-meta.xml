@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tax_Form_Knowledge__c</fullName>
+    <externalId>false</externalId>
+    <label>Tax Form Knowledge</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Trusts (1041)</fullName>
+                <default>false</default>
+                <label>Trusts (1041)</label>
+            </value>
+            <value>
+                <fullName>Partnerships (1065)</fullName>
+                <default>false</default>
+                <label>Partnerships (1065)</label>
+            </value>
+            <value>
+                <fullName>Corporations (1120)</fullName>
+                <default>false</default>
+                <label>Corporations (1120)</label>
+            </value>
+            <value>
+                <fullName>S Corps (1120S)</fullName>
+                <default>false</default>
+                <label>S Corps (1120S)</label>
+            </value>
+            <value>
+                <fullName>Individuals (1041)</fullName>
+                <default>false</default>
+                <label>Individuals (1041)</label>
+            </value>
+            <value>
+                <fullName>Non-Profit (990)</fullName>
+                <default>false</default>
+                <label>Non-Profit (990)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

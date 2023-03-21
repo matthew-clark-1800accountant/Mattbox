@@ -1,0 +1,29 @@
+<apex:page controller="ON24EventLinkGeneratorController" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:pageBlock >
+            
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Close" onclick="window.close();" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+            <apex:inputText label="Webinar URL" style="width:500px;font-size:1.2em" value="{!link}" id="link"/>
+            <apex:pageBlockTable value="{!eventNameMap}" var="event">
+                <apex:column headerValue="">
+                    <apex:commandButton value="Generate Link" action="{!generateLink}" rerender="link" status="status">
+                        <apex:param name="p1" value="{!event}"  assignTo="{!generateThisLink}"/>
+                    </apex:commandButton>
+                    <apex:commandButton value="Go to Registration Link" action="{!goToRegistration}" rerender="link" status="status">
+                        <apex:param name="p1" value="{!event}"  assignTo="{!generateThisLink}"/>
+                    </apex:commandButton>
+                </apex:column>
+                <apex:column headerValue="Event Name" value="{!event}"/>
+                <apex:column headerValue="Upcoming Times">
+                    <apex:dataTable value="{!eventNameMap[event]}" var="o">
+                        <apex:column value="{!o.Event_Time__c}"/>
+                    </apex:dataTable>                             
+                </apex:column>
+            </apex:pageBlockTable>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

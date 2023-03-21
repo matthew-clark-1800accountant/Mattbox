@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Entity_Service_Sold_Notification</fullName>
+        <ccEmails>entityspecialist@1800accountant.com</ccEmails>
+        <description>Entity Service Sold Notification</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>Corp_Sales/New_Entity_Service_Purchased</template>
+    </alerts>
+    <alerts>
+        <fullName>Expedited_Bookkeeping_Notification</fullName>
+        <ccEmails>casmanagement@1800accountant.com</ccEmails>
+        <description>Expedited Bookkeeping Notification</description>
+        <protected>false</protected>
+        <senderAddress>billing@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/New_Fulfillable_Service_Purchased</template>
+    </alerts>
+    <alerts>
+        <fullName>General_Fulfillable_Product</fullName>
+        <description>General Fulfillable Product</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>kchen@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>billing@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/New_Fulfillable_Service_Purchased</template>
+    </alerts>
+    <alerts>
+        <fullName>Nolo_s_Quicken_Willmaker_Trust</fullName>
+        <ccEmails>hthompson@1800accountant.com</ccEmails>
+        <description>Nolo&apos;s Quicken Willmaker &amp; Trust</description>
+        <protected>false</protected>
+        <senderAddress>billing@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/New_Fulfillable_Service_Purchased</template>
+    </alerts>
+    <alerts>
+        <fullName>VCorp_Sales_Use_Tax_Registration</fullName>
+        <ccEmails>salestaxregistration@1800accountant.com</ccEmails>
+        <description>VCorp Sales &amp; Use Tax Registration</description>
+        <protected>false</protected>
+        <senderAddress>billing@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/New_Fulfillable_Service_Purchased</template>
+    </alerts>
+</Workflow>

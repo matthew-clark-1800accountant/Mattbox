@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales</fullName>
+    <active>true</active>
+    <businessProcess>Sales</businessProcess>
+    <label>Sales (BNA)</label>
+    <picklistValues>
+        <picklist>At_Risk_Subscription_Lines__c</picklist>
+        <values>
+            <fullName>1-800Accountant Access</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Tax Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Tax Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Advisory</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Business_Operational__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cancellation_Reason__c</picklist>
+        <values>
+            <fullName>Cancellation Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partial Cancel Request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cancelled_within_30_Days__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_Portal_Issue__c</picklist>
+        <values>
+            <fullName>Add Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CP Access</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cogniance ticket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Password Reset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO Access</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Connected_w_Client__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Difficulty__c</picklist>
+        <values>
+            <fullName>Difficult</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moderate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Simple</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Error_Type__c</picklist>
+        <values>
+            <fullName>404</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>500</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lead Convert Error</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Finicity_Error_Code__c</picklist>
+        <values>
+            <fullName>10000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>102</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>103</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>106</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>108</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>109</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>130</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>169</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>170</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>185</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>187</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>324</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>44000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>503</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>525</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>910</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>924</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missing Transactions</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Finicity_Status__c</picklist>
+        <values>
+            <fullName>Sent to Customer Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ticket Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Finicity_i__c</picklist>
+        <values>
+            <fullName>Finicity - Invalid Credentials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finicity - Network Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>How_Long_Have_They_Been_a_Client__c</picklist>
+        <values>
+            <fullName>30 Days or Under</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>360 Days and Over</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Issue_Type__c</picklist>
+        <values>
+            <fullName>Dev</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finicity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tech</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LZ_Franchise_Status__c</picklist>
+        <values>
+            <fullName>Called - Left VM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - Needs Return</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Called - No Return Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New - Not Called</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Return - Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return - In Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Return - Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payroll_Cancellation_Reason__c</picklist>
+        <values>
+            <fullName>Closed Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doing Payroll on their own</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Go to another payroll provider</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not doing payroll</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Primary_Cancellation_Reason__c</picklist>
+        <values>
+            <fullName>Financial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fulfillment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Management Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Purchased_Productrs__c</picklist>
+        <values>
+            <fullName>-PKG%3A Basic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Basic %28Finance%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Basic %28Half Payment Plan%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Basic %2B Est Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Basic %2B Est Taxes %28Finance%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Basic %2B Est Taxes %28Half Payment%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Entity Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro %28Finance%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro %28Half Payment%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro %2B Est Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro %2B Est Taxes %28Finance%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>-PKG%3A Pro Plus %28Half Payment%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company Seal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate Binder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIN Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expedited Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Service Bookkeeping %2810%2F100%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Service Bookkeeping %285%2F50%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LZ Biz Income Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LZ Compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LZ Legal Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Entity Public Filing Notice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Operating Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll - 1 Employee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll - 3 Employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll - 5 employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll - 6 employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll - 7 employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quarterly Estimated Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resident Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales and Use Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Prep 2014 - Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Prep 2014 - Personal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unlimited Tax Consulting</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QA_Rep_Assigned__c</picklist>
+        <values>
+            <fullName>Armand Bachaspatimayum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esther Gonzalez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fong Saythanom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MaiPhuong Nguyen</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QA_Trends__c</picklist>
+        <values>
+            <fullName>All Included</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dedicated Bookkeeping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filings %28Other%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filings %28PTP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fulfillment Issue%28s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly Fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professionalism</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Not Resolved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resolved</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason_list__c</picklist>
+        <values>
+            <fullName>Behind on BK Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Contact %3E30 days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Deadline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reassignment_Reason__c</picklist>
+        <values>
+            <fullName>Chemistry%2FPersonality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gender</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professionalism</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Responsiveness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduling%2FAvailability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specialists by Industry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trust%2FAccuracy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winback Client</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reassignment_Type__c</picklist>
+        <values>
+            <fullName>Bookkeeper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Preparer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Retained_By__c</picklist>
+        <values>
+            <fullName>Comped Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discounted Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgraded Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended Refund Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Retained</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Postponed Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reassigned Accountant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refinanced Sale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utilized Fulfillment Chat</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Retained_Client__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Risk__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Secondary_Cancellation_Reason__c</picklist>
+        <values>
+            <fullName>Communication%2FTimeliness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Face to Face Interaction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Little to no business activity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oversold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prevention Alert</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Stage_When_Cancel_Requested__c</picklist>
+        <values>
+            <fullName>After Advisory Series%3B Before QBR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Discovery%3B Before Advisory Series</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Discovery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QBR or After</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Type_Category__c</picklist>
+        <values>
+            <fullName>Delay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escalation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offboarding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reassignment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Type__c</picklist>
+        <values>
+            <fullName>Chargeback</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subscription_Engagement_Rep__c</picklist>
+        <values>
+            <fullName>Hayley Lambert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joseph Milana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kayla Boles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Melanie Maynard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Michael Richmond</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stacy McGinnis</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subscription_Type__c</picklist>
+        <values>
+            <fullName>A La Carte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entity Formation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registered Agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Task_Type__c</picklist>
+        <values>
+            <fullName>Annual Report%2FFranchise Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping - Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping - Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping - Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bookkeeping - Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corp Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissolutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Agreements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Tax Prep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Tax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1023%2F1024 NonProfit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040 Individual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1040-ES Estimated Q4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1041%2F706%2F709%2FPayroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1065 Partnership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1120 Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 1120 S Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - 990 Tax Exempt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax - Business TBD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Consulting - LZ Limited</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Consulting - Unlimited</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Notice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trusts and Estates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Two Year Tax Review</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tax_Quarter__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tax_Year__c</picklist>
+        <values>
+            <fullName>2000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2001</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2002</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2003</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2004</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2005</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2006</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2007</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2008</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2009</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2011</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2012</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2013</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2014</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2015</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team_Leaders__c</picklist>
+        <values>
+            <fullName>Adnan Rasul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alex Zhong</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Christian TenEyck</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deni Hamzaraj</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Donna Casey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ermal Kukaj</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gabriella Deville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gerard Murat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gorson Qiao</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jeff Yu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jose Almonte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joseph LaMantia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joshua Meller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kelley Poppert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kelvin Chen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kristopher Zentner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kyle Guillou</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lea De Leon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leonid Sverdlov</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maria Nunez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mohammad Jamil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nenita Juarez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pam Kaur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reynard Lerot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Robert Schreiber</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rudy Robles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sajjad Afzal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sanch Sancho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sara Hussain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solomon Sionov</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sue Tse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Taneka Deveaux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vanessa Santiago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>William Liu</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tools_Used_to_Save__c</picklist>
+        <values>
+            <fullName>Business Audit Protection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discounted Monthly Retainer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discounted Service by 10%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discounted Service by 15%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discounted Service by 20%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended Refund Period 1 Week</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended Refund Period 2 Weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Tools Needed to Save</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Package Modification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Audit Protection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Save Appointment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Reassurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reassignment Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal Modification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement Consulting Appt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled Tax Appointment to Review Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utilizing Tax Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Waived 2-3 Monthlies</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transferred_to_Sales_Dissolution__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Trends__c</picklist>
+        <values>
+            <fullName>3 Business Day Cancel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client stated they didn%27t get renewal email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Crypto Complexities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing Audit Email Scare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Option 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid for Tax Prep in Portal - Already had the Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thought Bookkeeping was Included</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Internal</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Issue__c</picklist>
+        <values>
+            <fullName>Client Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ClientBooks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Workflow_Status__c</picklist>
+        <values>
+            <fullName>Client Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTO Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eFile Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eFile Confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eFile OptedOut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>eFiled</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

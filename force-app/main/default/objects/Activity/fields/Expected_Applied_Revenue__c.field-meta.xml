@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expected_Applied_Revenue__c</fullName>
+    <description>The expected applied revenue calculated based on the historical show rate and close rate of the TSA’s lead source.  This expected applied revenue counts for any TSA that is NOT dispositioned ‘Rescheduled’, ‘Canceled’, or ‘Consulted-Rescheduled’</description>
+    <externalId>false</externalId>
+    <label>Expected Applied Revenue</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

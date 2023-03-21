@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resource_Allocation_Fee_Applied__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Specifies if we deducted a resource allocation fee if a refund was issued.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check the box if we applied the resource allocation fee</inlineHelpText>
+    <label>Resource Allocation Fee Applied</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

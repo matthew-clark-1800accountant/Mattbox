@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Roman_Best_New_PD_Partner_NO_Shows_8_29</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>of_Calls__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>contains</operation>
+        <value>1-800Accountant,1800Accountant-Legacy,Bark,Dun &amp; Bradstreet,Swyft Filings,Z</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterThan</operation>
+        <value>3/1/2022</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>Attempted,New,Contacted,1-1 No Show,1-1 Cancelled</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>General,API</value>
+    </filters>
+    <filters>
+        <field>Campaign__c</field>
+        <operation>notEqual</operation>
+        <value>Entity Formation</value>
+    </filters>
+    <label>Roman Best New PD/Partner NO Shows*8/29</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Foxtrot_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

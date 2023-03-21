@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_1_800_EF_Accounts</fullName>
+    <columns>Campaign_Last_Touch__c</columns>
+    <columns>of_Calls__c</columns>
+    <columns>Lead_Status__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>utm_term__c</columns>
+    <columns>State_of_Formation__c</columns>
+    <columns>ACCOUNT.CREATED_DATE</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Campaign__c</field>
+        <operation>includes</operation>
+        <value>Call EIN,Call Entity Formation,Chat Entity Formation,EIN,Entity Formation</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>contains</operation>
+        <value>New,Contacted,Call Back Set,1-1 No Show,Pitched,Qualified,Attempted,EF Request</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>11/1/2021 12:00 AM</value>
+    </filters>
+    <label>My 1-800 EF Accounts</label>
+</ListView>

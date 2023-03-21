@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ZBundles</fullName>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>PRODUCT2.DESCRIPTION</columns>
+    <columns>zqu__SKU2__c</columns>
+    <columns>zqu__ZuoraId__c</columns>
+    <columns>zqu__Type__c</columns>
+    <columns>Top_10_Products__c</columns>
+    <columns>ServiceLine__c</columns>
+    <columns>zqu__SyncMessage__c</columns>
+    <columns>zqu__SyncStatus__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>zqu__Type__c</field>
+        <operation>equals</operation>
+        <value>Bundle</value>
+    </filters>
+    <label>Bundles</label>
+    <language>en_US</language>
+</ListView>

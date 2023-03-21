@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Eastern_2_Public</fullName>
+    <columns>NAME</columns>
+    <columns>Accountant_Assigned__c</columns>
+    <columns>OWNER.ALIAS</columns>
+    <columns>Bookkeeper_Assigned__c</columns>
+    <columns>Original_Dedicated_Accountant__c</columns>
+    <columns>M1_Bookkeeping_Status__c</columns>
+    <columns>M2_Bookkeeping_status__c</columns>
+    <columns>M3_Bookkeeping_Status__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>Account__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Bookkeeping</value>
+    </filters>
+    <filters>
+        <field>Year__c</field>
+        <operation>equals</operation>
+        <value>2017,2018</value>
+    </filters>
+    <filters>
+        <field>Mitel_Team__c</field>
+        <operation>equals</operation>
+        <value>Eastern Team #2</value>
+    </filters>
+    <filters>
+        <field>M3_Bookkeeping_Status__c</field>
+        <operation>notContain</operation>
+        <value>complete,discard</value>
+    </filters>
+    <label>Eastern 2 Public</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>Tax_Management</group>
+        <group>Tax_Managers_NYC</group>
+        <group>Tax_Prep_Reviewers</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TSA_Type_of_Appointment</fullName>
+    <active>true</active>
+    <description>Rule to restrict creation of TSA appointments from being manually created</description>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL( Type_of_Appointment__c, &apos;Tax Savings Analysis&apos;),
+ISPICKVAL( Type_of_Appointment__c, &apos;Formation Consultation&apos;),
+ISPICKVAL( Type_of_Appointment__c, &apos;BNA&apos;)),
+ISNEW(),
+NOT( $Permission.Admin_Validation_Rule_Override )
+)</errorConditionFormula>
+    <errorDisplayField>Type_of_Appointment__c</errorDisplayField>
+    <errorMessage>Only admins can create TSA, BNA, or Formation Consultation events</errorMessage>
+</ValidationRule>

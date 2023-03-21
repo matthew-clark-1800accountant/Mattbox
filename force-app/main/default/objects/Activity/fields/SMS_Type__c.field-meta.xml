@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SMS_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>SMS Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Advisory Reminder</fullName>
+                <default>false</default>
+                <label>Advisory Reminder</label>
+            </value>
+            <value>
+                <fullName>CB Invite</fullName>
+                <default>false</default>
+                <label>CB Invite</label>
+            </value>
+            <value>
+                <fullName>CB No Show</fullName>
+                <default>false</default>
+                <label>CB No Show</label>
+            </value>
+            <value>
+                <fullName>CB Reminder</fullName>
+                <default>false</default>
+                <label>CB Reminder</label>
+            </value>
+            <value>
+                <fullName>SDR No Answer</fullName>
+                <default>false</default>
+                <label>SDR No Answer</label>
+            </value>
+            <value>
+                <fullName>TSA Invite</fullName>
+                <default>false</default>
+                <label>TSA Invite</label>
+            </value>
+            <value>
+                <fullName>TSA No Show</fullName>
+                <default>false</default>
+                <label>TSA No Show</label>
+            </value>
+            <value>
+                <fullName>TSA Reminder</fullName>
+                <default>false</default>
+                <label>TSA Reminder</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

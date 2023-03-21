@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDR_Appointment_Dispo_visibility_ALL</fullName>
+    <active>true</active>
+    <description>Prevents SDRs from using the Consulted disposition</description>
+    <errorConditionFormula>AND(
+ $Profile.Name = &apos;Appointment Setter&apos;,
+ISPICKVAL( Appointment_Disposition__c , &apos;Consulted&apos;),
+ISCHANGED(Appointment_Disposition__c))</errorConditionFormula>
+    <errorDisplayField>Appointment_Disposition__c</errorDisplayField>
+    <errorMessage>SDRs cannot use the &quot;Consulted&quot; Disposition.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ClientBooks_Trial_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>ClientBooks Trial Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>30 Days</fullName>
+                <default>false</default>
+                <label>30 Days</label>
+            </value>
+            <value>
+                <fullName>60 Days</fullName>
+                <default>false</default>
+                <label>60 Days</label>
+            </value>
+            <value>
+                <fullName>90 Days</fullName>
+                <default>false</default>
+                <label>90 Days</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

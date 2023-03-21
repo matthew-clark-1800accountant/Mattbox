@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_Progress</fullName>
+    <columns>NAME</columns>
+    <columns>Account_Name__c</columns>
+    <columns>Majority_Owner_Contact__c</columns>
+    <columns>Dissolution_Status__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dissolution_Status__c</field>
+        <operation>equals</operation>
+        <value>Set-up,Dissolution - Pending Info,Refer to Note</value>
+    </filters>
+    <label>In Progress</label>
+    <language>en_US</language>
+</ListView>

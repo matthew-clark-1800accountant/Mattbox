@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TSA_Performance__c</fullName>
+    <externalId>false</externalId>
+    <label>TSA Performance</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>High</fullName>
+                <default>false</default>
+                <label>High</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
+            </value>
+            <value>
+                <fullName>Low</fullName>
+                <default>false</default>
+                <label>Low</label>
+            </value>
+            <value>
+                <fullName>New Hire</fullName>
+                <default>false</default>
+                <label>New Hire</label>
+            </value>
+            <value>
+                <fullName>No Tier</fullName>
+                <default>false</default>
+                <label>No Tier</label>
+            </value>
+            <value>
+                <fullName>Elite</fullName>
+                <default>false</default>
+                <label>Elite</label>
+            </value>
+            <value>
+                <fullName>All TSAs Low</fullName>
+                <default>false</default>
+                <label>All TSAs Low</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

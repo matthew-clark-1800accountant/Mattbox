@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_TSA_Change</fullName>
+    <active>true</active>
+    <description>This rule prevents users from changing the owner of a TSA unless a manager or the user is the owner</description>
+    <errorConditionFormula>AND(
+NOT($Profile.Name = &quot;System Admin&quot;),
+NOT($Profile.Name = &quot;Sales Manager&quot;),
+NOT($Profile.Name = &quot;SDDR Manager&quot;),
+NOT($Profile.Name = &quot;API User&quot;),
+NOT($Profile.Name = &quot;System Administrator&quot;),
+NOT(CONTAINS(Subject,&apos;Live&apos;)),
+ISCHANGED(OwnerId),
+$User.Id != PRIORVALUE(OwnerId),
+Owner:User.Profile.Name != &apos;Sales Manager&apos;,
+PRIORVALUE(OwnerId) != &apos;0055e000007Bkyv&apos;/*Brian Labus*/,
+PRIORVALUE(OwnerId) != &apos;005f100000Hc35S&apos;/*Israel Vazquez*/,
+PRIORVALUE(OwnerId) != &apos;005f100000HZcn3&apos;/*Keith Marzi*/,
+PRIORVALUE(OwnerId) != &apos;005j000000BNyXe&apos;/*Floria Royals*/,
+PRIORVALUE(OwnerId) != &apos;005j000000C6PkQ&apos;/*JT Keenan*/,
+PRIORVALUE(OwnerId) != &apos;005f100000IPNtx&apos;/*Christopher Sample*/,
+OR(ISPICKVAL ( Type_of_Appointment__c , &apos;Tax Savings Analysis&apos;),
+ISPICKVAL ( Type_of_Appointment__c , &apos;BNA&apos;),
+ISPICKVAL (Type_of_Appointment__c , &apos;Formation Consultation&apos;)))</errorConditionFormula>
+    <errorMessage>You can only change the owner of your own events, those owned by a manager, or live events</errorMessage>
+</ValidationRule>

@@ -1,0 +1,16 @@
+<apex:page standardController="Contact" extensions="C62ContactOverrideController" tabStyle="Contact">
+    
+	<apex:outputPanel id="theOutputPanel">
+		<chatter:feedWithFollowers entityId="{!contact.Id}" showHeader="true" />
+        <apex:detail inlineEdit="true" relatedList="true" id="theDetail"/> 
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!collectionPayments.size > 0}">
+        <script>
+            alert('Outstanding Payments – Please transfer client to the billing department before any work is done.');
+        </script>
+    </apex:outputPanel>
+
+    
+
+</apex:page>

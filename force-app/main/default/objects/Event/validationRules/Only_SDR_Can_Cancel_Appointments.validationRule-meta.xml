@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_SDR_Can_Cancel_Appointments</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT($Profile.Name = &quot;System Admin&quot;),
+NOT($Profile.Name = &quot;SDR Manager&quot;),
+NOT($Profile.Name = &quot;Appointment Setter&quot;),
+NOT($Profile.Name = &quot;API User&quot;),
+NOT($Profile.Name = &quot;System Administrator&quot;) , 
+NOT(ISBLANK(TEXT( Appointment_Disposition__c ))), 
+TEXT(Appointment_Disposition__c)=&quot;Cancelled&quot;)</errorConditionFormula>
+    <errorMessage>Only SDRs or Admins may Cancel an Appointment</errorMessage>
+</ValidationRule>

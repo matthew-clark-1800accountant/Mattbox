@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bark_Lead_Owner</fullName>
+    <active>false</active>
+    <description>This validation rule has been deprecated by the LeadPreventOwnerChange apex class. Will retain here until things are confirmed functional.</description>
+    <errorConditionFormula>AND(
+    NOT($Profile.Name = &quot;System Admin&quot;),
+    NOT($Profile.Name = &quot;Billing&quot;),
+    NOT($Profile.Name = &quot;API User&quot;),
+    NOT($Profile.Name = &quot;System Administrator&quot;),
+    BEGINS(PRIORVALUE(OwnerId) , &apos;005&apos;), 
+    ISCHANGED(OwnerId),  
+    ISPICKVAL(LeadSource, &apos;Bark&apos;),
+    NOT(Owner:User.FirstName = &apos;Dead Leads&apos;),
+    NOT(Owner:Queue.QueueName = &apos;Bark_Leads_Queue&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>You cannot change the Lead Owner if the Lead Source is Bark and the Lead Owner is not a Queue</errorMessage>
+</ValidationRule>

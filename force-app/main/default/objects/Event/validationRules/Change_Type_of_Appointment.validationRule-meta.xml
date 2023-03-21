@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_Type_of_Appointment</fullName>
+    <active>true</active>
+    <description>Restricts editing of the Type of Appointment field to admins</description>
+    <errorConditionFormula>ISCHANGED( Type_of_Appointment__c) &amp;&amp; NOT($Permission.Admin_Validation_Rule_Override)</errorConditionFormula>
+    <errorDisplayField>Type_of_Appointment__c</errorDisplayField>
+    <errorMessage>Only Admins can change the Type of Appointment field.</errorMessage>
+</ValidationRule>

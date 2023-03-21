@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type_Category__c</fullName>
+    <description>Additional level of detail depending on the Sub-Type of the case.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Additional level of detail depending on the Sub-Type of the case.</inlineHelpText>
+    <label>Sub-Type Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Sub_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Delay</fullName>
+                <default>false</default>
+                <label>Delay</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>Escalation</fullName>
+                <default>false</default>
+                <label>Escalation</label>
+            </value>
+            <value>
+                <fullName>Offboarding</fullName>
+                <default>false</default>
+                <label>Offboarding</label>
+            </value>
+            <value>
+                <fullName>Reassignment</fullName>
+                <default>false</default>
+                <label>Reassignment</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Payroll</controllingFieldValue>
+            <controllingFieldValue>Assignment Adjustment</controllingFieldValue>
+            <controllingFieldValue>Bookkeeping</controllingFieldValue>
+            <valueName>Escalation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payroll</controllingFieldValue>
+            <controllingFieldValue>Assignment Adjustment</controllingFieldValue>
+            <controllingFieldValue>Bookkeeping</controllingFieldValue>
+            <valueName>Offboarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payroll</controllingFieldValue>
+            <controllingFieldValue>Assignment Adjustment</controllingFieldValue>
+            <controllingFieldValue>Bookkeeping</controllingFieldValue>
+            <valueName>Reassignment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Returns</controllingFieldValue>
+            <valueName>Delay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tax Returns</controllingFieldValue>
+            <valueName>Error</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STF_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>STF Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New- Email Sent</fullName>
+                <default>false</default>
+                <label>New- Email Sent</label>
+            </value>
+            <value>
+                <fullName>Emailed - Second Attempt</fullName>
+                <default>false</default>
+                <label>Emailed - Second Attempt</label>
+            </value>
+            <value>
+                <fullName>Called - Left VM</fullName>
+                <default>false</default>
+                <label>Called - Left VM</label>
+            </value>
+            <value>
+                <fullName>Called - No Return Needed</fullName>
+                <default>false</default>
+                <label>Called - No Return Needed</label>
+            </value>
+            <value>
+                <fullName>Called - Needs Return</fullName>
+                <default>false</default>
+                <label>Called - Needs Return</label>
+            </value>
+            <value>
+                <fullName>Return - In Process</fullName>
+                <default>false</default>
+                <label>Return - In Process</label>
+            </value>
+            <value>
+                <fullName>Return - Issues</fullName>
+                <default>false</default>
+                <label>Return - Issues</label>
+            </value>
+            <value>
+                <fullName>Return - Complete</fullName>
+                <default>false</default>
+                <label>Return - Complete</label>
+            </value>
+            <value>
+                <fullName>Closed - No Response</fullName>
+                <default>false</default>
+                <label>Closed - No Response</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

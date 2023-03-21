@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Collection_Invoice_URL__c</fullName>
+    <description>The URL for sales reps to use to collect past due invoices</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The URL for sales reps to use to collect past due invoices</inlineHelpText>
+    <label>Sales Collection Invoice URL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

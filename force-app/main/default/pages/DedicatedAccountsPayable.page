@@ -1,0 +1,318 @@
+<apex:page controller="DedicatedAccountsPayableController" sidebar="false" tabStyle="Bill62__Payment__c">
+    <apex:includeScript value="{!URLFOR($Resource.Bill62__jQuery_UI,'/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Bill62__jqDataTable,'/DataTables-1.9.4/media/js/jquery.dataTables.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.Bill62__jqDataTable,'/DataTables-1.9.4/media/css/jquery.dataTables.css')}"/>
+    <script>
+        var j$ = jQuery.noConflict();
+    </script>
+    
+  <apex:form id="theForm">
+      <!--Loading Spinner-->
+      <apex:actionstatus id="status">
+        <apex:facet name="stop">
+        </apex:facet>
+        <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading" style="z-index:999;width:100%"> 
+                <div class="waitingHolder" style="z-index:999; opacity:1.0;position:fixed;top:200px;right:50%;margin-right:-100px; width: 100px;height: 25px;background-color: #fff;border: 1px solid black;border-radius: 5px;padding-top: 10px;color: #000;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Working..." />
+                    <span class="waitingDescription" style="color:#000; opacity:1.0;">Working...</span>
+                </div>
+            </div> 
+        </apex:facet>
+    </apex:actionstatus>
+    
+    
+      <apex:pageBlock title="Accounts Payable Report">
+      
+          <apex:pageBlockSection title="Filter Criteria">
+              <apex:inputField value="{!setting.Dedicated_Start_Date__c}" label="Accounts Created After" required="false"/>
+              <apex:inputField value="{!setting.Dedicated_Date__c}" label="Accounts Created Before" required="false"/>
+              
+              <apex:inputField value="{!dateHolder.Bill62__Cycle_Start_Date__c}" label="Report Start Date"/>
+              <apex:inputField value="{!dateHolder.Bill62__Cycle_End_Date__c}" label="Report End Date"/>
+              <center><apex:commandButton value="Rerun Report" action="{!fetchData}" status="status" rerender="theForm"/></center>
+          </apex:pageBlockSection>
+          
+          <apex:pageBlockSection title="Summary">
+              <apex:panelGrid id="summaryGrid" columns="3" rules="all">
+                <apex:outputText />
+                <apex:outputText ><b>Total Due</b></apex:outputText>
+                <apex:outputText ><b>Total Paid</b></apex:outputText>
+                
+                <apex:outputText ><b>Paid Accounts Totals</b></apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Due" style="text-align:right;">
+                    <apex:param value="{!amountDuePaid}"/>
+                </apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Paid" style="text-align:right;">
+                    <apex:param value="{!amountPaidPaid}"/>
+                </apex:outputText>
+                <apex:outputText ><b>Quarterly Accounts Totals</b></apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Due" style="text-align:right;">
+                    <apex:param value="{!amountDueOutside}"/>
+                </apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Paid" style="text-align:right;">
+                    <apex:param value="{!amountPaidOutside}"/>
+                </apex:outputText>
+                <apex:outputText ><b>Collections Accounts Totals</b></apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Due" style="text-align:right;">
+                    <apex:param value="{!amountDueCollections}"/>
+                </apex:outputText>
+                <apex:outputText value="{0, number, currency}" label="Total Paid" style="text-align:right;">
+                    <apex:param value="{!amountPaidCollections}"/>
+                </apex:outputText>
+            </apex:panelGrid>
+          </apex:pageBlockSection>
+          
+          <apex:pageBlockSection title="Paid Accounts" collapsible="true" columns="1">
+              <apex:pageblockTable value="{!PaidAccounts}" var="a" width="100%"  styleclass="dataTable">
+                  <apex:column headerValue="Account Name" width="15%">
+                      <apex:outputLink value="/{!a.theAccount.Id}">{!a.theAccount.Name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column headerValue="Customer Number">
+                      <apex:outputField value="{!a.theAccount.Customer_Number__c}"/>
+                  </apex:column>
+                  <apex:column headerValue="Payment Record" width="17%">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputLink value="/{!p.thePayment.Bill62__Transaction_Id__c}">{!p.thePayment.Bill62__Description__c}</apex:outputLink><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Frequency">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          {!p.thePayment.Bill62__Subscription_Line__r.Cycle_Type__c}<br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <!--<apex:column headerValue="Amount Due in Period" style="text-align:right;">
+                      <b>Total Due: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalDue}"/>
+                      </apex:outputText>
+                      </b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && !p.isPaid}" style="text-align:right;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>-->
+                  <apex:column headerValue="Amount Paid in Period" style="text-align:right;">
+                      <b>Total Paid: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalPaid}"/>
+                      </apex:outputText></b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && p.isPaid}" style="text-align:right;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c - IF(p.thePayment.Bill62__Amount_Refunded__c != null,p.thePayment.Bill62__Amount_Refunded__c,0.0)}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Payment Date">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Payment_Date__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Payment Status">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Status__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+              </apex:pageblockTable>
+              <!--<script>
+                  j$('table.dataTable').dataTable({
+                      sPaginationType: 'full_numbers',
+                      'aLengthMenu':[[20,50,100,200],[20,50,100,200]],
+                      'iDisplayLength':20
+                  });
+              </script>-->
+          </apex:pageBlockSection>
+
+
+          <apex:pageBlockSection title="Quarterly Accounts Paid Outside Report Period" collapsible="true" columns="1">
+              <apex:pageblockTable value="{!quarterlyAccounts}" var="a" width="100%"  styleclass="dataTable">
+                  <apex:column headerValue="Account Name" width="15%">
+                      <apex:outputLink value="/{!a.theAccount.Id}">{!a.theAccount.Name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column headerValue="Customer Number">
+                      <apex:outputField value="{!a.theAccount.Customer_Number__c}"/>
+                  </apex:column>
+                  <apex:column headerValue="Payment Record" width="17%">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputLink value="/{!p.thePayment.Bill62__Transaction_Id__c}">{!p.thePayment.Bill62__Description__c}</apex:outputLink><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Frequency">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          {!p.thePayment.Bill62__Subscription_Line__r.Cycle_Type__c}<br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Amount Due in Period" style="text-align:right;">
+                      <b>Total Due: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalDue}"/>
+                      </apex:outputText>
+                      </b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}"  style="text-align:right;"><!--rendered="{!p.dueInRange && !p.isPaid}"-->
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <!--<apex:column headerValue="Amount Paid in Period" style="text-align:right;">
+                      <b>Total Paid: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalPaid}"/>
+                      </apex:outputText></b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && p.isPaid}" style="text-align:right;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c - IF(p.thePayment.Bill62__Amount_Refunded__c != null,p.thePayment.Bill62__Amount_Refunded__c,0.0)}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>-->
+                  <apex:column headerValue="Payment Date">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Payment_Date__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Payment Status">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Status__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+              </apex:pageblockTable>
+          </apex:pageBlockSection>
+          
+          
+          <apex:pageBlockSection title="Accounts in Collections" collapsible="true" columns="1">
+              <apex:pageblockTable value="{!collectionsAccounts}" var="a" width="100%"  styleclass="dataTable">
+                  <apex:column headerValue="Account Name" width="15%">
+                      <apex:outputLink value="/{!a.theAccount.Id}">{!a.theAccount.Name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column headerValue="Customer Number">
+                      <apex:outputField value="{!a.theAccount.Customer_Number__c}"/>
+                  </apex:column>
+                  <apex:column headerValue="Payment Record" width="17%">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputLink value="/{!p.thePayment.Bill62__Transaction_Id__c}">{!p.thePayment.Bill62__Description__c}</apex:outputLink><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Frequency">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          {!p.thePayment.Bill62__Subscription_Line__r.Cycle_Type__c}<br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Amount Due in Period" style="text-align:right;">
+                      <b>Total Due: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalDue}"/>
+                      </apex:outputText>
+                      </b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && !p.isPaid}" style="text-align:right;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <!--<apex:column headerValue="Amount Paid in Period" style="text-align:right;">
+                      <b>Total Paid: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:right;">
+                          <apex:param value="{!a.TotalPaid}"/>
+                      </apex:outputText></b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && p.isPaid}" style="text-align:right;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c - IF(p.thePayment.Bill62__Amount_Refunded__c != null,p.thePayment.Bill62__Amount_Refunded__c,0.0)}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>-->
+                  <apex:column headerValue="Payment Date">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Payment_Date__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Payment Status">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Status__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+              </apex:pageblockTable>
+          </apex:pageBlockSection>
+          
+          
+          <apex:pageBlockSection title="Potential Problem Accounts" collapsible="true" columns="1">
+              <apex:pageblockTable value="{!problemAccounts}" var="a" width="70%"  styleclass="dataTable">
+                  <apex:column headerValue="Account Name" width="15%">
+                      <apex:outputLink value="/{!a.theAccount.Id}">{!a.theAccount.Name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column headerValue="Customer Number">
+                      <apex:outputField value="{!a.theAccount.Customer_Number__c}"/>
+                  </apex:column>
+                  <!--<apex:column headerValue="Payment Record" width="17%">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputLink value="/{!p.thePayment.Bill62__Transaction_Id__c}">{!p.thePayment.Bill62__Description__c}</apex:outputLink><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Frequency">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          {!p.thePayment.Bill62__Subscription_Line__r.Cycle_Type__c}<br/>
+                      </apex:repeat>
+                  </apex:column>-->
+                  <apex:column headerValue="Amount Due in Period" style="text-align:left;">
+                      <b>Total Due: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:left;">
+                          <apex:param value="{!a.TotalDue}"/>
+                      </apex:outputText>
+                      </b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && !p.isPaid}" style="text-align:left;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Amount Paid in Period" style="text-align:left;">
+                      <b>Total Paid: 
+                      <apex:outputText value=" {0, number, currency}" style="text-align:left;">
+                          <apex:param value="{!a.TotalPaid}"/>
+                      </apex:outputText></b><br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputText value="{0, number, currency}" rendered="{!p.dueInRange && p.isPaid}" style="text-align:left;">
+                              <apex:param value="{!p.thePayment.Bill62__Amount__c - IF(p.thePayment.Bill62__Amount_Refunded__c != null,p.thePayment.Bill62__Amount_Refunded__c,0.0)}"/>
+                          </apex:outputText><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <!--<apex:column headerValue="Payment Date">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Payment_Date__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>
+                  <apex:column headerValue="Payment Status">
+                      <br/>
+                      <apex:repeat value="{!a.Payments}" var="p">
+                          <apex:outputField value="{!p.thePayment.Bill62__Status__c}"/><br/>
+                      </apex:repeat>
+                  </apex:column>-->
+              </apex:pageblockTable>
+          </apex:pageBlockSection>
+          
+          <script>
+              j$('table.dataTable').dataTable({
+                  sPaginationType: 'full_numbers',
+                  'aLengthMenu':[[10,20,50,100,200],[10,20,50,100,200]],
+                  'iDisplayLength':10
+              });
+          </script>
+
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

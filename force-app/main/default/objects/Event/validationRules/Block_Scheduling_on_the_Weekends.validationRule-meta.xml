@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Scheduling_on_the_Weekends</fullName>
+    <active>false</active>
+    <description>Blocks Floria,J Roman, JT Keenan&apos;s teams from scheduling appts on the weekend.</description>
+    <errorConditionFormula>AND( 
+CASE(MOD(  ActivityDate  - DATE(1900, 1, 7), 7),
+0, 0,
+6, 0,
+1) = 0, 
+$Profile.Name  = &quot;InsideSalesUser - Zuora&quot;
+)</errorConditionFormula>
+    <errorMessage>You may not schedule an appointment on the weekend.</errorMessage>
+</ValidationRule>

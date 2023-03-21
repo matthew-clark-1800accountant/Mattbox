@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>The_Closers_New_for_Reps</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.STATE</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>contains</operation>
+        <value>jroma</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterThan</operation>
+        <value>8/2/2019</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>lessOrEqual</operation>
+        <value>2/7/2020</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notContain</operation>
+        <value>1-1 Request,Pitched,Qualified,Not Interested</value>
+    </filters>
+    <label>The Closers New for Reps</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Foxtrot_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

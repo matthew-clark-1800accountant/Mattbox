@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <description>Switch from True to False</description>
+        <name>Set_As_False</name>
+        <label>Set As False</label>
+        <locationX>864</locationX>
+        <locationY>743</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_thru_each_Invoice_Line.Historical_Update__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Historical_Update_Field</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set from False to True</description>
+        <name>Set_As_True</name>
+        <label>Set As True</label>
+        <locationX>1128</locationX>
+        <locationY>743</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_thru_each_Invoice_Line.Historical_Update__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Historical_Update_Field</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check to see the current value in the Historical Update field</description>
+        <name>Historical_Update</name>
+        <label>Historical Update?</label>
+        <locationX>996</locationX>
+        <locationY>623</locationY>
+        <defaultConnector>
+            <targetReference>Set_As_True</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>true</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_thru_each_Invoice_Line.Historical_Update__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_As_False</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <description>Updates to the ChargeOver Subscription Line records. Primarily used to update the Historical Update field on all related Invoice Line records for the same product.</description>
+    <environments>Default</environments>
+    <interviewLabel>ChargeOver Subscription Line {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ChargeOver Subscription Line</label>
+    <loops>
+        <description>Check each Invoice Line Item</description>
+        <name>Loop_thru_each_Invoice_Line</name>
+        <label>Loop thru each Invoice Line</label>
+        <locationX>776</locationX>
+        <locationY>503</locationY>
+        <collectionReference>Find_Related_Invoice_Lines</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Historical_Update</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Find all related unpaid invoice lines</description>
+        <name>Find_Related_Invoice_Lines</name>
+        <label>Find Related Invoice Lines</label>
+        <locationX>776</locationX>
+        <locationY>383</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_thru_each_Invoice_Line</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>ChargeOver_Invoice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Unpaid</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ChargeOver_Invoice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Overdue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ChargeOver_Subscription_Line_Item__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ChargeOver_Invoice_Line_Item__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ChargeOver_Invoice_Status__c</queriedFields>
+        <queriedFields>Historical_Update__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the value in the Historical Update field</description>
+        <name>Update_Historical_Update_Field</name>
+        <label>Update Historical Update Field</label>
+        <locationX>996</locationX>
+        <locationY>959</locationY>
+        <inputReference>Loop_thru_each_Invoice_Line</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Find_Related_Invoice_Lines</targetReference>
+        </connector>
+        <filterFormula>OR(
+ISNEW(),
+ISCHANGED({!$Record.Historical_Update__c}),
+ISCHANGED({!$Record.Status__c}))</filterFormula>
+        <object>ChargeOver_Subscription_Line_Item__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

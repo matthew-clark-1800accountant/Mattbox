@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Corp_Lead_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Corp Lead Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New</fullName>
+                <default>true</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>Contacted</fullName>
+                <default>false</default>
+                <label>Contacted</label>
+            </value>
+            <value>
+                <fullName>Webinar Requested</fullName>
+                <default>false</default>
+                <label>Webinar Requested</label>
+            </value>
+            <value>
+                <fullName>Webinar Attended</fullName>
+                <default>false</default>
+                <label>Webinar Attended</label>
+            </value>
+            <value>
+                <fullName>Webinar No Show</fullName>
+                <default>false</default>
+                <label>Webinar No Show</label>
+            </value>
+            <value>
+                <fullName>1-1 Request</fullName>
+                <default>false</default>
+                <label>1-1 Request</label>
+            </value>
+            <value>
+                <fullName>1-1 No Show</fullName>
+                <default>false</default>
+                <label>1-1 No Show</label>
+            </value>
+            <value>
+                <fullName>Pitched</fullName>
+                <default>false</default>
+                <label>Pitched</label>
+            </value>
+            <value>
+                <fullName>Qualified</fullName>
+                <default>false</default>
+                <label>Qualified</label>
+            </value>
+            <value>
+                <fullName>Bad Number</fullName>
+                <default>false</default>
+                <label>Bad Number</label>
+            </value>
+            <value>
+                <fullName>Not Interested</fullName>
+                <default>false</default>
+                <label>Not Interested</label>
+            </value>
+            <value>
+                <fullName>Dupe</fullName>
+                <default>false</default>
+                <label>Dupe</label>
+            </value>
+            <value>
+                <fullName>Do Not Call</fullName>
+                <default>false</default>
+                <label>Do Not Call</label>
+            </value>
+            <value>
+                <fullName>Not Interested in Finance</fullName>
+                <default>false</default>
+                <label>Not Interested in Finance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

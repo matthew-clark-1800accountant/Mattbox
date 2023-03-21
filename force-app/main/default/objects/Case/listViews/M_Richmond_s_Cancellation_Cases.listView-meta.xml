@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M_Richmond_s_Cancellation_Cases</fullName>
+    <columns>Risk__c</columns>
+    <columns>Original_Payment_Amount__c</columns>
+    <columns>Subscription_Type__c</columns>
+    <columns>How_Long_Have_They_Been_a_Client__c</columns>
+    <columns>Onboarding_Date__c</columns>
+    <columns>Sales_Rep__c</columns>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.RECORDTYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>mrich</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>New,Cancellation Requested,Save Attempt,To Be Assigned</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.Subscription_Review,Case.Billing</value>
+    </filters>
+    <label>M. Richmond&apos;s Cancellation Cases</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>Sales_Rep</role>
+    </sharedTo>
+</ListView>

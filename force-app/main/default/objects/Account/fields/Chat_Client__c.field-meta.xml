@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Chat_Client__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used for list of clients for chat on website. Check if the client has one of the following Active Subscriptions: Additional Personal Return, Personal Tax Preparation, Business Tax Preparation, Expedited Business Tax Preparation, Personal Expedited Tax Preparation, Schedule C, Schedule Tax Filing, Schedule C w/ Bundle</description>
+    <externalId>false</externalId>
+    <label>Chat Client</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

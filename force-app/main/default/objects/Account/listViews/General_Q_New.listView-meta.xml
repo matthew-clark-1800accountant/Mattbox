@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>General_Q_New</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Distribute_Date__c</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Primary_Contact__c</columns>
+    <columns>ACCOUNT.ADDRESS1_STATE</columns>
+    <columns>Lead_Status__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Lead_Type_New__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>equals</operation>
+        <value>General</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>equals</operation>
+        <value>New,Contacted,Attempted</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>notContain</operation>
+        <value>Business Portal,Copy</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessOrEqual</operation>
+        <value>10/1/2018</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>lessThan</operation>
+        <value>8/1/2018</value>
+    </filters>
+    <label>General Q - New</label>
+    <language>en_US</language>
+    <sharedTo>
+        <role>BNA_Team</role>
+        <role>Bravo_Team</role>
+        <role>Charlie_Team</role>
+        <role>Delta_Team</role>
+        <role>Jason_s_Team</role>
+        <role>Manager</role>
+        <role>Mark_Stephen_s_team</role>
+        <role>Office_Manager</role>
+        <role>Sales_Rep</role>
+    </sharedTo>
+</ListView>

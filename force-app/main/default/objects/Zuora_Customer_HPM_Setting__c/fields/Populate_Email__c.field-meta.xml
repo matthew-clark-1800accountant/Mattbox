@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Populate_Email__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Whether or not the Customer HPM Customization will populate the Email from the Bill To Contact into the IFrame</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Whether or not the Customer HPM Customization will populate the Email from the Bill To Contact into the IFrame</inlineHelpText>
+    <label>Populate Email</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

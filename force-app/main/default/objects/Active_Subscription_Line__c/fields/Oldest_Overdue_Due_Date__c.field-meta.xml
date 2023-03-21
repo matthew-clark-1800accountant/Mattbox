@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oldest_Overdue_Due_Date__c</fullName>
+    <description>The Due Date of the related ChargeOver Subscription Line&apos;s related invoices where the Status is Overdue and has the oldest Due Date. Used to help calculate how many days a line item is overdue so we can shut off services.</description>
+    <externalId>false</externalId>
+    <label>Oldest Overdue Due Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

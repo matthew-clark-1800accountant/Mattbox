@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Add_Special_Message__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Adds the message saved in the Org Defaults custom setting to the Payment invoice</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Adds the message saved in the Org Defaults custom setting to the Payment invoice</inlineHelpText>
+    <label>Add Special Message</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

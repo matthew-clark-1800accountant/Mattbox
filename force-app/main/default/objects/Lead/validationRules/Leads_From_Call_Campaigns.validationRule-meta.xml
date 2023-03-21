@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Leads_From_Call_Campaigns</fullName>
+    <active>false</active>
+    <description>Leads from &quot;call campaigns&quot; must have the &quot;How Did you Hear About Us?&quot; field completed.</description>
+    <errorConditionFormula>AND(
+NOT($Profile.Name = &quot;System Admin&quot;),
+NOT($Profile.Name = &quot;Billing&quot;),
+NOT($Profile.Name = &quot;API User&quot;),
+NOT($Profile.Name = &quot;System Administrator&quot;),
+ISBLANK( TEXT(How_did_you_hear_about_us__c) ),
+CONTAINS( Campaign_Text__c , &quot;Call&quot;),
+DATEVALUE(CreatedDate)&gt;=DATEVALUE(&quot;2021-04-01&quot;))</errorConditionFormula>
+    <errorMessage>You must fill out the &quot;How Did You Hear About Us?&quot; field before saving this record.</errorMessage>
+</ValidationRule>

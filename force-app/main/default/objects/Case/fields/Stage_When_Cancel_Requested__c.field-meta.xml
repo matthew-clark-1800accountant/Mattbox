@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_When_Cancel_Requested__c</fullName>
+    <externalId>false</externalId>
+    <label>Stage When Cancel Requested</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Before Discovery</fullName>
+                <default>false</default>
+                <label>Before Discovery</label>
+            </value>
+            <value>
+                <fullName>After Discovery; Before Advisory Series</fullName>
+                <default>false</default>
+                <label>After Discovery; Before Advisory Series</label>
+            </value>
+            <value>
+                <fullName>After Advisory Series; Before QBR</fullName>
+                <default>false</default>
+                <label>After Advisory Series; Before QBR</label>
+            </value>
+            <value>
+                <fullName>QBR or After</fullName>
+                <default>false</default>
+                <label>QBR or After</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

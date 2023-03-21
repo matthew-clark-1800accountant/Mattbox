@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calculator_Location__c</fullName>
+    <description>Used to indicate if the product should be included in the pricing calculator. Field values indicate what type of product it&apos;s connected with for dynamic pricing purposes.</description>
+    <externalId>false</externalId>
+    <label>Calculator Location</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Advisory</fullName>
+                <default>false</default>
+                <label>Advisory</label>
+            </value>
+            <value>
+                <fullName>A La Carte</fullName>
+                <default>false</default>
+                <label>A La Carte</label>
+            </value>
+            <value>
+                <fullName>Back Bookkeeping</fullName>
+                <default>false</default>
+                <label>Back Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Back Business Return</fullName>
+                <default>false</default>
+                <label>Back Business Return</label>
+            </value>
+            <value>
+                <fullName>Back Personal Return</fullName>
+                <default>false</default>
+                <label>Back Personal Return</label>
+            </value>
+            <value>
+                <fullName>Back Quarterly Payroll</fullName>
+                <default>false</default>
+                <label>Back Quarterly Payroll</label>
+            </value>
+            <value>
+                <fullName>Bookkeeping</fullName>
+                <default>false</default>
+                <label>Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Business Return</fullName>
+                <default>false</default>
+                <label>Business Return</label>
+            </value>
+            <value>
+                <fullName>Corp State Filing</fullName>
+                <default>false</default>
+                <label>Corp State Filing</label>
+            </value>
+            <value>
+                <fullName>Foreign State</fullName>
+                <default>false</default>
+                <label>Foreign State</label>
+            </value>
+            <value>
+                <fullName>LLC State Filing</fullName>
+                <default>false</default>
+                <label>LLC State Filing</label>
+            </value>
+            <value>
+                <fullName>Non-Profit Back Bookkeeping</fullName>
+                <default>false</default>
+                <label>Non-Profit Back Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Non-Profit Bookkeeping</fullName>
+                <default>false</default>
+                <label>Non-Profit Bookkeeping</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Personal Return</fullName>
+                <default>false</default>
+                <label>Personal Return</label>
+            </value>
+            <value>
+                <fullName>State Filing</fullName>
+                <default>false</default>
+                <label>State Filing</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

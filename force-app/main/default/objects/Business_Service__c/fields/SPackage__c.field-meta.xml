@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SPackage__c</fullName>
+    <externalId>false</externalId>
+    <label>SPackage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Economy LLC</fullName>
+                <default>false</default>
+                <label>Economy LLC</label>
+            </value>
+            <value>
+                <fullName>Express Gold LLC</fullName>
+                <default>false</default>
+                <label>Express Gold LLC</label>
+            </value>
+            <value>
+                <fullName>Standard LLC</fullName>
+                <default>false</default>
+                <label>Standard LLC</label>
+            </value>
+            <value>
+                <fullName>Economy Incorporation</fullName>
+                <default>false</default>
+                <label>Economy Incorporation</label>
+            </value>
+            <value>
+                <fullName>Standard Amendment Package</fullName>
+                <default>false</default>
+                <label>Standard Amendment Package</label>
+            </value>
+            <value>
+                <fullName>Standard DBA</fullName>
+                <default>false</default>
+                <label>Standard DBA</label>
+            </value>
+            <value>
+                <fullName>Premium DBA</fullName>
+                <default>false</default>
+                <label>Premium DBA</label>
+            </value>
+            <value>
+                <fullName>Expedited Amendment Package</fullName>
+                <default>false</default>
+                <label>Expedited Amendment Package</label>
+            </value>
+            <value>
+                <fullName>Express Gold Incorporation</fullName>
+                <default>false</default>
+                <label>Express Gold Incorporation</label>
+            </value>
+            <value>
+                <fullName>Standard Non-Profit Corporation</fullName>
+                <default>false</default>
+                <label>Standard Non-Profit Corporation</label>
+            </value>
+            <value>
+                <fullName>Standard Incorporation</fullName>
+                <default>false</default>
+                <label>Standard Incorporation</label>
+            </value>
+            <value>
+                <fullName>Economy Non-Profit Corporation</fullName>
+                <default>false</default>
+                <label>Economy Non-Profit Corporation</label>
+            </value>
+            <value>
+                <fullName>LLC Formation Essentials</fullName>
+                <default>false</default>
+                <label>LLC Formation Essentials</label>
+            </value>
+            <value>
+                <fullName>Express Gold Non-Profit Corporation</fullName>
+                <default>false</default>
+                <label>Express Gold Non-Profit Corporation</label>
+            </value>
+            <value>
+                <fullName>Express Platinum Non-Profit Corporation</fullName>
+                <default>false</default>
+                <label>Express Platinum Non-Profit Corporation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

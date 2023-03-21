@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Holds a pairing of accepted State strings and the corresponding State dropdown option for HPM IFrame</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Zuora State Conversions</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assign_Availability</name>
+        <label>Assign Availability</label>
+        <locationX>421</locationX>
+        <locationY>249</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Current_User.Scheduler_Availability__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Scheduler_Availability</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_User_Availability</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>GetUserAvailability</name>
+        <choiceText>{!SetCurrentUserAvailability}</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>SetCurrentUserAvailability</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>OtherAvailability</name>
+        <choiceText>{!SetAvailability}</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>SetAvailability</elementReference>
+        </value>
+    </choices>
+    <description>Working with display screen</description>
+    <dynamicChoiceSets>
+        <name>SchedulerAvailability</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Scheduler_Availability__c</picklistField>
+        <picklistObject>User</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <name>SetAvailability</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK(TEXT({!Get_Current_User.Scheduler_Availability__c})), &apos;Unavailable&apos;, IF(TEXT({!Get_Current_User.Scheduler_Availability__c}) == &apos;Available&apos;, &apos;Unavailable&apos;, &apos;Available&apos;))</expression>
+    </formulas>
+    <formulas>
+        <name>SetCurrentUserAvailability</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK(TEXT({!Get_Current_User.Scheduler_Availability__c})), &apos;Available&apos;, TEXT({!$User.Scheduler_Availability__c}))</expression>
+    </formulas>
+    <interviewLabel>Update Schedule Availability {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Scheduler Availability</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Current_User</name>
+        <label>Get Current User</label>
+        <locationX>135</locationX>
+        <locationY>261</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Availability</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_User_Availability</name>
+        <label>Update User Availability</label>
+        <locationX>518</locationX>
+        <locationY>364</locationY>
+        <connector>
+            <targetReference>Display_Result</targetReference>
+        </connector>
+        <inputReference>Get_Current_User</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Display_Result</name>
+        <label>Display Result</label>
+        <locationX>695</locationX>
+        <locationY>400</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayMessage</name>
+            <fieldText>&lt;p&gt;You have successfully updated user {!Get_Current_User.Name}&apos;s Scheduler Availability to &apos;{!Get_Current_User.Scheduler_Availability__c}&apos;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Update_Availability</name>
+        <label>Update Availability</label>
+        <locationX>282</locationX>
+        <locationY>177</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assign_Availability</targetReference>
+        </connector>
+        <fields>
+            <name>Scheduler_Availability</name>
+            <choiceReferences>GetUserAvailability</choiceReferences>
+            <choiceReferences>OtherAvailability</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>GetUserAvailability</defaultSelectedChoiceReference>
+            <fieldText>Scheduler Availability</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Current_User</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

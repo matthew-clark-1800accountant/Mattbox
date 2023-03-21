@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prep_review_new__c</fullName>
+    <externalId>false</externalId>
+    <formula>ROUND( 9 * (
+   ( 5 * FLOOR( ( DATEVALUE( Sent_to_Review__c) - DATE( 1900, 01, 08) ) / 7) +
+    MIN(5,
+     MOD( DATEVALUE( Sent_to_Review__c) - DATE( 1900, 01, 08), 7) +
+     MIN( 1, 24 / 9 * ( MOD( Sent_to_Review__c- DATETIMEVALUE( &apos;1900-01-08 14:30:00&apos; ), 1 ) ) )
+    )
+   )
+ -
+   ( 5 * FLOOR( ( DATEVALUE( Sent_to_Preparation__c ) - DATE( 1900, 01, 08) ) / 7) +
+     MIN( 5,
+      MOD( DATEVALUE(Sent_to_Preparation__c ) - DATE( 1996, 01, 08), 7 ) +
+      MIN( 1, 24 / 9 * ( MOD( Sent_to_Preparation__c-DATETIMEVALUE( &apos;1900-01-08 14:30:00&apos; ), 1) ) )
+    )
+   )
+  ),
+0 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Prep - review (new)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

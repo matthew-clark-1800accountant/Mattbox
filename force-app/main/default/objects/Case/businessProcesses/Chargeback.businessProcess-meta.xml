@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Chargeback</fullName>
+    <description>New case process to support chargeback</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>ACH Pending Settlement</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Account Not in Salesforce</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Accountant Assigned</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Attempted to Contact Client</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Awaiting Client Approval</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Billing Pending</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Cancel Pending</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Cancellation Requested</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Awaiting Response</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Dormant Account</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed-Cancelled</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed-Refund</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed-Saved</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Duplicate Case</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Escalated</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Expedited</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Hold off on refund %28w%2Fi 30 days%29</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>New</fullName>
+        <default>true</default>
+    </values>
+    <values>
+        <fullName>New Email Received</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open - Awaiting Quarterly Forms</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open - Awaiting Response</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open - Awaiting W2</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open - IT ticket submitted %2F in process</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open - in progress</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Open Points %2F Awaiting Info</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Payroll Manager Assigned</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pre-Prep</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Preparation</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Refund Needed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Refund Requested %28after 30 days%29</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Resolved %2F Closed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Review</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Save Attempt</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Save Attempt Failed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Service Modification</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Spam</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Talk to an Accountant</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Team Member Save Attempt</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>To Be Assigned</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>To be Posted</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Waiting on Refund Offer</fullName>
+        <default>false</default>
+    </values>
+</BusinessProcess>

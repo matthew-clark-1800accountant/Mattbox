@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Advisory_Call_Completed</fullName>
+        <description>Advisory Call Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>1on1@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Surveys/Post_Advisory_Survey</template>
+    </alerts>
+    <alerts>
+        <fullName>Bookkeeping_Call_Completed</fullName>
+        <description>Bookkeeping Call Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>1on1@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Surveys/Post_Bookkeeping_Survey</template>
+    </alerts>
+    <alerts>
+        <fullName>Discovery_Call_Completed</fullName>
+        <description>Discovery Call Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>1on1@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Surveys/Post_Discovery_Survey</template>
+    </alerts>
+    <alerts>
+        <fullName>New_Tax_App_Appointment</fullName>
+        <ccEmails>gmilkwick@1800accountant.com</ccEmails>
+        <description>New Tax App Appointment</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>bpack@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hera.soh@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>salesforce@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Administrative/New_Tax_App_Appointment</template>
+    </alerts>
+    <alerts>
+        <fullName>Payroll_Call_Completed</fullName>
+        <description>Payroll Call Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>1on1@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Surveys/Post_Payroll_Survey</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejected_TSA_email_to_Sales_Manager</fullName>
+        <description>Rejected TSA email to Sales Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>jjones@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales_Managers/TSA_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Unauthorized_Change_of_Appointment_Owner</fullName>
+        <description>Unauthorized Change of Appointment Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>aquiroz@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lcruz@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sdunn@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>aquiroz@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/Unauthorized_Change_of_Appointment_Owner</template>
+    </alerts>
+    <alerts>
+        <fullName>ZenBusiness_Sales_Manager_Notification</fullName>
+        <description>ZenBusiness Sales Manager Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>cgreiner@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>froyals@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jjones@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jkeenan@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jroman@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jwade@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kmarzi@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lcruz@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mcashman@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sdunn@1800accountant.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>1on1@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Internal/ZenBusiness_TSA_Notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>X2018_Tax_Season_Jump_Start</fullName>
+        <field>Description</field>
+        <formula>&quot;2018 Tax Season Jump Start&quot;</formula>
+        <name>2018 Tax Season Jump Start</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>BNA_Disposition</fullName>
+        <apiVersion>55.0</apiVersion>
+        <endpointUrl>https://1800accountant.com/sfapi/schedule/eventmessage.php</endpointUrl>
+        <fields>APIType__c</fields>
+        <fields>Accountant_Portal_ID__c</fields>
+        <fields>Appointment_Disposition__c</fields>
+        <fields>Event_Status__c</fields>
+        <fields>Id</fields>
+        <fields>Secondary_Disposition_Details__c</fields>
+        <fields>Subject</fields>
+        <fields>Type_of_Appointment__c</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>ericyunker@gmail.com</integrationUser>
+        <name>BNA Disposition</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <outboundMessages>
+        <fullName>NewClientPortal_AppointmentSync</fullName>
+        <apiVersion>36.0</apiVersion>
+        <endpointUrl>https://1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e</endpointUrl>
+        <fields>Id</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>api@1800accountant.com</integrationUser>
+        <name>NewClientPortal-AppointmentSync</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <outboundMessages>
+        <fullName>Welcome_Email</fullName>
+        <apiVersion>33.0</apiVersion>
+        <description>The welcome Email that is sent to clients after an Onboarding appointment is booked</description>
+        <endpointUrl>http://1800accountant.com</endpointUrl>
+        <fields>Id</fields>
+        <fields>WhoId</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>api@1800accountant.com</integrationUser>
+        <name>Welcome Email</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>2018 Tax Season Jump Start</fullName>
+        <actions>
+            <name>X2018_Tax_Season_Jump_Start</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Event.Subject</field>
+            <operation>equals</operation>
+            <value>2018 Tax Season Jump Start</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ClientBooks Appointment</fullName>
+        <actions>
+            <name>NewClientPortal_AppointmentSync</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>false</active>
+        <description>Syncs appointments</description>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Event created</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Follow Up appt tomorrow</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.StartDateTime</field>
+            <operation>equals</operation>
+            <value>TOMORROW</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>New Tax App Appointment</fullName>
+        <actions>
+            <name>New_Tax_App_Appointment</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Event.Subject</field>
+            <operation>equals</operation>
+            <value>Tax App Appointment</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Lead Owner on Self-1-1 Appointment Set</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.CreatedById</field>
+            <operation>equals</operation>
+            <value>Do Not Reply</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Onboarding Checkbox</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Event.Subject</field>
+            <operation>equals</operation>
+            <value>Onboarding Appointment</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>OnboardingTriggerWelcomeEmail</fullName>
+        <actions>
+            <name>Welcome_Email</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.Subject</field>
+            <operation>equals</operation>
+            <value>Onboarding Appointment</value>
+        </criteriaItems>
+        <description>This is the workflow that triggers a welcome email to be sent out to users once the onboarding appointment is booked</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Rejected TSA</fullName>
+        <actions>
+            <name>Rejected_TSA_email_to_Sales_Manager</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.Initial_Rejected_By__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Sends an email to the manager when a TSA has been rejected.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ZenBusiness TSA Notification</fullName>
+        <actions>
+            <name>ZenBusiness_Sales_Manager_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Event.Type_of_Appointment__c</field>
+            <operation>equals</operation>
+            <value>Tax Savings Analysis</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Event.Lead_Source__c</field>
+            <operation>equals</operation>
+            <value>ZenBusiness</value>
+        </criteriaItems>
+        <description>Workflow for when a TSA is created on a ZenBusiness lead</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

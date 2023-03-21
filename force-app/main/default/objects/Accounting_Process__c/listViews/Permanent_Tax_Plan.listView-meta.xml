@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Permanent_Tax_Plan</fullName>
+    <columns>NAME</columns>
+    <columns>Customer_Number__c</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Year__c</columns>
+    <columns>Mid_Year_Review_Status__c</columns>
+    <columns>Prior_Year_Tax_Return_completed_by_us__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Accounting_Process__c.Tax_Plan</value>
+    </filters>
+    <filters>
+        <field>Mid_Year_Review_Status__c</field>
+        <operation>notContain</operation>
+        <value>Completed,Discard,closed</value>
+    </filters>
+    <label>My Tax Plan</label>
+    <language>en_US</language>
+    <sharedTo>
+        <group>STA</group>
+        <group>Support_Accountant</group>
+    </sharedTo>
+</ListView>

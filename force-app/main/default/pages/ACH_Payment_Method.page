@@ -1,0 +1,16 @@
+<apex:page sidebar="false" tabStyle="zqu__Quote__c"
+    standardController="zqu__Quote__c" >
+
+        <apex:define name="PageBody">
+           
+
+    <!-- Render the payment page component, using the url parameters as attribute values -->
+    <zqu:PaymentPage zuoraPageId="2c92a0ff635c92e80163650ef0834e98" submitEnabled="{!$CurrentPage.parameters.submitEnabled}" style="{!$CurrentPage.parameters.style}" />
+    
+            
+
+    
+    
+        </apex:define>
+
+</apex:page>

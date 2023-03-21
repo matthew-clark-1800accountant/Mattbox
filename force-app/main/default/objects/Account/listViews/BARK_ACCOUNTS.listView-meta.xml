@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BARK_ACCOUNTS</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Lead_Status__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Distribute_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>equals</operation>
+        <value>Bark</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>Lead_Status__c</field>
+        <operation>notEqual</operation>
+        <value>Qualified,Not Interested</value>
+    </filters>
+    <label>BARK ACCOUNTS</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Bravo_Team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

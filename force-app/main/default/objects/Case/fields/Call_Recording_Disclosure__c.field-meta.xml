@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Recording_Disclosure__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Did the representative notify client that calls are recorded for quality and training purposes?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Did the representative notify client that calls are recorded for quality and training purposes?</inlineHelpText>
+    <label>Call Recording Disclosure</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

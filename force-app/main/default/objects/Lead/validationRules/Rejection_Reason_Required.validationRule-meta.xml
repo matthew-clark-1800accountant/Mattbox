@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejection_Reason_Required</fullName>
+    <active>true</active>
+    <description>Requires Rejection Reason if Lead Status = Not Interested</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+ISPICKVAL(Status, &apos;Not Interested&apos;),
+ISBLANK( TEXT(Rejection_Reason__c )))</errorConditionFormula>
+    <errorDisplayField>Rejection_Reason__c</errorDisplayField>
+    <errorMessage>You must select a Rejection Reason to disposition this Lead as &quot;Not Interested.&quot;</errorMessage>
+</ValidationRule>

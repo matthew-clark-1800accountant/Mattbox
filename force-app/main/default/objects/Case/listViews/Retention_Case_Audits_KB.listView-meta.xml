@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Retention_Case_Audits_KB</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Risk__c</columns>
+    <columns>Original_Payment_Amount__c</columns>
+    <columns>Payments_Last_180_days__c</columns>
+    <columns>Refund_Amount__c</columns>
+    <columns>Subscription_Type__c</columns>
+    <columns>How_Long_Have_They_Been_a_Client__c</columns>
+    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Subscription_Engagement_Rep__c</field>
+        <operation>equals</operation>
+        <value>David Lobel,Kayla Boles,Kenneth Meeks,Mark Johnson,Melanie Maynard,Michael Richmond,Stacy McGinnis</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Save Attempt Failed,Closed-Cancelled,Closed-Refund,Closed - Dormant Account</value>
+    </filters>
+    <filters>
+        <field>Retained_Client__c</field>
+        <operation>equals</operation>
+        <value>Yes</value>
+    </filters>
+    <filters>
+        <field>SET_Closed_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>5/1/2022</value>
+    </filters>
+    <label>Retention Case Audits - KB</label>
+    <sharedTo>
+        <role>Manager</role>
+    </sharedTo>
+</ListView>

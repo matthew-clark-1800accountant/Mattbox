@@ -1,0 +1,646 @@
+<apex:page doctype="html-5.0" standardStylesheets="false" controller="OneonOneRegistrationController" showHeader="false" sidebar="false" cache="false" applyBodyTag="false" applyHtmlTag="false" action="{!makeLead}" >
+    
+        <head>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+            <title>Schedule Your 1 on 1 Consultation  | 1800Accountant</title>
+            <link rel="stylesheet" type="text/css" href="http://1800accountant.com/1on1nyc_1/css/ui-lightness/jquery-ui-1.8.2.custom.css"/>
+            <link href="http://1800accountant.com/1on1nyc_1/css/styles11.css" rel="stylesheet" type="text/css" media="all" />
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>  
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"/>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.1/moment-timezone.js"/>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>  
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+        </head>
+        <style>
+            .ui-datepicker table{
+            font-size: 0.7em !important;
+            }
+            #calenderContainer .ui-datepicker table{
+            font-size: 0.9em !important;
+            }
+            
+            #datepicker .ui-datepicker-inline.ui-datepicker.ui-widget{
+            /*max-width:190px;*/
+            margin-left: 4px;
+            }
+            
+            .ui-widget-content{
+            border:0px !important;
+            }
+            .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+            border-bottom-right-radius: 0px !important;
+            }
+            .ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+            border-bottom-left-radius: 0px !important;
+            }
+            .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+            border-top-right-radius: 0px !important;
+            }
+            .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+            border-top-left-radius: 0px !important;
+            }
+            .ui-widget-header{
+            background: #366872 !important;
+            color:#eee !important;
+            }
+            a.ui-datepicker-prev:hover,a.ui-datepicker-next:hover{
+            background: #417984 !important;
+            }
+            #datepicker .ui-datepicker-prev span,#datepicker .ui-datepicker-prev span:hover{
+            border-right: 8px solid #fff;
+            opacity: 1;
+            border-top: 4px solid rgb(53, 104, 113);
+            border-bottom: 4px solid rgb(53, 104, 113);
+            height: 0px;
+            width: 0px;
+            background: none;
+            margin-top: -4px;
+            }
+            #datepicker .ui-datepicker-next span,#datepicker .ui-datepicker-next span:hover{
+            border-left: 8px solid #fff;
+            opacity: 1;
+            border-top: 4px solid rgb(53, 104, 113);
+            border-bottom: 4px solid rgb(53, 104, 113);
+            height: 0px;
+            width: 0px;
+            background: none;
+            margin-top: -4px;
+            }
+            
+            #calenderContainer .ui-datepicker .ui-datepicker-header{
+            border: none;
+            margin-right: 1px;
+            }
+            #calenderContainer thead {
+            background:#9DA9AC;
+            }
+            #calenderContainer .ui-state-default, #calenderContainer .ui-widget-content .ui-state-default, #calenderContainer .ui-widget-header .ui-state-default{
+            background:#D1D1D1;
+            }
+            #calenderContainer .ui-state-default:hover,  #calenderContainer .ui-widget-content .ui-state-default:hover, #calenderContainer .ui-widget-header .ui-state-default:hover{
+            background:#ffffff;
+            }
+            #calenderContainer .ui-state-default.ui-state-active{
+            color:#fff;
+            background:#366872;
+            border:1px solid #366872;
+            }
+            #calenderContainer .ui-state-default.ui-state-active:hover{
+            color:#000;
+            
+            }
+            
+            .submitBtn{
+            border:0px;
+            padding:0px;
+            background:none;
+            margin-top:20px;
+            color:#fff;
+            font-size:17px;
+            font-weight:bold;
+            border-radius:5px;
+            moz-border-radius:5px;
+            webkit-border-radius:5px;
+            -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+            padding: 20px;
+            width: 296px;
+            background: #33697c; /* Old browsers */
+            background: -moz-linear-gradient(top,  #33697c 0%, #295564 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#33697c), color-stop(100%,#295564)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #33697c 0%,#295564 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #33697c 0%,#295564 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #33697c 0%,#295564 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #33697c 0%,#295564 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33697c', endColorstr='#295564',GradientType=0 ); /* IE6-9 */
+            text-decoration:none;
+            }
+        </style>
+        
+            
+                <div id="container">
+                   
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div id="ctnLogo">
+                                <img src="http://1800accountant.com/1on1nyc_1/images/1800AccountantLogo.png" width="300" height="61" alt="1800Accountant" />
+                            </div>
+                        </div>
+                        <div id="hero">
+                            <apex:form id="theForm">
+                                <apex:actionFunction name="doSubmit" action="{!toPage2}"/>
+                                <input type="hidden" name="submitted" value="1"/>
+                                <input type="hidden" name="uid" value=""/>
+                                <input type="hidden" name="sfleadID" value=""/>
+                                <input type="hidden" name="isQ" value="1"/>
+                                <input type="hidden" name="apptDate" id="apptDate" value=""/>
+                                <input type="hidden" name="Email_Campaign_ID__c" value="{!$CurrentPage.parameters.EmailCampaignID}"/>
+                                <apex:inputHidden id="myTime" value="{!myTime}"/>
+                                <apex:inputHidden id="myDate" value="{!myDate}"/>
+                                
+                                <div id="centerPanel">
+                                    <h1>Schedule a Tax Consultation</h1>
+                                    
+                                    
+                                    <div id="centerForm">
+                                        <p class="num"><strong>Schedule an Appointment:</strong></p>
+                                        <div class="center" style="margin-bottom:20px;">
+                                            <div id="datepicker" style="margin:0 auto;width:270px;"></div>
+                                            <!--<input type="text" name="apptDate" id="datepicker"/>--><br/></div>
+                                        <div class="center" id="replAT">
+                                            <select name="Time" id="Time" class="input">
+                                                <option value="" selected="true" disabled="true">Select a Time</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <!--<input name="submit" type="submit" value="Continue To The Last Step" id="submitBtn" onclick="doSubmit(); return false" />-->
+                                    <apex:commandButton styleClass="submitBtn" action="{!toPage2}" value="Continue To The Last Step"/>
+                                </div>
+                            </apex:form>
+                        </div><!--hero-->
+                        
+                    </div><!--pageRep-->
+                    
+                    <div class='col-md-12'>
+                    <p style="color:#999; padding-top:20px;">Copyright 2014 - 1-800Accountant | 888-749-9094</p>
+                    </div>
+                    </div>
+                </div>
+            
+        
+        
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+            <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+        <script language="javascript" src="http://1800accountant.com/1on1nyc_1/js/validation.js"></script>
+        <script>
+            window.location.href = "https://1800accountant.com/";
+var test;
+        $(function(){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.OneonOneRegistrationController.getHolidayDates}',
+                function(r,e){myCallback(r,e)});
+        });
+            
+            var myCallback = function(result,event){            
+                // console.log(result);                    
+                    $('#Time').change(function(){
+                        $('[id$=myTime]').val($(this).val());
+                    });
+                    
+                    var now = new Date();
+                    var useMinDate = '0';
+                    
+                    //if ('' != '{!$CurrentPage.parameters.EmailCampaignID}') {
+                    
+                    if (now.getUTCHours() >= 21)
+                    {
+                        useMinDate = "+1d";
+                    }
+                    
+                   // }
+                    
+                    $( "#datepicker" ).datepicker({
+                        minDate: useMinDate,
+                        maxDate: "+7d",
+                        beforeShowDay: function(dt) {
+                            dt.setHours(0);
+                            dt.setMinutes(0);
+                            //console.log(dt.getTime());
+                            
+                            var dDateOnly = dt.getFullYear() + '' + (dt.getMonth() + 1) + '' +dt.getDate();
+                            //console.log(dDateOnly);
+                            //console.log(result.indexOf(dDateOnly));
+                            
+                            if(dt.getDay() == 0 || dt.getDay() == 6) {
+                               return [false,'',''];
+                            }
+                            else {
+                                
+                                return [result.indexOf(dDateOnly) == -1,'',''];
+
+                            }
+                        },
+                        dateFormat: 'mm/dd/yy',//'yy-mm-dd',
+                        onSelect: function (dateText, option) {
+                            $('[id$=myDate]').val(dateText);
+                            $('#Time').find('option').remove();
+                            $('#Time').append('<option value="" disabled selected>Please select a time</option>');
+                            $('#apptDate').val(dateText);
+                            ShowTimes(dateText);
+                        }
+                    });
+                
+            };
+    
+        function ShowTimes(date) {
+            test = date;
+            console.log('ShowTimes',date);
+            console.log(new Date(date).getDay());
+            var dArr = date.split('/');
+            var dateC = dArr[2]+'-'+dArr[0]+'-'+dArr[1];
+            var later = 1;
+            var mArr = {dateC:{"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-06-30":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-01":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-02":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-03":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-04":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-05":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-06":{"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-07":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-08":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-09":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-10":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-11":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-12":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-13":{"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-14":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-15":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-16":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-17":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-18":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-19":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-20":{"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-21":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-22":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-23":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-24":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-25":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-26":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-27":{"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-28":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-29":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0},"2015-07-30":{"9:00":0,"9:30":0,"10:00":0,"10:30":0,"11:00":0,"11:30":0,"12:00":0,"12:30":0,"13:00":0,"13:30":0,"14:00":0,"14:30":0,"15:00":0,"15:30":0,"16:00":0,"16:30":0,"17:00":0,"17:30":0,"18:00":0,"18:30":0}};
+            
+            var availableTimes;
+            
+            var offset = '{!$CurrentPage.parameters.tzoffset}';
+            console.log(offset);
+            if(!offset || offset == ''){
+                offset = -3;
+                console.log(offset);    
+            }
+            //-3 EST, -1 mountain, -2 central, 0 Pacific
+            
+            var cDate = new Date(date);
+            if(new Date(date).getDay() === 1){
+                    //possible times for Monday
+                    if(offset == -1){
+                    //mountain time
+                        availableTimes = {
+                                    "8:00": 0,
+                                    "8:30": 0,
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0
+                                  };
+                    } else if(offset == -3){
+                    //florida time
+                        availableTimes = {
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0,
+                                    "17:00": 0,
+                                    "17:30": 0,
+                                    "18:00": 0,
+                                    "18:30": 0,
+                                    "19:00": 0,
+                                    "19:30": 0
+                                  };
+                     
+                    }else{
+                        //everything else
+                         availableTimes = {
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0,
+                                    "17:00": 0,
+                                    "17:30": 0,
+                                    "18:00": 0,
+                                    "18:30": 0
+                                  };
+                    }        
+                }   else if(new Date(date).getDay() === 5) {
+                        //possible times for Friday
+                        if(offset == -1){
+                        //mountain time
+                        availableTimes = {
+                                    "7:00": 0,
+                                    "7:30": 0,
+                                    "8:00": 0,
+                                    "8:30": 0,
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0
+                                  };
+                        } else if(offset == -3){
+                        //florida time
+                            availableTimes = {
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0,
+                                    "17:00": 0,
+                                    "17:30": 0,
+                                    "18:00": 0,
+                                    "18:30": 0,
+                                    "19:00": 0,
+                                    "19:30": 0
+                                  };
+                        }else{
+                            //Other times
+                            availableTimes = {
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0,
+                                    "17:00": 0,
+                                    "17:30": 0,
+                                    "18:00": 0,
+                                    "18:30": 0
+                                  };
+                        }
+                
+                }   else {
+                        //possible times for Tuesday, Wednesday, Thursday
+                        if(offset == -1){
+                        //mountain time or something 
+                            availableTimes = {
+                                    "7:00": 0,
+                                    "7:30": 0,
+                                    "8:00": 0,
+                                    "8:30": 0,
+                                    "9:00": 0,
+                                    "9:30": 0,
+                                    "10:00": 0,
+                                    "10:30": 0,
+                                    "11:00": 0,
+                                    "11:30": 0,
+                                    "12:00": 0,
+                                    "12:30": 0,
+                                    "13:00": 0,
+                                    "13:30": 0,
+                                    "14:00": 0,
+                                    "14:30": 0,
+                                    "15:00": 0,
+                                    "15:30": 0,
+                                    "16:00": 0,
+                                    "16:30": 0,
+                                  };
+                       
+                    } else if(offset == -3){
+                    //florida time
+                        availableTimes = {
+                            "9:00": 0,
+                            "9:30": 0,
+                            "10:00": 0,
+                            "10:30": 0,
+                            "11:00": 0,
+                            "11:30": 0,
+                            "12:00": 0,
+                            "12:30": 0,
+                            "13:00": 0,
+                            "13:30": 0,
+                            "14:00": 0,
+                            "14:30": 0,
+                            "15:00": 0,
+                            "15:30": 0,
+                            "16:00": 0,
+                            "16:30": 0,
+                            "17:00": 0,
+                            "17:30": 0,
+                            "18:00": 0,
+                            "18:30": 0,
+                            "19:00": 0,
+                            "19:30": 0
+                          };
+                    } else {
+                        //Other times
+                        availableTimes = {
+                            "9:00": 0,
+                            "9:30": 0,
+                            "10:00": 0,
+                            "10:30": 0,
+                            "11:00": 0,
+                            "11:30": 0,
+                            "12:00": 0,
+                            "12:30": 0,
+                            "13:00": 0,
+                            "13:30": 0,
+                            "14:00": 0,
+                            "14:30": 0,
+                            "15:00": 0,
+                            "15:30": 0,
+                            "16:00": 0,
+                            "16:30": 0,
+                            "17:00": 0,
+                            "17:30": 0,
+                            "18:00": 0,
+                            "18:30": 0,
+                            "19:00": 0,
+                            "19:30": 0
+                          };
+                    }
+                }
+            
+            // talk to salesforce and see if there are any other events for this day for this ownerid and remove if necessary
+            
+             Visualforce.remoting.Manager.invokeAction('OneonOneRegistrationController.appointmentLimit',date,'{!$CurrentPage.parameters.OwnerId}','{!$CurrentPage.parameters.id}',
+              function(result){
+                  console.log('current appointments for this day: ', result);
+                  for(var t in availableTimes){
+                      if(result.indexOf(t) !== -1){
+                          delete availableTimes[t];
+                      }
+                  }
+                  
+                  var key = dateC;
+                  var obj = availableTimes;
+                  var today = new Date();
+                  var dd = today.getDate();
+                  var mm =today.getMonth() + 1;
+                  var yyyy = today.getFullYear();
+                  if(dd<10) {
+                      dd='0'+dd
+                  } 
+                  
+                  if(mm<10) {
+                      mm='0'+mm
+                  } 
+                  var hour = today.getHours();
+                  console.log(hour);
+                  var tzoffset = today.getTimezoneOffset() / 60;
+                  console.log(tzoffset);
+                  if(hour == "12") {
+                      hour = 14;
+                      console.log('setting hour to 1');
+                  } else {
+                      hour = hour + 2;
+                      console.log('setting hour to',hour);
+                  }
+
+
+
+                  /*** CHANGE THIS CONSTANT FOR DST - todo: fix and make better */
+                  
+                  hour += tzoffset - 5;
+                  console.log('adding ' + (tzoffset - 5) + ' the hour value = ',hour);
+                  
+                  var min = today.getMinutes();
+                  today = yyyy+'-'+mm+'-'+dd;
+                  console.log('checking',today,key);
+                  if(today == key) {
+                      if(offset == -3){
+                          for(t in availableTimes){
+                              var tArr = t.split(':');
+                              var h = tArr[0];
+                              var m = tArr[1];
+                              console.log(h,m,hour,min);
+                              if(h<(hour) || (h<=(hour) && m<min)) {
+                                  delete obj[t];
+                              }
+                          }
+                      } else {
+                          for(t in availableTimes) {
+                              var tArr = t.split(':');
+                              var h = tArr[0];                              
+                              var m = tArr[1];
+                              console.log('Mountain Times: ' + h,m,hour,min);
+                              if(h < hour || (h <= hour && m < min)) {
+                                  delete obj[t];
+                              }
+                          }
+                      }
+                  }
+                  
+                  $('#Time').append(CreateTimeInput(obj));
+             if(later) {
+                $('#Time').append('<option value="" disabled>Please choose another day</option>');
+            } 
+                  
+              });
+            
+            
+            
+        }
+        function CreateTimeInput(dayObj) {
+            var offset = '{!$CurrentPage.parameters.tzoffset}';
+            if(!offset || offset == ''){                
+                offset = -3;
+            }
+            var opt = '';
+            if($.isEmptyObject(dayObj)) {
+                opt+='<option value="" selected disabled>Please Request Another Day</option>';
+            }
+            for (var time in dayObj) {
+                //NUMBER OF APPOINTMENTS AVAILABLE
+                var left = 1;
+                if(left >= 1) {
+                    if(offset == -1){
+                        opt+='<option value="'+ProperTime(time)+'">'+ProperTime(time)+' - MST is available</option>';
+                    } else {
+                        opt+='<option value="'+ProperTime(time)+'">'+ProperTime(time)+' - EST is available</option>';
+                    }
+                }
+                else {
+                    if(offset == -1){
+                        opt+='<option value="'+ProperTime(time)+'"disabled>'+ProperTime(time)+' - MST is booked</option>';
+                    } else {
+                        opt+='<option value="'+ProperTime(time)+'"disabled>'+ProperTime(time)+' - EST is booked</option>';
+                    }
+                }
+            }
+            return opt;
+        }
+        function ProperTime(time) {
+            var tArr = time.split(':');
+            if(tArr[0] > 12) {
+                var nTime = tArr[0]-12;
+                return nTime+':'+tArr[1]+' PM';
+            } else if(tArr[0] == 12) {
+                return time + ' PM';
+            } else {
+                return time + ' AM';
+            }
+        }
+        </script>
+        <script>
+        $("#form1").validate({
+            rules: {
+                apptNum: "required",
+                apptDate: "required",
+                Time: "required"
+            },
+            messages: {
+                apptNum: "Please Enter Your Appointment Number",
+                apptDate: "Please Choose a Date to speak with a Tax Specialist",
+                Time: "Please Select a Time to Speak with a Tax Specialist"
+            }
+        });
+        
+        </script>
+    
+    <script type="text/javascript">
+piAId = '71022';
+piCId = '5428';
+SFCampaign = '{!$CurrentPage.parameters.SFCID}';
+ 
+(function() {
+                function async_load(){
+                                var s = document.createElement('script'); s.type = 'text/javascript';
+                                s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+                                var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+                }
+                if(window.attachEvent) { window.attachEvent('onload', async_load); }
+                else { window.addEventListener('load', async_load, false); }
+})();
+</script>
+
+</apex:page>

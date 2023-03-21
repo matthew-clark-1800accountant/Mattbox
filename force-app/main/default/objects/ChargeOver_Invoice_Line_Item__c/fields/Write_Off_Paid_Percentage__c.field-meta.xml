@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Write_Off_Paid_Percentage__c</fullName>
+    <description>Amount of the Invoice Line&apos;s related Transactions that were paid by Write-off versus an actual payment</description>
+    <externalId>false</externalId>
+    <formula>Write_Off_Paid_Amount__c /  Total__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Write-Off Paid Percentage</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

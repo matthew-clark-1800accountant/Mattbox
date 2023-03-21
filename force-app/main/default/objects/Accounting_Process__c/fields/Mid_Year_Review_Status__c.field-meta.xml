@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mid_Year_Review_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Tax Plan Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Info In</fullName>
+                <default>false</default>
+                <label>No Info In</label>
+            </value>
+            <value>
+                <fullName>Appointment Held</fullName>
+                <default>false</default>
+                <label>Appointment Held</label>
+            </value>
+            <value>
+                <fullName>Tax Return Received</fullName>
+                <default>false</default>
+                <label>Tax Return Received</label>
+            </value>
+            <value>
+                <fullName>Prior Tax Return Entered</fullName>
+                <default>false</default>
+                <label>Prior Tax Return Entered</label>
+            </value>
+            <value>
+                <fullName>Zero Tax Plan Generated</fullName>
+                <default>false</default>
+                <label>Zero Tax Plan Generated</label>
+            </value>
+            <value>
+                <fullName>Tax Plan Generated</fullName>
+                <default>false</default>
+                <label>Tax Plan Generated</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Closed - No Response</fullName>
+                <default>false</default>
+                <label>Closed - No Response</label>
+            </value>
+            <value>
+                <fullName>Discard</fullName>
+                <default>false</default>
+                <label>Discard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

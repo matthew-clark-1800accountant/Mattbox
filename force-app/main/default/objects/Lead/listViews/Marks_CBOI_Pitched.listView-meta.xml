@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Marks_CBOI_Pitched</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
+    <columns>Distribute_Date__c</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.COMPANY</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>of_2019_Calls__c</columns>
+    <columns>X1_1_Scheduled__c</columns>
+    <columns>LEAD.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.CONVERTED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>LegalZoom,Legal Zoom</value>
+    </filters>
+    <filters>
+        <field>Distribute_Date__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>1/1/2020</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>Pitched</value>
+    </filters>
+    <filters>
+        <field>LEAD.LAST_ACTIVITY</field>
+        <operation>lessThan</operation>
+        <value>N_DAYS_AGO:7</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.ALIAS</field>
+        <operation>contains</operation>
+        <value>general</value>
+    </filters>
+    <filters>
+        <field>Pitched_Date__c</field>
+        <operation>lessThan</operation>
+        <value>N_WEEKS_AGO:4</value>
+    </filters>
+    <label>Marks Status Pitched</label>
+    <language>en_US</language>
+    <sharedTo>
+        <roleAndSubordinates>Mark_Stephen_s_team</roleAndSubordinates>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChargeOver_Products</fullName>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>Billing_Frequency__c</columns>
+    <columns>Price_Description__c</columns>
+    <columns>PRODUCT2.DESCRIPTION</columns>
+    <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+    <columns>Permissions__c</columns>
+    <columns>PRODUCT2.FAMILY</columns>
+    <columns>SOW_Description__c</columns>
+    <columns>AnnualMonthlyOption__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ChargeOver__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>ChargeOver Products</label>
+</ListView>

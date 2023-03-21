@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Failure_to_Call_Disposition</fullName>
+    <active>true</active>
+    <description>Prevents unauthorized users from using the &quot;Failure to Call&quot; disposition</description>
+    <errorConditionFormula>AND(
+NOT(
+OR( $Permission.Admin_Validation_Rule_Override,
+$User.Department = &apos;Quality Assurance&apos;)),
+ISCHANGED(Appointment_Disposition__c),
+ISPICKVAL(Appointment_Disposition__c, &apos;Failure to Call&apos;))</errorConditionFormula>
+    <errorDisplayField>Appointment_Disposition__c</errorDisplayField>
+    <errorMessage>Only Admins or QA may select this disposition.</errorMessage>
+</ValidationRule>

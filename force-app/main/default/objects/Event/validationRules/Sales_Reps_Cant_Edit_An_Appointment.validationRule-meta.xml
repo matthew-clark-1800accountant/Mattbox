@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Reps_Cant_Edit_An_Appointment</fullName>
+    <active>true</active>
+    <description>Sales Reps and Sales Manager can&apos;t edit the date/time of TSA appointments once created.</description>
+    <errorConditionFormula>AND(
+OR(
+ISCHANGED( ActivityDateTime ),
+ISCHANGED( DurationInMinutes )),
+OR(
+ISPICKVAL( Type_of_Appointment__c , &apos;Tax Savings Analysis&apos;),
+ISPICKVAL( Type_of_Appointment__c , &apos;Formation Consultation&apos;),
+ISPICKVAL( Type_of_Appointment__c , &apos;BNA&apos;)),
+NOT(
+ $Permission.Admin_Validation_Rule_Override ))</errorConditionFormula>
+    <errorMessage>You can not change the scheduled appointment date once it is set. Please use the universal scheduler to reschedule the appointment.</errorMessage>
+</ValidationRule>

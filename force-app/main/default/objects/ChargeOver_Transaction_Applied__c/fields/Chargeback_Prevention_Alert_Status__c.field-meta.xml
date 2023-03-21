@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Chargeback_Prevention_Alert_Status__c</fullName>
+    <description>The Chargeback Prevention Alert Status from the parent Transaction record</description>
+    <externalId>false</externalId>
+    <formula>TEXT(ChargeOver_Transaction__r.Chargeback_Prevention_Alert_Status__c)</formula>
+    <label>Chargeback Prevention Alert Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

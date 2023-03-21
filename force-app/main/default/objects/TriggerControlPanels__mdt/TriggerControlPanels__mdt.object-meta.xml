@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Samuel Reyes - This is my method of quickly enabling and disabling triggers by context or specific method.
+At the entrance of a class block or method, include one of this as follows post SOQL query to fetch the mdt. if(mdtRecord.IsActive){ runLogic; }</description>
+    <label>TriggerControlPanels</label>
+    <pluralLabel>TriggerControlPanels</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

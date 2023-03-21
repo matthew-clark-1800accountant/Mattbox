@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Populate_Contact_Info_for_BA__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Whether or not to populate the IFrame fields based on the Bill To Contact details on the Billing Account.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Whether or not to populate the IFrame fields based on the Bill To Contact details on the Billing Account.</inlineHelpText>
+    <label>Populate Contact Info for BA</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

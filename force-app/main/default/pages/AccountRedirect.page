@@ -1,0 +1,3 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" extensions="zBAM_AccountRedirectController" action="{!onLoad}">
+	
+</apex:page>

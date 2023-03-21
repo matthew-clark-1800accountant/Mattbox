@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Remove_SSN</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Layout_w_o_SSN</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Remove SSN</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>w_o_SSN</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Layout_w_o_SSN</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>w/o SSN</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Remove SSN</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Business_Owner__c.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Business_Owner__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Default Business Owner - Corp</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Remove_SSN</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>3</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+</Workflow>
