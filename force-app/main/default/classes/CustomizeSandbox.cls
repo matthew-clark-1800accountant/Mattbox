@@ -8,12 +8,12 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
 
     public static String getEvironmentName(){
         System.Domain d = System.DomainParser.parse(URL.getOrgDomainUrl());
-        return d.getSandboxName();
+        return d.getSandboxName().toLowerCase();
     }
 
     public static Set<String> getUsersToUpdate(){
         System.debug(getEvironmentName());
-        if(getEvironmentName() == 'Training'){
+        if(getEvironmentName() == 'training'){
             return trainingUsers;
         } else {
             return stagingUsers;
@@ -70,10 +70,40 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         //'SELECT Active__c, Amount__c, Name, Delay_Days__c, Master_Product__c, Upsell_Product__c FROM Calculator_Offer_Product__c'
     };
 
+    public static List<String> outboundMessages = new List<String>{
+        'NewClientPortal_AccountingProcessSync',
+        'NewClientPortal_AccountSync',
+        'NewClientPortal_ActiveSubLineSync',
+        'NewClientPortal_ActiveSubSync',
+        'NewClientPortal_AppointmentSync',
+        'NewClientPortal_CaseCommentSync',
+        'NewClientPortal_CaseSync',
+        'NewClientPortal_ContactSync',
+        'NewClientPortal_LeadSync',
+        'NewClientPortal_NoteSync',
+        'NewClientPortal_PaymentMethodSync',
+        'NewClientPortal_PaymentSync',
+        'NewClientPortal_RelationAccountContaSync',
+        'NewClientPortal_SubscriptionLineSync',
+        'NewClientPortal_SubscriptionLineSync',
+        'NewClientPortal_UserSync',
+        'SOW_Trigger',
+        'SOW_Trigger_Fast'
+    };
+
+    public static String getOutboundMessageString(){
+        String retString = '';
+        for(String msgStr : outboundMessages){
+            retString += msgStr+',';
+        }
+        return retString.substring(0, retString.length()-1);
+    }
+
+    public static Integer batchSize = 50;
     public static String rollupQuery = 'SELECT rh2__type__c, rh2__RollupOrFilterData__c, rh2__filterJobRollupKey__c FROM rh2__PS_Export_Rollups__c';
-    public static String leadQuery = 'SELECT FirstName,LastName,email,Status,LeadSource,Lead_Type_New__c,Campaign__c,Marketing_Channel__c,Phone,Company, Industry, State FROM Lead WHERE Email != null LIMIT 500';
+    public static String leadQuery = 'SELECT FirstName,LastName,email,Status,LeadSource,Lead_Type_New__c,Campaign__c,Marketing_Channel__c,Phone,Company, Industry, State FROM Lead WHERE Email != null ORDER BY Phone LIMIT '+batchSize+' OFFSET ';
     public static String accountFields = 'Account.name, Account.Lead_Source__c, Account.Lead_Type_New__c, Account.Campaign__c, Account.Marketing_Channel__c, Account.Industry, Account.State_of_Formation__c, Account.BillingState, Account.Phone';
-    public static String contactQuery = 'SELECT FirstName,LastName, email, Lead_Source__c, Lead_Type__c, CampaignID__c, Last_SF_Activity__c, Time_Zone__c, MailingState, Phone, '+accountFields+' FROM Contact WHERE Email != null limit 500';
+    public static String contactQuery = 'SELECT FirstName,LastName, email, Lead_Source__c, Lead_Type__c, CampaignID__c, Last_SF_Activity__c, Time_Zone__c, MailingState, Phone, '+accountFields+' FROM Contact WHERE Email != null AND AccountId != null ORDER BY Phone LIMIT '+batchSize+' OFFSET ';
     //public static String accountQuery = 'SELECT id, name, Lead_Source__c, Lead_Type_New__c, Campaign__c, Marketing_Channel__c, Last_SF_Activity__c, Time_Zone__c, Industry, State_of_Formation__c, BillingState, Phone FROM account limit 500';
 
     global CustomizeSandbox() {
@@ -94,6 +124,7 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         transferCalculatorData();
         transferRollupData();
         importSeedData();
+        updateCustomSettings();
     }
 
     @future
@@ -162,11 +193,14 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
     }
 
     public static void importSeedData(){
-
+        for(Integer i = 0; i < 500; i += batchSize){
+            importSeedDataBatch(i);
+        }
     }
 
     @future(callout=true)
     public static void importSeedDataBatch(Integer offset){
+        System.debug('importSeedDataBatch '+offset);
         Date today = Date.today();
         String dateString = '.'+today.month()+today.day()+today.year();
         String jsonString;
@@ -176,7 +210,7 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         List<Contact> contactList = new List<Contact>();
         User generalQueue = [SELECT Id FROM User WHERE Name = 'General Lead Queue'];
         List<User> trainingUserList = [SELECT Id FROM User WHERE Name LIKE 'Training User%'];
-        String requestString = leadQuery;
+        String requestString = leadQuery + offset;
         String environment = getEvironmentName();
 
         System.debug('query: '+requestString);
@@ -195,7 +229,7 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         for(Lead l : leadList){
             l.email = (l.email==null) ? l.email+dateString : l.lastname.deleteWhitespace()+dateString+'@gmail.com';
             l.phone = '1234567890';//'111'+l.phone.substring(3,10);
-            if(environment != 'Training' && Math.random() > 0.5){ //assign half of the training leads to a random training user
+            if(environment == 'training' && Math.random() > 0.5){ //assign half of the training leads to a random training user
                 Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                 //System.debug('index: '+index);
                 l.OwnerId = trainingUserList[index].Id;
@@ -205,14 +239,14 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
             //.debug(l.ownerId);
         }
 
-        requestString = contactQuery;
+        requestString = contactQuery+offset;
 
         System.debug('query: '+requestString);
         jsonString = RestApiController.runQuery(requestString);
         response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
         for(Contact con : (List<Contact>)response.records){
             con.Account.phone ='1234567890';// '111'+ con.Account.phone?.substring(3,10);
-            if(environment != 'Training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
+            if(environment != 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
                 Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                 //System.debug('index: '+index);
                 con.Account.OwnerId = trainingUserList[index].Id;
@@ -233,7 +267,7 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
             response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
             for(Contact con : (List<Contact>)response.records){
                 con.Account.phone ='1234567890';//= '111'+con.Account.phone?.substring(3,10);
-                if(environment == 'Training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
+                if(environment == 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
                     Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                     //System.debug('index: '+index);
                     con.Account.OwnerId = trainingUserList[index].Id;
@@ -264,6 +298,43 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
             Database.rollback(sp);
             System.debug(ex.getMessage());
             throw ex;
+        }
+    }
+
+    @future
+    public static void updateCustomSettings(){
+        Chargeover_URL__C urlSetting = Chargeover_URL__C.getOrgDefaults();
+        String env = getEvironmentName();
+
+        if(env == 'training'){
+            urlSetting.Chargeover_URL__C = 'https://1800accountant-training.chargeover.com';
+            urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
+            urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_training.php';
+        } else if(env == 'uat'){
+            urlSetting.Chargeover_URL__C = 'https://1800accountant-uat.chargeover.com';
+            urlSetting.Chargeover_User__c = 'pvWrnGbt7yg2xRJU5VoC8XZDYEm4MOBi';
+            urlSetting.Chargeover_Pass__c = 'u3ZQtif9s210TmXBoLzSe5rgEvJOVdCn';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_uat.php';
+        } else if(env == 'staging') {
+            urlSetting.Chargeover_URL__C = 'https://1800accountant-staging.chargeover.com';
+            urlSetting.Chargeover_User__c = 'kRqAcM6KgPwTOpQZ0y9BtW1aNhrCEHGX';
+            urlSetting.Chargeover_Pass__c = 'RSOIVMiJ60qK4seNwk7lgyxTfFBtUznv';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_stage.php';
+        }
+        
+        update urlSetting;
+    }
+
+    @future(callout=true)
+    public static void updateOutboundMessages(){
+        String resStr = ToolingApiController.runQuery('select Name, Id from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100');
+        ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
+        if(getEvironmentName() == 'training'){
+            
+        }
+        for(ToolingApiController.RecordWrapper rec : om.records){
+
         }
     }
 }
