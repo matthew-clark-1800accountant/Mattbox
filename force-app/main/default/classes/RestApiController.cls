@@ -1,6 +1,7 @@
 public with sharing class RestApiController {
     private class CustomException extends Exception{}
 
+    public static Boolean logResults = false;
     public static String runQuery(String query){
 
         //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/query/?q=';
@@ -17,24 +18,27 @@ public with sharing class RestApiController {
         h = new Http(); 
         res = h.send(req); 
         System.debug(res.getBody()); 
+        logOutput('rest runQuery', res.getBody());
         return res.getBody();
     }
 
     public static String getNextRecords(String nextRecordsUrl){
         //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+nextRecordsUrl;
-        String endPoint = 'https://1800accountant.my.salesforce.com'+nextRecordsUrl;
-        HttpRequest req; 
-        HttpResponse res; 
-        Http h; 
+        // String endPoint = 'https://1800accountant.my.salesforce.com'+nextRecordsUrl;
+        // HttpRequest req; 
+        // HttpResponse res; 
+        // Http h; 
 
-        req = new HttpRequest(); 
-        req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
-        req.setEndpoint(endPoint); 
-        req.setMethod('GET'); 
-        h = new Http(); 
-        res = h.send(req); 
-        System.debug(res.getBody()); 
-        return res.getBody();
+        // req = new HttpRequest(); 
+        // req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
+        // req.setEndpoint(endPoint); 
+        // req.setMethod('GET'); 
+        // h = new Http(); 
+        // res = h.send(req); 
+        // System.debug(res.getBody()); 
+        // logOutput('getNextRecords', res.getBody());
+        // return res.getBody();
+        return '';
     }
     
     public static String getApiToken(){
@@ -61,7 +65,8 @@ public with sharing class RestApiController {
         try{
             req.setBody(body); 
             h = new Http(); 
-            res = h.send(req); 
+            res = h.send(req);              
+            //logOutput('getApiToken', res.getBody());
             responseData = (Map<String,Object>) JSON.deserializeUntyped(res.getBody());
             System.debug((String) responseData?.get('access_token')); 
         } catch (Exception ex){
@@ -70,5 +75,14 @@ public with sharing class RestApiController {
         return (String) responseData?.get('access_token');
     }
 
-
+    //@future(callout=true)
+    public static void logOutput(String title, String output){
+        if(logResults){
+            // ContentNote cnt = new ContentNote();
+            // cnt.Content = Blob.valueof(output);
+            // cnt.Title = title+Datetime.now().time();
+            // cnt.ownerId = Userinfo.getUserId();
+            // insert cnt;
+        }
+    }
 }

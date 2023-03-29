@@ -1,8 +1,14 @@
-global without sharing class CustomizeSandbox implements SandboxPostCopy {
+global without sharing class CustomizeSandbox {
     private class CustomException extends Exception {}
     public class RestResponse{
         public Integer totalSize;
         public List<sObject> records;
+        public String nextRecordsUrl;
+    }
+
+    public class RestRollupResponse{
+        public Integer totalSize;
+        public List<rh2__PS_Export_Rollups__c> records;
         public String nextRecordsUrl;
     }
 
@@ -71,55 +77,40 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
     };
 
     public static List<String> outboundMessages = new List<String>{
-        'NewClientPortal_AccountingProcessSync',
-        'NewClientPortal_AccountSync',
-        'NewClientPortal_ActiveSubLineSync',
-        'NewClientPortal_ActiveSubSync',
-        'NewClientPortal_AppointmentSync',
-        'NewClientPortal_CaseCommentSync',
-        'NewClientPortal_CaseSync',
-        'NewClientPortal_ContactSync',
-        'NewClientPortal_LeadSync',
-        'NewClientPortal_NoteSync',
-        'NewClientPortal_PaymentMethodSync',
-        'NewClientPortal_PaymentSync',
-        'NewClientPortal_RelationAccountContaSync',
-        'NewClientPortal_SubscriptionLineSync',
-        'NewClientPortal_SubscriptionLineSync',
-        'NewClientPortal_UserSync',
-        'SOW_Trigger',
+        'NewClientPortal-AccountSync',
+        'NewClientPortal-ActiveSubLineSync',
+        'NewClientPortal-ActiveSubSync',
+        'NewClientPortal-AppointmentSync',
+        'NewClientPortal-CaseCommentSync',
+        'NewClientPortal-CaseSync',
+        'NewClientPortal-ContactSync',
+        'NewClientPortal-LeadSync',
+        'NewClientPortal-NoteSync',
+        'NewClientPortal-PaymentMethodSync',
+        'NewClientPortal-PaymentSync',
+        'NewClientPortal-SubscriptionLineSync',
+        'NewClientPortal-UserSync',
         'SOW_Trigger_Fast'
     };
 
-    public static String getOutboundMessageString(){
-        String retString = '';
-        for(String msgStr : outboundMessages){
-            retString += msgStr+',';
-        }
-        return retString.substring(0, retString.length()-1);
-    }
+    // public static String getOutboundMessageString(){
+    //     String retString = '';
+    //     for(String msgStr : outboundMessages){
+    //         retString += '\''+msgStr+'\',';
+    //     }
+    //     return retString.substring(0, retString.length()-1);
+    // }
 
     public static Integer batchSize = 50;
+    public static Integer totalRecordCount = 500;
     public static String rollupQuery = 'SELECT rh2__type__c, rh2__RollupOrFilterData__c, rh2__filterJobRollupKey__c FROM rh2__PS_Export_Rollups__c';
     public static String leadQuery = 'SELECT FirstName,LastName,email,Status,LeadSource,Lead_Type_New__c,Campaign__c,Marketing_Channel__c,Phone,Company, Industry, State FROM Lead WHERE Email != null ORDER BY Phone LIMIT '+batchSize+' OFFSET ';
     public static String accountFields = 'Account.name, Account.Lead_Source__c, Account.Lead_Type_New__c, Account.Campaign__c, Account.Marketing_Channel__c, Account.Industry, Account.State_of_Formation__c, Account.BillingState, Account.Phone';
     public static String contactQuery = 'SELECT FirstName,LastName, email, Lead_Source__c, Lead_Type__c, CampaignID__c, Last_SF_Activity__c, Time_Zone__c, MailingState, Phone, '+accountFields+' FROM Contact WHERE Email != null AND AccountId != null ORDER BY Phone LIMIT '+batchSize+' OFFSET ';
     //public static String accountQuery = 'SELECT id, name, Lead_Source__c, Lead_Type_New__c, Campaign__c, Marketing_Channel__c, Last_SF_Activity__c, Time_Zone__c, Industry, State_of_Formation__c, BillingState, Phone FROM account limit 500';
 
-    global CustomizeSandbox() {
-
-    }
-
-    global void runApexClass(SandboxContext context) {
-        System.debug('Org ID: ' + context.organizationId());
-        System.debug('Sandbox ID: ' + context.sandboxId());
-        System.debug('Sandbox Name: ' + context.sandboxName());
-        System.debug(UserInfo.getSessionId());
-        System.debug(UserInfo.getUserName());
-        // Insert logic here to prepare the sandbox for use.
-    }
-
-    public static void runAllUpdates(){
+    public static void runAllUpdates(Integer size){
+        totalRecordCount = size;
         updateUsers(getUsersToUpdate());
         transferCalculatorData();
         transferRollupData();
@@ -155,10 +146,12 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         for(String requestString : calculatorQueries){
             System.debug('query: '+requestString);
             jsonString = RestApiController.runQuery(requestString);
-            response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-            recordList.addAll(response.records);
+                response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+                recordList.addAll(response.records);
+            
+            
             system.debug(response.nextRecordsUrl);
-            while(response.nextRecordsUrl != null){
+            while(response?.nextRecordsUrl != null){
                 jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
                 response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
                 recordList.addAll(response.records);
@@ -179,10 +172,25 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
 
         System.debug('query: '+requestString);
         jsonString = RestApiController.runQuery(requestString);
-        response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-        recordList.addAll(response.records);
-        system.debug(response.nextRecordsUrl);
-        while(response.nextRecordsUrl != null){
+        if(Test.isRunningTest()){
+            System.debug('**test');
+            Map<String,Object> resMap = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
+            List<Object> recList = (List<Object>)resMap.get('records');
+            for(Object rec : recList){
+                Map<String,Object> recMap = (Map<String,Object>)rec;
+                rh2__PS_Export_Rollups__c rolEx = new rh2__PS_Export_Rollups__c();
+                rolEx.rh2__type__c = (String)recMap.get('rh2__type__c');
+                rolEx.rh2__RollupOrFilterData__c = (String)recMap.get('rh2__RollupOrFilterData__c');
+                rolEx.rh2__filterJobRollupKey__c = (String)recMap.get('rh2__filterJobRollupKey__c');
+                recordList.add(rolEx);
+            }
+        } else {
+            System.debug('**not test');
+            response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+            recordList.addAll(response.records);
+        }  
+        system.debug(response?.nextRecordsUrl);
+        while(response?.nextRecordsUrl != null){
             jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
             response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
             recordList.addAll(response.records);
@@ -193,7 +201,7 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
     }
 
     public static void importSeedData(){
-        for(Integer i = 0; i < 500; i += batchSize){
+        for(Integer i = 0; i < totalRecordCount; i += batchSize){
             importSeedDataBatch(i);
         }
     }
@@ -304,8 +312,9 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
     @future
     public static void updateCustomSettings(){
         Chargeover_URL__C urlSetting = Chargeover_URL__C.getOrgDefaults();
+        System.debug(urlSetting);
         String env = getEvironmentName();
-
+        System.debug(env);
         if(env == 'training'){
             urlSetting.Chargeover_URL__C = 'https://1800accountant-training.chargeover.com';
             urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
@@ -326,15 +335,47 @@ global without sharing class CustomizeSandbox implements SandboxPostCopy {
         update urlSetting;
     }
 
-    @future(callout=true)
-    public static void updateOutboundMessages(){
-        String resStr = ToolingApiController.runQuery('select Name, Id from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100');
-        ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
-        if(getEvironmentName() == 'training'){
-            
-        }
-        for(ToolingApiController.RecordWrapper rec : om.records){
-
-        }
-    }
+    //@future(callout=true)
+    // public static void updateOutboundMessages(){
+    //     String query = 'select Id, integrationUserId from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100';
+    //     //ToolingApiController.printLomgString(query);
+    //     String resStr = ToolingApiController.runQuery(query);
+    //     ToolingApiController.printLomgString(resStr);
+    //     ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
+    //     if(getEvironmentName() == 'training'){
+    //         List<String> idList = new List<String>();
+    //         for(ToolingApiController.RecordWrapper rec : om.records){
+    //             idList.add(rec.Id);
+    //         }
+    //         ToolingApiController.deleteRecords(idList, 'WorkflowOutboundMessage');
+    //     } else {
+    //         //Map<String,String> idToRecordJson = new Map<String,String>();
+    //         Map<String,Object> idToRecord = new Map<String,Object>();
+    //         List<ToolingApiController.RecordWrapper> recList = om.records;
+    //         String newUrl;
+    //         if(getEvironmentName() == 'uat'){
+    //             newUrl = 'https://uat.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+    //         } else if(getEvironmentName() == 'staging'){
+    //             newUrl = 'https://staging.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+    //         } else {
+    //             system.debug('current environment not supported');
+    //             //return;
+    //             newUrl = 'testurl.com';
+    //         }
+    //         for(ToolingApiController.RecordWrapper rec : recList){
+    //             String id = rec.Id;
+    //             rec.Id = null;
+    //             rec.Metadata = new ToolingApiController.MetadataWrapper();
+    //             rec.Metadata.endpointUrl = newUrl;
+    //             rec.Metadata.integrationUser = new User(Id = rec.Metadata.integrationUserId);
+    //             //rec.Metadata.integrationUserId = null;
+    //             //idToRecordJson.put(rec.Id, JSON.serialize(rec));
+    //             //om.records = new List<ToolingApiController.RecordWrapper>{rec};
+    //             //idToRecord.put(id, rec);
+    //             ToolingApiController.updateObject('WorkflowOutboundMessage', id, JSON.serialize(rec, true));
+    //         }
+    //         //ToolingApiController.updateRecords(idToRecord, 'WorkflowOutboundMessage');
+    //     }
+        
+    // }
 }

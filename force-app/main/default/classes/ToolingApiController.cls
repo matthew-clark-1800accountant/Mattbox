@@ -3,15 +3,15 @@ public with sharing class ToolingApiController {
 
     public class OutboundMsg { public List<RecordWrapper> records;}
     public class RecordWrapper { public MetadataWrapper Metadata; public String Id; public String Name; }
-    public class MetadataWrapper { public String endpointUrl; public Double apiVersion=35.0; public String integrationUser; public String name;}
+    public class MetadataWrapper { public String endpointUrl; public Double apiVersion=35.0; public String name;}
     public class CompositeRequestWrapper { public Boolean allOrNone; public List<CompositeSubrequestWrapper> compositeRequest; }
-    public class CompositeSubrequestWrapper { public String body; public String method; public String referenceId; public String url;}
+    public class CompositeSubrequestWrapper { public Object body; public String method; public String referenceId; public String url;}
     public class CompositePostWrapper { public Boolean allOrNone; public List<sObject> records; }
     //patch requests can also use CompositePostWrapper ^
     public class CompositeGetWrapper  { public List<String> ids; public List<String> fields; }
     public class CompositeGetResponseWrapper { public String Id; public Map<String,String> attributes; }
-    //public class CompositeDeleteWrapper { public Boolean allOrNone; public List<String> ids;}
-
+    //public class CompositeDelgzzeteWrapper { public Boolean allOrNone; public List<String> ids;}
+    public static Boolean logResults = false;
     public ToolingApiController() {
 
     }
@@ -33,7 +33,8 @@ public with sharing class ToolingApiController {
         //req.setBody('{"TracedEntityId":"' + userToTrace + '","LogType":"USER_DEBUG","DebugLevelId":"7dl700000008ONeAAM"}'); 
         h = new Http(); 
         res = h.send(req); 
-        printLomgString(res.getBody()); 
+        printLomgString(res.getBody());             
+        logOutput('tooling runquery', res.getBody());
         return res.getBody();
     }
     
@@ -47,45 +48,46 @@ public with sharing class ToolingApiController {
         return token;
     }
 
-    public static String testOutboundUpdate(){
-        String resStr = ToolingApiController.runQuery('select Name, Id from WorkflowOutboundMessage order by Name limit 100');
-        ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
-        String recId = om.records[0].Id;
-        resStr = ToolingApiController.runQuery('select Metadata from WorkflowOutboundMessage where Id=\''+recId+'\' order by Name limit 100');
-        //printLomgString(resStr);
-        om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
-        om.records[0].Metadata.endpointUrl += 'test';
-        printLomgString(JSON.serialize(om));
-        RecordWrapper rec = om.records[0];
-        rec.Metadata.apiVersion=35.0;
-        String omString = JSON.serialize(rec, true);
-        printLomgString('omString: '+omString);
-        updateObject('WorkflowOutboundMessage', recId, omString);
-        return omString;
-        // String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/WorkflowOutboundMessage/';
-        // printLomgString(endPoint+recId+'/');
-        // HttpRequest req; 
-        // HttpResponse res; 
-        // Http h; 
+    // public static String testOutboundUpdate(){
+    //     String resStr = ToolingApiController.runQuery('select Name, Id from WorkflowOutboundMessage order by Name limit 100');
+    //     ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
+    //     String recId = om.records[0].Id;
+    //     resStr = ToolingApiController.runQuery('select Metadata from WorkflowOutboundMessage where Id=\''+recId+'\' order by Name limit 100');
+    //     //printLomgString(resStr);
+    //     om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
+    //     om.records[0].Metadata.endpointUrl += 'test';
+    //     printLomgString(JSON.serialize(om));
+    //     RecordWrapper rec = om.records[0];
+    //     rec.Metadata.apiVersion=35.0;
+    //     String omString = JSON.serialize(rec, true);
+    //     printLomgString('omString: '+omString);
+    //     // updateObject('WorkflowOutboundMessage', recId, omString);
+    //     // return omString;
 
-        // req = new HttpRequest(); 
-        // //req.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionID()); 
-        // req.setHeader('Authorization', 'Bearer ' + getToolingToken());
-        // req.setHeader('Content-Type', 'application/json'); 
-        // req.setEndpoint(endPoint+recId+'/'); 
-        // req.setMethod('PATCH'); 
+    //     String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/WorkflowOutboundMessage/';
+    //     printLomgString(endPoint+recId+'/');
+    //     HttpRequest req; 
+    //     HttpResponse res; 
+    //     Http h; 
 
-        // try{
-        //     String body = omString;
-        //     req.setBody(body); 
-        //     h = new Http(); 
-        //     res = h.send(req); 
-        //     printLomgString(res.getBody()); 
-        // } catch (Exception ex){
-        //     printLomgString(ex.getMessage());
-        // }
-        // return res.getBody();
-    }
+    //     req = new HttpRequest(); 
+    //     //req.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionID()); 
+    //     req.setHeader('Authorization', 'Bearer ' + getToolingToken());
+    //     req.setHeader('Content-Type', 'application/json'); 
+    //     req.setEndpoint(endPoint+recId+'/'); 
+    //     req.setMethod('PATCH'); 
+
+    //     try{
+    //         String body = omString;
+    //         req.setBody(body); 
+    //         h = new Http(); 
+    //         res = h.send(req); 
+    //         printLomgString(res.getBody()); 
+    //     } catch (Exception ex){
+    //         printLomgString(ex.getMessage());
+    //     }
+    //     return res.getBody();
+    // }
 
     
 
@@ -93,6 +95,7 @@ public with sharing class ToolingApiController {
     public static void updateObject(String objectType, String recId, String jsonBody){
         String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/'+objectType+'/';
         printLomgString(endPoint+recId+'/');
+        printLomgString(jsonBody);
         HttpRequest req; 
         HttpResponse res; 
         Http h; 
@@ -108,7 +111,8 @@ public with sharing class ToolingApiController {
             req.setBody(jsonBody); 
             h = new Http(); 
             res = h.send(req); 
-            printLomgString(res.getBody()); 
+            printLomgString(res.getBody());            
+            logOutput('updateObject', res.getBody());
         } catch (Exception ex){
             printLomgString(ex.getMessage());
         }
@@ -142,12 +146,6 @@ public with sharing class ToolingApiController {
             subReq.referenceId = 'refid'+id;
             compReq.compositeRequest.add(subReq);
         }
-        // String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/composite/sobjects?ids=';
-        // for(String id : idList){
-        //     endPoint += id+',';
-        // }
-        // endPoint = endPoint.substring(0,endPoint.length()-1);
-        // endPoint += '&allOrNone=true';
         printLomgString(endPoint);
         HttpRequest req; 
         HttpResponse res; 
@@ -167,23 +165,25 @@ public with sharing class ToolingApiController {
             h = new Http(); 
             res = h.send(req); 
             printLomgString(res.getBody()); 
+            logOutput('deleteRecords', res.getBody());
         } catch (Exception ex){
             printLomgString(ex.getMessage());
         }
     }
 
-    @future(callout=true)
-    public static void updateRecords(Map<String,String> idToRecordJson, String objectType){
+    //@future(callout=true)
+    public static void updateRecords(Map<String,Object> idToRecordJson, String objectType){
         CompositeRequestWrapper compReq = new CompositeRequestWrapper();
         compReq.allOrNone = true;
         compReq.compositeRequest = new List<CompositeSubrequestWrapper>();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite';
+        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite/';
         for(String id : idToRecordJson.keySet()){
             CompositeSubrequestWrapper subReq = new CompositeSubrequestWrapper();
             subReq.method = 'PATCH';
-            subReq.url = '/services/data/v43.0/tooling/sobjects/'+objectType+'/'+id;
+            subReq.url = '/services/data/v43.0/tooling/sobjects/'+objectType+'/'+id+'/';
             subReq.body = idToRecordJson.get(id);
             System.debug(subReq.url);
+            System.debug('**body: '+subReq.body);
             subReq.referenceId = 'refid'+id;
             compReq.compositeRequest.add(subReq);
         }
@@ -197,7 +197,8 @@ public with sharing class ToolingApiController {
         HttpRequest req; 
         HttpResponse res; 
         Http h; 
-        String jsonBody = JSON.serialize(compReq, true);
+        //todo: fix this monstrosity
+        String jsonBody = JSON.serialize(compReq, true).replace('"{', '{').replace('}"', '}').replace('\\"', '"');
         printLomgString(jsonBody);
 
         req = new HttpRequest(); 
@@ -212,8 +213,20 @@ public with sharing class ToolingApiController {
             h = new Http(); 
             res = h.send(req); 
             printLomgString(res.getBody()); 
+            logOutput('updateRecords', res.getBody());
         } catch (Exception ex){
             printLomgString(ex.getMessage());
+        }
+    }
+
+    //@future(callout=true)
+    public static void logOutput(String title, String output){
+        if(logResults){
+            ContentNote cnt = new ContentNote();
+            cnt.Content = Blob.valueof(output);
+            cnt.Title = title+Datetime.now().time();
+            cnt.ownerId = Userinfo.getUserId();
+            insert cnt;
         }
     }
 }
