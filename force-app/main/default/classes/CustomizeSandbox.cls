@@ -14,7 +14,11 @@ global without sharing class CustomizeSandbox {
 
     public static String getEvironmentName(){
         System.Domain d = System.DomainParser.parse(URL.getOrgDomainUrl());
-        return d.getSandboxName().toLowerCase();
+        if(d.getSandboxName() == null){
+            return 'production';
+        } else {
+            return d.getSandboxName().toLowerCase();
+        }        
     }
 
     public static Set<String> getUsersToUpdate(){
@@ -254,7 +258,7 @@ global without sharing class CustomizeSandbox {
         response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
         for(Contact con : (List<Contact>)response.records){
             con.Account.phone ='1234567890';// '111'+ con.Account.phone?.substring(3,10);
-            if(environment != 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
+            if(environment == 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
                 Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                 //System.debug('index: '+index);
                 con.Account.OwnerId = trainingUserList[index].Id;
