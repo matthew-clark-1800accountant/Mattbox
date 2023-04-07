@@ -94,16 +94,16 @@ global without sharing class CustomizeSandbox {
         'NewClientPortal-PaymentSync',
         'NewClientPortal-SubscriptionLineSync',
         'NewClientPortal-UserSync',
-        'SOW_Trigger_Fast'
+        'NewClientPortal-SubscriptionSync'
     };
 
-    // public static String getOutboundMessageString(){
-    //     String retString = '';
-    //     for(String msgStr : outboundMessages){
-    //         retString += '\''+msgStr+'\',';
-    //     }
-    //     return retString.substring(0, retString.length()-1);
-    // }
+    public static String getOutboundMessageString(){
+        String retString = '';
+        for(String msgStr : outboundMessages){
+            retString += '\''+msgStr+'\',';
+        }
+        return retString.substring(0, retString.length()-1);
+    }
 
     public static Integer batchSize = 50;
     public static Integer totalRecordCount = 500;
@@ -340,46 +340,58 @@ global without sharing class CustomizeSandbox {
     }
 
     //@future(callout=true)
-    // public static void updateOutboundMessages(){
-    //     String query = 'select Id, integrationUserId from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100';
-    //     //ToolingApiController.printLomgString(query);
-    //     String resStr = ToolingApiController.runQuery(query);
-    //     ToolingApiController.printLomgString(resStr);
-    //     ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
-    //     if(getEvironmentName() == 'training'){
-    //         List<String> idList = new List<String>();
-    //         for(ToolingApiController.RecordWrapper rec : om.records){
-    //             idList.add(rec.Id);
-    //         }
-    //         ToolingApiController.deleteRecords(idList, 'WorkflowOutboundMessage');
-    //     } else {
-    //         //Map<String,String> idToRecordJson = new Map<String,String>();
-    //         Map<String,Object> idToRecord = new Map<String,Object>();
-    //         List<ToolingApiController.RecordWrapper> recList = om.records;
-    //         String newUrl;
-    //         if(getEvironmentName() == 'uat'){
-    //             newUrl = 'https://uat.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
-    //         } else if(getEvironmentName() == 'staging'){
-    //             newUrl = 'https://staging.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
-    //         } else {
-    //             system.debug('current environment not supported');
-    //             //return;
-    //             newUrl = 'testurl.com';
-    //         }
-    //         for(ToolingApiController.RecordWrapper rec : recList){
-    //             String id = rec.Id;
-    //             rec.Id = null;
-    //             rec.Metadata = new ToolingApiController.MetadataWrapper();
-    //             rec.Metadata.endpointUrl = newUrl;
-    //             rec.Metadata.integrationUser = new User(Id = rec.Metadata.integrationUserId);
-    //             //rec.Metadata.integrationUserId = null;
-    //             //idToRecordJson.put(rec.Id, JSON.serialize(rec));
-    //             //om.records = new List<ToolingApiController.RecordWrapper>{rec};
-    //             //idToRecord.put(id, rec);
-    //             ToolingApiController.updateObject('WorkflowOutboundMessage', id, JSON.serialize(rec, true));
-    //         }
-    //         //ToolingApiController.updateRecords(idToRecord, 'WorkflowOutboundMessage');
-    //     }
+    public static void updateOutboundMessages(){
+        String query = 'select Id, Name from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100';
+        //ToolingApiController.printLomgString(query);
+        String resStr = ToolingApiController.runQuery(query);
+        ToolingApiController.printLomgString(resStr);
+        ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
+        if(getEvironmentName() == 'training'){
+            List<String> idList = new List<String>();
+            for(ToolingApiController.RecordWrapper rec : om.records){
+                idList.add(rec.Id);
+            }
+            ToolingApiController.deleteRecords(idList, 'WorkflowOutboundMessage');
+        } else {
+            //Map<String,String> idToRecordJson = new Map<String,String>();
+            Map<String,Object> idToRecord = new Map<String,Object>();
+            List<ToolingApiController.RecordWrapper> recList = om.records;
+            String newUrl;
+            String integrationUsername;
+            List<User> integrationUsers = [SELECT Username FROM User WHERE Alias = 'API' LIMIT 1];
+            if(!integrationUsers.isEmpty()){
+                integrationUsername = integrationUsers[0].Username;
+            } else {
+                integrationUsername = 'api@1800accountant.com';
+            }
+            
+            if(getEvironmentName() == 'uat'){
+                newUrl = 'https://uat.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+            } else if(getEvironmentName() == 'staging'){
+                newUrl = 'https://staging.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+            } else {
+                system.debug('current environment not supported');
+                //return;
+                newUrl = 'testurl.com';
+            }
+            for(ToolingApiController.RecordWrapper rec : recList){
+                String id = rec.Id;
+                String name = rec.Name;
+                rec.Id = null;
+                rec.Name = null;
+                rec.Metadata = new ToolingApiController.MetadataWrapper();
+                rec.Metadata.endpointUrl = newUrl;
+                rec.Metadata.integrationUser = integrationUsername;
+                rec.Metadata.apiVersion=35.0;
+                rec.Metadata.name = name;
+                //rec.Metadata.integrationUserId = null;
+                //idToRecordJson.put(rec.Id, JSON.serialize(rec));
+                //om.records = new List<ToolingApiController.RecordWrapper>{rec};
+                //idToRecord.put(id, rec);
+                ToolingApiController.updateObject('WorkflowOutboundMessage', id, JSON.serialize(rec, true));
+            }
+            //ToolingApiController.updateRecords(idToRecord, 'WorkflowOutboundMessage');
+        }
         
-    // }
+    }
 }

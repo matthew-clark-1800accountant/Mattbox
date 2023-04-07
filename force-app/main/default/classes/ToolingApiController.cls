@@ -3,14 +3,14 @@ public with sharing class ToolingApiController {
 
     public class OutboundMsg { public List<RecordWrapper> records;}
     public class RecordWrapper { public MetadataWrapper Metadata; public String Id; public String Name; }
-    public class MetadataWrapper { public String endpointUrl; public Double apiVersion=35.0; public String name;}
+    public class MetadataWrapper { public String endpointUrl; public Double apiVersion=35.0; public String integrationUser; public String name;}
     public class CompositeRequestWrapper { public Boolean allOrNone; public List<CompositeSubrequestWrapper> compositeRequest; }
     public class CompositeSubrequestWrapper { public Object body; public String method; public String referenceId; public String url;}
     public class CompositePostWrapper { public Boolean allOrNone; public List<sObject> records; }
     //patch requests can also use CompositePostWrapper ^
     public class CompositeGetWrapper  { public List<String> ids; public List<String> fields; }
     public class CompositeGetResponseWrapper { public String Id; public Map<String,String> attributes; }
-    //public class CompositeDelgzzeteWrapper { public Boolean allOrNone; public List<String> ids;}
+    //public class CompositeDeleteWrapper { public Boolean allOrNone; public List<String> ids;}
     public static Boolean logResults = false;
     public ToolingApiController() {
 
@@ -145,7 +145,7 @@ public with sharing class ToolingApiController {
             System.debug(subReq.url);
             subReq.referenceId = 'refid'+id;
             compReq.compositeRequest.add(subReq);
-        }
+        } 
         printLomgString(endPoint);
         HttpRequest req; 
         HttpResponse res; 

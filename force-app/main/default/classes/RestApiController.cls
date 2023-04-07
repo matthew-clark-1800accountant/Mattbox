@@ -17,7 +17,27 @@ public with sharing class RestApiController {
         req.setMethod('GET'); 
         h = new Http(); 
         res = h.send(req); 
-        System.debug(res.getBody()); 
+        printLomgString(res.getBody()); 
+        logOutput('rest runQuery', res.getBody());
+        return res.getBody();
+    }
+
+    public static String explainQuery(String query){
+
+        //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/query/?q=';
+        String endPoint = 'https://1800accountant.my.salesforce.com'+'/services/data/v43.0/query/?explain=';
+        String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
+        HttpRequest req; 
+        HttpResponse res; 
+        Http h; 
+
+        req = new HttpRequest(); 
+        req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
+        req.setEndpoint(endPoint+escapedQuery); 
+        req.setMethod('GET'); 
+        h = new Http(); 
+        res = h.send(req); 
+        printLomgString(res.getBody()); 
         logOutput('rest runQuery', res.getBody());
         return res.getBody();
     }
@@ -84,5 +104,18 @@ public with sharing class RestApiController {
             // cnt.ownerId = Userinfo.getUserId();
             // insert cnt;
         }
+    }
+
+    public static void printLomgString(String lomgString){
+        Integer index = 0;
+        Integer part = 0;
+        Integer partSize = 200;
+        while (index < lomgString.length() - partSize) {
+            System.debug(part+': '+lomgString.substring(index, index+partSize));
+            index += partSize;
+            part++;
+        }
+        System.debug(part+': '+lomgString.substring(index));
+        System.debug('-');
     }
 }

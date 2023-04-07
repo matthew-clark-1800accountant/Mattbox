@@ -20,21 +20,38 @@ global with sharing class CustomizeSandboxMockEndpoints implements HttpCalloutMo
         String reqEndpoint = req.getEndpoint();
         String bodyString = '';
         System.debug('***reqEndpoint: '+reqEndpoint);
-        if(reqEndpoint.contains('Calculator_Field__c')){
-            bodyString = calculatorFieldResponse;
-        } else if (reqEndpoint.contains('Calculator_Dropdown__c')){
-            bodyString = calculatorDropdownResponse;
-        } else if (reqEndpoint.contains('Calculator_Rule__c')){
-            bodyString = calculatorRuleResponse;
-        } else if (reqEndpoint.contains('token')){ //double check this one
-            bodyString = apiTokenResponse;
-        } else if (reqEndpoint.contains('rh2__PS_Export_Rollups__c')){
-            bodyString = rollupRuleResponse;
-        } else if (reqEndpoint.contains('FROM+Lead')){
-            bodyString = leadResponse;
-        } else if (reqEndpoint.contains('FROM+Contact')){
-            bodyString = contactResponse;
+        if(!reqEndpoint.contains('tooling')){
+            if(reqEndpoint.contains('Calculator_Field__c')){
+                bodyString = calculatorFieldResponse;
+            } else if (reqEndpoint.contains('Calculator_Dropdown__c')){
+                bodyString = calculatorDropdownResponse;
+            } else if (reqEndpoint.contains('Calculator_Rule__c')){
+                bodyString = calculatorRuleResponse;
+            } else if (reqEndpoint.contains('token')){ //double check this one
+                bodyString = apiTokenResponse;
+            } else if (reqEndpoint.contains('rh2__PS_Export_Rollups__c')){
+                bodyString = rollupRuleResponse;
+            } else if (reqEndpoint.contains('FROM+Lead')){
+                bodyString = leadResponse;
+            } else if (reqEndpoint.contains('FROM+Contact')){
+                bodyString = contactResponse;
+            }
+        } else {
+            if(reqEndpoint.contains(CustomizeSandbox.rollupQuery)){
+
+            } else if (reqEndpoint.contains(CustomizeSandbox.leadQuery)){
+
+            } else if (reqEndpoint.contains(CustomizeSandbox.contactQuery)){
+
+            } else if (reqEndpoint.contains(CustomizeSandbox.calculatorQueries[0])){
+
+            } else if (reqEndpoint.contains(CustomizeSandbox.calculatorQueries[1])){
+
+            } else if (reqEndpoint.contains(CustomizeSandbox.calculatorQueries[2])){
+
+            }
         }
+        
         // System.assertEquals('https://example.com/example/test', req.getEndpoint());
         // System.assertEquals('GET', req.getMethod());
         

@@ -38,7 +38,8 @@ public with sharing class ChargeOverInvoiceTriggerHandler
         List<Event> eventList = [
             SELECT Id, ActivityDate, AccountId
             FROM Event
-            WHERE (Secondary_Disposition_Details__c = 'Sale'
+            WHERE Account__c IN :accountIds
+            AND (Secondary_Disposition_Details__c = 'Sale'
             OR Secondary_Disposition_Details__c = 'Follow-Up')
             AND AccountId IN :accountIds
             ORDER BY ActivityDate DESC
