@@ -120,6 +120,7 @@ global without sharing class CustomizeSandbox {
         transferRollupData();
         importSeedData();
         updateCustomSettings();
+        updateOutboundMessages();
     }
 
     @future
@@ -155,12 +156,12 @@ global without sharing class CustomizeSandbox {
             
             
             system.debug(response.nextRecordsUrl);
-            while(response?.nextRecordsUrl != null){
-                jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
-                response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-                recordList.addAll(response.records);
-                system.debug(response.nextRecordsUrl);
-            }
+            // while(response?.nextRecordsUrl != null){
+            //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
+            //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+            //     recordList.addAll(response.records);
+            //     system.debug(response.nextRecordsUrl);
+            // }
         }
         insert recordList;
     }
@@ -194,12 +195,12 @@ global without sharing class CustomizeSandbox {
             recordList.addAll(response.records);
         }  
         system.debug(response?.nextRecordsUrl);
-        while(response?.nextRecordsUrl != null){
-            jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
-            response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-            recordList.addAll(response.records);
-            system.debug(response.nextRecordsUrl);
-        }
+        // while(response?.nextRecordsUrl != null){
+        //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
+        //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+        //     recordList.addAll(response.records);
+        //     system.debug(response.nextRecordsUrl);
+        // }
         
         insert recordList;
     }
@@ -230,12 +231,12 @@ global without sharing class CustomizeSandbox {
         response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
         leadList.addAll((List<Lead>)response.records);
         System.debug(response.nextRecordsUrl);
-        while(response.nextRecordsUrl != null){
-            jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
-            response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-            leadList.addAll((List<Lead>)response.records);
-            System.debug(response.nextRecordsUrl);
-        }
+        // while(response.nextRecordsUrl != null){
+        //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
+        //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+        //     leadList.addAll((List<Lead>)response.records);
+        //     System.debug(response.nextRecordsUrl);
+        // }
         //System.debug(recordList);
         
         for(Lead l : leadList){
@@ -274,27 +275,27 @@ global without sharing class CustomizeSandbox {
             contactList.add(con);
         }
         System.debug(response.records[0]);
-        while(response.nextRecordsUrl != null){
-            jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
-            response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-            for(Contact con : (List<Contact>)response.records){
-                con.Account.phone ='1234567890';//= '111'+con.Account.phone?.substring(3,10);
-                if(environment == 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
-                    Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
-                    //System.debug('index: '+index);
-                    con.Account.OwnerId = trainingUserList[index].Id;
-                } else {
-                    con.Account.OwnerId = generalQueue.Id;
-                }
-                accountList.add(con.Account);
+        // while(response.nextRecordsUrl != null){
+        //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
+        //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+        //     for(Contact con : (List<Contact>)response.records){
+        //         con.Account.phone ='1234567890';//= '111'+con.Account.phone?.substring(3,10);
+        //         if(environment == 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
+        //             Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
+        //             //System.debug('index: '+index);
+        //             con.Account.OwnerId = trainingUserList[index].Id;
+        //         } else {
+        //             con.Account.OwnerId = generalQueue.Id;
+        //         }
+        //         accountList.add(con.Account);
 
-                con.Account = null;
-                con.phone ='1234567890';// '111'+con.phone?.substring(3,10);
-                con.email = (con.email==null) ? con.email+dateString : con.lastname.deleteWhitespace()+dateString+'@gmail.com';
-                contactList.add(con);
-            }
-            System.debug(response.nextRecordsUrl);
-        }
+        //         con.Account = null;
+        //         con.phone ='1234567890';// '111'+con.phone?.substring(3,10);
+        //         con.email = (con.email==null) ? con.email+dateString : con.lastname.deleteWhitespace()+dateString+'@gmail.com';
+        //         contactList.add(con);
+        //     }
+        //     System.debug(response.nextRecordsUrl);
+        // }
         System.debug(leadList);
         System.debug(accountList);
         System.debug(contactList);
@@ -319,7 +320,7 @@ global without sharing class CustomizeSandbox {
         System.debug(urlSetting);
         String env = getEvironmentName();
         System.debug(env);
-        if(env == 'training'){
+        if(env == 'training' || Test.isRunningTest()){
             urlSetting.Chargeover_URL__C = 'https://1800accountant-training.chargeover.com';
             urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
             urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
@@ -346,13 +347,15 @@ global without sharing class CustomizeSandbox {
         String resStr = ToolingApiController.runQuery(query);
         ToolingApiController.printLomgString(resStr);
         ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
-        if(getEvironmentName() == 'training'){
+    
+        if(getEvironmentName() == 'training' || Test.isRunningTest()){
             List<String> idList = new List<String>();
             for(ToolingApiController.RecordWrapper rec : om.records){
                 idList.add(rec.Id);
             }
             ToolingApiController.deleteRecords(idList, 'WorkflowOutboundMessage');
-        } else {
+        } 
+        if(getEvironmentName() != 'training') {
             //Map<String,String> idToRecordJson = new Map<String,String>();
             Map<String,Object> idToRecord = new Map<String,Object>();
             List<ToolingApiController.RecordWrapper> recList = om.records;
@@ -372,7 +375,7 @@ global without sharing class CustomizeSandbox {
             } else {
                 system.debug('current environment not supported');
                 //return;
-                newUrl = 'testurl.com';
+                newUrl = Datetime.now()+'testurl.com';
             }
             for(ToolingApiController.RecordWrapper rec : recList){
                 String id = rec.Id;

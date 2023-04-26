@@ -11,7 +11,7 @@ public with sharing class ToolingApiController {
     public class CompositeGetWrapper  { public List<String> ids; public List<String> fields; }
     public class CompositeGetResponseWrapper { public String Id; public Map<String,String> attributes; }
     //public class CompositeDeleteWrapper { public Boolean allOrNone; public List<String> ids;}
-    public static Boolean logResults = false;
+    public static Boolean logResults = true;
     public ToolingApiController() {
 
     }
@@ -172,52 +172,52 @@ public with sharing class ToolingApiController {
     }
 
     //@future(callout=true)
-    public static void updateRecords(Map<String,Object> idToRecordJson, String objectType){
-        CompositeRequestWrapper compReq = new CompositeRequestWrapper();
-        compReq.allOrNone = true;
-        compReq.compositeRequest = new List<CompositeSubrequestWrapper>();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite/';
-        for(String id : idToRecordJson.keySet()){
-            CompositeSubrequestWrapper subReq = new CompositeSubrequestWrapper();
-            subReq.method = 'PATCH';
-            subReq.url = '/services/data/v43.0/tooling/sobjects/'+objectType+'/'+id+'/';
-            subReq.body = idToRecordJson.get(id);
-            System.debug(subReq.url);
-            System.debug('**body: '+subReq.body);
-            subReq.referenceId = 'refid'+id;
-            compReq.compositeRequest.add(subReq);
-        }
-        // String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/composite/sobjects?ids=';
-        // for(String id : idList){
-        //     endPoint += id+',';
-        // }
-        // endPoint = endPoint.substring(0,endPoint.length()-1);
-        // endPoint += '&allOrNone=true';
-        printLomgString(endPoint);
-        HttpRequest req; 
-        HttpResponse res; 
-        Http h; 
-        //todo: fix this monstrosity
-        String jsonBody = JSON.serialize(compReq, true).replace('"{', '{').replace('}"', '}').replace('\\"', '"');
-        printLomgString(jsonBody);
+    // public static void updateRecords(Map<String,Object> idToRecordJson, String objectType){
+    //     CompositeRequestWrapper compReq = new CompositeRequestWrapper();
+    //     compReq.allOrNone = true;
+    //     compReq.compositeRequest = new List<CompositeSubrequestWrapper>();
+    //     String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite/';
+    //     for(String id : idToRecordJson.keySet()){
+    //         CompositeSubrequestWrapper subReq = new CompositeSubrequestWrapper();
+    //         subReq.method = 'PATCH';
+    //         subReq.url = '/services/data/v43.0/tooling/sobjects/'+objectType+'/'+id+'/';
+    //         subReq.body = idToRecordJson.get(id);
+    //         System.debug(subReq.url);
+    //         System.debug('**body: '+subReq.body);
+    //         subReq.referenceId = 'refid'+id;
+    //         compReq.compositeRequest.add(subReq);
+    //     }
+    //     // String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/composite/sobjects?ids=';
+    //     // for(String id : idList){
+    //     //     endPoint += id+',';
+    //     // }
+    //     // endPoint = endPoint.substring(0,endPoint.length()-1);
+    //     // endPoint += '&allOrNone=true';
+    //     printLomgString(endPoint);
+    //     HttpRequest req; 
+    //     HttpResponse res; 
+    //     Http h; 
+    //     //todo: fix this monstrosity
+    //     String jsonBody = JSON.serialize(compReq, true).replace('"{', '{').replace('}"', '}').replace('\\"', '"');
+    //     printLomgString(jsonBody);
 
-        req = new HttpRequest(); 
-        //req.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionID()); 
-        req.setHeader('Authorization', 'Bearer ' + getToolingToken());
-        req.setHeader('Content-Type', 'application/json'); 
-        req.setEndpoint(endPoint); 
-        req.setMethod('POST'); 
+    //     req = new HttpRequest(); 
+    //     //req.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionID()); 
+    //     req.setHeader('Authorization', 'Bearer ' + getToolingToken());
+    //     req.setHeader('Content-Type', 'application/json'); 
+    //     req.setEndpoint(endPoint); 
+    //     req.setMethod('POST'); 
 
-        try{
-            req.setBody(jsonBody); 
-            h = new Http(); 
-            res = h.send(req); 
-            printLomgString(res.getBody()); 
-            logOutput('updateRecords', res.getBody());
-        } catch (Exception ex){
-            printLomgString(ex.getMessage());
-        }
-    }
+    //     try{
+    //         req.setBody(jsonBody); 
+    //         h = new Http(); 
+    //         res = h.send(req); 
+    //         printLomgString(res.getBody()); 
+    //         logOutput('updateRecords', res.getBody());
+    //     } catch (Exception ex){
+    //         printLomgString(ex.getMessage());
+    //     }
+    // }
 
     //@future(callout=true)
     public static void logOutput(String title, String output){

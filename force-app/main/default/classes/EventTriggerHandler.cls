@@ -88,6 +88,16 @@ public without sharing class EventTriggerHandler{
     public static void afterDelete(Map<Id,Event> mapOldRecords){
         System.debug('EventTriggerHandler.afterDelete()');
         deleteSMSScheduleRecords(mapOldRecords);
+        for(Event oldEvent : mapOldRecords.values()){
+            if(oldEvent.CreatedDate < Datetime.now().addDays(-30) && oldEvent.Type_of_Appointment__c == 'Calendar Block'){
+            //if(oldEvent.Type_of_Appointment__c == 'Calendar Block'){
+                ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+                wrapper.eventId = oldEvent.Id;
+                wrapper.isUpdate = false;
+                wrapper.eventData = new EventWrapper(oldEvent);
+                syncToApi(JSON.serialize(wrapper));
+            }
+        }
     }
 
     /**
@@ -139,6 +149,15 @@ public without sharing class EventTriggerHandler{
             if (newEvent.StartDateTime != oldEvent.StartDateTime) {
                 eventIdToEventMap.put(newEvent.Id, newEvent);
                 eventsToInsert.add(newEvent);
+            }
+
+            if(newEvent.CreatedDate < Datetime.now().addDays(-30) && newEvent.Type_of_Appointment__c == 'Calendar Block'){
+            //if(newEvent.Type_of_Appointment__c == 'Calendar Block'){
+                ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+                wrapper.eventId = newEvent.Id;
+                wrapper.isUpdate = true;
+                wrapper.eventData = new EventWrapper(newEvent);
+                syncToApi(JSON.serialize(wrapper));
             }
             
             for(Event_Tracking_Fields__mdt field : fieldsToTrack){
@@ -232,6 +251,46 @@ public without sharing class EventTriggerHandler{
         if(!accountIdToEventId.isEmpty()){
             updateWhatIdToOpportunity(accountIdToEventId, eventIdToOwnerId);
         }
+    }
+
+    private class ApiCalloutWrapper{
+        private Id eventId;
+        private Boolean isUpdate;
+        private EventWrapper eventData;
+    }
+    private class EventWrapper{
+        private Id OwnerId;
+        private Datetime StartDateTime;
+        private Datetime EndDateTime;
+        private String ShowAs;
+        private String Type_of_Appointment;
+
+        private EventWrapper(Event ev){
+                this.OwnerId = ev.OwnerId;
+                this.StartDateTime = ev.StartDateTime;
+                this.EndDateTime = ev.EndDateTime;
+                this.ShowAs = ev.ShowAs;
+                this.Type_of_Appointment = ev.Type_of_Appointment__c;
+        }
+    }
+    
+    @future(callout=true)
+    public static void syncToApi(String body){
+        System.debug(body);
+        String endPoint = 'callout:X1800Accountant_SFAPI/schedule/eventcache.php';
+        //String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
+        HttpRequest req; 
+        HttpResponse res; 
+        Http h; 
+
+
+        req = new HttpRequest(); 
+        req.setEndpoint(endPoint); 
+        req.setMethod('POST'); 
+        req.setBody(body);
+        h = new Http(); 
+        res = h.send(req); 
+        System.debug(res.getBody());
     }
 
     public static void updateWhatIdToOpportunity(Map<Id, Id> accountIdToEventId, Map<Id, Id> eventIdToOwnerId){
@@ -958,9 +1017,7 @@ public without sharing class EventTriggerHandler{
                     if(eventRecord.StartDateTime.addHours(-1) > System.now()){
                         smsScheduleRecordsToInsert.add(smsScheduleAnHourPriorRecord);
                     }
-
                 }
-
             }
         }
 
@@ -973,11 +1030,7 @@ public without sharing class EventTriggerHandler{
                 }
             }
         }
-
     }
-
-
-
 
     public static void updateEmailCampaignId (List<Event> newEvents) {
         System.debug('EventTriggerHandler.updateEmailCampaignId()');
@@ -1056,66 +1109,4 @@ public without sharing class EventTriggerHandler{
         updateInvoiceRunOnce = true;
         return;
     }
-/*
-    // New version to update all Events and Invoices of each Account
-    public static void updateInvoicePaymentAmountByAccount (List<Id> accountIds) {
-        System.debug(LoggingLevel.DEBUG, 'accountIds :: ' + accountIds);
-
-        Map<Id, List<Event>> eventsByAccount = new Map<Id, List<Event>>();
-        for (Event event : [
-                SELECT ActivityDate, AccountId FROM Event WHERE Secondary_Disposition_Details__c = 'Sale'
-                AND AccountId IN :accountIds ORDER BY ActivityDate DESC
-        ]) {
-            if (!eventsByAccount.containsKey(event.AccountId)) {
-                eventsByAccount.put(event.AccountId, new List<Event>());
-            }
-            eventsByAccount.get(event.AccountId).add(event);
-        }
-
-        System.debug(LoggingLevel.DEBUG, 'eventsByAccount returned with a map size of :: ' + eventsByAccount.size());
-        List<Event> eventsToUpdate = new List<Event>();
-        for (Account account : [
-                SELECT Id, (SELECT CreatedDate, Zuora__PaymentAmount__c
-                FROM Zuora__Invoices__r WHERE Zuora__PaymentAmount__c != NULL)
-                FROM Account WHERE Id IN :accountIds ORDER BY CreatedDate DESC
-        ]) {
-            if (eventsByAccount.containsKey(account.Id)) {
-                List<Zuora__ZInvoice__c> accountInvoices = account.Zuora__Invoices__r;
-
-                // For each Event, total all Invoices that are related and remove them from the list
-                for (Event event : eventsByAccount.get(account.Id)) {
-                    // For each Invoice that meets the criteria, total the payment amounts
-                    Decimal invoiceTotal = 0;
-                    List<Integer> indexesToRemove = new List<Integer>();
-                    for (Integer i = accountInvoices.size() - 1; i >= 0; i--) {
-                        Zuora__ZInvoice__c invoice = accountInvoices.get(i);
-                        if (invoice.CreatedDate >= event.ActivityDate
-                                && invoice.CreatedDate < event.ActivityDate.addDays(365)
-                                ) {
-                            invoiceTotal += invoice.Zuora__PaymentAmount__c;
-                            indexesToRemove.add(i);
-                        }
-                    }
-                    System.debug('setting zuora value :: ' + invoiceTotal);
-
-                    // Update the Event field with the total
-                    event.Invoice_Payment_Amount__c = invoiceTotal;
-                    eventsToUpdate.add(event);
-
-                    // Remove the counted Invoices from the remaining list
-                    for (Integer indexToRemove : indexesToRemove) {
-                        accountInvoices.remove(indexToRemove);
-                    }
-                }
-            }
-        }
-
-        // Disable Event trigger to prevent recursion and then update events
-        if (!eventsToUpdate.isEmpty()) {
-            System.debug(LoggingLevel.FINE, 'eventsToUpdate not empty, preparing to update :: ' + eventsToUpdate);
-            EventTriggerHandler.updateInvoiceRunOnce = true;
-            update eventsToUpdate;
-        }
-    } */
-
 }

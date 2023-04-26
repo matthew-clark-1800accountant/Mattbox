@@ -22,44 +22,43 @@ public with sharing class RestApiController {
         return res.getBody();
     }
 
-    public static String explainQuery(String query){
+    // public static String explainQuery(String query){
 
-        //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/query/?q=';
-        String endPoint = 'https://1800accountant.my.salesforce.com'+'/services/data/v43.0/query/?explain=';
-        String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
-        HttpRequest req; 
-        HttpResponse res; 
-        Http h; 
+    //     //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/query/?q=';
+    //     String endPoint = 'https://1800accountant.my.salesforce.com'+'/services/data/v43.0/query/?explain=';
+    //     String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
+    //     HttpRequest req; 
+    //     HttpResponse res; 
+    //     Http h; 
 
-        req = new HttpRequest(); 
-        req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
-        req.setEndpoint(endPoint+escapedQuery); 
-        req.setMethod('GET'); 
-        h = new Http(); 
-        res = h.send(req); 
-        printLomgString(res.getBody()); 
-        logOutput('rest runQuery', res.getBody());
-        return res.getBody();
-    }
+    //     req = new HttpRequest(); 
+    //     req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
+    //     req.setEndpoint(endPoint+escapedQuery); 
+    //     req.setMethod('GET'); 
+    //     h = new Http(); 
+    //     res = h.send(req); 
+    //     printLomgString(res.getBody()); 
+    //     logOutput('rest runQuery', res.getBody());
+    //     return res.getBody();
+    // }
 
-    public static String getNextRecords(String nextRecordsUrl){
-        //String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+nextRecordsUrl;
-        // String endPoint = 'https://1800accountant.my.salesforce.com'+nextRecordsUrl;
-        // HttpRequest req; 
-        // HttpResponse res; 
-        // Http h; 
+    // public static String getNextRecords(String nextRecordsUrl){
+    //     String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+nextRecordsUrl;
+    //     String endPoint = 'https://1800accountant.my.salesforce.com'+nextRecordsUrl;
+    //     HttpRequest req; 
+    //     HttpResponse res; 
+    //     Http h; 
 
-        // req = new HttpRequest(); 
-        // req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
-        // req.setEndpoint(endPoint); 
-        // req.setMethod('GET'); 
-        // h = new Http(); 
-        // res = h.send(req); 
-        // System.debug(res.getBody()); 
-        // logOutput('getNextRecords', res.getBody());
-        // return res.getBody();
-        return '';
-    }
+    //     req = new HttpRequest(); 
+    //     req.setHeader('Authorization', 'Bearer ' + getApiToken()); 
+    //     req.setEndpoint(endPoint); 
+    //     req.setMethod('GET'); 
+    //     h = new Http(); 
+    //     res = h.send(req); 
+    //     System.debug(res.getBody()); 
+    //     logOutput('getNextRecords', res.getBody());
+    //     return res.getBody();
+    // }
     
     public static String getApiToken(){
         // String token = UserInfo.getSessionId();

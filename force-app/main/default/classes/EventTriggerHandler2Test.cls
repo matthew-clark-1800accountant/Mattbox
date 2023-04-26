@@ -1,8 +1,12 @@
 @isTest
 private class EventTriggerHandler2Test {
     @testSetup static void setupTestData() {
+        User u = [SELECT Id FROM User WHERE Name = 'Matthew Clark' LIMIT 1];
         Account account = new Account(
-            Name = 'Test Account'
+            OwnerId = u.Id,
+            Name = 'Test Account',
+            Email_Campaign_ID__c = '12345',
+            Email_Campaign_ID_Last_Touch__c = '12345'
         );
         insert account;
 
@@ -14,6 +18,7 @@ private class EventTriggerHandler2Test {
         // insert testContact;
         
         Event event = new Event(
+            OwnerId = u.Id,
             WhatId = account.Id,
             // WhoId = testContact.Id,
             Subject = 'Test Event',
@@ -23,7 +28,20 @@ private class EventTriggerHandler2Test {
             Type_of_Appointment__c = 'Tax Savings Analysis',
             Portal_Event_Owner__c = 'Matthew Clark'
         );
-        insert event;
+        //insert event;
+
+        Event calendarBlock = new Event(
+            OwnerId = u.Id,
+            WhatId = account.Id,
+            Email_Campaign_ID__c = '12345',
+            Subject = 'Tax Consultation',
+            Type_of_Appointment__c = 'Calendar Block',
+            StartDateTime = Datetime.now(),
+            EndDateTime = Datetime.now().addMinutes(30)
+        );
+        //insert calendarBlock;
+        insert (new List<Event>{event, calendarBlock});
+        
 
         // Event event2 = new Event(
         //     WhatId = account.Id,
@@ -191,6 +209,29 @@ private class EventTriggerHandler2Test {
         //     }
         // }
     }
+
+    @isTest static void test_updateCalendarBlock(){
+        Event block = [SELECT Id, CreatedDate FROM Event WHERE Type_of_Appointment__c = 'Calendar Block' LIMIT 1];
+        Test.setCreatedDate(block.Id, DateTime.newInstance(2020,12,12));
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+        System.debug(block);
+        Test.startTest();
+        block.ShowAs = 'OutOfOffice';
+        update block;
+        Test.stopTest();
+    }
+
+    @isTest static void test_deleteCalendarBlock(){
+        Event block = [SELECT Id, CreatedDate FROM Event WHERE Type_of_Appointment__c = 'Calendar Block' LIMIT 1];
+        Test.setCreatedDate(block.Id, DateTime.newInstance(2020,12,12));
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+        System.debug(block);
+        Test.startTest();
+        delete block;
+        Test.stopTest();
+    }
+
+    
 
 //    @isTest static void test_updateInvoicePaymentAmount () {
 //        Account account = [SELECT Id FROM Account LIMIT 1];
