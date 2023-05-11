@@ -102,11 +102,10 @@ public class EventNotifyMissedCall implements Database.Batchable<sObject>, Sched
                 //Getting the mitel team to find the mapped email address
                 String mitelTeam = portalOwners.get(eventToUser.get(ev.Id)).Mitel_Team__c;
                 String emailAddress = mitelToEmail.get(mitelTeam);
-                message.bccaddresses = new String[] { 'kcampbell@1800accountant.com', 'dtroutner@1800accountant.com '};
 
                 message.toAddresses = new String[] { emailAddress  };
                 message.setSubject('Overdue Call on Discovery');
-                message.setHtmlBody(message.getHtmlBody().replace('eventlink', 'https://1800accountant--uat.lightning.force.com/lightning/r/Event/'+ev.Id+'/view').replace('portalEventOwner', ev.Portal_Event_Owner__c).replace('clientName', ev.Who.Name).replace('CustNumber', ev.Customer_Number__c).replace('clientPhone', ev.Who.Phone).replace('apptStart', string.valueof(ev.StartDateTime)).replace('acctStatus', ev.Account_Status__c));
+                message.setHtmlBody(message.getHtmlBody().replace('eventlink', 'https://1800accountant.lightning.force.com/lightning/r/Event/'+ev.Id+'/view').replace('portalEventOwner', ev.Portal_Event_Owner__c).replace('clientName', ev.Who.Name).replace('CustNumber', ev.Customer_Number__c).replace('clientPhone', ev.Who.Phone).replace('apptStart', string.valueof(ev.StartDateTime)).replace('acctStatus', ev.Account_Status__c));
     
                 //Send email and save Link to the Opportunity
                 if(!Test.isRunningTest()){

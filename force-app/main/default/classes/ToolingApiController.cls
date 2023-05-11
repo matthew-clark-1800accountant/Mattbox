@@ -18,7 +18,7 @@ public with sharing class ToolingApiController {
 
     public static String runQuery(String query){
 
-        //String userToTrace = System.UserInfo.getUserId();
+        String userToTrace = System.UserInfo.getUserId();
         String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/query/?q=';
         String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
         HttpRequest req; 

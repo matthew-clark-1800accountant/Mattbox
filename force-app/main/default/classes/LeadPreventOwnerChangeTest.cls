@@ -19,6 +19,7 @@ public class LeadPreventOwnerChangeTest {
             try {
                 Lead lead = TestDataGenerator.createTestLead(testUser.Id);
                 lead.LeadSource = 'Bark';
+                lead.Email = 'test@example.com';
                 insert lead;
                 lead.OwnerId = testUser2.Id;
                 update lead;
@@ -41,11 +42,13 @@ public class LeadPreventOwnerChangeTest {
             try {
                 Lead lead = TestDataGenerator.createTestLead(testUser.Id);
                 lead.LeadSource = 'Bark';
+                lead.Email = 'test@example.com';
                 insert lead;
                 lead.OwnerId = queueId;
                 update lead;
             } catch (Exception e) {
                 errorThrown = true;
+                system.debug (e);
             }
         }
         System.assertEquals(false, errorThrown, 'The user should be able to change the Bark Lead Owner to the General Queue');

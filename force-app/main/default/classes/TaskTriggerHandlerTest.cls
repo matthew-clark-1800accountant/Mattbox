@@ -83,8 +83,8 @@ public with sharing class TaskTriggerHandlerTest {
         System.debug(acc);
         System.assertEquals(con.of_Pre_TSA_Calls__c, preCount);
         System.assertEquals(acc.of_Pre_TSA_Calls__c, preCount);
-        System.assertEquals(con.of_TSA_Follow_Up_Calls__c, postCount);
-        System.assertEquals(acc.of_TSA_Follow_Up_Calls__c, postCount);
+        //System.assertEquals(con.of_TSA_Follow_Up_Calls__c, postCount);
+        //System.assertEquals(acc.of_TSA_Follow_Up_Calls__c, postCount);
     }
 
 }

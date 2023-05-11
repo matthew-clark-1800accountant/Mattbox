@@ -23,24 +23,24 @@ global with sharing class ContactTriggerHandler
         
         return [
             SELECT
-            	Id,
-            	ChargeOver_ID__c,
-            	Name,
-            	Primary_Contact_Email__c,
-            	Primary_Contact_First_Name__c,
-            	Primary_Contact_Last_Name__c,
-            	Primary_Contact_Phone__c,
-            	Primary_Contact_ID__c,
-            	BillingStreet,
-            	BillingCity,
-            	BillingState,
-            	BillingPostalCode,
-            	BillingCountry,
-            	Customer_Number__c
+              Id,
+              ChargeOver_ID__c,
+              Name,
+              Primary_Contact_Email__c,
+              Primary_Contact_First_Name__c,
+              Primary_Contact_Last_Name__c,
+              Primary_Contact_Phone__c,
+              Primary_Contact_ID__c,
+              BillingStreet,
+              BillingCity,
+              BillingState,
+              BillingPostalCode,
+              BillingCountry,
+              Customer_Number__c
             FROM
-            	Account
+              Account
             WHERE
-            	Id IN :accountIds ];
+              Id IN :accountIds ];
     } 
       
     private static Account findRelatedAccount(List<Account> accounts, Id findAccountId)
@@ -67,99 +67,12 @@ global with sharing class ContactTriggerHandler
         if (isUpdate)
         {
             chargeOverAfterUpdate(triggerNew, oldMap);
-            syncContactNote(triggerNew, oldMap);
-        } else if(isInsert){
-            syncContactNote(triggerNew, oldMap);
         }
         
         if (isDelete) 
         {
             
         }
-    }
-
-    public static void syncContactNote(List<Contact> newContacts, Map<Id, Contact> oldContacts){
-        List<Contact> contactsToSync = new List<Contact>();
-        if(oldContacts == null){ //insert
-            for(Contact con : newContacts){
-                if(con.Description != null){
-                    contactsToSync.add(con);
-                }
-            }
-        } else { //update
-            for(Contact con : newContacts){
-                if(con.Description != null && con.Description != oldContacts.get(con.Id).Description){
-                    contactsToSync.add(con);
-                }
-            }
-        }
-
-        Id currentUser = UserInfo.getUserId();
-        for(Contact con : contactsToSync){
-            createContentNote(con.Id, con.FirstName+' '+con.LastName, con.Description, con.OwnerId, new List<Id>{con.Id, con.AccountId});
-        }
-    }
-
-    @future
-    private static void createContentNote(Id contactId, String name, String description, Id conOwner, List<Id> relatedIds){
-        List<ContentDocumentLink> existingNoteLinks = [SELECT Id, ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :contactId];
-        ContentNote cn;
-        if(!existingNoteLinks.isEmpty()){ //the contact already has an existing note
-            cn = [SELECT Id, Content FROM ContentNote WHERE Id = :existingNoteLinks[0].ContentDocumentId LIMIT 1];
-            String updatedBody = cn.Content.toString().unescapeHTML4() + '\n\n\n(' + Datetime.now()+') \n\n'+description;
-            System.debug(updatedBody);
-            cn.Content = Blob.valueOf(convertLineBreaks(updatedBody));
-            update cn;
-        } else {
-            String body = '('+Datetime.now()+') \n\n'+description;
-            cn = new ContentNote();
-            cn.Content = Blob.valueof(convertLineBreaks(body));
-            cn.Title = name+' Sales Notes';
-            cn.ownerId = conOwner;
-            insert cn;
-
-            List<Account> relatedAccount = [SELECT Id, OwnerId, (SELECT Id, OwnerId, StageName FROM Opportunities) FROM Account WHERE Id = :relatedIds[1]];
-            if(!relatedAccount[0].Opportunities.isEmpty()){
-                for(Opportunity opp : relatedAccount[0].Opportunities){
-                    if(opp.OwnerId == relatedAccount[0].OwnerId && opp.StageName != 'Closed Lost'){
-                        relatedIds.add(opp.Id);
-                    }
-                }
-                //relatedIds.addAll(new Map<Id,Opportunity>(relatedAccount[0].Opportunities).keySet());
-            } //add check for opportunity.owner == contact.owner, status != closed lost
-
-
-            //fix to OR?
-            List<Event> relatedEvents = [SELECT Id FROM Event WHERE WhoId = :contactId AND WhatId = :relatedIds[1] AND Type_of_appointment__c IN ('Tax Savings Analysis', 'BNA', 'Formation Consultation') ];
-            if(!relatedEvents.isEmpty()){
-                relatedIds.addAll(new Map<Id, Event>(relatedEvents).keySet());
-            }
-            
-            List<ContentDocumentLink> links = new List<ContentDocumentLink>();
-            for(Id curId : relatedIds){
-                ContentDocumentLink cdl = new ContentDocumentLink();
-                cdl.ContentDocumentId = cn.Id;
-                cdl.LinkedEntityId = curId;
-                cdl.ShareType = 'I'; //Changed from C
-                cdl.Visibility = 'InternalUsers';    //changed from AllUsers
-                links.add(cdl);            
-            }
-            insert links;
-        }        
-    }
-
-    private static String convertLineBreaks(String input)
-    {
-        String returnStr = input;
-        if (input.contains('\n'))
-        {
-            if(returnStr.startsWith('<p>')){
-                returnStr = input.replaceAll('\n','</p><p>');
-            } else {
-                returnStr = '<p>' + input.replaceAll('\n','</p><p>') + '</p>';
-            }
-        }
-        return returnStr;
     }
     
     private static void chargeOverAfterUpdate(Contact[] triggerNew, Map<Id, Contact> oldMap)

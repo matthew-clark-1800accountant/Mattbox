@@ -103,13 +103,47 @@ public without sharing class ChargeOver {
                     	gen.writeStartObject();
                     		gen.writeStringField('setup', '0');
                     		gen.writeStringField('base', (String) lines[i].get(line_field) + '');
+                    		//gen.writeStringField('base', (String) lines[i].get(line_field) + ' (but also ' + lines[i].get('scheduled_updowngrades_2.tierset.base') + ' and ' + lines[i].get('scheduled_updowngrades_2.scheduled_date_str') + ')');
                     		gen.writeStringField('pricemodel', 'fla');
                     	gen.writeEndObject();
                     
                     	gen.writeStringField('scheduled_date_str', (String) lines[i].get('scheduled_updowngrades.scheduled_date_str') + '');                    
                     gen.writeEndObject();
                     
+                    for (Integer j = 2; j < 99; j++)
+                    {
+                        String line_field_n_base = 'scheduled_updowngrades_' + String.valueOf(j) + '.tierset.base';
+                        String line_field_n_date = 'scheduled_updowngrades_' + String.valueOf(j) + '.scheduled_date_str';
+                        
+                        String line_value_n_base = (String) lines[i].get(line_field_n_base);
+                        String line_value_n_date = (String) lines[i].get(line_field_n_date);    
+                        
+                        if (line_value_n_base != null && 
+                            line_value_n_base.length() > 0 && 
+                            line_value_n_date != null && 
+                            line_value_n_date.length() > 0)
+                        {
+                            gen.writeStartObject();
+                                gen.writeStringField('item_external_key', (String) lines[i].get('item_external_key') + '');
+                            
+                                gen.writeFieldName('tierset');
+                                gen.writeStartObject();
+                                    gen.writeStringField('setup', '0');
+                                    gen.writeStringField('base', line_value_n_base);
+                                    gen.writeStringField('pricemodel', 'fla');
+                                gen.writeEndObject();
+                            
+                                gen.writeStringField('scheduled_date_str', line_value_n_date);                    
+                        	gen.writeEndObject();
+                        }
+                    }
+                    
                     gen.writeEndArray();
+                }
+                else if (line_field.length() > 23 && 
+                         line_field.substring(0, 23) == 'scheduled_updowngrades_')
+                {
+                    // Handled above; cases 2 through N
                 }
                 else if (line_field == 'scheduled_updowngrades.scheduled_date_str')
                 {

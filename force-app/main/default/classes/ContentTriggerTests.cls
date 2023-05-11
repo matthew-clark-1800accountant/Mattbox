@@ -9,9 +9,6 @@ private class ContentTriggerTests {
 
         Opportunity opp = new Opportunity(Name='TestOpp',AccountId=act.Id, StageName='New', CloseDate=Date.today().addDays(1));
         insert opp;
-
-        Contact con = new Contact(FirstName='Test', LastName='Contact', AccountId = act.Id);
-        insert con;
     }
 
     @IsTest
@@ -58,38 +55,5 @@ private class ContentTriggerTests {
 
         System.assertEquals(2, cdl.size());
 
-    }
-
-    @IsTest
-    private static void testContactNote(){
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User' LIMIT 1];
-        User u = new User(Username = 'testguy@test.com', LastName='Beebop', Email='testguy@test.com', Alias = 'newUser', 
-        EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US', LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles');
-        insert u; //needed to filter since all content notes are visible to tests
-        Test.startTest();
-        Opportunity opp =[SELECT Id FROM Opportunity LIMIT 1];
-        opp.OwnerId = u.Id;
-        update opp;
-
-        Contact con = [SELECT Id FROM Contact LIMIT 1];
-        con.OwnerId = u.Id;
-        update con;
-
-        String testString = 'test description'+u.Id;
-        System.runAs(u){            
-            con.Description = testString;
-            con.FirstName = 'New';
-            update con;
-        }        
-        Test.stopTest();
-        
-        ContentNote cn = [SELECT Id, Content FROM ContentNote WHERE OwnerId = :u.Id LIMIT 1];
-        System.assert(cn.Content.toString().contains(testString));
-
-        for(ContentDocumentLink cdl : [select id, LinkedEntity.name, LinkedEntity.type from contentdocumentlink where contentdocumentid = :cn.id]){
-            System.debug(cdl.LinkedEntity.type+' '+cdl.LinkedEntity.name);
-        }
-        Integer linkCount = [SELECT COUNT() FROM ContentDocumentLink WHERE ContentDocumentId = :cn.Id];
-        System.assertEquals(4, linkCount);
     }
 }

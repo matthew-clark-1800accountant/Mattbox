@@ -23,16 +23,20 @@ public class AccountDeleteRelatedRecords {
         relatedRecordsToDelete2.addAll(this.deleteRecords('ChargeOver_Subscription__c', 'Account__c'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('ChargeOver_Transaction__c', 'Account__c'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('ChargeOver_Transaction_Applied__c', 'Account__c'));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Bill62__Payment_Method__c', 'Bill62__Account__c '));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Bill62__Payment__c', 'Bill62__Account__c '));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Bill62__Subscription__c', 'Bill62__Account__c '));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Bill62__Order__c', 'Bill62__Account__c'));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Business__c', 'Account__c'));
+        relatedRecordsToDelete3.addAll(this.deleteRecords('Shareholder__c', 'Account__c'));
+        //30  
+        relatedRecordsToDelete3.addAll(this.deleteRecords('X1099_Form__c', 'Payee_Account__c'));      
         relatedRecordsToDelete2.addAll(this.deleteRecords('Case', 'AccountId'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('Event', 'WhatId'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('Task', 'WhatId'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('Contact', 'AccountId'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('Opportunity', 'AccountId'));
         relatedRecordsToDelete2.addAll(this.deleteRecords('Lead', 'ConvertedAccountId'));
-        //30
-        relatedRecordsToDelete3.addAll(this.deleteRecords('Business__c', 'Account__c'));
-        relatedRecordsToDelete3.addAll(this.deleteRecords('Shareholder__c', 'Account__c'));
-        relatedRecordsToDelete3.addAll(this.deleteRecords('X1099_Form__c', 'Payee_Account__c'));
         /* Instructions on adding additional objects to delete: 
         *  Use the following code snippet but replace the parameters, then add it in below
         *  relatedRecordsToDelete3.addAll(this.deleteRecords('X1099_Form__c', 'Payee_Account__c'));

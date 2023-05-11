@@ -1,4 +1,4 @@
-public with sharing class ChargeOver_Quote_Trigger_Handler
+public without sharing class ChargeOver_Quote_Trigger_Handler
 {
 
     private static Boolean afterUpdateRun = false;
@@ -128,8 +128,8 @@ public with sharing class ChargeOver_Quote_Trigger_Handler
                 of_times_this_should_recur__c,
                 of_Free_Trial_Cycles_Cycles_to_Skip__c,
                 Date_Time_Invoice_Being_Held_Until__c,
-            	of_Monthly_Bookkeeping_Transactions__c,
-            	of_Payroll_Employees__c
+              of_Monthly_Bookkeeping_Transactions__c,
+              of_Payroll_Employees__c
             FROM
                 ChargeOver_Quote_Line_Item__c
             WHERE
@@ -329,17 +329,19 @@ public with sharing class ChargeOver_Quote_Trigger_Handler
     private static void ChargeOver_doAfterUpdate(ChargeOver_Quote__c[] triggerNew)
     {
         List<SObject> objs = new List<SObject>();
-
+        System.debug('**triggerNew: '+triggerNew);
         List<Account> relatedAccounts = getRelatedAccounts(triggerNew);
+        System.debug('**'+relatedAccounts);
         List<ChargeOver_Quote_Line_Item__c> relatedLines = getRelatedQuoteLines(triggerNew);
         List<Product2> relatedProducts = getRelatedProducts(relatedLines);
-
+        System.debug('**processed: '+processed);
         for (ChargeOver_Quote__c o : triggerNew)
         {
             if(!processed.contains(o.Id)){ objs.add((SObject) o); }
             processed.add(o.Id);
         }
-
+        System.debug('**objs: '+objs);
+        System.debug(objs.size());
         for (Integer i = 0; i < objs.size(); i++)
         {
             if (objs[i].get('LAST_SOURCE__c') == 'ChargeOver')
@@ -352,9 +354,11 @@ public with sharing class ChargeOver_Quote_Trigger_Handler
             }
             else
             {
+
                 // Ensure the customer exists
                 Account a = findRelatedAccount(relatedAccounts, (Id) objs[i].get('Account__c'));
-
+                System.debug('***'+objs[i]);
+                System.debug('***'+a);
                 String superuser_email = (String) a.get('Primary_Contact_Email__c');
                 String superuser_fname = (String) a.get('Primary_Contact_First_Name__c');
                 String superuser_lname = (String) a.get('Primary_Contact_Last_Name__c');

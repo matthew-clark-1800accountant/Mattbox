@@ -373,6 +373,8 @@ public class PricingCalcController {
     
     public List<priceOverrideWrapper> overrideList {get;set;}
     
+    public List<priceAdjustmentWrapper> adjustPriceList {get;set;}
+    
     public List<productWrapper> envProductList {get;set;}
     
     public List<Active_Subscriptions__c> activeSubList {get;set;}
@@ -467,6 +469,15 @@ public class PricingCalcController {
         
         public String productId {get;set;}
         public Decimal amount {get;set;}
+        public String productPostion {get;set;}
+        
+    }
+    
+    public class priceAdjustmentWrapper{
+        
+        public String productId {get;set;}
+        public Decimal amount {get;set;}
+        public Decimal percent {get;set;}
         public String productPostion {get;set;}
         
     }
@@ -625,6 +636,8 @@ public class PricingCalcController {
         
         overrideList = new List<priceOverrideWrapper>();
         
+        adjustPriceList = new List<priceAdjustmentWrapper>();
+        
         offerMasterList = new List<offerMasterWrapperClass>();
         offerProductList = new List<offerProductWrapperClass>();
         
@@ -775,7 +788,7 @@ public class PricingCalcController {
         Boolean tempRuleCheck = false;
         
         // get products to exclude by user and account details
-        List<Calculator_Rule__c> ruleList = [SELECT Action__c, Criteria_Field_1__c, Criteria_Field_2__c, Criteria_Object__c, Field_1_Operator__c, Field_1_Value__c, Field_2_Operator__c, Field_2_Value__c, Message__c, Product__c, Amount__c, Environment__c, Calculator_Offer__c FROM Calculator_Rule__c WHERE (Criteria_Object__c = 'User' OR Criteria_Object__c = 'Account' OR Criteria_Object__c = 'Form') AND Active__c = true];
+        List<Calculator_Rule__c> ruleList = [SELECT Action__c, Criteria_Field_1__c, Criteria_Field_2__c, Criteria_Object__c, Field_1_Operator__c, Field_1_Value__c, Field_2_Operator__c, Field_2_Value__c, Message__c, Product__c, Amount__c, Environment__c, Calculator_Offer__c, Price_Adjustment_Percent__c FROM Calculator_Rule__c WHERE (Criteria_Object__c = 'User' OR Criteria_Object__c = 'Account' OR Criteria_Object__c = 'Form') AND Active__c = true];
         for (Calculator_Rule__c ruleItem : ruleList){
             
             doThisRule = false;
@@ -1320,6 +1333,43 @@ public class PricingCalcController {
                     }
                     
                     overrideList.add(orPrice);
+                    
+                }
+                
+                // logic for price adjustment rule
+                if (ruleItem.Action__c == 'Price Adjustment') {
+                    
+                    priceAdjustmentWrapper adjPrice = new priceAdjustmentWrapper();
+                    
+                    adjPrice.productId = ruleItem.Product__c;
+                    
+                    // should default to 0 so we can always add amount in addition to percent
+                    adjPrice.amount = ruleItem.Amount__c;
+                    
+                    if (adjPrice.amount == NULL) {
+                        adjPrice.amount = 0;
+                    }
+                    
+                    // need to convert this into a percentage value we can work with
+                    if (ruleItem.Price_Adjustment_Percent__c == NULL) {
+                    
+                        adjPrice.percent = 1.0;
+                    
+                    } else {
+                    
+                        // normal positive value
+                        adjPrice.percent = 1.0 + (ruleItem.Price_Adjustment_Percent__c / 100);
+                    
+                    }
+                    
+                    // query calculator location
+                    List<Product2> locP = [SELECT Id, Calculator_Location__c FROM Product2 WHERE Id = :ruleItem.Product__c];
+                
+                    for(Product2 locItem : locP){
+                        adjPrice.productPostion = locItem.Calculator_Location__c;
+                    }
+                    
+                    adjustPriceList.add(adjPrice);
                     
                 }
 
@@ -2646,6 +2696,21 @@ public class PricingCalcController {
                             
                         }
                         
+                        // check for price adjustment
+                        for(priceAdjustmentWrapper padjItem : adjustPriceList){
+                        
+                            if (padjItem.productPostion == 'A La Carte' && padjItem.productId == acItem.Id) {
+                            
+                                // first increment price based on amount which defaults to zero so no negative effect when not used
+                                wrapRec.price = wrapRec.price + padjItem.amount;
+                                
+                                // then increment price based on percent which defaults to 1 so not negative effect when not used
+                                wrapRec.price = wrapRec.price * padjItem.percent;
+                                
+                            }
+                            
+                        }
+                        
                         // sort
                         if (acItem.Sort_Order__c == NULL) {
                             wrapRec.quoteSort = 4;
@@ -3926,6 +3991,10 @@ public class PricingCalcController {
                 personalAdjustment = powItem.amount;
             }
             
+            if (powItem.productPostion == 'Advisory') {
+                taxAdvisoryPrice = powItem.amount;
+            }
+            
             if (powItem.productPostion == 'Payroll') {
                 payrollAdjustment = powItem.amount;
             }
@@ -4100,12 +4169,179 @@ public class PricingCalcController {
             nonProfitBookkeepingAdjustment = getDynamicAmount('Non-Profit Bookkeeping', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
 
         }
-        
+
         // todo - mark checkboxes where product was added if we are editing a quote
             
         
         // now tax advisory calculation
-        taxAdvisoryPrice = ((businessAdjustment + personalAdjustment) / (815 + 365)) * 1125;        
+        if (taxAdvisoryPrice > 0) {
+        
+        } else {
+            taxAdvisoryPrice = ((businessAdjustment + personalAdjustment) / (869 + 390)) * 1199;   
+        }  
+        
+        // make adjustments to dynamic products here
+        for(priceAdjustmentWrapper padjItem : adjustPriceList){
+        
+            switch on padjItem.productPostion {
+                when 'Business Return' {
+                
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    businessAdjustment = businessAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    businessAdjustment = businessAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    businessAdjustment = businessAdjustment.setScale(2);
+                    
+                }
+                when 'Personal Return' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    personalAdjustment = personalAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    personalAdjustment = personalAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    personalAdjustment = personalAdjustment.setScale(2);
+                    
+                }
+                when 'Payroll' {
+                
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    payrollAdjustment = payrollAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    payrollAdjustment = payrollAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    payrollAdjustment = payrollAdjustment.setScale(2);
+                    
+                }
+                when 'Advisory' {
+                
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    taxAdvisoryPrice = taxAdvisoryPrice + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    taxAdvisoryPrice = taxAdvisoryPrice * padjItem.percent;
+                    
+                    // precision on this field gets set later
+                    
+                }
+                when 'Bookkeeping' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    bookkeepingAdjustment = bookkeepingAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    bookkeepingAdjustment = bookkeepingAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    bookkeepingAdjustment = bookkeepingAdjustment.setScale(2);
+                    
+                }
+                when 'LLC State Filing' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    stateFilingAdjustment = stateFilingAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    stateFilingAdjustment = stateFilingAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    stateFilingAdjustment = stateFilingAdjustment.setScale(2);
+                    
+                }
+                when 'Corp State Filing' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    stateFilingCorpAdjustment = stateFilingCorpAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    stateFilingCorpAdjustment = stateFilingCorpAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    stateFilingCorpAdjustment = stateFilingCorpAdjustment.setScale(2);
+                    
+                }
+                when 'Back Bookkeeping' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    backBookkeepingAdjustment = backBookkeepingAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    backBookkeepingAdjustment = backBookkeepingAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    backBookkeepingAdjustment = backBookkeepingAdjustment.setScale(2);
+                    
+                }
+                when 'Foreign State' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    foreignStateAdjustment = foreignStateAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    foreignStateAdjustment = foreignStateAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    foreignStateAdjustment = foreignStateAdjustment.setScale(2);
+                    
+                }
+                when 'Back Quarterly Payroll' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    backPayrollAdjustment = backPayrollAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    backPayrollAdjustment = backPayrollAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    backPayrollAdjustment = backPayrollAdjustment.setScale(2);
+                    
+                }
+                when 'Back Business Return' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    backBusinessAdjustment = backBusinessAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    backBusinessAdjustment = backBusinessAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    backBusinessAdjustment = backBusinessAdjustment.setScale(2);
+                    
+                }
+                when 'Back Personal Return' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    backPersonalAdjustment = backPersonalAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    backPersonalAdjustment = backPersonalAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    backPersonalAdjustment = backPersonalAdjustment.setScale(2);
+                    
+                }
+                when 'Non-Profit Bookkeeping' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    nonProfitBookkeepingAdjustment = nonProfitBookkeepingAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    nonProfitBookkeepingAdjustment = nonProfitBookkeepingAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    nonProfitBookkeepingAdjustment = nonProfitBookkeepingAdjustment.setScale(2);
+                    
+                }
+            }
+            
+        }
         
         taxAdvisoryPrice = taxAdvisoryPrice.setScale(2);
         
@@ -4890,7 +5126,7 @@ public class PricingCalcController {
                     
                 } else {
                 
-                    if (numberOfEmployeesInput != '10+') {
+                    if (numberOfEmployeesInput.contains('+') == false) {
                     
                         // update NumberOfEmployees
                         accItem.NumberOfEmployees = Integer.valueOf(numberOfEmployeesInput);
@@ -4907,7 +5143,7 @@ public class PricingCalcController {
                     
                 } else {
                 
-                    if (numberOfContractorsInput != '10+') {
+                    if (numberOfContractorsInput.contains('+') == false) {
                     
                         // update Number_of_Contractors__c
                         accItem.Number_of_Contractors__c = Integer.valueOf(numberOfContractorsInput);
@@ -4924,7 +5160,7 @@ public class PricingCalcController {
                     
                 } else {
                 
-                    if (numberOfRentalPropertiesInput != '13+') {
+                    if (numberOfRentalPropertiesInput.contains('+') == false) {
                     
                         // update Rental_Properties__c
                         accItem.Rental_Properties__c = Integer.valueOf(numberOfRentalPropertiesInput);
@@ -5734,7 +5970,7 @@ public class PricingCalcController {
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
                 
-                if (numberOfEmployeesInput != '10+') {
+                if (numberOfEmployeesInput.contains('+') == false) {
                     
                     coqLIPay.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInput);
 
@@ -5873,7 +6109,7 @@ public class PricingCalcController {
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
                     
-                    if (numberOfEmployeesInput != '10+') {
+                    if (numberOfEmployeesInput.contains('+') == false) {
                     
                         // update NumberOfEmployees
                         coqLIPay.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInput);
@@ -6049,7 +6285,7 @@ public class PricingCalcController {
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
                         
-                        if (numberOfEmployeesInput != '10+') {
+                        if (numberOfEmployeesInput.contains('+') == false) {
                     
                             // update NumberOfEmployees
                             coqLIPay.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInput);
@@ -6138,7 +6374,7 @@ public class PricingCalcController {
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
                         
-                        if (numberOfEmployeesInput != '10+') {
+                        if (numberOfEmployeesInput.contains('+') == false) {
                     
                             // update NumberOfEmployees
                             coqLIPay.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInput);
@@ -7975,7 +8211,7 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuote :: ' + theCOQuote);
             theCOQuote.Quote_Created__c = true;
             
-            if (vipAmount > 2999 && schedulerVIPURL != '') {
+            if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuote.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -7986,7 +8222,7 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteMonth.Quote_Created__c = true;
             
-            if (vipAmount > 2999 && schedulerVIPURL != '') {
+            if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -7997,7 +8233,7 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteOneTime.Quote_Created__c = true;
             
-            if (vipAmount > 2999 && schedulerVIPURL != '') {
+            if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8421,7 +8657,7 @@ public class PricingCalcController {
                 coqLIPass.of_Monthly_Bookkeeping_Transactions__c = numberOfTransactionsInputPass;
 
             } 
-            if (numberOfEmployeesInputPass != '10+' && numberOfEmployeesInputPass != '') {
+            if (numberOfEmployeesInputPass.contains('+') == false && numberOfEmployeesInputPass != '') {
                 
                 coqLIPass.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInputPass);
 
@@ -8505,7 +8741,7 @@ public class PricingCalcController {
                     coqLIPass.of_Monthly_Bookkeeping_Transactions__c = numberOfTransactionsInputPass;
     
                 } 
-                if (numberOfEmployeesInputPass != '10+' && numberOfEmployeesInputPass != '') {
+                if (numberOfEmployeesInputPass.contains('+') == false && numberOfEmployeesInputPass != '') {
                 
                     coqLIPass.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInputPass);
     
@@ -8621,7 +8857,7 @@ public class PricingCalcController {
                         coqLIPass.of_Monthly_Bookkeeping_Transactions__c = numberOfTransactionsInputPass;
         
                     } 
-                    if (numberOfEmployeesInputPass != '10+' && numberOfEmployeesInputPass != '') {
+                    if (numberOfEmployeesInputPass.contains('+') == false && numberOfEmployeesInputPass != '') {
                 
                         coqLIPass.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInputPass);
         
@@ -8649,7 +8885,7 @@ public class PricingCalcController {
                         coqLIPass.of_Monthly_Bookkeeping_Transactions__c = numberOfTransactionsInputPass;
         
                     } 
-                    if (numberOfEmployeesInputPass != '10+' && numberOfEmployeesInputPass != '') {
+                    if (numberOfEmployeesInputPass.contains('+') == false && numberOfEmployeesInputPass != '') {
                 
                         coqLIPass.of_Payroll_Employees__c = Integer.valueOf(numberOfEmployeesInputPass);
         
