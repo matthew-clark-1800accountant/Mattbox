@@ -23,7 +23,8 @@ public with sharing class InteractionEventTriggerHandlerTest {
             EndDateTime = Datetime.now(),
             Email_Campaign_ID__c = '12345',
             Type_of_Appointment__c = 'Tax Savings Analysis',
-            Portal_Event_Owner__c = 'Matthew Clark'
+            Portal_Event_Owner__c = 'Matthew Clark',
+            of_Calls_for_Event__c = 0
         );
         insert event;
 
@@ -56,8 +57,10 @@ public with sharing class InteractionEventTriggerHandlerTest {
         update testCall;
         Test.stopTest();
 
-        Event testEvent = [SELECT Id, Minute_Difference_for_Appt_Call__c FROM Event LIMIT 1];
-        System.debug(testEvent.Minute_Difference_for_Appt_Call__c);
+        Event testEvent = [SELECT Id, Minute_Difference_for_Appt_Call__c, of_Calls_for_Event__c, Most_Recent_Call_for_Event__c FROM Event LIMIT 1];
+        System.debug(testEvent);
         System.assertEquals(2, testEvent.Minute_Difference_for_Appt_Call__c);
+        System.assertEquals(1, testEvent.of_Calls_for_Event__c);
+        System.assertNotEquals(null, testEvent.Most_Recent_Call_for_Event__c);
     }
 }

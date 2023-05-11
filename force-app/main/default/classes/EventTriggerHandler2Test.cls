@@ -1,5 +1,5 @@
 @isTest
-private class EventTriggerHandler2Test {
+private class EventTriggerHandler2Test { 
     @testSetup static void setupTestData() {
         User u = [SELECT Id FROM User WHERE Name = 'Matthew Clark' LIMIT 1];
         Account account = new Account(
@@ -77,7 +77,7 @@ private class EventTriggerHandler2Test {
             Email_Campaign_ID__c = '11111',
             Type_of_Appointment__c = 'Tax Savings Analysis'
         );
-        insert leadEvent;
+        //insert leadEvent;
 
         Contact contact = new Contact(
             FirstName = 'Test',
@@ -95,7 +95,7 @@ private class EventTriggerHandler2Test {
             Email_Campaign_ID__c = '22222',
             Type_of_Appointment__c = 'Tax Savings Analysis'
         );
-        insert contactEvent;
+        //insert contactEvent;
 
         Test.startTest();
         Event newAccountEvent = new Event(
@@ -105,7 +105,7 @@ private class EventTriggerHandler2Test {
             EndDateTime = System.now(),
             Type_of_Appointment__c = 'Tax Savings Analysis'
         );
-        insert newAccountEvent;
+        //insert newAccountEvent;
 
         Event newLeadEvent = new Event(
             WhoId = lead.Id,
@@ -114,7 +114,7 @@ private class EventTriggerHandler2Test {
             EndDateTime = System.now(),
             Type_of_Appointment__c = 'Tax Savings Analysis'
         );
-        insert newLeadEvent;
+        //insert newLeadEvent;
 
         Event newContactEvent = new Event(
             WhoId = contact.Id,
@@ -123,7 +123,8 @@ private class EventTriggerHandler2Test {
             EndDateTime = System.now(),
             Type_of_Appointment__c = 'Tax Savings Analysis'
         );
-        insert newContactEvent;
+        //insert newContactEvent;
+        insert new List<Event>{leadEvent, contactEvent, newAccountEvent, newLeadEvent, newContactEvent};
         Test.stopTest();
 
         List<Id> testIds = new List<Id>{newAccountEvent.Id, newLeadEvent.Id, newContactEvent.Id };
