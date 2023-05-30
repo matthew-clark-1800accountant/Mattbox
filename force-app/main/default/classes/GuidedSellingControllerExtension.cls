@@ -10,25 +10,25 @@ public without sharing class GuidedSellingControllerExtension {
 
     public String dynamicScript { get; set; }
     public String environment { get; set; }
-    public String defaultNumForeignOwners { get; set; }
+    //public String defaultNumForeignOwners { get; set; }
     public String defaultYearsInBusiness { get; set; }
     public String defaultEntity { get; set; }
     public String defaultIndustry { get; set; }
     public String defaultDomesticState { get; set; }
     public String defaultForeignState { get; set; }
-    public String defaultPersonalState { get; set; }
+    //public String defaultPersonalState { get; set; }
     public String defaultStartupCosts { get; set; }
     public String defaultRevenue { get; set; }
     public String defaultFirstYearProfit { get; set; }
-    public String defaultInvestorFunding { get; set; }
+    //public String defaultInvestorFunding { get; set; }
     public String defaultNumTransactions { get; set; }
     public String defaultNumOwners { get; set; }
     public String defaultNumEmployees { get; set; }
-    public String defaultNumContractors { get; set; }
+    //public String defaultNumContractors { get; set; }
     public String defaultFilingStatus { get; set; }
     public String defaultPersonalIncome { get; set; }
     public String defaultNumberOfRentalProperties { get; set; }
-    public String defaultOtherInvestments { get; set; }
+    //public String defaultOtherInvestments { get; set; }
     public String defaultOffice { get; set; }
     public String defaultMileage { get; set; }
     public String defaultState { get; set; }
@@ -46,11 +46,11 @@ public without sharing class GuidedSellingControllerExtension {
     public Boolean firstBusiness { get; set; }
     public Boolean runPayrollBefore { get; set; }
     public Boolean hasEmployeesContractors { get; set; }
-    public Boolean foreignIncome { get; set; }
+    //public Boolean foreignIncome { get; set; }
     public Boolean hasRentalProperties { get; set; }
     public Boolean isWorkingFromHome { get; set; }
     public Boolean commutesWithOwnVehicle { get; set; }
-    public Boolean eCommerce { get; set; }
+    //public Boolean eCommerce { get; set; }
     public Boolean btp { get; set; }
 
     // Variables Integer 
@@ -88,6 +88,53 @@ public without sharing class GuidedSellingControllerExtension {
     public Id businessReturnId { get; set; }
      
     // Funtions 
+    // @RemoteAction
+    public static String environmentName{
+        get {
+            String name = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+            if(name == null){
+                return 'production';
+            } else {
+                return name;
+            }
+        }
+    }
+    public static String getsfBaseUrl(){
+        if(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName() == null){
+            return 'https://1800accountant.lightning.force.com';
+        } else {
+            return 'https://1800accountant--'+environmentName+'.sandbox.lightning.force.com';
+        }
+    }
+
+    public static String getsiteBaseUrl(){
+        Site mySite = [select Id from Site where Name = 'Guided_Selling_Client_View'];
+        SiteDetail mySiteDetail = [select SecureURL from SiteDetail where DurableId = :mySite.Id];
+        String url = mySiteDetail.SecureURL.substring(0, mySiteDetail.SecureURL.indexOf('.com/')+4);
+        System.debug(url);
+        return url;
+    }
+
+    public static String getschedulerBaseUrl(){
+        List<Guided_Selling_URL__mdt> urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Scheduler'
+        AND Environment__c = :environmentName];
+        if(urls.isEmpty()){
+            urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Scheduler'
+            AND Environment__c = 'default'];
+        } 
+        return urls[0].Endpoint__c;
+    }
+
+    public static String getsocketBaseUrl(){
+        List<Guided_Selling_URL__mdt> urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Socket'
+        AND Environment__c = :environmentName];
+        if(urls.isEmpty()){
+            urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Socket'
+            AND Environment__c = 'default'];
+        } 
+        return urls[0].Endpoint__c;
+    }
+
     public void setproductToPrice(Map<Id, Decimal> dumperVar) {
         this.productToPrice = dumperVar;
     }
@@ -112,41 +159,41 @@ public without sharing class GuidedSellingControllerExtension {
     //}
 
     public GuidedSellingControllerExtension(ApexPages.StandardController stdController) {
-        
+        System.debug('*checkpoint 1');
         //First identify the record Id passed in the parameters through the flow
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
         hasRecordId = (null == recordId) ? false : true;
 
-        defaultNumForeignOwners = '---';
+        //defaultNumForeignOwners = '---';
         defaultState = 'Select a State';
         defaultYearsInBusiness = '---';
         defaultEntity = 'Select an Entity Type';
         defaultIndustry = 'Select an Industry';
         defaultDomesticState = 'Select a State';
         defaultForeignState = 'Select a State';
-        defaultPersonalState = 'Select a State';
+        //defaultPersonalState = 'Select a State';
         defaultStartupCosts = '---';
         defaultRevenue = '---';
         defaultFirstYearProfit = '---';
-        defaultInvestorFunding = '---';
+        ///defaultInvestorFunding = '---';
         defaultNumTransactions = '---';
         defaultNumOwners = '---';
         defaultNumEmployees = '---';
-        defaultNumContractors = '---';
+        //defaultNumContractors = '---';
         defaultFilingStatus = 'Select a Filing Status';
         defaultPersonalIncome = '---';
         defaultNumberOfRentalProperties = '---';
-        defaultOtherInvestments = '---';
+        //defaultOtherInvestments = '---';
         defaultOffice = '---';
         defaultMileage = '---';
         firstBusiness = false;
         runPayrollBefore = false;
         hasEmployeesContractors = false;
-        foreignIncome = false; 
+        //foreignIncome = false; 
         hasRentalProperties = false; 
         isWorkingFromHome = false;
         commutesWithOwnVehicle = false; 
-        eCommerce = false; 
+        //eCommerce = false; 
         defaultCountry = 'United States';
         
         String recordIdType = recordId?.getSObjectType().getDescribe().getName(); 
@@ -155,6 +202,7 @@ public without sharing class GuidedSellingControllerExtension {
         Id leadId = ('Lead' == recordIdType) ? recordId : null;
         Id accountId = ('Account' == recordIdType) ? recordId : null;
         Id opportunityId = ('Opportunity' == recordIdType) ? recordId : null;
+        System.debug('*checkpoint 2');
 
         //If there is an Event Id, get either an Opportunity or Account
         if(null != eventId) {
@@ -199,9 +247,9 @@ public without sharing class GuidedSellingControllerExtension {
                 Account.Name, Account.Lead_Source__c, Account.Primary_Contact__r.FirstName, Account.Primary_Contact__r.LastName, Account.Primary_Contact__r.Phone, 
                 Account.Primary_Contact__r.Email, Account.Owner.FirstName, Account.Lead_Type_New__c, Account.Campaign__c, Account.Owner.Id, Account.Entity_Tax_Classification__c,
                 Account.Website_Selling_Goods__c, Account.Years_in_Business__c, Account.Industry, Account.State_of_Formation__c, Account.Personal_Return_Filing_Status__c, 
-                Account.Foreign_State__c, Account.State_of_Residence__c, Account.Total_Startup_Costs__c, Account.Expected_1st_year_revenue__c, Account.Trans_Per_Month__c, 
-                Account.How_much_funding__c, Account.Current_Year_Profit_Projection__c, Account.Number_of_owners__c, Account.NumberOfEmployees, Account.Number_of_Contractors__c,
-                Account.Personal_Income__c, Account.Foreign_Income__c, Account.Rental_Properties__c, Account.Home_Office_Square_Feet__c, Account.Estimated_Business_Mileage__c, 
+                Account.Total_Startup_Costs__c, Account.Expected_1st_year_revenue__c, Account.Trans_Per_Month__c, 
+                Account.How_much_funding__c, Account.Current_Year_Profit_Projection__c, Account.Number_of_owners__c, Account.NumberOfEmployees, 
+                Account.Personal_Income__c, Account.Rental_Properties__c, Account.Home_Office_Square_Feet__c, Account.Estimated_Business_Mileage__c, 
                 Account.Lead_Source_Date__c        
                 FROM Opportunity 
                 WHERE Id = :opportunityId
@@ -213,11 +261,11 @@ public without sharing class GuidedSellingControllerExtension {
         if(opportunity.AccountId != null) {
             business = [
                 SELECT Id, Name, Account__c, Anticipated_Revenue__c, Industry__c, Business_Type__c, Number_of_Owners__c, Startup_Costs__c, Years_In_Business__c, 
-                Foreign_State_of_Incorporation__c, State_of_Residence__c, Profit_Projection__c, Number_of_Contractors__c, Home_Office_Square_Feet__c,
-                State_of_incorporation__c, Number_of_Foreign_Owners__c, Monthly_Bookkeeping_Transactions__c, Investor_Funding__c, Number_of_Employees__c, Tax_Filing_Status__c,
-                W2_Income__c, Number_of_Rental_Properties__c, Number_of_K1_Investments__c, Yearly_Business_Miles__c, 
+                Profit_Projection__c, Home_Office_Square_Feet__c,
+                State_of_incorporation__c, Monthly_Bookkeeping_Transactions__c, Number_of_Employees__c, Tax_Filing_Status__c,
+                W2_Income__c, Number_of_Rental_Properties__c, Yearly_Business_Miles__c, 
                 Run_Payroll_Before__c, Has_Employees_Contractors__c, File_Return_Yourself__c, Has_Rental_Properties__c, Is_Working_From_Home__c, Commutes_With_Own_Vehicle__c, 
-                E_Commerce__c, First_Business__c, Foreign_Income__c
+                First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :opportunity.AccountId
             ];
@@ -236,6 +284,8 @@ public without sharing class GuidedSellingControllerExtension {
         } else {
             businessEntity = business.Business_Type__c;
         }
+        System.debug('*checkpoint 3');
+
 
         //Map question to default
         defaultRevenue = (business.Anticipated_Revenue__c != null) ? business.Anticipated_Revenue__c : '---';
@@ -244,29 +294,29 @@ public without sharing class GuidedSellingControllerExtension {
         defaultNumOwners = (business.Number_of_Owners__c != null) ? business.Number_of_Owners__c : '---';
         defaultStartupCosts = (business.Startup_Costs__c != null) ? business.Startup_Costs__c : '---';
         defaultYearsInBusiness = (business.Years_In_Business__c != null) ? business.Years_In_Business__c : '---';
-        defaultPersonalState = (business.State_of_Residence__c != null) ? business.State_of_Residence__c : 'Select a State';
+        //defaultPersonalState = (business.State_of_Residence__c != null) ? business.State_of_Residence__c : 'Select a State';
         defaultFirstYearProfit = (business.Profit_Projection__c != null) ? business.Profit_Projection__c : '---';
-        defaultNumContractors = (business.Number_of_Contractors__c != null) ? business.Number_of_Contractors__c : '---';
+        //defaultNumContractors = (business.Number_of_Contractors__c != null) ? business.Number_of_Contractors__c : '---';
         defaultOffice = (business.Home_Office_Square_Feet__c != null) ? String.valueOf(business.Home_Office_Square_Feet__c) : '---';
         defaultDomesticState = (business.State_of_incorporation__c != null) ? business.State_of_incorporation__c : 'Select a State';
         defaultForeignState = (business.Foreign_State_of_Incorporation__c != null) ? business.Foreign_State_of_Incorporation__c : 'Select a State';
-        defaultInvestorFunding = (business.Investor_Funding__c != null) ? business.Investor_Funding__c : '---';
+        //defaultInvestorFunding = (business.Investor_Funding__c != null) ? business.Investor_Funding__c : '---';
         defaultNumTransactions = (business.Monthly_Bookkeeping_Transactions__c != null) ? String.valueOf(business.Monthly_Bookkeeping_Transactions__c) : '---';
-        defaultNumForeignOwners = (business.Number_of_Foreign_Owners__c != null) ? business.Number_of_Foreign_Owners__c : '---';
+        //defaultNumForeignOwners = (business.Number_of_Foreign_Owners__c != null) ? business.Number_of_Foreign_Owners__c : '---';
         defaultNumEmployees = (business.Number_of_Employees__c != null) ? String.valueOf(numEmpl) : '---';
         defaultFilingStatus = (business.Tax_Filing_Status__c != null) ? business.Tax_Filing_Status__c : 'Select a Filing Status';
         defaultPersonalIncome = (business.W2_Income__c != null) ? business.W2_Income__c : '---';
         defaultNumberOfRentalProperties = (business.Number_of_Rental_Properties__c != null) ? business.Number_of_Rental_Properties__c : '---';
-        defaultOtherInvestments = (business.Number_of_K1_Investments__c != null) ? business.Number_of_K1_Investments__c : '---';
+        //defaultOtherInvestments = (business.Number_of_K1_Investments__c != null) ? business.Number_of_K1_Investments__c : '---';
         defaultMileage = (business.Yearly_Business_Miles__c != null) ? business.Yearly_Business_Miles__c : '---';
         firstBusiness = business.First_Business__c;
         runPayrollBefore = business.Run_Payroll_Before__c;
         hasEmployeesContractors = business.Has_Employees_Contractors__c;
-        foreignIncome = business.Foreign_Income__c;
+        //foreignIncome = business.Foreign_Income__c;
         hasRentalProperties = business.Has_Rental_Properties__c;
         isWorkingFromHome = business.Is_Working_From_Home__c;
         commutesWithOwnVehicle = business.Commutes_With_Own_Vehicle__c;
-        eCommerce = business.E_Commerce__c;
+        //eCommerce = business.E_Commerce__c;
 
         user = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id];
 
@@ -288,12 +338,16 @@ public without sharing class GuidedSellingControllerExtension {
                 AND Primary_Contact__c = true
             ];
         }
+        System.debug('*checkpoint 4');
 
         defaultCountry = (businessOwner.Country__c != null) ? businessOwner.Country__c : 'United States';
         defaultState = (businessOwner.State__c != null) ? businessOwner.State__c : 'Select a State';
 
         //Logic based on Lead Source here
         btp = false;
+
+        //Calculator Environment logic
+        environment = 'Standard';
         if(null != opportunity.Account.Lead_Source__c) {
                 
             //Setting the LegalZoom script here: Priority for LegalZoom script: 1.BTP 2.BAP
@@ -306,8 +360,7 @@ public without sharing class GuidedSellingControllerExtension {
                 }
             }
             
-            //Calculator Environment logic
-            environment = 'Standard';
+            
             if(null != opportunity.Account.Lead_Type_New__c) {
                 if('Sprout' == opportunity.Account.Lead_Type_New__c) {
                     environment = 'Sprout';
@@ -325,11 +378,15 @@ public without sharing class GuidedSellingControllerExtension {
             environment = 'Entity Formation';
         } 
         */
+        System.debug('*checkpoint ');
+        System.debug('environment: '+environment);
 
         String queryEnvironment = '%'+environment+'%';
         List<Required_Fields_Guided_Selling__mdt> getRequired = [
             SELECT Guided_Selling_Field_Name__c, Required__c, Label FROM Required_Fields_Guided_Selling__mdt WHERE Required__c LIKE :queryEnvironment
         ];
+
+        System.debug(getRequired);
 
         for(Required_Fields_Guided_Selling__mdt rf : getRequired) {
             if(null == requiredfields) {
@@ -340,6 +397,8 @@ public without sharing class GuidedSellingControllerExtension {
                 numRequiredFields++;
             }
         }
+
+        System.debug('*checkpoint 5');
 
         getProductData();
     }
@@ -632,11 +691,11 @@ public without sharing class GuidedSellingControllerExtension {
 
         Business__c b = [
                 SELECT Id, Name, Account__c, Anticipated_Revenue__c, Industry__c, Business_Type__c, Number_of_Owners__c, Startup_Costs__c, Years_In_Business__c, 
-                Foreign_State_of_Incorporation__c, State_of_Residence__c, Profit_Projection__c, Number_of_Contractors__c, Home_Office_Square_Feet__c,
-                State_of_incorporation__c, Number_of_Foreign_Owners__c, Monthly_Bookkeeping_Transactions__c, Investor_Funding__c, Number_of_Employees__c, Tax_Filing_Status__c,
-                W2_Income__c, Number_of_Rental_Properties__c, Number_of_K1_Investments__c, Yearly_Business_Miles__c, 
+                Profit_Projection__c, Home_Office_Square_Feet__c,
+                State_of_incorporation__c, Monthly_Bookkeeping_Transactions__c, Number_of_Employees__c, Tax_Filing_Status__c,
+                W2_Income__c, Number_of_Rental_Properties__c, Yearly_Business_Miles__c, 
                 Run_Payroll_Before__c, Has_Employees_Contractors__c, File_Return_Yourself__c, Has_Rental_Properties__c, Is_Working_From_Home__c, Commutes_With_Own_Vehicle__c, 
-                E_Commerce__c, First_Business__c, Foreign_Income__c
+                First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :opportunity.AccountId
             ];
@@ -754,13 +813,13 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     @RemoteAction
-    public static String calculateSavingsGuidedSelling(String entityType, String profits, String startup, String mileage, String office, String filingStatus, String income, String industryType, String numForeignOwners, String accountId) {
+    public static String calculateSavingsGuidedSelling(String entityType, String profits, String startup, String mileage, String office, String filingStatus, String income, String industryType, String accountId) {
         
         //Check for disqualifiers to be thorough, but none should get to this point
         Boolean displaySavings = PricingCalcController.displaySavings(entityType, industryType);
         
         //Calculating each saving type individually if not disqualified
-        Decimal sCorpSavings = (!PricingCalcController.displaySCorporationSavings(Integer.valueOf(profits), entityType, industryType, Integer.valueOf(numForeignOwners))) ? 0.00 : PricingCalcController.calculateSCorporationSavings(Integer.valueOf(PostTSALandingPageController.currencyStringToDecimal(profits)));
+        Decimal sCorpSavings = (!PricingCalcController.displaySCorporationSavings(Integer.valueOf(profits), entityType, industryType)) ? 0.00 : PricingCalcController.calculateSCorporationSavings(Integer.valueOf(PostTSALandingPageController.currencyStringToDecimal(profits)));
         Decimal officeSavings = ('---' == office || '0' == office || !displaySavings) ? 0.00 : PricingCalcController.calculateSavings('Home Office', filingStatus, Decimal.valueOf(income), Decimal.valueOf(profits), Decimal.valueOf(office), 0, 0);
         Decimal mileageSavings = ('---' == mileage || '0' == mileage || !PricingCalcController.displayBusinessMileageSavings(entityType, industryType)) ? 0.00 : PricingCalcController.calculateSavings('Business Mileage', filingStatus, Decimal.valueOf(income), Decimal.valueOf(profits), 0, Decimal.valueOf(mileage), 0);
         Decimal QBISavings = (!displaySavings) ? 0.00 : PricingCalcController.calculateSavings('QBI', filingStatus, Decimal.valueOf(income), Decimal.valueOf(profits), 0, 0, 0);
@@ -774,7 +833,7 @@ public without sharing class GuidedSellingControllerExtension {
                 SELECT Id, Name, Entity_Type_After_Discovery_Call__c, Current_Year_Profit_Projection__c, Total_Startup_Costs__c,
                 Personal_Return_Filing_Status__c, Personal_Income__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c,
                 Potential_Business_Mile_Savings__c, Potential_Home_Office_Savings__c, Potential_QBI_Savings__c, Potential_SCorp_Savings__c,
-                Potential_Startup_Savings__c, Potential_Total_Savings__c
+                Potential_Startup_Savings__c, Potential_Total_Savings__c, Foreign_State__c
                 FROM Account
                 WHERE Id =:accountId
             ];
@@ -943,6 +1002,13 @@ public without sharing class GuidedSellingControllerExtension {
                 AND (WhoId =:rId OR WhatId =:rId OR Id =:rId) 
             ];
         } else {
+            System.debug('rid: '+rid+', accId: '+accId);
+            List<Lead> convertedLead = [SELECT Id, ConvertedOpportunityId FROM Lead 
+            WHERE Id = :rId AND IsConverted = true];
+            
+            if(!convertedLead.isEmpty()){
+                rid = convertedLead[0].ConvertedOpportunityId;
+            }
             event = [
                 SELECT Id, StartDateTime, Appointment_Disposition__c, Secondary_Disposition_Details__c 
                 FROM Event 
@@ -1016,29 +1082,29 @@ public without sharing class GuidedSellingControllerExtension {
             bus.Industry__c = answersMap.get('What industry is your business in');
             bus.State_of_incorporation__c = answersMap.get('What is your state of incorporation');
             bus.Foreign_State_of_Incorporation__c = answersMap.get('What is your foreign state of incorporation');
-            bus.State_of_Residence__c = answersMap.get('What is your state of residence');
+            //bus.State_of_Residence__c = answersMap.get('What is your state of residence');
             bus.Startup_Costs__c = answersMap.get('How much have you invested so far in start-up costs');
             bus.Anticipated_Revenue__c = answersMap.get('What do you anticipate your revenue to be over the next 12 months');
             bus.Profit_Projection__c = answersMap.get('What do you project your 1st year profit to be over the next 12 months');
-            bus.Investor_Funding__c = answersMap.get('What is your total investor funding');
+            //bus.Investor_Funding__c = answersMap.get('What is your total investor funding');
             bus.Monthly_Bookkeeping_Transactions__c = answersMap.get('How many monthly bookkeeping transactions do you have');
             bus.Number_of_Owners__c = answersMap.get('How many owners does your business have');
-            bus.Number_of_Foreign_Owners__c = answersMap.get('How many owners are outside the USA');
+            //bus.Number_of_Foreign_Owners__c = answersMap.get('How many owners are outside the USA');
             bus.Run_Payroll_Before__c = (answersMap.get('Have you run payroll before') == 'Yes') ? true : false;
             bus.Has_Employees_Contractors__c = (answersMap.get('Do you currently have any employees or contractors') == 'Yes') ? true : false;
             bus.Number_of_Employees__c = String.valueOf(answersMap.get('How many employees do you have'));
-            bus.Number_of_Contractors__c = answersMap.get('How many contractors do you have');
+            //bus.Number_of_Contractors__c = answersMap.get('How many contractors do you have');
             bus.Tax_Filing_Status__c = answersMap.get('What is your tax filing status');
             bus.W2_Income__c = answersMap.get('What was your household W-2 income last year');
-            bus.Foreign_Income__c = (answersMap.get('Do you have any foreign sourced income') == 'Yes') ? true : false;
+            //bus.Foreign_Income__c = (answersMap.get('Do you have any foreign sourced income') == 'Yes') ? true : false;
             bus.Has_Rental_Properties__c = (answersMap.get('Do you currently have any rental properties') == 'Yes') ? true : false;
             bus.Number_of_Rental_Properties__c = answersMap.get('How many rental properties do you have');
-            bus.Number_of_K1_Investments__c = answersMap.get('How many K-1s are from other investments');
+            // bus.Number_of_K1_Investments__c = answersMap.get('How many K-1s are from other investments');
             bus.Is_Working_From_Home__c = (answersMap.get('Will you be working from home') == 'Yes') ? true : false;
             bus.Home_Office_Square_Feet__c = Decimal.valueOf(answersMap.get('What is the approximate square footage of your home office'));
             bus.Commutes_With_Own_Vehicle__c = (answersMap.get('Will you use your personal vehicle for business purposes') == 'Yes') ? true : false;
             bus.Yearly_Business_Miles__c = answersMap.get('How many business-related miles do you estimate you’ll drive per year');
-            bus.E_Commerce__c = (answersMap.get('Will your business have a web or e-commerce presence') == 'Yes') ? true : false;
+            //bus.E_Commerce__c = (answersMap.get('Will your business have a web or e-commerce presence') == 'Yes') ? true : false;
 
             update bus;
 
@@ -1059,18 +1125,18 @@ public without sharing class GuidedSellingControllerExtension {
             acc.Estimated_Business_Mileage__c = answersMap.get('How many business-related miles do you estimate you’ll drive per year');
             acc.Foreign_State__c = answersMap.get('What is your foreign state of incorporation');
             acc.Years_in_Business__c = answersMap.get('How many years have you been in business');
-            acc.State_of_Residence__c = answersMap.get('What is your state of residence');
+            //acc.State_of_Residence__c = answersMap.get('What is your state of residence');
             acc.Trans_Per_Month__c = answersMap.get('How many monthly bookkeeping transactions do you have');
-            acc.How_much_funding__c = answersMap.get('What is your total investor funding');
+            //acc.How_much_funding__c = answersMap.get('What is your total investor funding');
             acc.Worked_With_CPA_Accountant__c = (answersMap.get('Is this your first business') == 'Yes') ? true : false;
-            acc.Website_Selling_Goods__c = (answersMap.get('Will your business have a web or e-commerce presence') == 'Yes') ? true : false;
-            acc.Foreign_Income__c = (answersMap.get('Do you have any foreign sourced income') == 'Yes') ? true : false;
+            //acc.Website_Selling_Goods__c = (answersMap.get('Will your business have a web or e-commerce presence') == 'Yes') ? true : false;
+            //acc.Foreign_Income__c = (answersMap.get('Do you have any foreign sourced income') == 'Yes') ? true : false;
 
             if(environment != 'Entity Formation') {
                 String value = answersMap.get('How many employees do you have');
                 String numEmpl = value.replace('+', '');
                 acc.Total_Startup_Costs__c = answersMap.get('How much have you invested so far in start-up costs');
-                acc.Number_of_Contractors__c = Integer.valueOf(answersMap.get('How many contractors do you have'));
+                //acc.Number_of_Contractors__c = Integer.valueOf(answersMap.get('How many contractors do you have'));
                 acc.NumberOfEmployees = Integer.valueOf(numEmpl);
                 acc.Rental_Properties__c = Integer.valueOf(answersMap.get('How many rental properties do you have'));
             }
@@ -1081,12 +1147,16 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     @RemoteAction
-    public static void saveBusinessName(String newName, String businessId) {
-
+    public static void saveBusinessData(String newName, String businessId, String busType, String accId) {
         if(!String.isBlank(newName)) {
             Business__c bus = new Business__c(Id = businessId);
             bus.Name = newName;
+            bus.Business_Type__c = busType;
             update bus;
+
+            Account acc = new Account(Id = accId);
+            acc.Entity_Tax_Classification__c = busType;
+            update acc;
         }
     }
 
@@ -1094,25 +1164,26 @@ public without sharing class GuidedSellingControllerExtension {
     public static void saveClientInfo(String infoType, String businessId, String businessOwnerId, String accId, String email, String phone, String address, String city, String state, String zip, String country) {
         Boolean needBusUpdate = false;
         Boolean needAccUpdate = false;
+        Boolean needConUpdate = false;
         Business_Owner__c busOwner = new Business_Owner__c(Id = businessOwnerId);
         Business__c bus = new Business__c(Id = businessId);
-        Account acc = new Account(Id = accId);
+        Account acc = [SELECT Id, Primary_Contact__c, BillingState, BillingCountry, BillingStreet, BillingPostalCode, BillingCity FROM Account WHERE Id = :accId];
+        Contact con = new Contact(Id = acc.Primary_Contact__c);
         if(infoType == 'personal') {
             busOwner.Phone__c = phone;
             busOwner.Email__c = email;
+
+            con.Phone = phone;
+            con.Email = email;
+
             needBusUpdate = true;
+            needConUpdate = true;
         } else if(infoType == 'billing') {
             busOwner.Address__c = address;
             busOwner.City__c = city;
             busOwner.State__c = state;
             busOwner.Zip__c = zip;
             busOwner.Country__c = country;
-
-            acc.BillingState = state;
-            acc.BillingCountry = country;
-            acc.BillingStreet = address;
-            acc.BillingCity = city;
-            acc.BillingPostalCode = zip;
 
             acc.BillingState = state;
             acc.BillingCountry = country;
@@ -1136,17 +1207,20 @@ public without sharing class GuidedSellingControllerExtension {
             update acc;
             update bus;
         }
+        if(needConUpdate == true) {
+            update con;
+        }
     }
 
     @RemoteAction
     public static String getBusinessInfo(String accId) {
         Business__c business = [
                 SELECT Id, Name, Account__c, Anticipated_Revenue__c, Industry__c, Business_Type__c, Number_of_Owners__c, Startup_Costs__c, Years_In_Business__c, 
-                Foreign_State_of_Incorporation__c, State_of_Residence__c, Profit_Projection__c, Number_of_Contractors__c, Home_Office_Square_Feet__c,
-                State_of_incorporation__c, Number_of_Foreign_Owners__c, Monthly_Bookkeeping_Transactions__c, Investor_Funding__c, Number_of_Employees__c, Tax_Filing_Status__c,
-                W2_Income__c, Number_of_Rental_Properties__c, Number_of_K1_Investments__c, Yearly_Business_Miles__c, 
+                Profit_Projection__c, Home_Office_Square_Feet__c,
+                State_of_incorporation__c, Monthly_Bookkeeping_Transactions__c, Number_of_Employees__c, Tax_Filing_Status__c,
+                W2_Income__c, Number_of_Rental_Properties__c, Yearly_Business_Miles__c, 
                 Run_Payroll_Before__c, Has_Employees_Contractors__c, File_Return_Yourself__c, Has_Rental_Properties__c, Is_Working_From_Home__c, Commutes_With_Own_Vehicle__c, 
-                E_Commerce__c, First_Business__c, Foreign_Income__c
+                First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :accId
             ];
@@ -1281,7 +1355,7 @@ public without sharing class GuidedSellingControllerExtension {
             }
         }
 
-        String updURL = redirURL + '?utm_source=client';
+        String updURL = redirURL;
         redirURL = redirURL + '?utm_source=Sales&utm_term=Sales&utm_medium=Guided+Selling';
         
         sleep(4000);
@@ -1300,7 +1374,7 @@ public without sharing class GuidedSellingControllerExtension {
             StageName = 'Quote Generated'
         );
 
-        return redirURL;
+        return updURL;
     }
 
     @RemoteAction
@@ -1546,22 +1620,22 @@ public without sharing class GuidedSellingControllerExtension {
         // Missing fields from original query: Name, Account__c, Has_Employees_Contractors__c, File_Return_Yourself__c, Has_Rental_Properties__c, Is_Working_From_Home__c, 
         // Commutes_With_Own_Vehicle__c, First_Business__c, 
         Business__c business = [
-                SELECT Id, Business_Type__c, Number_of_Foreign_Owners__c, Industry__c, Foreign_Income__c, Number_of_Contractors__c, Number_of_Employees__c, 
-                Number_of_K1_Investments__c, Number_of_Owners__c, Monthly_Bookkeeping_Transactions__c, Number_of_Rental_Properties__c, W2_Income__c, Profit_Projection__c, 
-                Anticipated_Revenue__c, State_of_incorporation__c, Investor_Funding__c, Startup_Costs__c, E_Commerce__c, Run_Payroll_Before__c, Tax_Filing_Status__c, 
-                Yearly_Business_Miles__c, Home_Office_Square_Feet__c, Foreign_State_of_Incorporation__c, Years_In_Business__c, State_of_Residence__c
+                SELECT Id, Business_Type__c, Industry__c, Number_of_Employees__c, 
+                Number_of_Owners__c, Monthly_Bookkeeping_Transactions__c, Number_of_Rental_Properties__c, W2_Income__c, Profit_Projection__c, 
+                Anticipated_Revenue__c, State_of_incorporation__c, Startup_Costs__c, Run_Payroll_Before__c, Tax_Filing_Status__c, 
+                Yearly_Business_Miles__c, Home_Office_Square_Feet__c, Years_In_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :accId];
 
         String livingAbroad = 'No';
-        if (business.Foreign_Income__c == true) {
-            livingAbroad = 'Yes';
-        }
+        // if (business.Foreign_Income__c == true) {
+        //     livingAbroad = 'Yes';
+        // }
 
         String E_Commerce = 'No';
-        if (business.E_Commerce__c == true) {
-            E_Commerce = 'Yes';
-        }
+        // if (business.E_Commerce__c == true) {
+        //     E_Commerce = 'Yes';
+        // }
 
         String runPayrollBefore = 'No';
         if (business.Run_Payroll_Before__c == true) {
@@ -1656,12 +1730,12 @@ public without sharing class GuidedSellingControllerExtension {
                 OpportunityId = oppId,
                 Pricebook2Id = standardPriceBookID,
                 Calc_Entity_Type__c = business.Business_Type__c,
-                Calc_Foreign_Owners__c = business.Number_of_Foreign_Owners__c,
+                //Calc_Foreign_Owners__c = business.Number_of_Foreign_Owners__c,
                 Calc_Industry_Type__c = business.Industry__c,
                 Calc_Living_Abroad__c = livingAbroad,
-                Calc_Number_of_Contractors__c = business.Number_of_Contractors__c,
+                //Calc_Number_of_Contractors__c = business.Number_of_Contractors__c,
                 Calc_Number_of_Employees__c = business.Number_of_Employees__c,
-                Calc_Number_of_K1s__c = business.Number_of_K1_Investments__c,
+                //Calc_Number_of_K1s__c = business.Number_of_K1_Investments__c,
                 Calc_Number_of_Owners__c = business.Number_of_Owners__c,
                 Calc_Number_of_Transactions__c = business.Monthly_Bookkeeping_Transactions__c,
                 Calc_Number_of_Rental_Properties__c = business.Number_of_Rental_Properties__c,
@@ -1669,9 +1743,9 @@ public without sharing class GuidedSellingControllerExtension {
                 Calc_Projected_1st_Year_Profit__c = business.Profit_Projection__c,
                 Calc_Projected_1st_Year_Revenue__c = business.Anticipated_Revenue__c,
                 Calc_State_of_Incorporation__c = business.State_of_incorporation__c,
-                Calc_Total_Investor_Funding__c = business.Investor_Funding__c,
+                //Calc_Total_Investor_Funding__c = business.Investor_Funding__c,
                 Calc_Total_Startup_Cost__c = business.Startup_Costs__c,
-                Calc_Website_Selling_Goods__c = E_Commerce,
+                //Calc_Website_Selling_Goods__c = E_Commerce,
                 //Calc_Worked_with_Accountant__c = business.workedWithAccountantInPastInput,
                 Calc_Run_Payroll_Before__c = runPayrollBefore,
                 Calc_Filing_Status__c = business.Tax_Filing_Status__c,
@@ -1679,7 +1753,7 @@ public without sharing class GuidedSellingControllerExtension {
                 Calc_Office_Square_Footage__c = String.valueOf(business.Home_Office_Square_Feet__c),
                 Calc_Foreign_State__c = business.Foreign_State_of_Incorporation__c,
                 Calc_Years_in_Business__c = business.Years_In_Business__c,
-                Calc_State_of_Residence__c = business.State_of_Residence__c,
+                //Calc_State_of_Residence__c = business.State_of_Residence__c,
                 billingSchedule__c = billingTime,
                 Bundle__c = 'None',
                 Calc_Savings_Amount__c = acc.Potential_Total_Savings__c
@@ -1781,7 +1855,7 @@ public without sharing class GuidedSellingControllerExtension {
         
         sleep(3000);
 
-        if(schedulerVIPURL != '' && vipAmount > 2999) {
+        if(schedulerVIPURL != '' && vipAmount > 4999) {
             theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             theCOQuote.Scheduler_URL__c = schedulerVIPURL;
@@ -1803,7 +1877,7 @@ public without sharing class GuidedSellingControllerExtension {
         }
 
 
-        if(schedulerVIPURL != '' && vipAmount > 2999) {
+        if(schedulerVIPURL != '' && vipAmount > 4999) {
             return schedulerVIPURLReturn;
         } else {
             return schedulerURLReturn;
@@ -2150,12 +2224,12 @@ public without sharing class GuidedSellingControllerExtension {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('Select an Entity Type', 'Select an Entity Type', true));
         options.add(new SelectOption('LLC', 'LLC'));
-        options.add(new SelectOption('C Corporation', 'C Corporation'));
+        //options.add(new SelectOption('C Corporation', 'C Corporation'));
         options.add(new SelectOption('S Corporation', 'S Corporation'));
-        options.add(new SelectOption('Partnership', 'Partnership'));
-        options.add(new SelectOption('DBA', 'DBA'));
-        options.add(new SelectOption('Non-Profit', 'Non-Profit'));
-        options.add(new SelectOption('Personal Only', 'Personal Only'));
+        //options.add(new SelectOption('Partnership', 'Partnership'));
+        //options.add(new SelectOption('DBA', 'DBA'));
+        //options.add(new SelectOption('Non-Profit', 'Non-Profit'));
+        //options.add(new SelectOption('Personal Only', 'Personal Only'));
         return options;
     }
     public List<SelectOption> getIndustryType() {

@@ -2,37 +2,26 @@ public class PricingCalcController {
     public class MisconfiguredMetadataException extends Exception {}
 
     public List<SelectOption> entityType {get;set;}
-    public List<SelectOption> foreignOwners {get;set;}
     public List<SelectOption> industryType {get;set;}
-    public List<SelectOption> livingAbroad {get;set;}
-    public List<SelectOption> numberOfContractors {get;set;}
     public List<SelectOption> numberOfEmployees {get;set;}
-    public List<SelectOption> numberOfK1s {get;set;}
     public List<SelectOption> numberOfOwners {get;set;}
     public List<SelectOption> numberOfTransactions {get;set;}
     public List<SelectOption> numberOfRentalProperties {get;set;}
     public List<SelectOption> personalIncome {get;set;}
     public List<SelectOption> projectedFirstYearProfit {get;set;}
     public List<SelectOption> projectedFirstYearRevenue {get;set;}
-    public List<SelectOption> stateOfIncorporation {get;set;}
-    public List<SelectOption> totalInvestorFunding {get;set;}
     public List<SelectOption> totalStartupCost {get;set;}
-    public List<SelectOption> websiteSellingGoods {get;set;}
-    public List<SelectOption> workedWithAccountantInPast {get;set;}
     public List<SelectOption> runPayrollBefore {get;set;}
     public List<SelectOption> filingStatus {get;set;}
-    
+    public List<SelectOption> stateOfIncorporation {get;set;}
     public List<SelectOption> businessMiles {get;set;}
     public List<SelectOption> officeSqFt {get;set;}
     public List<SelectOption> foreignState {get;set;}
-    public List<SelectOption> yearsInBusiness {get;set;}
-    
     public List<SelectOption> bundleItems {get;set;}
     public List<SelectOption> billingItems {get;set;}
     public List<SelectOption> timeItems {get;set;}
     public List<SelectOption> billingStateItems {get;set;}
     public List<SelectOption> billingCountryItems {get;set;}
-    public List<SelectOption> stateOfResidenceItems {get;set;}
     
     public List<Product2> acListP {get;set;}
     public List<Product2> acListProducts {get;set;}
@@ -40,36 +29,28 @@ public class PricingCalcController {
     //public List<String> acList {get;set;}
     
     Public String entityTypeInput {get;set;}
-    public String foreignOwnersInput {get;set;}
     public String industryTypeInput {get;set;}
-    public String livingAbroadInput {get;set;}
-    public String numberOfContractorsInput {get;set;}
     public String numberOfEmployeesInput {get;set;}
-    public String numberOfK1sInput {get;set;}
     public String numberOfOwnersInput {get;set;}
     public String numberOfTransactionsInput {get;set;}
     public String numberOfRentalPropertiesInput {get;set;}
     public String personalIncomeInput {get;set;}
     public String projectedFirstYearProfitInput {get;set;}
     public String projectedFirstYearRevenueInput {get;set;}
-    public String stateOfIncorporationInput {get;set;}
-    public String totalInvestorFundingInput {get;set;}
     public String totalStartupCostInput {get;set;}
-    public String websiteSellingGoodsInput {get;set;}
-    public String workedWithAccountantInPastInput {get;set;}
     public String runPayrollBeforeInput {get;set;}
     public String filingStatusInput {get;set;}
     
     public String businessMilesInput {get;set;}
     public String officeSqFtInput {get;set;}
     public String foreignStateInput {get;set;}
-    public String yearsInBusinessInput {get;set;}
+    public String bookKeepingStartDateInput {get;set;}
     
-    public String emailCampaignIDInput {get;set;}
     
     public String bundle {get;set;}
     public String billingTime {get;set;}
     public String accountNameInput {get;set;}
+    public String stateOfIncorporationInput {get;set;}
     public String billingStateInput {get;set;}
     public String billingCountryInput {get;set;}
     public String billingStreetInput {get;set;}
@@ -80,34 +61,24 @@ public class PricingCalcController {
     public String UserSkill {get;set;}
     public String BundleOverride {get;set;}
     
-    public String stateOfResidenceInput {get;set;}
-    
     Public String entityTypeClass {get;set;}
-    public String foreignOwnersClass {get;set;}
     public String industryTypeClass {get;set;}
-    public String livingAbroadClass {get;set;}
-    public String numberOfContractorsClass {get;set;}
     public String numberOfEmployeesClass {get;set;}
-    public String numberOfK1sClass {get;set;}
     public String numberOfOwnersClass {get;set;}
     public String numberOfTransactionsClass {get;set;}
     public String numberOfRentalPropertiesClass {get;set;}
     public String personalIncomeClass {get;set;}
     public String projectedFirstYearProfitClass {get;set;}
     public String projectedFirstYearRevenueClass {get;set;}
-    public String stateOfIncorporationClass {get;set;}
-    public String totalInvestorFundingClass {get;set;}
     public String totalStartupCostClass {get;set;}
-    public String websiteSellingGoodsClass {get;set;}
-    public String workedWithAccountantInPastClass {get;set;}
     public String runPayrollBeforeClass {get;set;}
     public String filingStatusClass {get;set;}
+    public String stateOfIncorporationClass {get;set;}
+    public String bookKeepingStartDateClass {get;set;}
     
     public String businessMilesClass {get;set;}
     public String officeSqFtClass {get;set;}
-    
     public String foreignStateClass {get;set;}
-    public String yearsInBusinessClass {get;set;}
     
     public String redirURL {get;set;}
     
@@ -699,7 +670,7 @@ public class PricingCalcController {
 
             }
             
-            emailCampaignIDInput = eoItem.Email_Campaign_ID__c;
+
         
         }
         
@@ -1169,6 +1140,20 @@ public class PricingCalcController {
                         
                     }
                     
+                    if (ruleItem.Field_1_Operator__c == 'Does Not Contain String') {
+                        
+                        if (LeadTypeNew.contains(ruleItem.Field_1_Value__c)) {
+                        
+                            
+                            
+                        } else {
+                        
+                            doThisRule = true;
+                        
+                        }
+                        
+                    }
+                    
                     if (ruleItem.Field_1_Operator__c == 'Equal String') {
                         
                         if (LeadTypeNew == ruleItem.Field_1_Value__c) {
@@ -1187,6 +1172,20 @@ public class PricingCalcController {
                         
                             doThisRule = true;
                             
+                        }
+                        
+                    }
+                    
+                    if (ruleItem.Field_1_Operator__c == 'Not Equal String') {
+                        
+                        if (LeadSource == ruleItem.Field_1_Value__c) {
+                        
+                            
+                            
+                        } else {
+                        
+                            doThisRule = true;
+                        
                         }
                         
                     }
@@ -1229,6 +1228,16 @@ public class PricingCalcController {
                         
                     }
                     
+                    if (ruleItem.Field_2_Operator__c == 'Does Not Contain String') {
+                        
+                        if (LeadTypeNew.contains(ruleItem.Field_2_Value__c)) {
+                        
+                            doThisRule = false;
+                            
+                        } 
+                        
+                    }
+                    
                     if (ruleItem.Field_2_Operator__c == 'Equal String') {
                         
                         if (LeadTypeNew == ruleItem.Field_2_Value__c) {
@@ -1252,6 +1261,16 @@ public class PricingCalcController {
                             doThisRule = false;
                             
                         }
+                        
+                    }
+                    
+                    if (ruleItem.Field_2_Operator__c == 'Not Equal String') {
+                        
+                        if (LeadSource == ruleItem.Field_2_Value__c) {
+                        
+                            doThisRule = false;
+                        
+                        } 
                         
                     }
                 
@@ -1379,29 +1398,22 @@ public class PricingCalcController {
         
         // default class data
         entityTypeClass = '';
-        foreignOwnersClass = '';
         industryTypeClass = '';
-        livingAbroadClass = '';
-        numberOfContractorsClass = '';
         numberOfEmployeesClass = '';
-        numberOfK1sClass = '';
         numberOfOwnersClass = '';
         numberOfTransactionsClass = '';
         numberOfRentalPropertiesClass = '';
         personalIncomeClass = '';
         projectedFirstYearProfitClass = '';
         projectedFirstYearRevenueClass = '';
-        stateOfIncorporationClass = '';
-        totalInvestorFundingClass = '';
         totalStartupCostClass = '';
-        websiteSellingGoodsClass = '';
-        workedWithAccountantInPastClass = '';
         runPayrollBeforeClass = '';
         filingStatusClass = '';
         businessMilesClass = '';
         officeSqFtClass = '';
         foreignStateClass = '';
-        yearsInBusinessClass = '';
+        stateOfIncorporationClass = '';
+        bookKeepingStartDateClass = '';
         
         List<Calculator_Field__c> myFieldList = [SELECT Id, Name, Required_In_Environment__c FROM Calculator_Field__c];
         for(Calculator_Field__c fieldItem : myFieldList){
@@ -1412,28 +1424,12 @@ public class PricingCalcController {
                     entityTypeClass = ' jq_req1';
                 }
                 
-                if (fieldItem.Name == 'Foreign Owners') {
-                    foreignOwnersClass = ' jq_req1';
-                }
-                
                 if (fieldItem.Name == 'Industry Type') {
                     industryTypeClass = ' jq_req1';
                 }
                 
-                if (fieldItem.Name == 'Living Abroad') {
-                    livingAbroadClass = ' jq_req1';
-                }
-                
-                if (fieldItem.Name == 'Number of Contractors') {
-                    numberOfContractorsClass = ' jq_req1';
-                }
-                
                 if (fieldItem.Name == 'Number of Employees') {
                     numberOfEmployeesClass = ' jq_req1';
-                }
-                
-                if (fieldItem.Name == 'Number of K1s') {
-                    numberOfK1sClass = ' jq_req1';
                 }
                 
                 if (fieldItem.Name == 'Number of Owners') {
@@ -1464,20 +1460,8 @@ public class PricingCalcController {
                     stateOfIncorporationClass = ' jq_req1';
                 }
                 
-                if (fieldItem.Name == 'Total Investor Funding') {
-                    totalInvestorFundingClass = ' jq_req1';
-                }
-                
                 if (fieldItem.Name == 'Total Startup Cost') {
                     totalStartupCostClass = ' jq_req1';
-                }
-                
-                if (fieldItem.Name == 'Website Selling Goods') {
-                    websiteSellingGoodsClass = ' jq_req1';
-                }
-                
-                if (fieldItem.Name == 'Worked With Accountant in Past') {
-                    workedWithAccountantInPastClass = ' jq_req1';
                 }
                 
                 if (fieldItem.Name == 'Run Payroll Before') {
@@ -1499,9 +1483,10 @@ public class PricingCalcController {
                     foreignStateClass = ' jq_req1';
                 }
                 
-                if (fieldItem.Name == 'Years In Business') {
-                    yearsInBusinessClass = ' jq_req1';
+                if (fieldItem.Name == 'Bookkeeping Start Date') {
+                    bookKeepingStartDateClass = ' jq_req1';
                 }
+                
             
             }
         
@@ -1734,10 +1719,7 @@ public class PricingCalcController {
             
             // dropdown values first
             entityType = new List<SelectOption>();
-            foreignOwners = new List<SelectOption>();
             industryType = new List<SelectOption>();
-            livingAbroad = new List<SelectOption>();
-            numberOfContractors = new List<SelectOption>();
             numberOfEmployees = new List<SelectOption>();
             
             List<String> entType = new List<String>();
@@ -1748,46 +1730,34 @@ public class PricingCalcController {
             List<String> numEmp = new List<String>();
             List<String> stateList = new List<String>();
             List<String> numTrans = new List<String>();
-            List<String> yearsBusiness = new List<String>();
             
-            List<String> numberOfK1sMatch = new List<String>();
             List<String> numberOfOwnersMatch = new List<String>();
             List<String> numberOfRentalPropertiesMatch = new List<String>();
             List<String> personalIncomeMatch = new List<String>();
             List<String> projectedFirstYearProfitMatch = new List<String>();
             List<String> projectedFirstYearRevenueMatch = new List<String>();
-            List<String> totalInvestorFundingMatch = new List<String>();
             List<String> totalStartupCostMatch = new List<String>();
-            List<String> websiteSellingGoodsMatch = new List<String>();
-            List<String> workedWithAccountantInPastMatch = new List<String>();
             List<String> runPayrollBeforeMatch = new List<String>();
             List<String> filingStatusMatch = new List<String>();
             List<String> businessMilesMatch = new List<String>();
-            List<String> foreignStateMatch = new List<String>();
             List<String> officeSqFtMatch = new List<String>();
-            List<String> yearsInBusinessMatch = new List<String>();
+            List<String> foreignStateMatch = new List<String>();
             
-            numberOfK1s = new List<SelectOption>();
             numberOfOwners = new List<SelectOption>();
             numberOfTransactions = new List<SelectOption>();
             numberOfRentalProperties = new List<SelectOption>();
             personalIncome = new List<SelectOption>();
             projectedFirstYearProfit = new List<SelectOption>();
             projectedFirstYearRevenue = new List<SelectOption>();
-            stateOfIncorporation = new List<SelectOption>();
-            totalInvestorFunding = new List<SelectOption>();
             totalStartupCost = new List<SelectOption>();
-            websiteSellingGoods = new List<SelectOption>();
-            workedWithAccountantInPast = new List<SelectOption>();
             billingStateItems = new List<SelectOption>();
-            stateOfResidenceItems = new List<SelectOption>();
             billingCountryItems = new List<SelectOption>();
             runPayrollBefore = new List<SelectOption>();
             filingStatus = new List<SelectOption>();
             businessMiles = new List<SelectOption>();
             officeSqFt = new List<SelectOption>();
             foreignState = new List<SelectOption>();
-            yearsInBusiness = new List<SelectOption>();
+            stateOfIncorporation = new List<SelectOption>();
             
             // placeholder variables
             Decimal formatInput = 0;
@@ -1796,7 +1766,6 @@ public class PricingCalcController {
             
             adjustList = new List<priceWrapper>();
             
-            stateOfIncorporation.add(new SelectOption('','--'));
             industryType.add(new SelectOption('','--'));
             totalStartupCost.add(new SelectOption('','--'));
             projectedFirstYearRevenue.add(new SelectOption('','--'));
@@ -1804,7 +1773,7 @@ public class PricingCalcController {
             businessMiles.add(new SelectOption('','--'));
             officeSqFt.add(new SelectOption('','--'));
             foreignState.add(new SelectOption('','--'));
-            yearsInBusiness.add(new SelectOption('','--'));
+            stateOfIncorporation.add(new SelectOption('','--'));
             
             // get dropdown values from custom object
             List<Calculator_Dropdown__c> dropList = [SELECT Id, Dropdown_Value__c, Form_Field__c, Price_Adjustment__c, Product__c, Setup_fee__c FROM Calculator_Dropdown__c ORDER BY Sort__c];
@@ -1837,36 +1806,12 @@ public class PricingCalcController {
                     wrapPrice.field = 'EntityType';
                 }
                 
-                if (dropItem.Form_Field__c == 'Foreign Owners' && !forOwn.contains(dropItem.Dropdown_Value__c)) {
-                    forOwn.add(dropItem.Dropdown_Value__c);
-                    foreignOwners.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'ForeignOwners';
-                } else if(dropItem.Form_Field__c == 'Foreign Owners') {
-                    wrapPrice.field = 'ForeignOwners';
-                }
-                
                 if (dropItem.Form_Field__c == 'Industry Type' && !indType.contains(dropItem.Dropdown_Value__c)) {
                     indType.add(dropItem.Dropdown_Value__c);
                     industryType.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
                     wrapPrice.field = 'IndustryType';
                 } else if(dropItem.Form_Field__c == 'Industry Type') {
                     wrapPrice.field = 'IndustryType';
-                }
-                
-                if (dropItem.Form_Field__c == 'Living Abroad' && !livAbroad.contains(dropItem.Dropdown_Value__c)) {
-                    livAbroad.add(dropItem.Dropdown_Value__c);
-                    livingAbroad.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'LivingAbroad';
-                } else if(dropItem.Form_Field__c == 'Living Abroad') {
-                    wrapPrice.field = 'LivingAbroad';
-                }
-                
-                if (dropItem.Form_Field__c == 'Number of Contractors' && !numCont.contains(dropItem.Dropdown_Value__c)) {
-                    numCont.add(dropItem.Dropdown_Value__c);
-                    numberOfContractors.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'NumberOfContractors';
-                } else if(dropItem.Form_Field__c == 'Number of Contractors') {
-                    wrapPrice.field = 'NumberOfContractors';
                 }
                 
                 if (dropItem.Form_Field__c == 'Number of Employees' && !numEmp.contains(dropItem.Dropdown_Value__c)) {
@@ -1876,15 +1821,7 @@ public class PricingCalcController {
                 } else if(dropItem.Form_Field__c == 'Number of Employees') {
                     wrapPrice.field = 'NumberOfEmployees';
                 }
-                
-                if (dropItem.Form_Field__c == 'Number of K1s' && !numberOfK1sMatch.contains(dropItem.Dropdown_Value__c)) {
-                    numberOfK1sMatch.add(dropItem.Dropdown_Value__c);
-                    numberOfK1s.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'NumberOfK1s';
-                } else if(dropItem.Form_Field__c == 'Number of K1s') {
-                    wrapPrice.field = 'NumberOfK1s';
-                }
-                
+
                 if (dropItem.Form_Field__c == 'Number of Owners' && !numberOfOwnersMatch.contains(dropItem.Dropdown_Value__c)) {
                     numberOfOwnersMatch.add(dropItem.Dropdown_Value__c);
                     numberOfOwners.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
@@ -1949,7 +1886,6 @@ public class PricingCalcController {
                     wrapPrice.field = 'ProjectedFirstYearRevenue';
                 }
                 
-                
                 if (dropItem.Form_Field__c == 'State of Incorporation' && !stateList.contains(dropItem.Dropdown_Value__c)) {
                 
                     stateList.add(dropItem.Dropdown_Value__c);
@@ -1957,7 +1893,6 @@ public class PricingCalcController {
                     // using this one to also populate billingstate input items
                     shortState = changeStateToAbbrev(dropItem.Dropdown_Value__c);
                     billingStateItems.add(new SelectOption(shortState,dropItem.Dropdown_Value__c));
-                    stateOfResidenceItems.add(new SelectOption(shortState,dropItem.Dropdown_Value__c));
                 
                     stateOfIncorporation.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
                     wrapPrice.field = 'StateOfIncorporation';
@@ -1965,19 +1900,7 @@ public class PricingCalcController {
                     wrapPrice.field = 'StateOfIncorporation';
                 }
                 
-                if (dropItem.Form_Field__c == 'Total Investor Funding' && !totalInvestorFundingMatch.contains(dropItem.Dropdown_Value__c)) {
-                
-                    totalInvestorFundingMatch.add(dropItem.Dropdown_Value__c);
-                
-                    formatInput = Decimal.valueof(dropItem.Dropdown_Value__c);
-                    formatOutput = '$' + String.valueOf(formatInput.format());
-                
-                    totalInvestorFunding.add(new SelectOption(dropItem.Dropdown_Value__c,formatOutput));
-                    wrapPrice.field = 'TotalInvestorFunding';
-                } else if(dropItem.Form_Field__c == 'Total Investor Funding') {
-                    wrapPrice.field = 'TotalInvestorFunding';
-                }
-                
+    
                 if (dropItem.Form_Field__c == 'Total Startup Cost' && !totalStartupCostMatch.contains(dropItem.Dropdown_Value__c)) {
                 
                     totalStartupCostMatch.add(dropItem.Dropdown_Value__c);
@@ -1991,23 +1914,7 @@ public class PricingCalcController {
                 } else if(dropItem.Form_Field__c == 'Total Startup Cost') {
                     wrapPrice.field = 'TotalStartupCost';
                 }
-                
-                if (dropItem.Form_Field__c == 'Website Selling Goods' && !websiteSellingGoodsMatch.contains(dropItem.Dropdown_Value__c)) {
-                    websiteSellingGoodsMatch.add(dropItem.Dropdown_Value__c);
-                    websiteSellingGoods.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'WebsiteSellingGoods';
-                } else if(dropItem.Form_Field__c == 'Website Selling Goods') {
-                    wrapPrice.field = 'WebsiteSellingGoods';
-                }
-                
-                if (dropItem.Form_Field__c == 'Worked With Accountant in Past' && !workedWithAccountantInPastMatch.contains(dropItem.Dropdown_Value__c)) {
-                    workedWithAccountantInPastMatch.add(dropItem.Dropdown_Value__c);
-                    workedWithAccountantInPast.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'WorkedWithAccountantInPast';
-                } else if(dropItem.Form_Field__c == 'Worked With Accountant in Past') {
-                    wrapPrice.field = 'WorkedWithAccountantInPast';
-                }
-                
+  
                 if (dropItem.Form_Field__c == 'Run Payroll Before' && !runPayrollBeforeMatch.contains(dropItem.Dropdown_Value__c)) {
                     runPayrollBeforeMatch.add(dropItem.Dropdown_Value__c);
                     runPayrollBefore.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
@@ -2048,22 +1955,67 @@ public class PricingCalcController {
                     wrapPrice.field = 'OfficeSqFt';
                 }
                 
-                if (dropItem.Form_Field__c == 'Years In Business' && !yearsInBusinessMatch.contains(dropItem.Dropdown_Value__c)) {
-                    yearsInBusinessMatch.add(dropItem.Dropdown_Value__c);
-                    yearsInBusiness.add(new SelectOption(dropItem.Dropdown_Value__c,dropItem.Dropdown_Value__c));
-                    wrapPrice.field = 'YearsInBusiness';
-                } else if(dropItem.Form_Field__c == 'Years In Business') {
-                    wrapPrice.field = 'YearsInBusiness';
-                }
-                
                 adjustList.add(wrapPrice);
                 
             }
             
+            // add billing state items
+            //shortState = changeStateToAbbrev(dropItem.Dropdown_Value__c);
+            billingStateItems.add(new SelectOption('',''));
+            //billingStateItems.add(new SelectOption('AK','Alaska'));
+            //billingStateItems.add(new SelectOption('AL','Alabama'));
+            //billingStateItems.add(new SelectOption('AR','Arkansas'));
+            //billingStateItems.add(new SelectOption('AZ','Arizona'));
+            //billingStateItems.add(new SelectOption('CA','California'));
+            //billingStateItems.add(new SelectOption('CO','Colorado'));
+            //billingStateItems.add(new SelectOption('CT','Connecticut'));
+            //billingStateItems.add(new SelectOption('DC','District of Columbia'));
+            //billingStateItems.add(new SelectOption('DE','Delaware'));
+            //billingStateItems.add(new SelectOption('FL','Florida'));
+            //billingStateItems.add(new SelectOption('GA','Georgia'));
+            //billingStateItems.add(new SelectOption('HI','Hawaii'));
+            //billingStateItems.add(new SelectOption('IA','Iowa'));
+            //billingStateItems.add(new SelectOption('ID','Idaho'));
+            //billingStateItems.add(new SelectOption('IL','Illinois'));
+            //billingStateItems.add(new SelectOption('IN','Indiana'));
+            //billingStateItems.add(new SelectOption('KS','Kansas'));
+            //billingStateItems.add(new SelectOption('KY','Kentucky'));
+            //billingStateItems.add(new SelectOption('LA','Louisiana'));
+            //billingStateItems.add(new SelectOption('MA','Massachusetts'));
+            //billingStateItems.add(new SelectOption('MD','Maryland'));
+            //billingStateItems.add(new SelectOption('ME','Maine'));
+            //billingStateItems.add(new SelectOption('MI','Michigan'));
+            //billingStateItems.add(new SelectOption('MN','Minnesota'));
+            //billingStateItems.add(new SelectOption('MO','Missouri'));
+            //billingStateItems.add(new SelectOption('MS','Mississippi'));
+            //billingStateItems.add(new SelectOption('MT','Montana'));
+            //billingStateItems.add(new SelectOption('NC','North Carolina'));
+            //billingStateItems.add(new SelectOption('ND','North Dakota'));
+            //billingStateItems.add(new SelectOption('NE','Nebraska'));
+            //billingStateItems.add(new SelectOption('NH','New Hampshire'));
+            //billingStateItems.add(new SelectOption('NJ','New Jersey'));
+            //billingStateItems.add(new SelectOption('NM','New Mexico'));
+            //billingStateItems.add(new SelectOption('NV','Nevada'));
+            //billingStateItems.add(new SelectOption('NY','New York'));
+            //billingStateItems.add(new SelectOption('OH','Ohio'));
+            //billingStateItems.add(new SelectOption('OK','Oklahoma'));
+            //billingStateItems.add(new SelectOption('OR','Oregon'));
+            //billingStateItems.add(new SelectOption('PA','Pennsylvania'));
+            //billingStateItems.add(new SelectOption('RI','Rhode Island'));
+            //billingStateItems.add(new SelectOption('SC','South Carolina'));
+            //billingStateItems.add(new SelectOption('SD','South Dakota'));
+            //billingStateItems.add(new SelectOption('TN','Tennessee'));
+            //billingStateItems.add(new SelectOption('TX','Texas'));
+            //billingStateItems.add(new SelectOption('UT','Utah'));
+            //billingStateItems.add(new SelectOption('VA','Virginia'));
+            //billingStateItems.add(new SelectOption('VT','Vermont'));
+            //billingStateItems.add(new SelectOption('WA','Washington'));
+            //billingStateItems.add(new SelectOption('WI','Wisconsin'));
+            //billingStateItems.add(new SelectOption('WV','West Virginia'));
+            //billingStateItems.add(new SelectOption('WY','Wyoming'));
             // add dc and default
             //billingStateItems.add(new SelectOption('DC','District of Columbia'));
-            billingStateItems.add(new SelectOption('',''));
-            stateOfResidenceItems.add(new SelectOption('',''));
+            
             
             // populate country list
             billingCountryItems.add(new SelectOption('',''));
@@ -2300,38 +2252,30 @@ public class PricingCalcController {
             
             // prepare data for view - sort
             //entityType.sort();
-            //foreignOwners.sort();
             //industryType.sort();
-            //livingAbroad.sort();
-            //numberOfContractors.sort();
             //numberOfEmployees.sort();
-            //numberOfK1s.sort();
             //numberOfOwners.sort();
             //numberOfRentalProperties.sort();
             //personalIncome.sort();
             //projectedFirstYearProfit.sort();
             //projectedFirstYearRevenue.sort();
+            billingStateItems.sort();
+            billingCountryItems.sort();
+            //totalStartupCost.sort();
             stateOfIncorporation.sort();
             foreignState.sort();
-            billingStateItems.sort();
-            stateOfResidenceItems.sort();
-            billingCountryItems.sort();
-            //totalInvestorFunding.sort();
-            //totalStartupCost.sort();
-            //websiteSellingGoods.sort();
-            //workedWithAccountantInPast.sort();
             
             // set defaults
-            websiteSellingGoodsInput = 'No';
-            workedWithAccountantInPastInput = 'No';
             numberOfOwnersInput = '1';
             numberOfEmployeesInput = '1';
-            livingAbroadInput = 'No';
             billingTime = 'yrl';
             runPayrollBeforeInput = 'No';
+            businessMilesInput = '10000';
+            officeSqFtInput = '300';
+            bookKeepingStartDateInput = '';
             
             // get defaults from account
-            List <Account> accList = [SELECT Industry, Expected_1st_year_revenue__c, Website_Selling_Goods__c, Foreign_Income__c, Entity_Tax_Classification__c, State_of_Formation__c, Total_Startup_Costs__c, How_much_funding__c, Worked_With_CPA_Accountant__c, NumberOfEmployees, Number_of_owners__c, Trans_Per_Month__c, Personal_Income__c, Number_of_Contractors__c, Rental_Properties__c, Name, BillingState, BillingStreet, BillingCity, BillingPostalCode, BillingCountry, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c, Foreign_State__c, Years_in_Business__c, State_of_Residence__c FROM Account WHERE Id = :accountID];
+            List <Account> accList = [SELECT Industry, Expected_1st_year_revenue__c, Entity_Tax_Classification__c, Total_Startup_Costs__c, NumberOfEmployees, Number_of_owners__c, Trans_Per_Month__c, Personal_Income__c, Rental_Properties__c, Name, BillingState, BillingStreet, BillingCity, BillingPostalCode, BillingCountry, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c, State_of_Residence__c, State_of_Formation__c, Foreign_State__c FROM Account WHERE Id = :accountID];
             for (Account accItem : accList){
                 
                 // industry
@@ -2398,6 +2342,7 @@ public class PricingCalcController {
                     }
                 }
                 
+                
                 // total startup costs
                 if (accItem.Total_Startup_Costs__c != '' && accItem.Total_Startup_Costs__c != null) {
                 
@@ -2425,27 +2370,7 @@ public class PricingCalcController {
                         numberOfTransactionsInput = accItem.Trans_Per_Month__c;
                     }
                 }
-                
-                // how much funding
-                if (accItem.How_much_funding__c != '' && accItem.How_much_funding__c != null) {
-                
-                    // use try catch in case non decimal value
-                    try{
-
-                        formatInput = Decimal.valueof(accItem.How_much_funding__c);
-                        formatOutput = '$' + String.valueOf(formatInput.format());
-                    
-                        SelectOption hmfTest = new SelectOption(accItem.How_much_funding__c,formatOutput);
-                        if (totalInvestorFunding.contains(hmfTest)) {
-                            totalInvestorFundingInput = accItem.How_much_funding__c;
-                        }
-
-                    } catch(TypeException ex){
-
-                    }             
-                    
-                }
-                
+ 
                 // number of owners
                 if (accItem.Number_of_owners__c != '' && accItem.Number_of_owners__c != null) {
                     SelectOption nooTest = new SelectOption(accItem.Number_of_owners__c,accItem.Number_of_owners__c);
@@ -2479,14 +2404,6 @@ public class PricingCalcController {
                     SelectOption noeTest = new SelectOption(String.valueOf(accItem.NumberOfEmployees),String.valueOf(accItem.NumberOfEmployees));
                     if (numberOfEmployees.contains(noeTest)) {
                         numberOfEmployeesInput = String.valueOf(accItem.NumberOfEmployees);
-                    }
-                }
-                
-                // Number_of_Contractors__c
-                if (accItem.Number_of_Contractors__c != null) {
-                    SelectOption nocTest = new SelectOption(String.valueOf(accItem.Number_of_Contractors__c),String.valueOf(accItem.Number_of_Contractors__c));
-                    if (numberOfContractors.contains(nocTest)) {
-                        numberOfContractorsInput = String.valueOf(accItem.Number_of_Contractors__c);
                     }
                 }
                 
@@ -2530,32 +2447,8 @@ public class PricingCalcController {
                     }
                 }
                 
-                // Years_in_Business__c
-                if (accItem.Years_in_Business__c != null) {
-                    SelectOption yibTest = new SelectOption(String.valueOf(accItem.Years_in_Business__c),String.valueOf(accItem.Years_in_Business__c));
-                    if (yearsInBusiness.contains(yibTest)) {
-                        yearsInBusinessInput = String.valueOf(accItem.Years_in_Business__c);
-                    }
-                }
-                
-                // Worked_With_CPA_Accountant__c
-                if (accItem.Worked_With_CPA_Accountant__c == true) {
-                    workedWithAccountantInPastInput = 'Yes';
-                }
-                
-                // Website_Selling_Goods__c
-                if (accItem.Website_Selling_Goods__c == true) {
-                    websiteSellingGoodsInput = 'Yes';
-                }
-                
-                // Foreign_Income__c
-                if (accItem.Foreign_Income__c == true) {
-                    livingAbroadInput = 'Yes';
-                }
-                
                 accountNameInput = accItem.Name;
                 billingStateInput = accItem.BillingState;
-                stateOfResidenceInput = accItem.BillingState;
                 
                 billingCountryInput = accItem.BillingCountry;
                 
@@ -2584,19 +2477,15 @@ public class PricingCalcController {
             if (quoteID != '') {
             
                 // if we are editing a quote, pull default values from custom fields
-                List<Quote> quoteList = [SELECT Id, Calc_Entity_Type__c, Calc_Foreign_Owners__c, Calc_Industry_Type__c, Calc_Living_Abroad__c, Calc_Number_of_Contractors__c, Calc_Number_of_Employees__c, Calc_Number_of_K1s__c, Calc_Number_of_Owners__c, Calc_Number_of_Rental_Properties__c, Calc_Number_of_Transactions__c, Calc_Personal_Income__c, Calc_Projected_1st_Year_Profit__c, Calc_Projected_1st_Year_Revenue__c, Calc_State_of_Incorporation__c, Calc_Total_Investor_Funding__c, Calc_Total_Startup_Cost__c, Calc_Website_Selling_Goods__c, Calc_Worked_with_Accountant__c, Calc_Run_Payroll_Before__c, OpportunityId, AccountId, billingSchedule__c, Bundle__c, Calc_Filing_Status__c, Calc_Business_Miles__c, Calc_Office_Square_Footage__c, Calc_Foreign_State__c, Calc_Years_in_Business__c, Calc_State_of_Residence__c FROM Quote WHERE Id = :quoteID];
+                List<Quote> quoteList = [SELECT Id, Calc_Entity_Type__c, Calc_Industry_Type__c, Calc_Number_of_Employees__c, Calc_Number_of_Owners__c, Calc_Number_of_Rental_Properties__c, Calc_Number_of_Transactions__c, Calc_Personal_Income__c, Calc_Projected_1st_Year_Profit__c, Calc_Projected_1st_Year_Revenue__c, Calc_Total_Startup_Cost__c, Calc_Run_Payroll_Before__c, OpportunityId, AccountId, billingSchedule__c, Bundle__c, Calc_Filing_Status__c, Calc_Business_Miles__c, Calc_Office_Square_Footage__c, Calc_State_of_Incorporation__c, Calc_Foreign_State__c, Calc_Bookkeeping_Start_Date__c FROM Quote WHERE Id = :quoteID];
                 
                 for(Quote quoteItem : quoteList){
                 
                     opportunityID = quoteItem.OpportunityId;
                     accountID = quoteItem.AccountId;
                     entityTypeInput = quoteItem.Calc_Entity_Type__c;
-                    foreignOwnersInput = quoteItem.Calc_Foreign_Owners__c;
                     industryTypeInput = quoteItem.Calc_Industry_Type__c;
-                    livingAbroadInput = quoteItem.Calc_Living_Abroad__c;
-                    numberOfContractorsInput = quoteItem.Calc_Number_of_Contractors__c;
                     numberOfEmployeesInput = quoteItem.Calc_Number_of_Employees__c;
-                    numberOfK1sInput = quoteItem.Calc_Number_of_K1s__c;
                     numberOfOwnersInput = quoteItem.Calc_Number_of_Owners__c;
                     numberOfTransactionsInput = quoteItem.Calc_Number_of_Transactions__c;
                     numberOfRentalPropertiesInput = quoteItem.Calc_Number_of_Rental_Properties__c;
@@ -2604,17 +2493,13 @@ public class PricingCalcController {
                     projectedFirstYearProfitInput = quoteItem.Calc_Projected_1st_Year_Profit__c;
                     projectedFirstYearRevenueInput = quoteItem.Calc_Projected_1st_Year_Revenue__c;
                     stateOfIncorporationInput = quoteItem.Calc_State_of_Incorporation__c;
-                    totalInvestorFundingInput = quoteItem.Calc_Total_Investor_Funding__c;
                     totalStartupCostInput = quoteItem.Calc_Total_Startup_Cost__c;
-                    websiteSellingGoodsInput = quoteItem.Calc_Website_Selling_Goods__c;
-                    workedWithAccountantInPastInput = quoteItem.Calc_Worked_with_Accountant__c;
                     runPayrollBeforeInput = quoteItem.Calc_Run_Payroll_Before__c;
                     filingStatusInput = quoteItem.Calc_Filing_Status__c;
                     businessMilesInput = quoteItem.Calc_Business_Miles__c;
                     officeSqFtInput = quoteItem.Calc_Office_Square_Footage__c;
                     foreignStateInput = quoteItem.Calc_Foreign_State__c;
-                    yearsInBusinessInput = quoteItem.Calc_Years_in_Business__c;
-                    stateOfResidenceInput = quoteItem.Calc_State_of_Residence__c;
+                    bookKeepingStartDateInput = quoteItem.Calc_Bookkeeping_Start_Date__c;
                     
                     // get billing schedule
                     
@@ -3553,13 +3438,6 @@ public class PricingCalcController {
                                 acItem.quantity = 1;
                             }
                         }
-                        
-                        if (websiteSellingGoodsInput == 'Yes') {
-                            if ('01tf1000003JjrrAAC' == acItem.id) {
-                                acItem.doIt = true;
-                                acItem.quantity = 1;
-                            }
-                        }
                     
                     }
                 }
@@ -4078,7 +3956,7 @@ public class PricingCalcController {
         
         } else {
         
-            businessAdjustment = getDynamicAmount('Business Return', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            businessAdjustment = getDynamicAmount('Business Return', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4086,7 +3964,7 @@ public class PricingCalcController {
         
         } else {
         
-            personalAdjustment = getDynamicAmount('Personal Return', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            personalAdjustment = getDynamicAmount('Personal Return', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4094,7 +3972,7 @@ public class PricingCalcController {
         
         } else {
         
-            payrollAdjustment = getDynamicAmount('Payroll', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            payrollAdjustment = getDynamicAmount('Payroll', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4102,7 +3980,7 @@ public class PricingCalcController {
         
         } else {
         
-            bookkeepingAdjustment = getDynamicAmount('Bookkeeping', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            bookkeepingAdjustment = getDynamicAmount('Bookkeeping', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4110,7 +3988,7 @@ public class PricingCalcController {
         
         } else {
         
-            stateFilingAdjustment = getDynamicAmount('LLC State Filing', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            stateFilingAdjustment = getDynamicAmount('LLC State Filing', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4118,7 +3996,7 @@ public class PricingCalcController {
         
         } else {
         
-            stateFilingCorpAdjustment = getDynamicAmount('Corp State Filing', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            stateFilingCorpAdjustment = getDynamicAmount('Corp State Filing', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4126,7 +4004,7 @@ public class PricingCalcController {
         
         } else {
         
-            backBookkeepingAdjustment = getDynamicAmount('Back Bookkeeping', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            backBookkeepingAdjustment = getDynamicAmount('Back Bookkeeping', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4134,7 +4012,7 @@ public class PricingCalcController {
         
         } else {
         
-            foreignStateAdjustment = getDynamicAmount('Foreign State', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            foreignStateAdjustment = getDynamicAmount('Foreign State', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4142,7 +4020,7 @@ public class PricingCalcController {
         
         } else {
         
-            backPayrollAdjustment = getDynamicAmount('Back Quarterly Payroll', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            backPayrollAdjustment = getDynamicAmount('Back Quarterly Payroll', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4150,7 +4028,7 @@ public class PricingCalcController {
         
         } else {
         
-            backBusinessAdjustment = getDynamicAmount('Back Business Return', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            backBusinessAdjustment = getDynamicAmount('Back Business Return', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4158,7 +4036,7 @@ public class PricingCalcController {
         
         } else {
         
-            backPersonalAdjustment = getDynamicAmount('Back Personal Return', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            backPersonalAdjustment = getDynamicAmount('Back Personal Return', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
         
@@ -4166,7 +4044,7 @@ public class PricingCalcController {
         
         } else {
         
-            nonProfitBookkeepingAdjustment = getDynamicAmount('Non-Profit Bookkeeping', entityTypeInput, foreignOwnersInput, industryTypeInput, livingAbroadInput, numberOfContractorsInput, numberOfEmployeesInput, numberOfK1sInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalInvestorFundingInput, totalStartupCostInput, websiteSellingGoodsInput, workedWithAccountantInPastInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput, yearsInBusinessInput);
+            nonProfitBookkeepingAdjustment = getDynamicAmount('Non-Profit Bookkeeping', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
 
@@ -4561,6 +4439,10 @@ public class PricingCalcController {
                 backBookkeepingDesc = backBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
                 backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
                 
+                // append description with number of employees
+                backBookkeepingDesc = backBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                
                 if (pItem.Billing_Frequency__c == 'One-Time') {
                 
                     backBookkeepingOT = true;
@@ -4805,12 +4687,8 @@ public class PricingCalcController {
                 Id = quoteID,
                 Pricebook2Id = standardPriceBookID,
                 Calc_Entity_Type__c = entityTypeInput,
-                Calc_Foreign_Owners__c = foreignOwnersInput,
                 Calc_Industry_Type__c = industryTypeInput,
-                Calc_Living_Abroad__c = livingAbroadInput,
-                Calc_Number_of_Contractors__c = numberOfContractorsInput,
                 Calc_Number_of_Employees__c = numberOfEmployeesInput,
-                Calc_Number_of_K1s__c = numberOfK1sInput,
                 Calc_Number_of_Owners__c = numberOfOwnersInput,
                 Calc_Number_of_Transactions__c = numberOfTransactionsInput,
                 Calc_Number_of_Rental_Properties__c = numberOfRentalPropertiesInput,
@@ -4818,20 +4696,16 @@ public class PricingCalcController {
                 Calc_Projected_1st_Year_Profit__c = projectedFirstYearProfitInput,
                 Calc_Projected_1st_Year_Revenue__c = projectedFirstYearRevenueInput,
                 Calc_State_of_Incorporation__c = stateOfIncorporationInput,
-                Calc_Total_Investor_Funding__c = totalInvestorFundingInput,
                 Calc_Total_Startup_Cost__c = totalStartupCostInput,
-                Calc_Website_Selling_Goods__c = websiteSellingGoodsInput,
-                Calc_Worked_with_Accountant__c = workedWithAccountantInPastInput,
                 Calc_Run_Payroll_Before__c = runPayrollBeforeInput,
                 Calc_Filing_Status__c = filingStatusInput,
                 Calc_Business_Miles__c = businessMilesInput,
                 Calc_Office_Square_Footage__c = officeSqFtInput,
-                Calc_Years_in_Business__c = yearsInBusinessInput,
                 Calc_Foreign_State__c = foreignStateInput,
-                Calc_State_of_Residence__c = stateOfResidenceInput,
                 billingSchedule__c = billingTime,
                 Bundle__c = bundle,
-                Calc_Savings_Amount__c = potentialSavings
+                Calc_Savings_Amount__c = potentialSavings,
+                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput
             );
             
             // delete quote line items
@@ -4874,12 +4748,8 @@ public class PricingCalcController {
                 OpportunityId = opportunityID,
                 Pricebook2Id = standardPriceBookID,
                 Calc_Entity_Type__c = entityTypeInput,
-                Calc_Foreign_Owners__c = foreignOwnersInput,
                 Calc_Industry_Type__c = industryTypeInput,
-                Calc_Living_Abroad__c = livingAbroadInput,
-                Calc_Number_of_Contractors__c = numberOfContractorsInput,
                 Calc_Number_of_Employees__c = numberOfEmployeesInput,
-                Calc_Number_of_K1s__c = numberOfK1sInput,
                 Calc_Number_of_Owners__c = numberOfOwnersInput,
                 Calc_Number_of_Transactions__c = numberOfTransactionsInput,
                 Calc_Number_of_Rental_Properties__c = numberOfRentalPropertiesInput,
@@ -4887,20 +4757,16 @@ public class PricingCalcController {
                 Calc_Projected_1st_Year_Profit__c = projectedFirstYearProfitInput,
                 Calc_Projected_1st_Year_Revenue__c = projectedFirstYearRevenueInput,
                 Calc_State_of_Incorporation__c = stateOfIncorporationInput,
-                Calc_Total_Investor_Funding__c = totalInvestorFundingInput,
                 Calc_Total_Startup_Cost__c = totalStartupCostInput,
-                Calc_Website_Selling_Goods__c = websiteSellingGoodsInput,
-                Calc_Worked_with_Accountant__c = workedWithAccountantInPastInput,
                 Calc_Run_Payroll_Before__c = runPayrollBeforeInput,
                 Calc_Filing_Status__c = filingStatusInput,
                 Calc_Business_Miles__c = businessMilesInput,
                 Calc_Office_Square_Footage__c = officeSqFtInput,
                 Calc_Foreign_State__c = foreignStateInput,
-                Calc_Years_in_Business__c = yearsInBusinessInput,
-                Calc_State_of_Residence__c = stateOfResidenceInput,
                 billingSchedule__c = billingTime,
                 Bundle__c = bundle,
-                Calc_Savings_Amount__c = potentialSavings
+                Calc_Savings_Amount__c = potentialSavings,
+                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput
             );
         
             insert theQuote;
@@ -4922,11 +4788,11 @@ public class PricingCalcController {
             
             // save account fields
             List<Account> accList = [
-                SELECT Industry, Expected_1st_year_revenue__c, Website_Selling_Goods__c, Foreign_Income__c, Entity_Tax_Classification__c, State_of_Formation__c, 
-                Total_Startup_Costs__c, How_much_funding__c, Worked_With_CPA_Accountant__c, NumberOfEmployees, Number_of_owners__c, Primary_Contact_ID__c, 
-                Trans_Per_Month__c, Personal_Income__c, Number_of_Contractors__c, Rental_Properties__c, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, 
+                SELECT Industry, Expected_1st_year_revenue__c, Entity_Tax_Classification__c, State_of_Formation__c, 
+                Total_Startup_Costs__c, NumberOfEmployees, Number_of_owners__c, Primary_Contact_ID__c, 
+                Trans_Per_Month__c, Personal_Income__c, Rental_Properties__c, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, 
                 Potential_Business_Mile_Savings__c, Potential_Home_Office_Savings__c, Potential_QBI_Savings__c, Potential_SCorp_Savings__c, Potential_Startup_Savings__c, 
-                Potential_Total_Savings__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c, Foreign_State__c, Years_in_Business__c, State_of_Residence__c 
+                Potential_Total_Savings__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c 
                 FROM Account 
                 WHERE Id = :accountID
             ];
@@ -4944,8 +4810,7 @@ public class PricingCalcController {
                 accItem.Estimated_Business_Mileage__c = businessMilesInput;
                 accItem.Home_Office_Square_Feet__c = officeSqFtInput;
                 accItem.Foreign_State__c = foreignStateInput;
-                accItem.Years_in_Business__c = yearsInBusinessInput;
-                accItem.State_of_Residence__c = stateOfResidenceInput;
+
                 doAccountUpdateList = true;
                  
                 if (accountNameInput != '') {
@@ -5039,7 +4904,7 @@ public class PricingCalcController {
                     doAccountUpdateList = true;
                     
                 }
-                
+                      
                 // Total_Startup_Costs__c
                 if (accItem.Total_Startup_Costs__c != '' && accItem.Total_Startup_Costs__c != null) {
                     
@@ -5062,19 +4927,6 @@ public class PricingCalcController {
                 
                     // update Trans_Per_Month__c
                     accItem.Trans_Per_Month__c = numberOfTransactionsInput;
-                    doAccountUpdateList = true;
-                    
-                }
-                
-                // How_much_funding__c
-                if (accItem.How_much_funding__c != '' && accItem.How_much_funding__c != null) {
-                    
-                    // should not overwrite existing value
-                    
-                } else {
-                
-                    // update How_much_funding__c
-                    accItem.How_much_funding__c = totalInvestorFundingInput;
                     doAccountUpdateList = true;
                     
                 }
@@ -5136,23 +4988,6 @@ public class PricingCalcController {
 
                 }
                 
-                // Number_of_Contractors__c
-                if (accItem.Number_of_Contractors__c != null) {
-                    
-                    // should not overwrite existing value
-                    
-                } else {
-                
-                    if (numberOfContractorsInput.contains('+') == false) {
-                    
-                        // update Number_of_Contractors__c
-                        accItem.Number_of_Contractors__c = Integer.valueOf(numberOfContractorsInput);
-                        doAccountUpdateList = true;
-
-                    }
-
-                }
-                
                 // Rental_Properties__c
                 if (accItem.Rental_Properties__c != null) {
                     
@@ -5182,27 +5017,7 @@ public class PricingCalcController {
                     doAccountUpdateList = true;
 
                 }
-                
-                if (workedWithAccountantInPastInput == 'Yes') {
-                
-                    accItem.Worked_With_CPA_Accountant__c = true;
-                    doAccountUpdateList = true;
-
-                }
-                
-                if (websiteSellingGoodsInput == 'Yes') {
-                
-                    accItem.Website_Selling_Goods__c = true;
-                    doAccountUpdateList = true;
-
-                }
-                
-                if (livingAbroadInput == 'Yes') {
-                
-                    accItem.Foreign_Income__c = true;
-                    doAccountUpdateList = true;
-
-                }
+              
                 
                 if (doAccountUpdateList) {
                     listToUpdate.add(accItem);
@@ -5355,12 +5170,12 @@ public class PricingCalcController {
             
         }
         
-        String schedulerURL = sURL+'?TID='+apptType+'&WID='+contactID+'&EmailCampaignID='+emailCampaignIDInput;
+        String schedulerURL = sURL+'?TID='+apptType+'&WID='+contactID;
         String schedulerVIPURL = '';
         
         if (apptType == 'Discovery') {
         
-            schedulerVIPURL = sURL+'?TID=DiscoveryVIP&WID='+contactID+'&EmailCampaignID='+emailCampaignIDInput;
+            schedulerVIPURL = sURL+'?TID=DiscoveryVIP&WID='+contactID;
             
         }
         
@@ -5376,40 +5191,11 @@ public class PricingCalcController {
         // update brand on opportunity
         update new Opportunity(
             Id = opportunityID,
-            Brand__c = brand,
-            Email_Campaign_ID__c = emailCampaignIDInput
+            Brand__c = brand
         );
         
         Boolean updatedEventWithEC = false;
-        
-        if (emailCampaignIDInput != '') {
-            
-            // check for existing event related to opportunity and assign email campaign id if it exists
-            // save account fields
-            List<Event> eventList = [
-                SELECT Id, WhoId, WhatId, Type_of_Appointment__c, ActivityDate   
-                FROM Event 
-                WHERE WhoId = :contactID AND (Type_of_Appointment__c = 'Tax Savings Analysis' OR Type_of_Appointment__c = 'BNA') AND ActivityDate = LAST_N_DAYS:365
-                ORDER BY ActivityDate DESC
-            ];
-            
-            for (Event eventItem : eventList){
-                
-                if (updatedEventWithEC == false) {
-                    
-                    // do the update
-                    update new Event(
-                        Id = eventItem.Id,
-                        Email_Campaign_ID__c = emailCampaignIDInput
-                    );
-                    
-                    updatedEventWithEC = true;
-                    
-                }
-                
-            }
-            
-        }
+
         
         // shorten account name if necessary
         String shortNameInput = accountNameInput;
@@ -7732,7 +7518,7 @@ public class PricingCalcController {
                         tmpACPrice = acItem.price;
                     }
                     
-                } else if (acItem.id == '01tf1000003JjrwAAC') {
+                } else if (acItem.id == '01tf1000003JjrwAAC') { 
                     
                     if (doBusinessReturn && doPersonalReturn && doAdvisory) {
                         tmpACPrice = 29.99;
@@ -8267,7 +8053,7 @@ public class PricingCalcController {
     }
     
     @RemoteAction
-    public static String getDiscountData(String formEntityType, String formForeignOwners, String formIndustryType, String formLivingAbroad, String formNumberOfContractors, String formNumberOfEmployees, String formNumberOfK1s, String formNumberOfOwners, String formNumberOfTransactions, String formNumberOfRentalProperties, String formPersonalIncome, String formProjectedFirstYearProfit, String formProjectedFirstYearRevenue, String formStateOfIncorporation, String formTotalInvestorFunding, String formTotalStartupCost, String formWebsiteSellingGoods, String formWorkedWithAccountantInPast, String formRunPayrollBefore, String formFilingStatus, String formOfficeSqFT, String formBusMiles){
+    public static String getDiscountData(String formEntityType, String formIndustryType, String formNumberOfEmployees, String formNumberOfOwners, String formNumberOfTransactions, String formNumberOfRentalProperties, String formPersonalIncome, String formProjectedFirstYearProfit, String formProjectedFirstYearRevenue, String formStateOfIncorporation, String formTotalStartupCost, String formRunPayrollBefore, String formFilingStatus, String formOfficeSqFT, String formBusMiles){
         
         // initialize list to hold object that we will return from this method, properties are below
         // public String DiscountType {get;set;}
@@ -8279,7 +8065,7 @@ public class PricingCalcController {
         discountWrapper discountItem = new discountWrapper();
         
         discountItem.DiscountType = 'sCorpSavings';
-        discountItem.DisplayDiscount = displaySCorporationSavings(Integer.valueOf(formProjectedFirstYearProfit), formEntityType, formIndustryType, Integer.valueOf(formForeignOwners));
+        discountItem.DisplayDiscount = displaySCorporationSavings(Integer.valueOf(formProjectedFirstYearProfit), formEntityType, formIndustryType);
         discountItem.Amount = (discountItem.DisplayDiscount == false) ? 0 : calculateSCorporationSavings(Integer.valueOf(formProjectedFirstYearProfit));
         discountList.add(discountItem);
         
@@ -8340,7 +8126,7 @@ public class PricingCalcController {
         return display;
     }
 
-    public static Boolean displaySCorporationSavings(Integer formProjectedFirstYearProfit, String formEntityType, String formIndustryType, Integer formForeignOwners){
+    public static Boolean displaySCorporationSavings(Integer formProjectedFirstYearProfit, String formEntityType, String formIndustryType){
         Boolean display = true;
         if(0 == formProjectedFirstYearProfit){
             display = false;
@@ -8353,9 +8139,6 @@ public class PricingCalcController {
             display = false;
         }
 
-        if(formForeignOwners > 0){
-            display = false;
-        }
         return display;
     }
 
@@ -8902,7 +8685,7 @@ public class PricingCalcController {
         
     }
     
-    public Decimal getDynamicAmount(String productNamePass, String entityTypeInputPass, String foreignOwnersInputPass, String industryTypeInputPass, String livingAbroadInputPass, String numberOfContractorsInputPass, String numberOfEmployeesInputPass, String numberOfK1sInputPass, String numberOfOwnersInputPass, String numberOfRentalPropertiesInputPass, String personalIncomeInputPass, String projectedFirstYearProfitInputPass, String projectedFirstYearRevenueInputPass, String stateOfIncorporationInputPass, String totalInvestorFundingInputPass, String totalStartupCostInputPass, String websiteSellingGoodsInputPass, String workedWithAccountantInPastInputPass, String numberOfTransactionsInputPass, String filingStatusInputPass, String businessMilesInputPass, String officeSqFtInputPass, String foreignStateInputPass, String yearsInBusinessInputPass) 
+    public Decimal getDynamicAmount(String productNamePass, String entityTypeInputPass, String industryTypeInputPass, String numberOfEmployeesInputPass, String numberOfOwnersInputPass, String numberOfRentalPropertiesInputPass, String personalIncomeInputPass, String projectedFirstYearProfitInputPass, String projectedFirstYearRevenueInputPass, String stateOfIncorporationInputPass, String totalStartupCostInputPass, String numberOfTransactionsInputPass, String filingStatusInputPass, String businessMilesInputPass, String officeSqFtInputPass, String foreignStateInputPass) 
     {
         Decimal adjustAmount = 0.00;
         String tempValue = '';
@@ -8918,28 +8701,12 @@ public class PricingCalcController {
                 tempValue = entityTypeInputPass;
             }
             
-            if (dropItem.Form_Field__c == 'Foreign Owners') {
-                tempValue = foreignOwnersInputPass;
-            }
-            
             if (dropItem.Form_Field__c == 'Industry Type') {
                 tempValue = industryTypeInputPass;
             }
             
-            if (dropItem.Form_Field__c == 'Living Abroad') {
-                tempValue = livingAbroadInputPass;
-            }
-            
-            if (dropItem.Form_Field__c == 'Number of Contractors') {
-                tempValue = numberOfContractorsInputPass;
-            }
-            
             if (dropItem.Form_Field__c == 'Number of Employees') {
                 tempValue = numberOfEmployeesInputPass;
-            }
-            
-            if (dropItem.Form_Field__c == 'Number of K1s') {
-                tempValue = numberOfK1sInputPass;
             }
             
             if (dropItem.Form_Field__c == 'Number of Owners') {
@@ -8962,24 +8729,12 @@ public class PricingCalcController {
                 tempValue = projectedFirstYearRevenueInputPass;
             }
             
-            if (dropItem.Form_Field__c == 'State of Incorporation') {
+             if (dropItem.Form_Field__c == 'State of Incorporation') {
                 tempValue = stateOfIncorporationInputPass;
-            }
-            
-            if (dropItem.Form_Field__c == 'Total Investor Funding') {
-                tempValue = totalInvestorFundingInputPass;
             }
             
             if (dropItem.Form_Field__c == 'Total Startup Cost') {
                 tempValue = totalStartupCostInputPass;
-            }
-            
-            if (dropItem.Form_Field__c == 'Website Selling Goods') {
-                tempValue = websiteSellingGoodsInputPass;
-            }
-            
-            if (dropItem.Form_Field__c == 'Worked With Accountant in Past') {
-                tempValue = workedWithAccountantInPastInputPass;
             }
             
             if (dropItem.Form_Field__c == 'Number of Transactions') {
@@ -9001,11 +8756,7 @@ public class PricingCalcController {
             if (dropItem.Form_Field__c == 'Foreign State') {
                 tempValue = foreignStateInputPass;
             }
-            
-            if (dropItem.Form_Field__c == 'Years In Business') {
-                tempValue = yearsInBusinessInputPass;
-            }
-                
+
             if (tempValue == dropItem.Dropdown_Value__c) {
                 adjustAmount = adjustAmount + dropItem.Price_Adjustment__c;
             }

@@ -22,6 +22,17 @@ public class LaunchGuidedSellingInvocable {
     public String presentationToken;
     public String sessionId;
 
+    public static String environmentName{
+        get {
+            String name = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+            if(name == null){
+                return 'production';
+            } else {
+                return name;
+            }
+        }
+    }
+
     public class SessionKeyApiResponse {
         public String session_id;
         public String controller_token;
@@ -33,11 +44,10 @@ public class LaunchGuidedSellingInvocable {
     }
     public void getSessionTokens() {
         Web_Socket_API_Key__mdt getApiKeys;
-        try {
-            getApiKeys = [SELECT Label, API_Key__c, Endpoint__c FROM Web_Socket_API_Key__mdt WHERE Label = 'Web Socket API Key'];
-        } catch(Exception e) {
-            throw new WebSocketApiKeyException(noApiKeyError);
-        }
+        String mdtName;
+        if(environmentName == 'production'){ mdtName = 'Web_Socket_API_Key_Prod'; } else if (environmentName == 'staging'){ mdtName = 'Web_Socket_API_Key_Staging'; } else { mdtName = 'Web_Socket_API_Key_UAT'; }
+        try { getApiKeys = [SELECT Label, API_Key__c, Endpoint__c FROM Web_Socket_API_Key__mdt WHERE DeveloperName = :mdtName];
+        } catch(Exception e) { throw new WebSocketApiKeyException(noApiKeyError); }
 
         HttpRequest req = new HttpRequest();
         req.setMethod('POST');
@@ -45,13 +55,17 @@ public class LaunchGuidedSellingInvocable {
         req.setHeader('Api-Key', getApiKeys.API_Key__c);
         Http http = new Http();
         HttpResponse resp = http.send(req);
-        if(resp.getStatusCode() != 200) {
-            throw new WebSocketException(webSocketError + resp.getStatus() + ' ' + resp.getBody());
-        }
+        if(resp.getStatusCode() != 200) { throw new WebSocketException(webSocketError + resp.getStatus() + ' ' + resp.getBody()); }
         SessionKeyApiResponse keys = (SessionKeyApiResponse)JSON.deserialize(resp.getBody(), SessionKeyApiResponse.Class);
         this.controllerToken = keys.controller_token;
         this.presentationToken = keys.presentation_token;
         this.sessionId = keys.session_id;
+    }  
+
+    public static String schedulerURL{
+        get {
+            return GuidedSellingControllerExtension.getschedulerBaseUrl();
+        }
     }
 
     @InvocableMethod(label='Launch Guided Selling' description='Launch Guided Selling')
@@ -246,7 +260,7 @@ public class LaunchGuidedSellingInvocable {
                 //If this object does not have an appointment scheduled, add the scheduler url to the response
                 System.debug('leadId: ' + hasEvent);
                 if(!hasEvent) {
-                    emailMessageResponse.schedulerUrl = 'https://1800accountant.com/sfapi/schedule/index.php?TID=1on1&WID=' +lead.Id+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
+                    emailMessageResponse.schedulerUrl = schedulerURL+'?TID=1on1&WID=' +lead.Id+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
                 } else {
                     emailMessageResponse.schedulerUrl = 'None';
                 }
@@ -273,7 +287,9 @@ public class LaunchGuidedSellingInvocable {
                     
                     //Sending the email message and recording the response
                     try {
-                        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+                        if(!Test.isRunningTest()){
+                            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+                        }                        
                         emailMessageResponse.sessionId = sessionId;
                         emailMessageResponse.response = 'An email message with the client link to the Tax Savings Analysis Presentation has been successfully sent to ' + lead.Email;
                         if('' != requestList[0].emailAddresses) {
@@ -342,7 +358,7 @@ public class LaunchGuidedSellingInvocable {
                 //If this object does not have an appointment scheduled, add the scheduler url to the response
                 System.debug('accountId: ' + hasEvent);
                 if(!hasEvent) {
-                    emailMessageResponse.schedulerUrl = 'https://1800accountant.com/sfapi/schedule/index.php?TID=1on1&WID=' +account.Primary_Contact__r.Id+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
+                    emailMessageResponse.schedulerUrl = schedulerURL+'?TID=1on1&WID=' +account.Primary_Contact__r.Id+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
                 } else {
                     emailMessageResponse.schedulerUrl = 'None';
                 }
@@ -367,8 +383,9 @@ public class LaunchGuidedSellingInvocable {
 
                     //Sending the email message and recording the response
                     try {
-                        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
-                        emailMessageResponse.response = 'An email message with the client link to the Tax Savings Analysis Presentation has been successfully sent to '+account.Primary_Contact__r.Email;
+                        if(!Test.isRunningTest()){
+                            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+                        }                          emailMessageResponse.response = 'An email message with the client link to the Tax Savings Analysis Presentation has been successfully sent to '+account.Primary_Contact__r.Email;
                         if('' != requestList[0].emailAddresses) {
                             emailMessageResponse.response += ', '+requestList[0].emailAddresses;
                         }
@@ -433,7 +450,7 @@ public class LaunchGuidedSellingInvocable {
 
                 //If this object does not have an appointment scheduled, add the scheduler url to the response
                 if(!hasEvent) {
-                    emailMessageResponse.schedulerUrl = 'https://1800accountant.com/sfapi/schedule/index.php?TID=1on1&WID=' +opportunity.Account.Primary_Contact__c+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
+                    emailMessageResponse.schedulerUrl = schedulerURL+'?TID=1on1&WID=' +opportunity.Account.Primary_Contact__c+ '&Setter=' +userNameUrl+ '&SetterID='+userId;
                 } else {
                     emailMessageResponse.schedulerUrl = 'None';
                 }
@@ -458,8 +475,9 @@ public class LaunchGuidedSellingInvocable {
 
                     //Sending the email message and recording the response
                     try {
-                        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
-                        emailMessageResponse.response = 'An email message with the client link to the Tax Savings Analysis Presentation has been successfully sent to '+opportunity.Account.Primary_Contact_Email__c;
+                        if(!Test.isRunningTest()){
+                            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+                        }                          emailMessageResponse.response = 'An email message with the client link to the Tax Savings Analysis Presentation has been successfully sent to '+opportunity.Account.Primary_Contact_Email__c;
                         if('' != requestList[0].emailAddresses) {
                             emailMessageResponse.response += ', '+requestList[0].emailAddresses;
                         }

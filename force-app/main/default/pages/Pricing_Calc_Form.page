@@ -917,6 +917,10 @@
                             personalPrice = {!orOne.amount};
                         }
                         
+                        if ('Advisory' == '{!orOne.productPostion}') {
+                            advisoryPrice = {!orOne.amount};
+                        }
+                        
                         if ('Payroll' == '{!orOne.productPostion}') {
                             payrollPrice = {!orOne.amount};
                         }
@@ -986,7 +990,7 @@
                         
                         if (tmpVal == '{!adjustOne.value}') {
                             //alert("{!adjustOne.field}");
-                            if ('{!adjustOne.value}' == '13+' || '{!adjustOne.value}' == '10+' || '{!adjustOne.value}' == '21+' || '{!adjustOne.value}' == '41+') {
+                            if ('{!adjustOne.value}' == '13+' || '{!adjustOne.value}' == '10+' || '{!adjustOne.value}' == '21+' || '{!adjustOne.value}' == '41+' || '{!adjustOne.value}' == '51+') {
                                 
                                 if (didCustomMsg == false) {
                                     alert('This client requires a custom pricing quote.');
@@ -1086,11 +1090,139 @@
                                 
                     </apex:repeat>
                     
-                    //alert(count);
-                    
                     var tmpPriceMon = 0;
                     
-                    advisoryPrice = ((businessPrice + personalPrice) / (815 + 365)) * 1125;
+                    if (advisoryPrice > 0) {
+                    
+                    } else {
+                        advisoryPrice = ((businessPrice + personalPrice) / (869 + 390)) * 1199;
+                    }
+                    
+                    // for consistency and to prevent regresion we place adjustments before bundle overrides
+                    <apex:repeat var="adjOne" value="{!adjustPriceList}" >
+                        
+                        switch('{!adjOne.productPostion}') {
+                          case 'Business Return':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            businessPrice = businessPrice + {!adjOne.amount};
+                              
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            businessPrice = businessPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Personal Return':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            personalPrice = personalPrice + {!adjOne.amount};
+                                
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            personalPrice = personalPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Payroll':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            payrollPrice = payrollPrice + {!adjOne.amount};
+                                  
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            payrollPrice = payrollPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Advisory':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            advisoryPrice = advisoryPrice + {!adjOne.amount};
+                                
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            advisoryPrice = advisoryPrice * {!adjOne.percent};
+                          
+                          break;
+                          case 'Bookkeeping':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            bookkeepingPrice = bookkeepingPrice + {!adjOne.amount};
+                                    
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            bookkeepingPrice = bookkeepingPrice * {!adjOne.percent};
+
+                            break;
+                          case 'LLC State Filing':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            stateFilingPrice = stateFilingPrice + {!adjOne.amount};
+                                      
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            stateFilingPrice = stateFilingPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Corp State Filing':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            stateFilingCorpPrice = stateFilingCorpPrice + {!adjOne.amount};
+                                    
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            stateFilingCorpPrice = stateFilingCorpPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Back Bookkeeping':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            backBookkeepingPrice = backBookkeepingPrice + {!adjOne.amount};
+                                      
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            backBookkeepingPrice = backBookkeepingPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Foreign State':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            foreignStatePrice = foreignStatePrice + {!adjOne.amount};
+                                        
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            foreignStatePrice = foreignStatePrice * {!adjOne.percent};
+
+                            break;
+                          case 'Back Quarterly Payroll':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            backPayrollPrice = backPayrollPrice + {!adjOne.amount};
+                                          
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            backPayrollPrice = backPayrollPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Back Business Return':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            backBusinessPrice = backBusinessPrice + {!adjOne.amount};
+                                            
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            backBusinessPrice = backBusinessPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Back Personal Return':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            backPersonalPrice = backPersonalPrice + {!adjOne.amount};
+                                              
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            backPersonalPrice = backPersonalPrice * {!adjOne.percent};
+
+                            break;
+                          case 'Non-Profit Bookkeeping':
+                          
+                            // first increment price based on amount which defaults to zero so no negative effect when not used
+                            nonProfitBookkeepingPrice = nonProfitBookkeepingPrice + {!adjOne.amount};
+                                                
+                            // then increment price based on percent which defaults to 1 so not negative effect when not used
+                            nonProfitBookkeepingPrice = nonProfitBookkeepingPrice * {!adjOne.percent};
+
+                            break;
+                          default:
+                            // code block
+                        }
+                    </apex:repeat>
                     
                     if (businessBundlePrice !== false) {
                         
@@ -4567,7 +4699,7 @@
                             b = false;
                         }
                         else{
-                            if($(this).val() == '13+' || $(this).val() == '10+' || $(this).val() == '21+' || $(this).val() == '41+'){
+                            if($(this).val() == '13+' || $(this).val() == '10+' || $(this).val() == '21+' || $(this).val() == '41+' || $(this).val() == '51+'){
                             
                                 jq_addError($(this),"<b style='color:red;'>Error:</b>This client requires a custom quote.");
                                 b = false;

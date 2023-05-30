@@ -1,6 +1,23 @@
 public class GuidedSellingClientControllerExtension {
     public Opportunity opportunity {get; set;}
 
+    //@RemoteAction
+    public static String getsfBaseUrl(){
+        return GuidedSellingControllerExtension.getsfBaseUrl();
+    }
+
+    public static String getsiteBaseUrl(){
+        return GuidedSellingControllerExtension.getsiteBaseUrl();
+    }
+
+    public static String getschedulerBaseUrl(){
+        return GuidedSellingControllerExtension.getschedulerBaseUrl();
+    }
+
+    public static String getsocketBaseUrl(){
+        return GuidedSellingControllerExtension.getsocketBaseUrl();
+    }
+
     public GuidedSellingClientControllerExtension(ApexPages.StandardController stdController) {
         //First identify the record Id passed in the parameters through the flow
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
