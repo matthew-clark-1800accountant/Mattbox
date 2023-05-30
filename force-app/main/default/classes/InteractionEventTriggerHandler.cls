@@ -7,9 +7,12 @@ public with sharing class InteractionEventTriggerHandler {
         //     logCallDelay(interaction.Id);
         // }
         if(afterTriggerIsActive.isActive__c){
+            Integer i = 0;
             for(NVMContactWorld__InteractionEvent__c interaction : newInteractions){
-                if(oldInteractions?.get(interaction.Id).NVMContactWorld__Who__c == null && interaction.NVMContactWorld__Who__c != null){
+                if(oldInteractions?.get(interaction.Id).NVMContactWorld__Who__c == null && interaction.NVMContactWorld__Who__c != null
+                && i < 5){
                     logCallDelay(interaction.Id);
+                    i++;
                 } else {
                     System.debug('no delay logged: '+oldInteractions.get(interaction.Id).NVMContactWorld__Who__c == null+' '+interaction.NVMContactWorld__Who__c != null);
                 }
@@ -17,7 +20,7 @@ public with sharing class InteractionEventTriggerHandler {
         }
     }
 
-    @future
+    //@future
     public static void logCallDelay(Id interactionId){
         List<String> apptTypes = new List<String>{'BNA', 'Formation Consultation', 'Tax Savings Analysis'};
         List<String> disposToIgnore = new List<String>{'Rescheduled', 'Cancelled'};
@@ -32,17 +35,17 @@ public with sharing class InteractionEventTriggerHandler {
             if(matchingEvent.Minute_Difference_for_Appt_Call__c == null || Math.abs(timeDifference) < Math.abs(matchingEvent.Minute_Difference_for_Appt_Call__c)){
                 matchingEvent.Minute_Difference_for_Appt_Call__c = timeDifference;
             }
-            if(matchingEvent.of_Calls_for_Event__c == null){
-                matchingEvent.of_Calls_for_Event__c = 1;
-            } else {
+            // if(matchingEvent.of_Calls_for_Event__c == null){
+            //     matchingEvent.of_Calls_for_Event__c = 1;
+            // } else {
                 //matchingEvent.of_Calls_for_Event__c++;
                 Integer callCount = [SELECT COUNT() FROM NVMContactWorld__InteractionEvent__c WHERE NVMContactWorld__Who__c = :matchingEvent.WhoId
                 AND CreatedDate <= :matchingEvent.StartDateTime.addMinutes(30) AND CreatedDate >= :matchingEvent.StartDateTime.addMinutes(-7)];
                 matchingEvent.of_Calls_for_Event__c = callCount;
-            }
+            //}
             
-            if(matchingEvent.Most_Recent_Call_for_Event__c == null || Datetime.now()>matchingEvent.Most_Recent_Call_for_Event__c){
-                matchingEvent.Most_Recent_Call_for_Event__c = Datetime.now();
+            if(matchingEvent.Most_Recent_Call_for_Event__c == null || interaction.CreatedDate>matchingEvent.Most_Recent_Call_for_Event__c){
+                matchingEvent.Most_Recent_Call_for_Event__c = interaction.CreatedDate;
             }
             update matchingEvent;
             

@@ -151,7 +151,14 @@ private class EventTriggerHandler2Test {
         Test.startTest();
         Event testEvent = [SELECT Id, StartDateTime, EndDateTime, Portal_Event_Owner__c, Account.Primary_Contact__r.Name FROM Event LIMIT 1];
         testEvent.ShowAs = 'Free';
-        
+        Event_Tracking_Fields__mdt fieldsToUpdate = [SELECT Id, Field_Name__c, IsDate__c FROM Event_Tracking_Fields__mdt WHERE IsActive__c = true];
+        for(Event_Tracking_Fields__mdt field : fieldsToUpdate){
+            if(field.IsDate__c){
+                field.put(field.Field_Name__c, ((Datetime)field.get(field.Field_Name__c)).addMinutes(5));
+            } else {
+                field.put(field.Field_Name__c, (field.get(field.Field_Name__c)).addMinutes(5));
+            }
+        }
         Id owner = [Select Id From User where Profile.Name = 'System Administrator' and IsActive=true Limit 1].Id;
         System.debug(owner);
         testEvent.OwnerId = owner;
