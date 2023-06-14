@@ -91,6 +91,7 @@ public class PricingCalcController {
     public Boolean doStateFilingCorp {get;set;}
     public Boolean doBackBookkeeping {get;set;}
     public Boolean doForeignState {get;set;}
+    public Boolean doNonProfitBackBookkeeping {get;set;}
     
     public Boolean doBackPayroll {get;set;}
     public Boolean doBackBusiness {get;set;}
@@ -111,6 +112,7 @@ public class PricingCalcController {
     public Boolean excludeBackBusiness {get;set;}
     public Boolean excludeBackPersonal {get;set;}
     public Boolean excludeNonProfitBookkeeping {get;set;}
+    public Boolean excludeNonProfitBackBookkeeping {get;set;}
     
     public Boolean disableBusinessReturn {get;set;}
     public Boolean disablePersonalReturn {get;set;}
@@ -126,6 +128,7 @@ public class PricingCalcController {
     public Boolean disableBackBusiness {get;set;}
     public Boolean disableBackPersonal {get;set;}
     public Boolean disableNonProfitBookkeeping {get;set;}
+    public Boolean disableNonProfitBackBookkeeping {get;set;}
     
     public String disableBusinessReturnMessage {get;set;}
     public String disablePersonalReturnMessage {get;set;}
@@ -141,6 +144,7 @@ public class PricingCalcController {
     public String disableBackBusinessMessage {get;set;}
     public String disableBackPersonalMessage {get;set;}
     public String disableNonProfitBookkeepingMessage {get;set;}
+    public String disableNonProfitBackBookkeepingMessage {get;set;}
     
     public Boolean disableQTYBusinessReturn {get;set;}
     public Boolean disableQTYPersonalReturn {get;set;}
@@ -156,6 +160,7 @@ public class PricingCalcController {
     public Boolean disableQTYBackBusiness {get;set;}
     public Boolean disableQTYBackPersonal {get;set;}
     public Boolean disableQTYNonProfitBookkeeping {get;set;}
+    public Boolean disableQTYNonProfitBackBookkeeping {get;set;}
     
     public Boolean showBundles {get;set;}
     
@@ -173,6 +178,7 @@ public class PricingCalcController {
     public Boolean optionBackBusiness {get;set;}
     public Boolean optionBackPersonal {get;set;}
     public Boolean optionNonProfitBookkeeping {get;set;}
+    public Boolean optionNonProfitBackBookkeeping {get;set;}
     
     // platform access
     public Boolean hasPlatformAccess {get;set;}
@@ -201,6 +207,7 @@ public class PricingCalcController {
     public Decimal backBusinessAdjustment {get;set;}
     public Decimal backPersonalAdjustment {get;set;}
     public Decimal nonProfitBookkeepingAdjustment {get;set;}
+    public Decimal nonProfitBackBookkeepingAdjustment {get;set;}
     
     // variables for setup fees
     public Decimal businessFee {get;set;}
@@ -217,6 +224,7 @@ public class PricingCalcController {
     public Decimal backBusinessFee {get;set;}
     public Decimal backPersonalFee {get;set;}
     public Decimal nonProfitBookkeepingFee {get;set;}
+    public Decimal nonProfitBackBookkeepingFee {get;set;}
     
     public Decimal totalAdjustment {get;set;}
     
@@ -234,6 +242,7 @@ public class PricingCalcController {
     public Integer backBusinessQuantity {get;set;}
     public Integer backPersonalQuantity {get;set;}
     public Integer nonProfitBookkeepingQuantity {get;set;}
+    public Integer nonProfitBackBookkeepingQuantity {get;set;}
     
     public Decimal businessSort {get;set;}
     public Decimal personalSort {get;set;}
@@ -249,6 +258,7 @@ public class PricingCalcController {
     public Decimal backBusinessSort {get;set;}
     public Decimal backPersonalSort {get;set;}
     public Decimal nonProfitBookkeepingSort {get;set;}
+    public Decimal nonProfitBackBookkeepingSort {get;set;}
     
     public String businessTime {get;set;}
     public String personalTime {get;set;}
@@ -264,6 +274,7 @@ public class PricingCalcController {
     public String backBusinessTime {get;set;}
     public String backPersonalTime {get;set;}
     public String nonProfitBookkeepingTime {get;set;}
+    public String nonProfitBackBookkeepingTime {get;set;}
     
     public String businessTimeDef {get;set;}
     public String personalTimeDef {get;set;}
@@ -279,6 +290,7 @@ public class PricingCalcController {
     public String backBusinessTimeDef {get;set;}
     public String backPersonalTimeDef {get;set;}
     public String nonProfitBookkeepingTimeDef {get;set;}
+    public String nonProfitBackBookkeepingTimeDef {get;set;}
     
     public String stateFilingSetupFee {get; set;}
     public String stateFilingCorpSetupFee {get; set;}
@@ -308,6 +320,7 @@ public class PricingCalcController {
     public String backBusinessID {get;set;}
     public String backPersonalID {get;set;}
     public String nonProfitBookkeepingID {get;set;}
+    public String nonProfitBackBookkeepingID {get;set;}
     
     public Boolean bizTaxPrepNoSplit {get;set;}
     public Boolean personalTaxPrepNoSplit {get;set;}
@@ -323,6 +336,7 @@ public class PricingCalcController {
     public Boolean backBusinessNoSplit {get;set;}
     public Boolean backPersonalNoSplit {get;set;}
     public Boolean nonProfitBookkeepingNoSplit {get;set;}
+    public Boolean nonProfitBackBookkeepingNoSplit {get;set;}
     
     public static List<String> disqualifiers = new List<String>{'C Corporation', 'Non-Profit', 'Cryptocurrency', 'Investments', 'Not For Profit', 'Real Estate'};
     public Map<String,String> stateMap_toAbbrev = new Map<String,String>{ 'alabama'=>'AL','alaska'=>'AK','arizona'=>'AZ','arkansas'=>'AR','california'=>'CA','colorado'=>'CO','connecticut'=>'CT','delaware'=>'DE','district of columbia'=>'DC','florida'=>'FL','georgia'=>'GA','guam'=>'GU','hawaii'=>'HI','idaho'=>'ID','illinois'=>'IL','indiana'=>'IN','iowa'=>'IA','kansas'=>'KS','kentucky'=>'KY','louisiana'=>'LA','maine'=>'ME','maryland'=>'MD','massachusetts'=>'MA','michigan'=>'MI','minnesota'=>'MN','mississippi'=>'MS','missouri'=>'MO','montana'=>'MT','nebraska'=>'NE','nevada'=>'NV','new hampshire'=>'NH','new jersey'=>'NJ','new mexico'=>'NM','new york'=>'NY','north carolina'=>'NC','north dakota'=>'ND','ohio'=>'OH','oklahoma'=>'OK','oregon'=>'OR','pennsylvania'=>'PA','puerto rico'=>'PR','rhode island'=>'RI','south carolina'=>'SC','south dakota'=>'SD','tennessee'=>'TN','texas'=>'TX','utah'=>'UT','vermont'=>'VT','virginia'=>'VA','washington'=>'WA','west virginia'=>'WV','wisconsin'=>'WI','wyoming'=>'WY' };
@@ -512,6 +526,7 @@ public class PricingCalcController {
         backBusinessAdjustment = 0.00;
         backPersonalAdjustment = 0.00;
         nonProfitBookkeepingAdjustment = 0.00;
+        nonProfitBackBookkeepingAdjustment = 0.00;
         
         totalAdjustment = 0.00;
         
@@ -535,6 +550,7 @@ public class PricingCalcController {
         backBusinessQuantity = 1;
         backPersonalQuantity = 1;
         nonProfitBookkeepingQuantity = 1;
+        nonProfitBackBookkeepingQuantity = 1;
         
         excludeBusinessReturn = false;
         excludePersonalReturn = false;
@@ -549,6 +565,7 @@ public class PricingCalcController {
         excludeBackBusiness = false;
         excludeBackPersonal = false;
         excludeNonProfitBookkeeping = false;
+        excludeNonProfitBackBookkeeping = false;
         
         disableQTYBusinessReturn = false;
         disableQTYPersonalReturn = false;
@@ -563,6 +580,7 @@ public class PricingCalcController {
         disableQTYBackBusiness = false;
         disableQTYBackPersonal = false;
         disableQTYNonProfitBookkeeping = false;
+        disableQTYNonProfitBackBookkeeping = false;
         
         disableBusinessReturn = false;
         disablePersonalReturn = false;
@@ -577,6 +595,7 @@ public class PricingCalcController {
         disableBackBusiness = false;
         disableBackPersonal = false;
         disableNonProfitBookkeeping = false;
+        disableNonProfitBackBookkeeping = false;
         
         disableBusinessReturnMessage = '';
         disablePersonalReturnMessage = '';
@@ -591,6 +610,7 @@ public class PricingCalcController {
         disableBackBusinessMessage = '';
         disableBackPersonalMessage = '';
         disableNonProfitBookkeepingMessage = '';
+        disableNonProfitBackBookkeepingMessage = '';
         
         hasPlatformAccess = false;
         
@@ -1518,7 +1538,7 @@ public class PricingCalcController {
         // no need to do the following if we are locking the calculator
         if (isLocked == false) {
         
-            List<Product2> productList = [SELECT Id, Calculator_Location__c, Name, Bundles__c, AnnualMonthlyOption__c, RevenueInstallmentPeriod, Disable_QTY_on_Calc__c, Sort_Order__c, Setup_Fee__c, No_Split_Allowed__c FROM Product2 WHERE Environment__c includes (:environment) AND (Calculator_Location__c = 'Business Return' OR Calculator_Location__c = 'Personal Return' OR Calculator_Location__c = 'Payroll' OR Calculator_Location__c = 'Bookkeeping' OR Calculator_Location__c = 'Advisory' OR Calculator_Location__c = 'LLC State Filing' OR Calculator_Location__c = 'Corp State Filing' OR Calculator_Location__c = 'Back Bookkeeping' OR Calculator_Location__c = 'Foreign State' OR Calculator_Location__c = 'Back Quarterly Payroll' OR Calculator_Location__c = 'Back Business Return' OR Calculator_Location__c = 'Back Personal Return' OR Calculator_Location__c = 'Non-Profit Bookkeeping')];
+            List<Product2> productList = [SELECT Id, Calculator_Location__c, Name, Bundles__c, AnnualMonthlyOption__c, RevenueInstallmentPeriod, Disable_QTY_on_Calc__c, Sort_Order__c, Setup_Fee__c, No_Split_Allowed__c FROM Product2 WHERE Environment__c includes (:environment) AND (Calculator_Location__c = 'Business Return' OR Calculator_Location__c = 'Personal Return' OR Calculator_Location__c = 'Payroll' OR Calculator_Location__c = 'Bookkeeping' OR Calculator_Location__c = 'Advisory' OR Calculator_Location__c = 'LLC State Filing' OR Calculator_Location__c = 'Corp State Filing' OR Calculator_Location__c = 'Back Bookkeeping' OR Calculator_Location__c = 'Foreign State' OR Calculator_Location__c = 'Back Quarterly Payroll' OR Calculator_Location__c = 'Back Business Return' OR Calculator_Location__c = 'Back Personal Return' OR Calculator_Location__c = 'Non-Profit Bookkeeping' OR Calculator_Location__c = 'Non-Profit Back Bookkeeping')];
             
             List<PricebookEntry> pbACList = [SELECT Id, UnitPrice, Name, IsActive, Pricebook2Id, Product2Id, Dynamic__c FROM PricebookEntry WHERE Pricebook2Id = :standardPriceBookID];
                 
@@ -1674,6 +1694,12 @@ public class PricingCalcController {
                                 if (pItem.Calculator_Location__c == 'Non-Profit Bookkeeping') {
         
                                     mcProduct.calcId = 'npbcheck';
+        
+                                }
+                                
+                                if (pItem.Calculator_Location__c == 'Non-Profit Back Bookkeeping') {
+        
+                                    mcProduct.calcId = 'npbbcheck';
         
                                 }
                                 
@@ -2681,6 +2707,7 @@ public class PricingCalcController {
             backBusinessID = '';
             backPersonalID = '';
             nonProfitBookkeepingID = '';
+            nonProfitBackBookkeepingID = '';
             
             bizTaxPrepNoSplit = false;
             personalTaxPrepNoSplit = false;
@@ -2695,6 +2722,7 @@ public class PricingCalcController {
             backBusinessNoSplit = false;
             backPersonalNoSplit = false;
             nonProfitBookkeepingNoSplit = false;
+            nonProfitBackBookkeepingNoSplit = false;
             
             // check for existing products and mark them as selected
             for(Product2 pItem : productList){
@@ -3249,6 +3277,48 @@ public class PricingCalcController {
                     
                 }
                 
+                if (pItem.Calculator_Location__c == 'Non-Profit Back Bookkeeping') {
+                
+                    nonProfitBackBookkeepingID = pItem.Id;
+                    bundleWrapperClass bundleRec = new bundleWrapperClass();
+                    
+                    bundleRec.id = pItem.Id;
+                    bundleRec.calcid = 'npbbcheck';
+                    bundleRec.bundlelist = pItem.Bundles__c;
+                    
+                    bundleProductList.add(bundleRec);
+                    
+                    optionNonProfitBackBookkeeping = pItem.AnnualMonthlyOption__c;
+                    
+                    nonProfitBackBookkeepingTime = pItem.RevenueInstallmentPeriod;
+                    nonProfitBackBookkeepingTimeDef = pItem.RevenueInstallmentPeriod;
+                    
+                    if (pItem.Sort_Order__c == NULL) {
+                        nonProfitBackBookkeepingSort = 4;
+                    } else {
+                        nonProfitBackBookkeepingSort = pItem.Sort_Order__c;
+                    }
+                    
+                    if (excludeProductList.contains(pItem.Id)) {
+                    
+                        excludeNonProfitBackBookkeeping = true;
+                        
+                    }
+                    
+                    if (disableProductList.contains(pItem.Id)) {
+                    
+                        disableNonProfitBackBookkeeping = true;
+                        
+                        disableNonProfitBackBookkeepingMessage = productMessages.get(pItem.Id);
+                        
+                    }
+                    
+                    disableQTYNonProfitBackBookkeeping = pItem.Disable_QTY_on_Calc__c;
+                    
+                    nonProfitBackBookkeepingNoSplit = pItem.No_Split_Allowed__c;
+                    
+                }
+                
             }
             
             //totalAdjustment = 0;
@@ -3347,6 +3417,13 @@ public class PricingCalcController {
                 if (nonProfitBookkeepingID != '' && eItem.Product2Id == nonProfitBookkeepingID) {
                     doNonProfitBookkeeping = true;
                     nonProfitBookkeepingQuantity = integer.valueOf(eItem.Quantity);
+                    
+                    prevSel = true;
+                }
+                
+                if (nonProfitBackBookkeepingID != '' && eItem.Product2Id == nonProfitBackBookkeepingID) {
+                    doNonProfitBackBookkeeping = true;
+                    nonProfitBackBookkeepingQuantity = integer.valueOf(eItem.Quantity);
                     
                     prevSel = true;
                 }
@@ -3535,6 +3612,13 @@ public class PricingCalcController {
                 
             }
             
+            if (excludeNonProfitBackBookkeeping == true || nonProfitBackBookkeepingID == '') {
+            
+                doNonProfitBackBookkeeping = false;
+                excludeNonProfitBackBookkeeping = true;
+                
+            }
+            
             if (disableBusinessReturn == true) {
             
                 doBusinessReturn = false;
@@ -3610,6 +3694,12 @@ public class PricingCalcController {
             if (disableNonProfitBookkeeping == true) {
             
                 doNonProfitBookkeeping = false;
+                
+            }
+            
+            if (disableNonProfitBackBookkeeping == true) {
+            
+                doNonProfitBackBookkeeping = false;
                 
             }
             
@@ -3857,6 +3947,7 @@ public class PricingCalcController {
         backBusinessAdjustment = 0.00;
         backPersonalAdjustment = 0.00;
         nonProfitBookkeepingAdjustment = 0.00;
+        nonProfitBackBookkeepingAdjustment = 0.00;
         
         // check overrides
         for(priceOverrideWrapper powItem : overrideList){
@@ -3913,6 +4004,10 @@ public class PricingCalcController {
                 nonProfitBookkeepingAdjustment = powItem.amount;
             }
             
+            if (powItem.productPostion == 'Non-Profit Back Bookkeeping') {
+                nonProfitBackBookkeepingAdjustment = powItem.amount;
+            }
+            
         }
         
         businessFee = 0.00;
@@ -3928,6 +4023,7 @@ public class PricingCalcController {
         backBusinessFee = 0.00;
         backPersonalFee = 0.00;
         nonProfitBookkeepingFee = 0.00;
+        nonProfitBackBookkeepingFee = 0.00;
         
         Decimal financeAmount = 0.00;
         Decimal subAmount = 0.00;
@@ -4045,6 +4141,14 @@ public class PricingCalcController {
         } else {
         
             nonProfitBookkeepingAdjustment = getDynamicAmount('Non-Profit Bookkeeping', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
+
+        }
+        
+        if (nonProfitBackBookkeepingAdjustment > 0) {
+        
+        } else {
+        
+            nonProfitBackBookkeepingAdjustment = getDynamicAmount('Non-Profit Back Bookkeeping', entityTypeInput, industryTypeInput, numberOfEmployeesInput, numberOfOwnersInput, numberOfRentalPropertiesInput, personalIncomeInput, projectedFirstYearProfitInput, projectedFirstYearRevenueInput, stateOfIncorporationInput, totalStartupCostInput, numberOfTransactionsInput, filingStatusInput, businessMilesInput, officeSqFtInput, foreignStateInput);
 
         }
 
@@ -4217,6 +4321,18 @@ public class PricingCalcController {
                     nonProfitBookkeepingAdjustment = nonProfitBookkeepingAdjustment.setScale(2);
                     
                 }
+                when 'Non-Profit Back Bookkeeping' {
+                    
+                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                    nonProfitBackBookkeepingAdjustment = nonProfitBackBookkeepingAdjustment + padjItem.amount;
+                    
+                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                    nonProfitBackBookkeepingAdjustment = nonProfitBackBookkeepingAdjustment * padjItem.percent;
+                    
+                    // since we are doing multiplication on a float lets set our decimal precision for currency
+                    nonProfitBackBookkeepingAdjustment = nonProfitBackBookkeepingAdjustment.setScale(2);
+                    
+                }
             }
             
         }
@@ -4247,6 +4363,7 @@ public class PricingCalcController {
         backBusinessID = '';
         backPersonalID = '';
         nonProfitBookkeepingID = '';
+        nonProfitBackBookkeepingID = '';
         
         Boolean bizTaxPrepOT = false;
         Boolean personalTaxPrepOT = false;
@@ -4261,6 +4378,7 @@ public class PricingCalcController {
         Boolean backBusinessOT = false;
         Boolean backPersonalOT = false;
         Boolean nonProfitBookkeepingOT = false;
+        Boolean nonProfitBackBookkeepingOT = false;
         
         bizTaxPrepNoSplit = false;
         personalTaxPrepNoSplit = false;
@@ -4275,6 +4393,7 @@ public class PricingCalcController {
         backBusinessNoSplit = false;
         backPersonalNoSplit = false;
         nonProfitBookkeepingNoSplit = false;
+        nonProfitBackBookkeepingNoSplit = false;
         
         String bizTaxPrepDesc = '';
         String bizTaxPrepHTMLDesc = '';
@@ -4303,9 +4422,11 @@ public class PricingCalcController {
         String backPersonalHTMLDesc = '';
         String nonProfitBookkeepingDesc = '';
         String nonProfitBookkeepingHTMLDesc = '';
+        String nonProfitBackBookkeepingDesc = '';
+        String nonProfitBackBookkeepingHTMLDesc = '';
         
         // check for existing products and mark them as selected
-        List<Product2> productList = [SELECT Id, Calculator_Location__c, Name, AnnualMonthlyOption__c, Billing_Frequency__c, HTML_Description__c, Description, No_Split_Allowed__c FROM Product2 WHERE Calculator_Location__c = 'Business Return' OR Calculator_Location__c = 'Personal Return' OR Calculator_Location__c = 'Payroll' OR Calculator_Location__c = 'Bookkeeping' OR Calculator_Location__c = 'Advisory' OR Calculator_Location__c = 'LLC State Filing' OR Calculator_Location__c = 'Corp State Filing' OR Calculator_Location__c = 'Back Bookkeeping' OR Calculator_Location__c = 'Foreign State' OR Calculator_Location__c = 'Back Quarterly Payroll' OR Calculator_Location__c = 'Back Business Return' OR Calculator_Location__c = 'Back Personal Return' OR Calculator_Location__c = 'Non-Profit Bookkeeping'];
+        List<Product2> productList = [SELECT Id, Calculator_Location__c, Name, AnnualMonthlyOption__c, Billing_Frequency__c, HTML_Description__c, Description, No_Split_Allowed__c FROM Product2 WHERE Calculator_Location__c = 'Business Return' OR Calculator_Location__c = 'Personal Return' OR Calculator_Location__c = 'Payroll' OR Calculator_Location__c = 'Bookkeeping' OR Calculator_Location__c = 'Advisory' OR Calculator_Location__c = 'LLC State Filing' OR Calculator_Location__c = 'Corp State Filing' OR Calculator_Location__c = 'Back Bookkeeping' OR Calculator_Location__c = 'Foreign State' OR Calculator_Location__c = 'Back Quarterly Payroll' OR Calculator_Location__c = 'Back Business Return' OR Calculator_Location__c = 'Back Personal Return' OR Calculator_Location__c = 'Non-Profit Bookkeeping' OR Calculator_Location__c = 'Non-Profit Back Bookkeeping'];
         
         for(Product2 pItem : productList){
         
@@ -4439,7 +4560,7 @@ public class PricingCalcController {
                 backBookkeepingDesc = backBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
                 backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
                 
-                // append description with number of employees
+                // append description with start date
                 backBookkeepingDesc = backBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
                 backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
                 
@@ -4541,6 +4662,30 @@ public class PricingCalcController {
                 
             }
             
+            if (pItem.Calculator_Location__c == 'Non-Profit Back Bookkeeping') {
+            
+                nonProfitBackBookkeepingID = pItem.Id;
+                nonProfitBackBookkeepingDesc = pItem.Description;
+                nonProfitBackBookkeepingHTMLDesc = pItem.HTML_Description__c;
+                
+                // append description with number of employees
+                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
+                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
+                
+                // append description with start date
+                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                
+                if (pItem.Billing_Frequency__c == 'One-Time') {
+                
+                    nonProfitBackBookkeepingOT = true;
+                    
+                }
+                
+                nonProfitBackBookkeepingNoSplit = pItem.No_Split_Allowed__c;
+                
+            }
+            
         }
         
         // pull product id from Product2 object, Calculator_Location__c field
@@ -4559,6 +4704,7 @@ public class PricingCalcController {
         String priceBookBackBusinessID = '';
         String priceBookBackPersonalID = '';
         String priceBookNonProfitBookkeepingID = '';
+        String priceBookNonProfitBackBookkeepingID = '';
         
         String bizTaxPrepPBEID = '';
         String personalTaxPrepPBEID = '';
@@ -4573,9 +4719,10 @@ public class PricingCalcController {
         String backBusinessPBEID = '';
         String backPersonalPBEID = '';
         String nonProfitBookkeepingPBEID = '';
+        String nonProfitBackBookkeepingPBEID = '';
         
         // check for price book entry, add if necessary
-        List<PricebookEntry> pbAllList = [SELECT Id, UnitPrice, Name, IsActive, Pricebook2Id, Product2Id FROM PricebookEntry WHERE (Product2Id = :bizTaxPrepID OR Product2Id = :personalTaxPrepID OR Product2Id = :payrollID OR Product2Id = :taxAdvisoryID OR Product2Id = :bookkeepingID OR Product2Id = :stateFilingID OR Product2Id = :stateFilingCorpID OR Product2Id = :backBookkeepingID OR Product2Id = :foreignStateID OR Product2Id = :backPayrollID OR Product2Id = :backBusinessID OR Product2Id = :backPersonalID OR Product2Id = :nonProfitBookkeepingID) AND Pricebook2Id = :standardPriceBookID];
+        List<PricebookEntry> pbAllList = [SELECT Id, UnitPrice, Name, IsActive, Pricebook2Id, Product2Id FROM PricebookEntry WHERE (Product2Id = :bizTaxPrepID OR Product2Id = :personalTaxPrepID OR Product2Id = :payrollID OR Product2Id = :taxAdvisoryID OR Product2Id = :bookkeepingID OR Product2Id = :stateFilingID OR Product2Id = :stateFilingCorpID OR Product2Id = :backBookkeepingID OR Product2Id = :foreignStateID OR Product2Id = :backPayrollID OR Product2Id = :backBusinessID OR Product2Id = :backPersonalID OR Product2Id = :nonProfitBookkeepingID OR Product2Id = :nonProfitBackBookkeepingID) AND Pricebook2Id = :standardPriceBookID];
         
         for(PricebookEntry pbAllItem : pbAllList){
         
@@ -4618,6 +4765,9 @@ public class PricingCalcController {
             } else if (pbAllItem.Product2Id == nonProfitBookkeepingID) {
                 nonProfitBookkeepingPBEID = pbAllItem.Id;
                 priceBookNonProfitBookkeepingID = pbAllItem.Pricebook2Id;
+            } else if (pbAllItem.Product2Id == nonProfitBackBookkeepingID) {
+                nonProfitBackBookkeepingPBEID = pbAllItem.Id;
+                priceBookNonProfitBackBookkeepingID = pbAllItem.Pricebook2Id;
             }
 
         }
@@ -7499,6 +7649,76 @@ public class PricingCalcController {
 
             // update vipAmount for scheduler url reasons
             vipAmount = vipAmount + (nonProfitBookkeepingAdjustment * nonProfitBookkeepingQuantity);
+
+        }
+        
+        if (doNonProfitBackBookkeeping) {
+        
+            // do i need to create a chargeover quote?
+            if (nonProfitBackBookkeepingTime == 'Monthly') {
+            
+                if (madeMonth == false) {
+                    
+                    insert theCOQuoteMonth;
+                    
+                    cOQuoteIDMonth = theCOQuoteMonth.Id;
+                    
+                    madeMonth = true;
+                        
+                }
+                
+            } else {
+                
+                if (billingTime == 'mon' && nonProfitBackBookkeepingNoSplit == false) {
+                
+                    if (madeMonth == false) {
+                    
+                        insert theCOQuoteMonth;
+                        
+                        cOQuoteIDMonth = theCOQuoteMonth.Id;
+                        
+                        madeMonth = true;
+                            
+                    }
+                    
+                } else {
+                    
+                    if (nonProfitBackBookkeepingOT == true && (billingTime == 'yrl' || nonProfitBackBookkeepingNoSplit == true)) {
+                    
+                        if (madeOneTime == false) {
+                        
+                            insert theCOQuoteOneTime;
+                            
+                            cOQuoteIDOneTime = theCOQuoteOneTime.Id;
+                            
+                            madeOneTime = true;
+                            
+                        }
+                        
+                    } else {
+                    
+                        if (madeYear == false) {
+                            // actually insert the yearly quote
+                            insert theCOQuote;
+                            
+                            // get the quote id
+                            cOQuoteID = theCOQuote.Id;
+                            
+                            // indicate that we have created the yearly quote
+                            madeYear = true;
+                        }
+                        
+                    } 
+                    
+                }
+                
+            }
+            
+            // call method to do the object creation
+            makeLineItems(nonProfitBackBookkeepingAdjustment, offerProductList, 'npbbcheck', bundle, 'Non-Profit Back Bookkeeping', opportunityID, nonProfitBackBookkeepingPBEID, nonProfitBackBookkeepingID, nonProfitBackBookkeepingQuantity, nonProfitBackBookkeepingTime, nonProfitBackBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, nonProfitBackBookkeepingDesc, nonProfitBackBookkeepingHTMLDesc, accountID, nonProfitBackBookkeepingSort, false, 0.00, '', nonProfitBackBookkeepingOT, nonProfitBackBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
+
+            // update vipAmount for scheduler url reasons
+            vipAmount = vipAmount + (nonProfitBackBookkeepingAdjustment * nonProfitBackBookkeepingQuantity);
 
         }
         

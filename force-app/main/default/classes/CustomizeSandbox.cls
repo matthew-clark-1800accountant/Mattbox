@@ -115,12 +115,12 @@ global without sharing class CustomizeSandbox {
 
     public static void runAllUpdates(Integer size){
         totalRecordCount = size;
-        updateUsers(getUsersToUpdate());
+        updateOutboundMessages();
+        //updateUsers(getUsersToUpdate());
         transferCalculatorData();
         transferRollupData();
         importSeedData();
         updateCustomSettings();
-        updateOutboundMessages();
     }
 
     @future
@@ -342,6 +342,8 @@ global without sharing class CustomizeSandbox {
 
     //@future(callout=true)
     public static void updateOutboundMessages(){
+        System.debug(Limits.getDMLRows());
+        System.debug(Limits.getDMLStatements());
         String query = 'select Id, Name from WorkflowOutboundMessage where Name in ('+getOutboundMessageString()+') order by Name limit 100';
         //ToolingApiController.printLomgString(query);
         String resStr = ToolingApiController.runQuery(query);

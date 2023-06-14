@@ -35,7 +35,8 @@ public with sharing class ChargeOverInvoiceTriggerHandler
             for(ChargeOver_Invoice__c invoice : triggerNew){ accountIds.add(invoice.Account__c); }
         } else { accountIds.addAll(ids); }
         Map<Id, Event[]> accountIdEventMap = new Map<Id, Event[]>();
-        List<Event> eventList = [
+        Set<Id> eventIds = new Set<Id>();
+        for (Event evt : [
             SELECT Id, ActivityDate, AccountId
             FROM Event
             WHERE Account__c IN :accountIds
@@ -43,9 +44,11 @@ public with sharing class ChargeOverInvoiceTriggerHandler
             OR Secondary_Disposition_Details__c = 'Follow-Up')
             AND AccountId IN :accountIds
             ORDER BY ActivityDate DESC
-        ];
+        ]){
+            eventIds.add(evt.Id);
+        }
 
-        Set<Id> eventIds = new Map<Id, Event>(eventList).keySet();
+        //Set<Id> eventIds = new Map<Id, Event>(eventList).keySet();
         Map<Id, UserRecordAccess> eventIdToRecordAccess = new Map<Id, UserRecordAccess>();
         for(UserRecordAccess acc : [SELECT RecordId, HasReadAccess, HasEditAccess, MaxAccessLevel
         FROM UserRecordAccess
@@ -54,7 +57,15 @@ public with sharing class ChargeOverInvoiceTriggerHandler
             eventIdToRecordAccess.put(acc.RecordId, acc);
         }
 
-        for (Event evt : eventList)
+        for (Event evt : [
+            SELECT Id, ActivityDate, AccountId
+            FROM Event
+            WHERE Account__c IN :accountIds
+            AND (Secondary_Disposition_Details__c = 'Sale'
+            OR Secondary_Disposition_Details__c = 'Follow-Up')
+            AND AccountId IN :accountIds
+            ORDER BY ActivityDate DESC
+        ])
         {
             if(eventIdToRecordAccess.containsKey(evt.Id) && eventIdToRecordAccess.get(evt.Id).HasEditAccess){
                 if(accountIdEventMap.containsKey(evt.AccountId)){ accountIdEventMap.get(evt.AccountId).add(evt);}

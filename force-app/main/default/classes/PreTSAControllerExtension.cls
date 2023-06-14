@@ -12,6 +12,14 @@ public class PreTSAControllerExtension {
     public static List<String> disqualifiers = new List<String>{'C Corporation', 'Non-Profit'};
     public Boolean disableFields {get; set;}
 
+    public string getBaseUrl(){
+        if(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName() == null){
+            return 'https://1800accountant.com';
+        } else {
+            return 'https://staging.1800accountant.com';
+        }
+    }
+
     public PreTSAControllerExtension(ApexPages.StandardController stdController) {
         //Before doing anything, I am going to set the default values for the page
         defaultEntity = 'LLC';
@@ -21,7 +29,7 @@ public class PreTSAControllerExtension {
         defaultOffice = '150';
         defaultFilingStatus = 'Single';
         defaultIncome = '50000';
-        schedulerURL = 'https://1800accountant.com/sfapi/schedule/index.php?WID=&EO=1&TID=1on1&EmailCampaignID=Pre-TSA-page&APSBJ=pre-TSA';
+        schedulerURL = getBaseUrl()+'/sfapi/schedule/index.php?WID=&EO=1&TID=1on1&EmailCampaignID=Pre-TSA-page&APSBJ=pre-TSA';
         // Getting the information from the Page Parameters
         Id urlId = ApexPages.currentPage().getParameters().get('recordId');
         Id eventIdFromParameters = ApexPages.currentPage().getParameters().get('id');
@@ -65,7 +73,7 @@ public class PreTSAControllerExtension {
             defaultFilingStatus = (lead.Filing_Status__c != null) ? lead.Filing_Status__c : 'Single';
             defaultIncome = (lead.Personal_Income__c != null) ? lead.Personal_Income__c : '50000';
             //Make the URL for the scheduler with the Lead Id
-            schedulerURL = (null == EmailCampaignID) ? 'https://1800accountant.com/sfapi/schedule/index.php?WID='+lead.Id+'&TID=1on1&EmailCampaignID=PreTSAPage1' : 'https://1800accountant.com/sfapi/schedule/index.php?WID='+lead.Id+'&TID=1on1&EmailCampaignID='+EmailCampaignID;
+            schedulerURL = (null == EmailCampaignID) ? getBaseUrl()+'/sfapi/schedule/index.php?WID='+lead.Id+'&TID=1on1&EmailCampaignID=PreTSAPage1' : getBaseUrl()+'/sfapi/schedule/index.php?WID='+lead.Id+'&TID=1on1&EmailCampaignID='+EmailCampaignID;
         }
         //For Accounts.....
         if(null != accountId){
@@ -84,7 +92,7 @@ public class PreTSAControllerExtension {
             defaultFilingStatus = (account.Personal_Return_Filing_Status__c != null) ? account.Personal_Return_Filing_Status__c : 'Single';
             defaultIncome = (account.Personal_Income__c != null) ? account.Personal_Income__c : '50000';
             //Make the URL for the scheduler with the Account's Primary Contact
-            schedulerURL = (null == EmailCampaignID) ? 'https://1800accountant.com/sfapi/schedule/index.php?WID='+account.Primary_Contact__c+'&TID=1on1&EmailCampaignID=PreTSAPage1' : 'https://1800accountant.com/sfapi/schedule/index.php?WID='+account.Primary_Contact__c+'&TID=1on1&EmailCampaignID='+EmailCampaignID;
+            schedulerURL = (null == EmailCampaignID) ? getBaseUrl()+'/sfapi/schedule/index.php?WID='+account.Primary_Contact__c+'&TID=1on1&EmailCampaignID=PreTSAPage1' : getBaseUrl()+'/sfapi/schedule/index.php?WID='+account.Primary_Contact__c+'&TID=1on1&EmailCampaignID='+EmailCampaignID;
         }
     }
 
