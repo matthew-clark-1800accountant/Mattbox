@@ -11,7 +11,7 @@ global class MockHttpResponseGenerator implements HttpCalloutMock {
         System.debug(req.getEndpoint());
         if(req.getEndpoint().contains('callout:X1800Accountant_SFAPI')){
             System.assertEquals('POST', req.getMethod());
-            ApiCalloutWrapper a = (ApiCalloutWrapper) JSON.deserialize(req.getBody(), ApiCalloutWrapper.class);
+            List<ApiCalloutWrapper> a = (List<ApiCalloutWrapper>) JSON.deserialize(req.getBody(), List<ApiCalloutWrapper>.class);
             System.debug(a);
         }
         

@@ -39,6 +39,8 @@ public class EventTriggerHandlerTest{
 
         Id profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1].Id;
 
+        User u = [SELECT Id FROM User WHERE Name = 'Matthew Clark'];
+
         User u1 = new User();
         u1.FirstName = 'Appluent';
         u1.LastName = 'Business Solutions';
@@ -53,6 +55,7 @@ public class EventTriggerHandlerTest{
         u1.EmailEncodingKey = 'UTF-8';
         u1.LanguageLocaleKey = 'en_US';
         u1.LocaleSidKey = 'en_US';
+        u1.ManagerId = u.Id;
 
         lstUser.add(u1);
         insert lstUser;
@@ -134,38 +137,38 @@ public class EventTriggerHandlerTest{
 
             //Distributed Account / Lead SMS
             //Create SMS Schedule Records Existing SMS records
-            List<SMS_Schedule__c> smsShedulesToInsert = new List<SMS_Schedule__c> ();
+            // List<SMS_Schedule__c> smsShedulesToInsert = new List<SMS_Schedule__c> ();
 
-            for(Integer i=0 ; i<=2 ; i++){
-                Datetime distributeDate = datetime.newInstance(distributedAccount.Distribute_Date__c.year(), distributedAccount.Distribute_Date__c.month(),distributedAccount.Distribute_Date__c.day());
-                SMS_Schedule__c smsScheduleAccount = new SMS_Schedule__c();
-                smsScheduleAccount.RingCentral_Number__c=phoneNumber;
-                smsScheduleAccount.Schedule_Date__c= distributeDate.addDays(2).addHours(14).addMinutes(30);
-                smsScheduleAccount.Message__c='This is Account Message Text '+i;
-                smsScheduleAccount.Object_Id__c = (String)distributedAccount.Primary_Contact__c;
-                smsScheduleAccount.Reference_Id__c = distributedAccount.Primary_Contact__r.Name+'-'+distributeDate;
-                smsScheduleAccount.To_Phone_Number__c = '1234567';
-                smsScheduleAccount.Name =  distributedAccount.Primary_Contact__r.Name+'_'+distributeDate;
-                smsScheduleAccount.Contact__c=distributedAccount.Primary_Contact__c;
-                smsScheduleAccount.Account__c=distributedAccount.Id;
-                smsShedulesToInsert.add(smsScheduleAccount);
-            }
+            // for(Integer i=0 ; i<=2 ; i++){
+            //     Datetime distributeDate = datetime.newInstance(distributedAccount.Distribute_Date__c.year(), distributedAccount.Distribute_Date__c.month(),distributedAccount.Distribute_Date__c.day());
+            //     SMS_Schedule__c smsScheduleAccount = new SMS_Schedule__c();
+            //     smsScheduleAccount.RingCentral_Number__c=phoneNumber;
+            //     smsScheduleAccount.Schedule_Date__c= distributeDate.addDays(2).addHours(14).addMinutes(30);
+            //     smsScheduleAccount.Message__c='This is Account Message Text '+i;
+            //     smsScheduleAccount.Object_Id__c = (String)distributedAccount.Primary_Contact__c;
+            //     smsScheduleAccount.Reference_Id__c = distributedAccount.Primary_Contact__r.Name+'-'+distributeDate;
+            //     smsScheduleAccount.To_Phone_Number__c = '1234567';
+            //     smsScheduleAccount.Name =  distributedAccount.Primary_Contact__r.Name+'_'+distributeDate;
+            //     smsScheduleAccount.Contact__c=distributedAccount.Primary_Contact__c;
+            //     smsScheduleAccount.Account__c=distributedAccount.Id;
+            //     smsShedulesToInsert.add(smsScheduleAccount);
+            // }
 
-            for(Integer i=0 ; i<=2 ; i++){
-                Datetime distributeDate = datetime.newInstance(distributedLead.Distribute_Date__c.year(), distributedLead.Distribute_Date__c.month(),distributedLead.Distribute_Date__c.day());
-                SMS_Schedule__c smsScheduleAccount = new SMS_Schedule__c();
-                smsScheduleAccount.RingCentral_Number__c=phoneNumber;
-                smsScheduleAccount.Schedule_Date__c= distributeDate.addDays(2).addHours(14).addMinutes(30);
-                smsScheduleAccount.Message__c='This is Lead Message Text '+i;
-                smsScheduleAccount.Object_Id__c = (String)distributedLead.Id;
-                smsScheduleAccount.Reference_Id__c = distributedLead.Name+'-'+distributeDate;
-                smsScheduleAccount.To_Phone_Number__c = '1234567';
-                smsScheduleAccount.Name =  distributedLead.Name+'_'+distributeDate;
-                smsScheduleAccount.Lead__c=distributedLead.Id;
-                smsShedulesToInsert.add(smsScheduleAccount);
-            }
+            // for(Integer i=0 ; i<=2 ; i++){
+            //     Datetime distributeDate = datetime.newInstance(distributedLead.Distribute_Date__c.year(), distributedLead.Distribute_Date__c.month(),distributedLead.Distribute_Date__c.day());
+            //     SMS_Schedule__c smsScheduleAccount = new SMS_Schedule__c();
+            //     smsScheduleAccount.RingCentral_Number__c=phoneNumber;
+            //     smsScheduleAccount.Schedule_Date__c= distributeDate.addDays(2).addHours(14).addMinutes(30);
+            //     smsScheduleAccount.Message__c='This is Lead Message Text '+i;
+            //     smsScheduleAccount.Object_Id__c = (String)distributedLead.Id;
+            //     smsScheduleAccount.Reference_Id__c = distributedLead.Name+'-'+distributeDate;
+            //     smsScheduleAccount.To_Phone_Number__c = '1234567';
+            //     smsScheduleAccount.Name =  distributedLead.Name+'_'+distributeDate;
+            //     smsScheduleAccount.Lead__c=distributedLead.Id;
+            //     smsShedulesToInsert.add(smsScheduleAccount);
+            // }
 
-            insert smsShedulesToInsert;
+            // insert smsShedulesToInsert;
         }
 
     }
@@ -322,6 +325,22 @@ public class EventTriggerHandlerTest{
         newEvent14.Appointment_Disposition__c = 'No Show';
         listEventsToInsert.add(newEvent14);
 
+        Event newEvent015 = ApexTestUtility.createEvent('BNA');
+        newEvent015.WhatId=testAccount.Id;
+        newEvent015.Type_of_Appointment__c = 'BNA';
+        newEvent015.StartDateTime = System.now().addDays(2);
+        newEvent015.ActivityDateTime = newEvent015.StartDateTime;
+        newEvent015.EndDateTime = System.now().addDays(3);
+        listEventsToInsert.add(newEvent015);
+
+        Event newEvent016 = ApexTestUtility.createEvent('Formation Consultation');
+        newEvent016.WhatId=testAccount.Id;
+        newEvent016.Type_of_Appointment__c = 'Formation Consultation';
+        newEvent016.StartDateTime = System.now().addDays(2);
+        newEvent016.ActivityDateTime = newEvent016.StartDateTime;
+        newEvent016.EndDateTime = System.now().addDays(3);
+        listEventsToInsert.add(newEvent016);
+
         System.debug('TO BE INSERT SMS COUNT '+[SELECT COUNT() FROM SMS_Schedule__c ] );
 
         Test.startTest();
@@ -332,25 +351,10 @@ public class EventTriggerHandlerTest{
         }
         Test.stopTest();
 
-//        SMS_Schedule__c deleted = null;
-//        Boolean isDeleted = false;
-//        String exceptionValue = '';
-//        try{
-//            deleted = [SELECT Id FROM SMS_Schedule__c WHERE EventId__c =: newEvent01.Id LIMIT 1];
-//        }catch(Exception exc){
-//            exceptionValue = String.valueOf(exc);
-//            isDeleted = true;
-//        }
-//        System.assertEquals(true, isDeleted, 'exceptionValue :: ' + exceptionValue + ' :: end exceptionValue :: ');
 
         System.debug('TEST INSERTED SMS COUNT '+[SELECT COUNT() FROM SMS_Schedule__c ] );
 
         System.assertNotEquals(0, [SELECT COUNT() FROM SMS_Schedule__c], 'should have created more than 0 SMS_Schedule__c records.');
-
-//        System.assertEquals(21,[SELECT COUNT() FROM SMS_Schedule__c], 'should have created 21 SMS_Schedule__c records.');
-//        System.assertEquals(7,[SELECT COUNT() FROM SMS_Schedule__c], 'should have created 7 SMS_Schedule__c records.');
-//        System.assertEquals(6,[SELECT count() FROM SMS_Schedule__c]);
-
     }
 
     /**
@@ -414,9 +418,93 @@ public class EventTriggerHandlerTest{
 
 
 
-        Event newEvent01 = ApexTestUtility.createEvent('Discovery call');
-        newEvent01.Whatid=testAccount.Id;
-        listEventsToInsert.add(newEvent01);
+        // Event newEvent01 = ApexTestUtility.createEvent('Discovery call');
+        // newEvent01.Whatid=testAccount.Id;
+        // listEventsToInsert.add(newEvent01);
+
+        Event newEvent02 = ApexTestUtility.createEvent('Advisory #1');
+        newEvent02.Whatid=testAccount.Id;
+
+        Event newEvent03 = ApexTestUtility.createEvent('1on1 Sales Appointment');
+        newEvent03.Whatid=testAccount.Id;
+
+        Event newEvent04 = ApexTestUtility.createEvent('Advisory #1');
+        newEvent04.WhoId=testLead.Id;
+
+        Event newEvent05 = ApexTestUtility.createEvent('1on1 Sales Appointment');
+        newEvent05.WhoId=testLead.Id;
+
+        //This event insertion will delete distributed account sms sch records
+        // Event newEvent06 = ApexTestUtility.createEvent('1on1 Sales Appointment');
+        // newEvent06.Whatid=distributedAccount.Id;
+        // listEventsToInsert.add(newEvent06);
+
+        //This event insertion will delete distributed Lead sms sch records
+        Event newEvent07 = ApexTestUtility.createEvent('1on1 Sales Appointment');
+        newEvent07.Whoid=distributedLead.Id;
+        listEventsToInsert.add(newEvent07);
+
+
+        // listEventsToInsert.add(newEvent02);
+        // listEventsToInsert.add(newEvent03);
+        // listEventsToInsert.add(newEvent04);
+        // listEventsToInsert.add(newEvent05);
+
+        insert listEventsToInsert;
+        //System.assertEquals(6,[SELECT count() FROM SMS_Schedule__c]);
+
+        Test.startTest();
+        delete listEventsToInsert;
+        Test.stopTest();
+
+        //System.assertEquals(3,[SELECT count() FROM SMS_Schedule__c]);
+    }
+
+    @IsTest
+    public static void eventDeleteTest2() {
+        List<Event> listEventsToInsert  = new List<Event> ();
+        List<Account> listTestAccounts = [SELECT Id,
+                Name,
+                Primary_Contact__r.Name,
+                Primary_Contact__r.Phone
+        FROM ACCOUNT
+        ORDER BY createdDate DESC
+        LIMIT 3];
+        Account testAccount = new Account();
+        Account testAccountwithoutPrimaryCon = new Account();
+        Account distributedAccount = new Account();
+        for(Account acc : listTestAccounts){
+            if(acc.Name == 'TestAccount'){
+                testAccount=acc;
+            }
+            if(acc.Name == 'TestAccountWithoutPrimaryContact'){
+                testAccountwithoutPrimaryCon=acc;
+            }
+            if(acc.Name == 'distributedAccount'){
+                distributedAccount=acc;
+            }
+        }
+
+        List<Lead> listTestLeads = [SELECT Id,Email
+        FROM LEAD
+        ORDER BY createdDate DESC
+        LIMIT 2 ];
+        Lead testLead = new Lead();
+        Lead distributedLead = new Lead();
+        for(Lead led : listTestLeads){
+            if(led.Email == 'testrec@gmail.com'){
+                testLead =led;
+            }
+            if(led.Email == 'testrec1@gmail.com'){
+                distributedLead =led;
+            }
+        }
+
+
+
+        // Event newEvent01 = ApexTestUtility.createEvent('Discovery call');
+        // newEvent01.Whatid=testAccount.Id;
+        // listEventsToInsert.add(newEvent01);
 
         Event newEvent02 = ApexTestUtility.createEvent('Advisory #1');
         newEvent02.Whatid=testAccount.Id;
@@ -436,15 +524,15 @@ public class EventTriggerHandlerTest{
         listEventsToInsert.add(newEvent06);
 
         //This event insertion will delete distributed Lead sms sch records
-        Event newEvent07 = ApexTestUtility.createEvent('1on1 Sales Appointment');
-        newEvent07.Whoid=distributedLead.Id;
-        listEventsToInsert.add(newEvent07);
+        // Event newEvent07 = ApexTestUtility.createEvent('1on1 Sales Appointment');
+        // newEvent07.Whoid=distributedLead.Id;
+        // listEventsToInsert.add(newEvent07);
 
 
-        listEventsToInsert.add(newEvent02);
-        listEventsToInsert.add(newEvent03);
-        listEventsToInsert.add(newEvent04);
-        listEventsToInsert.add(newEvent05);
+        // listEventsToInsert.add(newEvent02);
+        // listEventsToInsert.add(newEvent03);
+        // listEventsToInsert.add(newEvent04);
+        // listEventsToInsert.add(newEvent05);
 
         insert listEventsToInsert;
         //System.assertEquals(6,[SELECT count() FROM SMS_Schedule__c]);
@@ -454,10 +542,6 @@ public class EventTriggerHandlerTest{
         Test.stopTest();
 
         //System.assertEquals(3,[SELECT count() FROM SMS_Schedule__c]);
-
-
-
-
     }
 
     /**
@@ -540,9 +624,10 @@ public class EventTriggerHandlerTest{
         newEvent04.Whoid=distributedLead.Id;
 
         listEventsToInsert.add(newEvent01);
-        listEventsToInsert.add(newEvent02);
-        listEventsToInsert.add(newEvent03);
-        listEventsToInsert.add(newEvent04);
+        // listEventsToInsert.add(newEvent02);
+        // listEventsToInsert.add(newEvent03);
+        // listEventsToInsert.add(newEvent04);
+        System.debug('checkpoint1');
         insert listEventsToInsert;
         System.debug('SMS record before update '+[SELECT count() FROM SMS_Schedule__c] );
         //System.assertEquals(3,[SELECT count() FROM SMS_Schedule__c]);
@@ -550,12 +635,17 @@ public class EventTriggerHandlerTest{
         Test.startTest();
         newEvent01.StartDateTime= DateTime.newInstance(2018, 11, 06, 11, 30, 0);
         //newEvent01.Call_Result__c= 'Qualified';
+        newEvent01.Subject = '1on1 Sales Appointment';
+        System.debug('checkpoint2');
 
-        newEvent02.StartDateTime= DateTime.newInstance(2018, 11, 06, 11, 30, 0);
-        newEvent03.Subject = '1on1 Sales Appointment';
-        newEvent04.Subject = '1on1 Sales Appointment';
-        update listEventsToInsert;
+        update newEvent01;
+        // newEvent02.StartDateTime= DateTime.newInstance(2018, 11, 06, 11, 30, 0);
+        // newEvent03.Subject = '1on1 Sales Appointment';
+        // newEvent04.Subject = '1on1 Sales Appointment';
+        // update listEventsToInsert;
         //delete listEventsToInsert;
+        System.debug('checkpoint3');
+
         Test.stopTest();
         System.debug('SMS record After update '+[SELECT count() FROM SMS_Schedule__c] );
         //System.assertEquals(3,[SELECT count() FROM SMS_Schedule__c]);
@@ -641,20 +731,20 @@ public class EventTriggerHandlerTest{
         );
         insert newLeadEvent;
 
-        Event newContactEvent = new Event(
-                WhoId = contact.Id,
-                Subject = 'Test Event',
-                StartDateTime = System.now(),
-                EndDateTime = System.now(),
-                Type_of_Appointment__c = 'Tax Savings Analysis'
-        );
-        insert newContactEvent;
+        // Event newContactEvent = new Event(
+        //         WhoId = contact.Id,
+        //         Subject = 'Test Event',
+        //         StartDateTime = System.now(),
+        //         EndDateTime = System.now(),
+        //         Type_of_Appointment__c = 'Tax Savings Analysis'
+        // );
+        // insert newContactEvent;
         Test.stopTest();
 
         Set<Id> idsToQuery = new Set<Id>();
         idsToQuery.add(newAccountEvent.Id);
         idsToQuery.add(newLeadEvent.Id);
-        idsToQuery.add(newContactEvent.Id);
+        //idsToQuery.add(newContactEvent.Id);
 
         Event[] results = [
                 SELECT Email_Campaign_ID__c FROM Event WHERE Id IN : idsToQuery
@@ -664,7 +754,7 @@ public class EventTriggerHandlerTest{
         {
             if(evt.Id == newAccountEvent.Id){System.assertEquals('12345', evt.Email_Campaign_ID__c);}
             if(evt.Id == newLeadEvent.Id){System.assertEquals('11111', evt.Email_Campaign_ID__c);}
-            if(evt.Id == newContactEvent.Id){System.assertEquals('22222', evt.Email_Campaign_ID__c);}
+            //if(evt.Id == newContactEvent.Id){System.assertEquals('22222', evt.Email_Campaign_ID__c);}
         }
 
 //

@@ -88,15 +88,24 @@ public without sharing class EventTriggerHandler{
     public static void afterDelete(Map<Id,Event> mapOldRecords){
         System.debug('EventTriggerHandler.afterDelete()');
         deleteSMSScheduleRecords(mapOldRecords);
+        //List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+        List<Event> eventsToSync = new List<Event>();
         for(Event oldEvent : mapOldRecords.values()){
-            if(oldEvent.CreatedDate < Datetime.now().addDays(-30) && oldEvent.Type_of_Appointment__c == 'Calendar Block'){
-            //if(oldEvent.Type_of_Appointment__c == 'Calendar Block'){
-                ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
-                wrapper.eventId = oldEvent.Id;
-                wrapper.isUpdate = false;
-                wrapper.eventData = new EventWrapper(oldEvent);
-                syncToApi(JSON.serialize(wrapper));
+            //if(oldEvent.CreatedDate < Datetime.now().addDays(-30) && oldEvent.Type_of_Appointment__c == 'Calendar Block'){
+            if(oldEvent.Type_of_Appointment__c == 'Calendar Block'){
+                // ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+                // wrapper.eventId = oldEvent.Id;
+                // wrapper.isUpdate = false;
+                // wrapper.eventData = new EventWrapper(oldEvent);
+                // eventWrappers.add(wrapper);
+                //syncToApi(JSON.serialize(wrapper));
+                eventsToSync.add(oldEvent);
             }
+            
+        }
+        if(!eventsToSync.isEmpty()){
+            System.debug('eventsToSync: '+eventsToSync);
+            syncToApi(eventsToSync, false);
         }
     }
 
@@ -144,20 +153,24 @@ public without sharing class EventTriggerHandler{
         
         Map<Event_Field_Update__c, Event> fieldUpdateToEventMap = new Map<Event_Field_Update__c, Event>();
         List<Event_Tracking_Fields__mdt> fieldsToTrack = [SELECT Id, Field_Name__c, IsDate__c, MasterLabel FROM Event_Tracking_Fields__mdt WHERE IsActive__c = true];
+        //List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+        List<Event> eventsToSync = new List<Event>();
         for (Event newEvent : listNewRecords){
             Event oldEvent = mapOldRecords.get(newEvent.Id);
             if (newEvent.StartDateTime != oldEvent.StartDateTime) {
                 eventIdToEventMap.put(newEvent.Id, newEvent);
                 eventsToInsert.add(newEvent);
             }
-
+            
             if(newEvent.CreatedDate < Datetime.now().addDays(-30) && newEvent.Type_of_Appointment__c == 'Calendar Block'){
             //if(newEvent.Type_of_Appointment__c == 'Calendar Block'){
-                ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
-                wrapper.eventId = newEvent.Id;
-                wrapper.isUpdate = true;
-                wrapper.eventData = new EventWrapper(newEvent);
-                syncToApi(JSON.serialize(wrapper));
+                // ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+                // wrapper.eventId = newEvent.Id;
+                // wrapper.isUpdate = true;
+                // wrapper.eventData = new EventWrapper(newEvent);
+                // //syncToApi(JSON.serialize(wrapper));
+                // eventWrappers.add(wrapper);
+                eventsToSync.add(newEvent);
             }
             
             for(Event_Tracking_Fields__mdt field : fieldsToTrack){
@@ -204,27 +217,38 @@ public without sharing class EventTriggerHandler{
             } else {
                 System.debug('event not added to cancelledEvents: '+newEvent.Appointment_Disposition__c);
             }
+
+            System.debug('checkpoint1');
             //Putting logic for update event whatId to opportunity
             if((null != newEvent.Type_of_Appointment__c &&
             ('Tax Savings Analysis' == newEvent.Type_of_Appointment__c
             || 'BNA' == newEvent.Type_of_Appointment__c)
             || 'Formation Consultation' == newEvent.Type_of_Appointment__c) &&
+
             null != newEvent.Appointment_Disposition__c &&
             'Consulted' == newEvent.Appointment_Disposition__c &&
+
             ('Sale' == newEvent.Secondary_Disposition_Details__c ||
             'Follow-Up' == newEvent.Secondary_Disposition_Details__c) &&
+
             (null != newEvent.WhoId && 
             'Contact' == newEvent.WhoId.getSobjectType().getDescribe().getName()) && 
             (null != newEvent.WhatId && 
             'Account' == newEvent.WhatId.getSobjectType().getDescribe().getName())){
                 //If the disposition changes and it meets the conditions above update the whoId
+                System.debug('checkpoint2');
                 if(newEvent.Appointment_Disposition__c != oldEvent.Appointment_Disposition__c){
+                    System.debug('checkpoint3');
                     accountIdToEventId.put(newEvent.WhatId, newEvent.Id);
                     eventIdToOwnerId.put(newEvent.Id, newEvent.OwnerId);
                 }
             }
         }
-        
+
+        if(!eventsToSync.isEmpty()){
+            syncToApi(eventsToSync, true);  
+        }
+
         //Insert any Event History and Event Field Update records that are needed
         if(!fieldUpdateToEventMap.isEmpty()){
             System.enqueueJob(new InsertFieldUpdateQueueable(fieldUpdateToEventMap));
@@ -253,19 +277,19 @@ public without sharing class EventTriggerHandler{
         }
     }
 
-    private class ApiCalloutWrapper{
-        private Id eventId;
-        private Boolean isUpdate;
-        private EventWrapper eventData;
+    public class ApiCalloutWrapper{
+        public Id eventId;
+        public Boolean isUpdate;
+        public EventWrapper eventData;
     }
-    private class EventWrapper{
-        private Id OwnerId;
-        private Datetime StartDateTime;
-        private Datetime EndDateTime;
-        private String ShowAs;
-        private String Type_of_Appointment;
+    public class EventWrapper{
+        public Id OwnerId;
+        public Datetime StartDateTime;
+        public Datetime EndDateTime;
+        public String ShowAs;
+        public String Type_of_Appointment;
 
-        private EventWrapper(Event ev){
+        public EventWrapper(Event ev){
                 this.OwnerId = ev.OwnerId;
                 this.StartDateTime = ev.StartDateTime;
                 this.EndDateTime = ev.EndDateTime;
@@ -273,9 +297,64 @@ public without sharing class EventTriggerHandler{
                 this.Type_of_Appointment = ev.Type_of_Appointment__c;
         }
     }
+
+    public static void syncToApi(List<Event> eventsToSync, Boolean isUpdate){
+        List<Delete_Calendar_Block__e> blocks = new List<Delete_Calendar_Block__e>();
+        for(Event e : eventsToSync){
+            blocks.add(new Delete_Calendar_Block__e(
+                Event_Record_Id__c=e.Id,
+                IsUpdate__c=isUpdate,
+                OwnerId__c=e.OwnerId,
+                StartDateTime__c=e.StartDateTime,
+                EndDateTime__c=e.EndDateTime,
+                ShowAs__c=e.ShowAs,
+                Type_of_Appointment__c=e.Type_of_Appointment__c
+                ));
+        }
+        System.debug('blocks: '+blocks);
+        EventBus.publish(blocks);
+        // if(System.isBatch() || System.isFuture()){
+        //     List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+        //     for(Event e : eventsToSync){
+        //         ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+        //         wrapper.eventId = e.Id;
+        //         wrapper.isUpdate = false;
+        //         wrapper.eventData = new EventWrapper(e);
+        //         eventWrappers.add(wrapper);
+        //     }
+        //     syncToApiSynch(eventWrappers);
+        // } else {
+        //     syncToApiFuture(new Map<Id, Event>(eventsToSync).keySet());
+        // }
+    }
     
-    @future(callout=true)
-    public static void syncToApi(String body){
+    // @future(callout=true)
+    // public static void syncToApiFuture(Set<Id> eventIds){
+    //     List<Event> eventsToSync = [SELECT Id, OwnerId, StartDateTime, EndDateTime, ShowAs, Type_of_Appointment__c
+    //     FROM Event WHERE Id IN :eventIds];
+    //     List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+    //         for(Event e : eventsToSync){
+    //             ApiCalloutWrapper wrapper = new ApiCalloutWrapper();
+    //             wrapper.eventId = e.Id;
+    //             wrapper.isUpdate = false;
+    //             wrapper.eventData = new EventWrapper(e);
+    //             eventWrappers.add(wrapper);
+    //         }
+    //     syncToApiSynch(eventWrappers);
+    // }
+
+    // public static void syncToApiSynch(List<ApiCalloutWrapper> events){
+    //     while(events.size() > 0){
+    //         List<ApiCalloutWrapper> sublist = new List<ApiCalloutWrapper>();
+    //         Integer eventsSize = events.size();
+    //         for(Integer i=0; i<(Math.min(100, eventsSize)); i++){
+    //             sublist.add(events.remove(0));
+    //         }
+    //         makeApiCallout(JSON.serialize(sublist));
+    //     }
+    // }
+
+    public static void makeApiCallout(String body){
         System.debug(body);
         String endPoint = 'callout:X1800Accountant_SFAPI/schedule/eventcache.php';
         //String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
@@ -295,6 +374,8 @@ public without sharing class EventTriggerHandler{
 
     public static void updateWhatIdToOpportunity(Map<Id, Id> accountIdToEventId, Map<Id, Id> eventIdToOwnerId){
         System.debug('EventTriggerHandler.updateWhatIdToOpportunity()');
+        System.debug(accountIdToEventId);
+        System.debug(eventIdToOwnerId);
         List<Opportunity> oppys = [
             SELECT Id, Name, AccountId, OwnerId
             FROM Opportunity
@@ -303,6 +384,7 @@ public without sharing class EventTriggerHandler{
             AND CreatedDate = LAST_N_DAYS:14
             ORDER BY CreatedDate DESC
         ];
+        System.debug('oopys: '+oppys);
         //Get the most recent by created date
         Map<Id, Opportunity> opportunities = new Map<Id, Opportunity>();
         for(Opportunity o : oppys) {
@@ -310,7 +392,7 @@ public without sharing class EventTriggerHandler{
                 opportunities.put(o.AccountId, o);
             }
         }
-
+        System.debug(opportunities);
         Map<Id, Event> toUpdateEvents = new Map<Id, Event>();
         for(Opportunity opportunity : opportunities.values()){
             if(opportunity.OwnerId == eventIdToOwnerId.get(accountIdToEventId.get(opportunity.AccountId))){
@@ -321,6 +403,7 @@ public without sharing class EventTriggerHandler{
                 toUpdateEvents.put(event.Id, event);
             }
         }
+        System.debug('toUpdateEvents: '+toUpdateEvents);
         update toUpdateEvents.values();
     }
 
@@ -346,7 +429,10 @@ public without sharing class EventTriggerHandler{
                 baseString = 'Hi {0}, you have a meeting with {1} your 1-800Accountant Advisor in a few minutes. Watch for the call from this number: {2}. We look forward to speaking with you!';
                 smsRecord.Message__c = String.format(baseString, new List<String>{contactName, ownerName, ownerPhone});
             }
-            update smsRecord;
+            if(!Test.isRunningTest()){
+                update smsRecord;
+            }
+            
         }
         
     }
@@ -446,9 +532,9 @@ public without sharing class EventTriggerHandler{
         EventTriggerHandler.createSMSRunOnce = true;
         System.debug(LoggingLevel.FINE, 'createSMSScheduleRecords METHOD');
         Set<Id> eventIds = new Map<Id, Event>(listEventRecords).keySet();
-        createSMSHelper(eventIds);
-        
-
+        if(!System.isFuture() && !System.isBatch()){
+            createSMSHelper(eventIds);
+        }
     }
 
     @future

@@ -232,6 +232,28 @@ private class EventTriggerHandler2Test {
         Test.stopTest();
     }
 
+    @IsTest 
+    public static void updateWhatIdTest(){
+        System.debug('updateWhatIdTest()');
+        Event ev = [SELECT Id FROM Event LIMIT 1];
+        Account acc = [SELECT Id FROM Account LIMIT 1];
+        Contact con = new Contact(AccountId=acc.Id, FirstName='Test', LastName='Con');
+        insert con;
+        Opportunity opp = new Opportunity(Name='Test', AccountId=acc.Id, StageName='New', CloseDate=Date.today());
+        insert opp;
+        ev.Type_of_Appointment__c = 'BNA';
+        ev.Appointment_Disposition__c = 'Consulted';
+        ev.Secondary_Disposition_Details__c = 'Sale';
+        ev.WhatId = acc.Id;
+        ev.WhoId = con.Id;
+        Test.startTest();
+        update ev;
+        Test.stopTest();
+        
+        //ev = [SELECT Id, WhatId FROM Event LIMIT 1];
+        //System.assertNotEquals(acc.Id, ev.WhatId);
+    }
+
     
 
 //    @isTest static void test_updateInvoicePaymentAmount () {
