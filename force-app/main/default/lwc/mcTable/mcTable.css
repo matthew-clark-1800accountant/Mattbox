@@ -1,0 +1,63 @@
+.timeslot-label {
+    --column-width: 240px;
+    padding: 8px;
+    gap: 8px;
+
+    width: var(--column-width);
+    height: 40px;
+
+    background: #FFFFFF;
+
+    border-left: thin solid gray;
+    align-self: end;
+    min-width: var(--column-width); 
+    max-height: fit-content;
+}
+
+.timeslot-row {
+    max-width:fit-content; 
+    overflow: hidden; 
+    align-self:end;
+}
+
+.pinned-row-list-item {
+    max-height: fit-content; 
+    overflow: auto;
+    border-bottom: rgb(229, 229, 229) solid thick;
+}
+
+.row-list-item {
+    height: calc(0.80 * (100vh - 300px)); 
+    max-height: fit-content; 
+    overflow: auto;
+    padding-bottom: 50px;
+}
+
+.view-selector {
+    width: 280px;
+}
+.date-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 16px;
+}
+
+.date-arrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 2px;
+}
+
+.table-container {
+    --table-width: 100px;
+    max-width:var(--table-width); 
+    background-color: white;
+}
+
+.rep-input {
+    --slds-c-input-color-border: white;
+}

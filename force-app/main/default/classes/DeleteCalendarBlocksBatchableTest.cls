@@ -25,6 +25,8 @@ public with sharing class DeleteCalendarBlocksBatchableTest {
         }
 
     @isTest static void deleteBlocks(){
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+
         Test.startTest();
         // DeleteCalendarBlocksBatchable bat = new DeleteCalendarBlocksBatchable(new List<Id>{UserInfo.getUserId()});
         // Database.executeBatch(bat);

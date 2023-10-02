@@ -18,7 +18,8 @@ public class eventNotifier implements Database.Batchable<sObject>, Database.Stat
     public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id,StartDateTime,OwnerId,whoId FROM event where StartDateTime >= today AND StartDateTime <= tomorrow ' +
-            'AND (type_of_appointment__c LIKE \'Tax Savings Analysis\' OR type_of_appointment__c LIKE \'BNA\' OR type_of_appointment__c LIKE \'Formation Consultation\') AND Appointment_Disposition__c != \'Rescheduled\' AND Appointment_Disposition__c != \'Cancelled\' ' 
+            'AND (type_of_appointment__c LIKE \'Tax Savings Analysis\' OR type_of_appointment__c LIKE \'BNA\' OR type_of_appointment__c LIKE \'Formation Consultation\') '+
+            'AND Appointment_Disposition__c != \'Rescheduled\' AND Appointment_Disposition__c != \'Cancelled\' AND (NOT Subject LIKE \'%Live%\')' 
         );
     }
     // process each batch of records    

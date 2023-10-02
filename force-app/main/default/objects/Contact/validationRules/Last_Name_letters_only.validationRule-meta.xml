@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Last_Name_letters_only</fullName>
-    <active>false</active>
-    <errorConditionFormula>ISNUMBER(FirstName)</errorConditionFormula>
-    <errorMessage>Enter a valid Last Name (only letters)</errorMessage>
-</ValidationRule>

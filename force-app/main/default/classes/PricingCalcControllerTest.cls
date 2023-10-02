@@ -9,7 +9,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -18,7 +18,7 @@ private class PricingCalcControllerTest {
         
         }
         
-        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
         //System.debug(accounts.size());
         //if (accounts.size() > 0) {
         //    testID = accounts[0].Id;
@@ -26,7 +26,7 @@ private class PricingCalcControllerTest {
         //}
         System.debug(testID);
         
-        // create opportunity
+        // create test opportunity
         Opportunity op = new Opportunity();
         op.AccountId = testID;
         op.Name = 'Test Opportunity';
@@ -111,6 +111,9 @@ private class PricingCalcControllerTest {
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
         
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
         for(PricingCalcController.myWrapperClass acItem : controller.acList){
 
             acItem.doIt = true;
@@ -146,7 +149,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -155,7 +158,7 @@ private class PricingCalcControllerTest {
         
         }
         
-        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
         //System.debug(accounts.size());
         //if (accounts.size() > 0) {
         //    testID = accounts[0].Id;
@@ -248,6 +251,9 @@ private class PricingCalcControllerTest {
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
         
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
         for(PricingCalcController.myWrapperClass acItem : controller.acList){
 
             acItem.doIt = false;
@@ -279,7 +285,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -288,7 +294,7 @@ private class PricingCalcControllerTest {
         
         }
         
-        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
         //System.debug(accounts.size());
         //if (accounts.size() > 0) {
         //    testID = accounts[0].Id;
@@ -381,6 +387,9 @@ private class PricingCalcControllerTest {
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
         
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
         //for(PricingCalcController.myWrapperClass acItem : controller.acList){
 
         //    acItem.doIt = true;
@@ -407,7 +416,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -416,7 +425,7 @@ private class PricingCalcControllerTest {
         
         }
         
-        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
         //System.debug(accounts.size());
         //if (accounts.size() > 0) {
         //    testID = accounts[0].Id;
@@ -509,6 +518,9 @@ private class PricingCalcControllerTest {
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
         
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
         for(PricingCalcController.myWrapperClass acItem : controller.acList){
 
             acItem.doIt = true;
@@ -532,7 +544,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -541,7 +553,7 @@ private class PricingCalcControllerTest {
         
         }
         
-        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
         //System.debug(accounts.size());
         //if (accounts.size() > 0) {
         //    testID = accounts[0].Id;
@@ -634,6 +646,9 @@ private class PricingCalcControllerTest {
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
         
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
         for(PricingCalcController.myWrapperClass acItem : controller.acList){
 
             acItem.doIt = true;
@@ -657,7 +672,7 @@ private class PricingCalcControllerTest {
         Test.startTest();
         
         // get account
-        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' LIMIT 1];
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
             
         for(Account aItem : accounts){
             System.debug('found');
@@ -775,6 +790,9 @@ private class PricingCalcControllerTest {
         
         controller.doNonProfitBookkeeping = false;
         controller.nonProfitBookkeepingQuantity = 1;
+        
+        controller.doNonProfitBackBookkeeping = false;
+        controller.nonProfitBackBookkeepingQuantity = 1;
         
         //controller.doSubmit();
         

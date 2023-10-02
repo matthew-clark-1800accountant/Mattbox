@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
-        <fullName>Case_Awaiting_Customer_Response</fullName>
-        <field>Status</field>
-        <literalValue>Awaiting Customer Response</literalValue>
-        <name>Case: Awaiting Customer Response</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Incoming_Email</fullName>
         <field>Status</field>
         <literalValue>New Email Received</literalValue>
@@ -35,17 +24,6 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ReOpen_Case</fullName>
-        <field>Status</field>
-        <literalValue>New Email Received</literalValue>
-        <name>ReOpen Case</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Replied_to_Email</fullName>
         <field>Status</field>
         <literalValue>Closed</literalValue>
@@ -56,39 +34,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
-    <rules>
-        <fullName>Reopen Case on Email Receipt</fullName>
-        <actions>
-            <name>ReOpen_Case</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Set Case Status on Sent Email %28Support %2F Billing - closes Case%29</fullName>
-        <actions>
-            <name>Case_Awaiting_Customer_Response</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Billing,Support</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
     <rules>
         <fullName>Update Case status - Incoming</fullName>
         <actions>

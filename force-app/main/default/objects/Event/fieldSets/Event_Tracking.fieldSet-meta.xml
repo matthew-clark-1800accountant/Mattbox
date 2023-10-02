@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Event_Tracking</fullName>
-    <description>Original Assigned to and start date fields on the event page</description>
-    <label>Event Tracking</label>
-</FieldSet>

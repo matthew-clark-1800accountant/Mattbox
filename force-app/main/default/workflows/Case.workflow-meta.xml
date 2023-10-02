@@ -73,6 +73,18 @@
         <template>Client_Reassignments/New_Internal_Case_Notification</template>
     </alerts>
     <alerts>
+        <fullName>Client_Inquiry_Chargeback_Email_Alert</fullName>
+        <description>Send if Sub-Type Category is Chargeback or Prevention Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>chargebacks@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Billing/Client_Inquiry_Chargeback</template>
+    </alerts>
+    <alerts>
         <fullName>Eastern_1</fullName>
         <description>Eastern #1</description>
         <protected>false</protected>
@@ -124,17 +136,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Client_Reassignments/LZ_LP_Appt_No_owner</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Accounting_Case_Assigned_to_you</fullName>
-        <description>New Accounting Case -Assigned to you</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Client_Reassignments/New_Accounting_Case_Assigned_to_you</template>
     </alerts>
     <alerts>
         <fullName>New_Accounting_Case_E_C</fullName>
@@ -278,123 +279,6 @@
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Client_Reassignments/New_Bookkeeping_Case</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Case_Eastern_Pacific</fullName>
-        <description>New Case (Eastern / Pacific)</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>egajadhar@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ekukaj@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffreyyu@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jesquivias@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jmeller@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ssancho@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>teamleads@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Client_Reassignments/New_Case</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Case_No_Zone</fullName>
-        <description>New Case- No Zone</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>egajadhar@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ekukaj@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffreyyu@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jesquivias@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jmeller@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ssancho@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>teamleads@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Client_Reassignments/New_Case_No_Zone</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Case_Pacific</fullName>
-        <description>New Case (Pacific)</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>egajadhar@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ekukaj@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffreyyu@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jesquivias@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jmeller@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ssancho@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>teamleads@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Client_Reassignments/New_Case</template>
     </alerts>
     <alerts>
         <fullName>New_Dedicated_Accoutant</fullName>
@@ -611,17 +495,6 @@
         <template>Client_Reassignments/Payroll_Off_boarding_Case</template>
     </alerts>
     <alerts>
-        <fullName>Reassigned_Case</fullName>
-        <description>Reassigned Case</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Client_Reassignments/SF_Client_Reassigned_to_you</template>
-    </alerts>
-    <alerts>
         <fullName>Reassignment</fullName>
         <ccEmails>sfisher@1800accountant.com</ccEmails>
         <ccEmails>AdvisoryManagement@1800accountant.com</ccEmails>
@@ -835,73 +708,6 @@
         <template>Follow_Up_Templates/X1_800Accountant_Reviews</template>
     </alerts>
     <fieldUpdates>
-        <fullName>Cancellation_Q</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Cancellation_Queue</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Cancellation Q</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancellation_Set_Billing_Support_Rep</fullName>
-        <description>Sets the billing support rep</description>
-        <field>Billing_Support_Rep__c</field>
-        <lookupValue>kboles@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Cancellation-Set Billing Support Rep</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancellation_Set_Status_Closed_Cancelled</fullName>
-        <description>Sets the case status to closed-cancelled</description>
-        <field>Status</field>
-        <literalValue>Closed-Cancelled</literalValue>
-        <name>Cancellation-Set Status: Closed Cancel</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancellation_Set_Status_Refund_Needed</fullName>
-        <description>Sets the case status to refund needed</description>
-        <field>Status</field>
-        <literalValue>Refund Needed</literalValue>
-        <name>Cancellation-Set Status: Refund Needed</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancellation_Set_Status_Requested</fullName>
-        <description>Sets the case status to &apos;Cancellation Requested&apos;</description>
-        <field>Status</field>
-        <literalValue>Cancellation Requested</literalValue>
-        <name>Cancellation-Set Status: Requested</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancellation_Set_Status_Save_Attempt</fullName>
-        <description>Sets the case status to save attempt</description>
-        <field>Status</field>
-        <literalValue>Save Attempt</literalValue>
-        <name>Cancellation-Set Status: Save Attempt</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Case_original_owner</fullName>
         <field>Original_Account_Owner__c</field>
         <formula>Account.Owner.FirstName + &quot; &quot; + Account.Owner.LastName</formula>
@@ -922,17 +728,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>On_Submitted_route_to_Q</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Submitted_Q</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>On Submitted, route to Q</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Payments_Last_180_Days</fullName>
         <description>Payments-Last 180 Days field update.</description>
         <field>Payments_Last_180_days__c</field>
@@ -940,38 +735,6 @@
         <name>Payments - Last 180 Days</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Payroll_task_type</fullName>
-        <field>Task_Type__c</field>
-        <literalValue>Payroll</literalValue>
-        <name>Payroll task type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Review_Q</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Review_Q</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Review Q</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Route_to_Assignment_Q</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Assignment_Q</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Route to Assignment Q</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -987,63 +750,12 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Team_Member_Save_Attempt</fullName>
-        <field>Status</field>
-        <literalValue>Team Member Save Attempt</literalValue>
-        <name>Team Member Save Attempt</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Cancellation_Queue</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Update Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_Subject_with_Case_Type</fullName>
         <field>Subject</field>
         <formula>&quot;Email: &quot; + LEFT(TEXT(Type),25)</formula>
         <name>Update Subject with Case Type</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_subject_from_Description</fullName>
-        <field>Subject</field>
-        <formula>LEFT( Description ,254)</formula>
-        <name>Update subject from Description</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>payroll</fullName>
-        <field>Task_Type__c</field>
-        <literalValue>Payroll</literalValue>
-        <name>payroll</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>save_attempt_made</fullName>
-        <field>Save_Attempt_made_by_team__c</field>
-        <literalValue>1</literalValue>
-        <name>save attempt made</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1075,10 +787,16 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Bookkeeping Escalation,Bookkeeping Reassignment,Payroll Off-Boarding</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>CAS Management</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -1094,31 +812,6 @@
             <operation>equals</operation>
             <value>Closed-Refund,Closed-Cancelled</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Cancellation Q</fullName>
-        <actions>
-            <name>Cancellation_Q</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cancellation</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Cancellation-Auto-Save Attempt</fullName>
-        <actions>
-            <name>Cancellation_Set_Status_Save_Attempt</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Updates status to save attempt and creates a task if the service package start date is less than 90 days ago.</description>
-        <formula>RecordType.Name = &apos;Cancellation&apos; &amp;&amp; Service_Package__r.Bill62__Start_Date__c &gt;= TODAY()-90</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -1158,7 +851,7 @@
             <name>Cancellation_Closed_Saved</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
@@ -1174,115 +867,19 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Subscription Review</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Subscription Review</value>
+        </criteriaItems>
         <description>Actions taken when a case record type is set to cancellation.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Case Closed- Customer Complaints</fullName>
-        <actions>
-            <name>Case_has_been_Closed</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Client Escalation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Escalation Case - Eastern%2FCentral</fullName>
-        <actions>
-            <name>New_Case_Eastern_Pacific</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Eastern</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer,Client Escalation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Central</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Escalation Case - No Zone</fullName>
-        <actions>
-            <name>New_Case_No_Zone</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer,Client Escalation</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Escalation Case - Pacific</fullName>
-        <actions>
-            <name>New_Case_Pacific</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Pacific</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer,Client Escalation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Mountain</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Create subject from Desk</fullName>
-        <actions>
-            <name>Update_subject_from_Description</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Email</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Finicity Support Overdue</fullName>
@@ -1326,7 +923,7 @@
             <name>LZ_LP_Appt_No_owner</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Subject</field>
             <operation>equals</operation>
@@ -1335,22 +932,12 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Management Escalation Case</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Priority</field>
-            <operation>equals</operation>
-            <value>Management Escalation</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Mark Case Closed By</fullName>
         <actions>
             <name>Mark_Case_Closed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.IsClosed</field>
             <operation>equals</operation>
@@ -1359,68 +946,8 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>New Accounting Case - E%2FC</fullName>
-        <actions>
-            <name>New_Accounting_Case_E_C</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Accounting</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Eastern,Central</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Accounting Case - No Zone</fullName>
-        <actions>
-            <name>New_Accounting_Case_No_Zone</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Accounting</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Accounting Case - P</fullName>
-        <actions>
-            <name>New_Accounting_Case_P</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Accounting</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Mountain,Pacific</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>New Accounting Case assigned to you</fullName>
-        <actions>
-            <name>New_Accounting_Case_Assigned_to_you</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
@@ -1440,22 +967,23 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR (2 AND 3)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Bookkeeping Escalation,Bookkeeping Reassignment,Bookkeeping</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Cancellation Case</fullName>
-        <active>false</active>
         <criteriaItems>
-            <field>Case.RecordTypeId</field>
+            <field>Case.Type</field>
             <operation>equals</operation>
-            <value>Cancellation</value>
+            <value>CAS Management</value>
         </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
+        <criteriaItems>
+            <field>Case.Sub_Type__c</field>
+            <operation>equals</operation>
+            <value>Bookkeeping</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>New QA Case</fullName>
@@ -1478,6 +1006,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1486,6 +1015,11 @@
         <criteriaItems>
             <field>Account.Mitel_Team__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Tax Compliance</value>
         </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -1531,9 +1065,15 @@
             <name>Payments_Last_180_Days</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
+        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Subscription Review</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
             <operation>equals</operation>
             <value>Subscription Review</value>
         </criteriaItems>
@@ -1547,67 +1087,31 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
             <value>Payroll Off-Boarding</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Q%3A Move to To Be Assigned</fullName>
-        <actions>
-            <name>Route_to_Assignment_Q</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
         <criteriaItems>
-            <field>Case.Workflow_Status__c</field>
+            <field>Case.Type</field>
             <operation>equals</operation>
-            <value>To Be Assigned</value>
+            <value>CAS Management</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Q%3A Route on Submitted</fullName>
-        <actions>
-            <name>On_Submitted_route_to_Q</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
         <criteriaItems>
-            <field>Case.Workflow_Status__c</field>
+            <field>Case.Sub_Type__c</field>
             <operation>equals</operation>
-            <value>VTO Submitted</value>
+            <value>Payroll</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Sub_Type_Category__c</field>
+            <operation>equals</operation>
+            <value>Offboarding</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Reassigned Accountant</fullName>
-        <actions>
-            <name>Reassigned_Case</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Accountant Assigned</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Reassignment</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Reassigned Accountant- Client Notification</fullName>
-        <actions>
-            <name>New_Dedicated_Accoutant</name>
-            <type>Alert</type>
-        </actions>
         <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
@@ -1628,7 +1132,7 @@
             <name>Case_original_owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1637,83 +1141,30 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Reassignment Case - Eastern%2FCentral</fullName>
-        <actions>
-            <name>New_Reassignment_Caseec</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Eastern</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Central</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Reassignment</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Reassignment Case - No Zone</fullName>
-        <actions>
-            <name>Reassignment_Case_No_Zone</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Reassignment</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Reassignment Case - Pacific</fullName>
-        <actions>
-            <name>New_Reassignment_Case</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Pacific</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Time_Zone__c</field>
-            <operation>equals</operation>
-            <value>Mountain</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Reassignment</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Reassignment Cases</fullName>
         <actions>
             <name>Reassignment</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reassignment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Advisory</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Sub_Type__c</field>
+            <operation>equals</operation>
+            <value>Assignment Adjustment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Sub_Type_Category__c</field>
             <operation>equals</operation>
             <value>Reassignment</value>
         </criteriaItems>
@@ -1721,7 +1172,7 @@
     </rules>
     <rules>
         <fullName>Refunds - Last 30 Days</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.ClosedDate</field>
             <operation>notEqual</operation>
@@ -1734,26 +1185,12 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Retention %2F Package eval</fullName>
-        <actions>
-            <name>Update_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Retention / Package Evaluation</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SET Close Date</fullName>
         <actions>
             <name>SET_Close_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
@@ -1768,7 +1205,7 @@
             <name>Update_Subject_with_Case_Type</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Status</field>
             <operation>equals</operation>
@@ -1792,6 +1229,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1801,6 +1239,11 @@
             <field>Account.Mitel_Team__c</field>
             <operation>startsWith</operation>
             <value>Team Central</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Tax Compliance</value>
         </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -1812,6 +1255,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1821,6 +1265,11 @@
             <field>Account.Mitel_Team__c</field>
             <operation>startsWith</operation>
             <value>Team Eastern #1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Tax Compliance</value>
         </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -1832,6 +1281,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1841,6 +1291,11 @@
             <field>Account.Mitel_Team__c</field>
             <operation>startsWith</operation>
             <value>Team Eastern #2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Tax Compliance</value>
         </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -1852,6 +1307,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1862,22 +1318,13 @@
             <operation>startsWith</operation>
             <value>Team Eastern #3</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Tax Compliance</value>
+        </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Team Member Save Attempt checkbox</fullName>
-        <actions>
-            <name>save_attempt_made</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( 
-ISCHANGED(Status  ), 
-ISPICKVAL(PRIORVALUE(Status   ),&quot;Team Member Save Attempt&quot; ), 
-ISPICKVAL((Status  ),&quot;Closed-Saved&quot; ) 
-)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Team Pacific %231</fullName>
@@ -1886,6 +1333,7 @@ ISPICKVAL((Status  ),&quot;Closed-Saved&quot; )
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1896,38 +1344,12 @@ ISPICKVAL((Status  ),&quot;Closed-Saved&quot; )
             <operation>startsWith</operation>
             <value>Team Pacific #1</value>
         </criteriaItems>
-        <description>Email alert for Case Assignment Changes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Team Pacific %232</fullName>
-        <actions>
-            <name>Pacific_2</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
         <criteriaItems>
-            <field>Case.RecordTypeId</field>
+            <field>Case.Type</field>
             <operation>equals</operation>
-            <value>Accounting,Client Escalation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Mitel_Team__c</field>
-            <operation>startsWith</operation>
-            <value>Team Pacific #2</value>
+            <value>Tax Compliance</value>
         </criteriaItems>
         <description>Email alert for Case Assignment Changes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
-    <tasks>
-        <fullName>Associate_a_Service_Package</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>Please assign this case to a service package.</description>
-        <dueDateOffset>1</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>High</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>Associate a Service Package</subject>
-    </tasks>
 </Workflow>

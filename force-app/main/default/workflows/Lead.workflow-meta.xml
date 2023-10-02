@@ -25,6 +25,39 @@
         <template>Internal/Alert_Unassigned_Lead</template>
     </alerts>
     <alerts>
+        <fullName>Bad_Number_Disp_TSA_Lead</fullName>
+        <description>Bad Number Disp TSA Lead</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Bad_Number_Disposition_TSA</template>
+    </alerts>
+    <alerts>
+        <fullName>Bad_Number_Lead_Status</fullName>
+        <description>Bad Number Lead Status</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Bad_Number_Lead_Status</template>
+    </alerts>
+    <alerts>
+        <fullName>Bad_Number_Lead_Status_SDR</fullName>
+        <description>Bad Number Lead Status SDR</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Bad_Number_Lead_Status_SDR</template>
+    </alerts>
+    <alerts>
         <fullName>CBC_Scheduled_Lead</fullName>
         <description>CBC Scheduled Lead</description>
         <protected>false</protected>
@@ -69,20 +102,6 @@
         <template>Internal/Dissolution_Initiative</template>
     </alerts>
     <alerts>
-        <fullName>EIN_Sales</fullName>
-        <ccEmails>inbound@1800accountant.com</ccEmails>
-        <ccEmails>1800accountant@happyhourmediagroup.com</ccEmails>
-        <ccEmails>onlinemarketing@1800accountant.com</ccEmails>
-        <description>EIN Sales Lead</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>dsavoy@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>EIN/EIN_New_Sales</template>
-    </alerts>
-    <alerts>
         <fullName>EIN_Sales_Notify</fullName>
         <ccEmails>froyals@1800accountant.com</ccEmails>
         <description>EIN Sales</description>
@@ -93,22 +112,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>EIN/EIN_New_Sales</template>
-    </alerts>
-    <alerts>
-        <fullName>Email_Notice_for_MVF</fullName>
-        <description>Email Notice for MVF</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>Tier_1</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
-            <recipient>jjones@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>X1800_Sales/New_MVF_Lead</template>
     </alerts>
     <alerts>
         <fullName>Equip_Notification_Lead</fullName>
@@ -127,8 +130,8 @@
         <description>Facebook &amp; LinkedIn Email Notice</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Paid_Digital</recipient>
-            <type>group</type>
+            <recipient>sgraden@1800accountant.com</recipient>
+            <type>user</type>
         </recipients>
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -144,10 +147,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dlestoric@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>ecaprio@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
@@ -156,27 +155,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jjones@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>jkeenan@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mcashman@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>spendley@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -243,23 +222,24 @@
         <ccEmails>partnerships@1800accountant.com</ccEmails>
         <description>New Lead-D&amp;B Partnership</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Marketing/New_Lead_D_B</template>
     </alerts>
     <alerts>
-        <fullName>New_Lead_in_Dead_Lead_Q</fullName>
-        <description>New Lead in Dead Lead Q</description>
+        <fullName>New_Lead_Email_Notification_Immediate_Call</fullName>
+        <description>New Lead Email Notification-Immediate Call</description>
         <protected>false</protected>
         <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
+            <recipient>Paid_Digital</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>aquiroz@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Internal/New_Lead_in_Dead_Lead_Q</template>
+        <senderAddress>salesforce@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/New_Lead_Notification_Immediate_Action</template>
     </alerts>
     <alerts>
         <fullName>New_MyCompanyWorks_Lead</fullName>
@@ -284,15 +264,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>anthonyk@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bpack@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dlestoric@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -301,10 +273,6 @@
         </recipients>
         <recipients>
             <recipient>froyals@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -319,47 +287,8 @@
             <recipient>jwade@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>mcashman@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mstephens@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rgellert@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>X1800_Sales/New_Partner_Leads</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Partnership_Lead</fullName>
-        <description>New Partnership Lead</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>dsavoy@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Marketing/Partnership_Notification</template>
-    </alerts>
-    <alerts>
-        <fullName>New_Partnership_Lead_Sprout</fullName>
-        <ccEmails>entitysales@1800accountant.com</ccEmails>
-        <description>New Partnership Lead-Sprout</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>EIN/Sprout</template>
     </alerts>
     <alerts>
         <fullName>New_Sam_s_Club_Lead</fullName>
@@ -384,10 +313,6 @@
             <recipient>bpack@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Administrative/New_Tax_App_Lead</template>
@@ -406,35 +331,14 @@
         <ccEmails>leads@clientbooks.com</ccEmails>
         <description>New Website Email Notification-ClientBooks</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>dsavoy@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Internal/New_CB_Lead_Notification</template>
     </alerts>
     <alerts>
-        <fullName>New_Website_Email_Notification_EntityFormation</fullName>
-        <description>New Website Email Notification-Entity Formation</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>bmcmahel@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dsavoy@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Internal/New_Lead_Notification</template>
-    </alerts>
-    <alerts>
         <fullName>New_mailer_leads</fullName>
         <ccEmails>inbound@1800accountant.com</ccEmails>
         <ccEmails>salesmanagers@1800accountant.com</ccEmails>
-        <ccEmails>hera.soh@1800accountant.com</ccEmails>
         <description>New mailer leads</description>
         <protected>false</protected>
         <recipients>
@@ -445,16 +349,15 @@
         <template>unfiled$public/New_Mailer_Accounts</template>
     </alerts>
     <alerts>
-        <fullName>OpenSky_Leads</fullName>
-        <ccEmails>twhiton@1800accountant.com</ccEmails>
-        <description>OpenSky Leads</description>
+        <fullName>Newtek_Lead_Notification</fullName>
+        <description>Newtek Lead Notification</description>
         <protected>false</protected>
         <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
+            <recipient>lvelaquez@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/OpenSky_Leads</template>
+        <template>Internal/New_Lead_Notification</template>
     </alerts>
     <alerts>
         <fullName>Outbound_Email_with_Appointment_Information</fullName>
@@ -473,10 +376,6 @@
         <ccEmails>partnerships@1800accountant.com</ccEmails>
         <description>Partner Page Refer</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>EIN/Sprout</template>
     </alerts>
@@ -491,6 +390,15 @@
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>X1800_Sales/New_Payroll_Lead</template>
+    </alerts>
+    <alerts>
+        <fullName>SDR_Manager_New_Lead_Alert</fullName>
+        <ccEmails>dkraig@1800accountant.com</ccEmails>
+        <description>SDR Manager New Lead Alert</description>
+        <protected>false</protected>
+        <senderAddress>salesforce@1800accountant.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>X1800_Sales/New_Tier_1_Lead</template>
     </alerts>
     <alerts>
         <fullName>Survey_Webinar_Lead</fullName>
@@ -515,14 +423,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dsavoy@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffreyyu@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>jesquivias@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
@@ -530,12 +430,19 @@
             <recipient>jmeller@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Marketing/TaxSmartNotification</template>
+    </alerts>
+    <alerts>
+        <fullName>Tax_Savings_Analysis_Bad_Number</fullName>
+        <description>Tax Savings Analysis Bad Number</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>LeadTemplates/Bad_Number_1_1_1583523477791</template>
     </alerts>
     <alerts>
         <fullName>Tier_1_Email_Notice</fullName>
@@ -549,17 +456,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>X1800_Sales/New_Tier_1_Lead</template>
     </alerts>
-    <fieldUpdates>
-        <fullName>Assign_to_General_Queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>X4_Week_Transfer_Q</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Assign to General Queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
     <fieldUpdates>
         <fullName>BTP_Client_Zuora_Rule_Lead</fullName>
         <field>BTP_Client__c</field>
@@ -578,16 +474,6 @@
         <name>Bad Survey</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>CAP_Pitched_Date_Time</fullName>
-        <field>CAP_Pitched_Date_Time__c</field>
-        <formula>NOW()</formula>
-        <name>CAP Pitched Date/Time</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -614,27 +500,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Date</fullName>
-        <field>Date_Sold__c</field>
-        <formula>NOW()</formula>
-        <name>Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dead_Leads</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Dead_Leads</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Dead Leads</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Dissolutions</fullName>
         <field>OwnerId</field>
         <lookupValue>Dissolution_Queue</lookupValue>
@@ -652,47 +517,6 @@
         <name>Distribute Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Equipment</fullName>
-        <description>reminder to update equipment field</description>
-        <field>Equipment__c</field>
-        <formula>&quot;COMPLETE EQUIPMENT&quot;</formula>
-        <name>Equipment</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>LZ_Lead_Source_to_Dissolution</fullName>
-        <field>LeadSource</field>
-        <literalValue>LZ - Dissolution</literalValue>
-        <name>LZ Lead Source to Dissolution</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>LZ_Lead_Source_to_LegalPlan</fullName>
-        <field>LeadSource</field>
-        <literalValue>LegalZoom</literalValue>
-        <name>LZ Lead Source to LegalPlan</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Lead_Source_to_Florida_Reg</fullName>
-        <field>LeadSource</field>
-        <literalValue>Florida Registrations</literalValue>
-        <name>Lead Source to Florida Reg</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -726,46 +550,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Make_Company_out_of_Fname_Lname</fullName>
-        <field>Company</field>
-        <formula>FirstName  + &quot; &quot; + LastName</formula>
-        <name>Make Company out of Fname / Lname</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Merchant_1_1</fullName>
-        <field>Merchant_Sales_Status__c</field>
-        <literalValue>Pitched</literalValue>
-        <name>Merchant 1-1</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Merchant_Sold_Date</fullName>
-        <field>Date_Sold__c</field>
-        <formula>NOW()</formula>
-        <name>Merchant Sold Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Pitched_1_1_Attended_Lead</fullName>
-        <field>X1_1_Attended__c</field>
-        <literalValue>1</literalValue>
-        <name>Pitched - 1-1 Attended - Lead</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Pitched_By</fullName>
         <field>Pitched__c</field>
         <formula>LastModifiedBy.FirstName &amp;&quot; &quot;&amp; LastModifiedBy.LastName</formula>
@@ -780,16 +564,6 @@
         <field>Pitched_by_Manager__c</field>
         <formula>TEXT( LastModifiedBy.Sales_Team__c )</formula>
         <name>Pitched By Manager L</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Pitched_CAP</fullName>
-        <field>CAP_Rep__c</field>
-        <formula>LastModifiedBy.FirstName &amp;&quot; &quot;&amp; LastModifiedBy.LastName</formula>
-        <name>Pitched CAP</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -816,92 +590,11 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Remove_Email</fullName>
-        <field>Email</field>
-        <name>Remove Email</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Remove_Phone</fullName>
-        <field>Phone</field>
-        <name>Remove Phone</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SMS_Opt_Out</fullName>
         <description>Selects the SMS Opt Out button as TRUE</description>
         <field>SMS_Opt_Out__c</field>
         <literalValue>1</literalValue>
         <name>SMS Opt Out</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Send_Lead_to_General_Lead_Queue</fullName>
-        <description>Change the owner of the lead to the General Lead Queue</description>
-        <field>OwnerId</field>
-        <lookupValue>General_Lead_Queue</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Send Lead to General Lead Queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Sold</fullName>
-        <field>Merchant_Sales_Status__c</field>
-        <literalValue>Sold</literalValue>
-        <name>Sold</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Sync_to_Marketo_lead</fullName>
-        <field>Sync_to_Marketo__c</field>
-        <literalValue>1</literalValue>
-        <name>Sync to Marketo - lead</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Tracking_Lead_Source</fullName>
-        <field>Tracking_Lead_Source__c</field>
-        <formula>TEXT(PRIORVALUE(  LeadSource ))</formula>
-        <name>Tracking Lead Source</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Uncheck_Hidden_Box</fullName>
-        <field>Vonage_Hidden_Dialer_Call_Count__c</field>
-        <literalValue>0</literalValue>
-        <name>Uncheck Hidden Box</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Uncheck_Marketo_Sync</fullName>
-        <description>Uncheck the Sync to Marketo when Lead Status = Do Not Call</description>
-        <field>Sync_to_Marketo__c</field>
-        <literalValue>0</literalValue>
-        <name>Uncheck Marketo Sync</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -923,39 +616,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_Owner_to_Queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Online_Marketing</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Update Owner to Queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_from_DNR</fullName>
-        <field>OwnerId</field>
-        <lookupValue>Online_Marketing</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Update from DNR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_to_General_Lead_Queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>genleadqueue@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Update to General Lead Queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_to_Online_Marketing_Queue</fullName>
         <description>Update the Lead Owner to the Online Marketing Queue</description>
         <field>OwnerId</field>
@@ -964,28 +624,6 @@
         <name>Update to Online Marketing Queue</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_to_Online_Mkt_Queue</fullName>
-        <description>Put the Lead back into the Online Marketing Queue.</description>
-        <field>OwnerId</field>
-        <lookupValue>Online_Marketing</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Update to Online Mkt Queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Vonage_Increment_Count</fullName>
-        <field>Vonage_Dialer_Call_Count__c</field>
-        <formula>Vonage_Dialer_Call_Count__c +1</formula>
-        <name>Vonage Increment Count</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1015,7 +653,7 @@
             <name>Pitched_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.X1_1_Attended__c</field>
             <operation>equals</operation>
@@ -1026,7 +664,7 @@
     </rules>
     <rules>
         <fullName>1-1 No Show Lead</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Status</field>
             <operation>equals</operation>
@@ -1057,32 +695,12 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>BARK Notification</fullName>
-        <actions>
-            <name>Tier_1_Email_Notice</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <criteriaItems>
-            <field>Lead.LeadSource</field>
-            <operation>equals</operation>
-            <value>Bark</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.LeadSource</field>
-            <operation>equals</operation>
-            <value>MVF Global</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>BTP Client %28Zuora Rule%29 Lead</fullName>
         <actions>
             <name>BTP_Client_Zuora_Rule_Lead</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Lead_Type_New__c</field>
             <operation>includes</operation>
@@ -1096,71 +714,13 @@
             <name>Bad_Survey</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Status</field>
             <operation>equals</operation>
             <value>Bad Survey</value>
         </criteriaItems>
         <description>Sends bad survey results leads to a queue to be rescheduled for a 1-1</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Blank Company Name</fullName>
-        <actions>
-            <name>Make_Company_out_of_Fname_Lname</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Company</field>
-            <operation>equals</operation>
-            <value>None</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>CAP Pitched Date%2FTime Lead</fullName>
-        <actions>
-            <name>CAP_Pitched_Date_Time</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Pitched_Finance__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Records when CAP services are pitched</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>CAP Rep</fullName>
-        <actions>
-            <name>Pitched_CAP</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Pitched_Finance__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Records name of Sales Rep that pitches CAP services</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>CB trial - Sync to Marketo - lead</fullName>
-        <actions>
-            <name>Sync_to_Marketo_lead</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.ClientBooks_Trial__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -1181,47 +741,8 @@
         </actions>
         <active>true</active>
         <description>Synchronizes all leads with new SSO</description>
-        <formula>AND( 
-
-NOT(ISNULL(Email)), 
-
-OR( 
-ISNEW(),
-ISCHANGED(City), 
-ISCHANGED(Company), 
-ISCHANGED(Country), 
-ISCHANGED(Email), 
-ISCHANGED(FirstName), 
-ISCHANGED(IsConverted), 
-ISCHANGED(LastName), 
-ISCHANGED(OwnerId), 
-ISCHANGED(Phone), 
-ISCHANGED(PostalCode), 
-ISCHANGED(State), 
-ISCHANGED(Street) 
-) 
-
-)</formula>
+        <formula>AND(   NOT(ISNULL(Email)),   OR(  ISNEW(), ISCHANGED(City),  ISCHANGED(Company),  ISCHANGED(Country),  ISCHANGED(Email),  ISCHANGED(FirstName),  ISCHANGED(IsConverted),  ISCHANGED(LastName),  ISCHANGED(OwnerId),  ISCHANGED(Phone),  ISCHANGED(PostalCode),  ISCHANGED(State),  ISCHANGED(Street)  )   )</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dead Leads</fullName>
-        <actions>
-            <name>New_Lead_in_Dead_Lead_Q</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Dead_Leads</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Bad Number,Dupe,Do Not Call,Not Interested in CAP</value>
-        </criteriaItems>
-        <description>Move leads to the dead lead queue</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Dissolution Initiative</fullName>
@@ -1270,7 +791,7 @@ ISCHANGED(Street)
             <name>Distribute_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>User.ProfileId</field>
@@ -1283,55 +804,6 @@ ISCHANGED(Street)
             <value>MVF Global</value>
         </criteriaItems>
         <description>Updates the Distribute Date to today when a sales rep creates a lead.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Do Not Call List Privacy</fullName>
-        <actions>
-            <name>Remove_Email</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Remove_Phone</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Do Not Call</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>notEqual</operation>
-            <value>System Administrator</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>EIN Sales</fullName>
-        <actions>
-            <name>EIN_Sales_Notify</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND (2 or 3)</booleanFilter>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>equals</operation>
-            <value>EIN</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.CreatedById</field>
-            <operation>equals</operation>
-            <value>E API</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.CreatedById</field>
-            <operation>equals</operation>
-            <value>Portal API</value>
-        </criteriaItems>
-        <description>New EIN. Notification only goes out to Marketing when new lead is created.</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -1356,21 +828,6 @@ ISCHANGED(Street)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Email Opt Out</fullName>
-        <actions>
-            <name>Uncheck_Marketo_Sync</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Workflow for unchecking the Sync to Marketo box when a Lead is marked as an Email Opt Out</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Entity Formation Scheduled - Lead</fullName>
         <actions>
             <name>New_Entity_Formation_Appointment_Lead</name>
@@ -1386,7 +843,7 @@ ISCHANGED(Street)
             <name>Change_Owner</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Lead_Type_New__c</field>
             <operation>includes</operation>
@@ -1406,46 +863,6 @@ ISCHANGED(Street)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>InsideSales - 1 on 1 Attended</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Pitched</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>InsideSales - 1 on 1 Scheduled</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>1-1 Request</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>InsideSales - Webinar Attended</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Webinar Attended</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>InsideSales - Webinar Scheduled</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Webinar Requested</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Lead Client Portal Update</fullName>
         <active>true</active>
         <description>Updates lead info into client portal user</description>
@@ -1458,64 +875,13 @@ ISCHANGED(Street)
             <name>MVF_Lead_Owner_Update</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.LeadSource</field>
             <operation>equals</operation>
             <value>MVF Global</value>
         </criteriaItems>
         <description>When an MVF Global lead is created it assigns MVF Queue as owner.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Merchant 1-1</fullName>
-        <actions>
-            <name>Merchant_1_1</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Attended_Merchant_Sales_1_1__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Changes merchant status to pitched when 1-1 attended is true</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Merchant Sold</fullName>
-        <actions>
-            <name>Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Equipment</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Sold</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Merchant_Fulfillment__c</field>
-            <operation>equals</operation>
-            <value>Approved,Shipped,Active,Processing</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>MyCompanyWorks Lead</fullName>
-        <actions>
-            <name>New_MyCompanyWorks_Lead</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Partner Page Referral</value>
-        </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -1561,35 +927,6 @@ ISCHANGED(Street)
             <value>Buyer Corp Opt In</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>New MailerLeads</fullName>
-        <actions>
-            <name>New_mailer_leads</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.LeadSource</field>
-            <operation>equals</operation>
-            <value>1-800Accountant</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Mailer Letter,Mailer Postcard</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Partner Leads</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Partner Page Referral,Live Plan Referral,Dissolution Referral,Partner Referral</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>New Partner Leads - notification</fullName>
@@ -1643,11 +980,7 @@ ISCHANGED(Street)
     </rules>
     <rules>
         <fullName>New Partnership Notification</fullName>
-        <actions>
-            <name>New_Partnership_Lead</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2 Or 3</booleanFilter>
         <criteriaItems>
             <field>Lead.Lead_Type_New__c</field>
@@ -1669,11 +1002,7 @@ ISCHANGED(Street)
     </rules>
     <rules>
         <fullName>New Partnership-Sprout</fullName>
-        <actions>
-            <name>New_Partnership_Lead_Sprout</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 or 2</booleanFilter>
         <criteriaItems>
             <field>Lead.LeadSource</field>
@@ -1703,57 +1032,12 @@ ISCHANGED(Street)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>New Web ClientBk Lead Notification</fullName>
-        <actions>
-            <name>New_Website_Email_Notification_ClientBooks</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.LeadSource</field>
-            <operation>equals</operation>
-            <value>ClientBooks</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Online Marketing</fullName>
-        <actions>
-            <name>Update_to_Online_Marketing_Queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND (2 OR 3) AND 4</booleanFilter>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>notEqual</operation>
-            <value>1-1 Request,Qualified,Bad Number,Not Interested,Dupe,Do Not Call</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.LeadSource</field>
-            <operation>equals</operation>
-            <value>1-800Accountant</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.Lead_Source_New__c</field>
-            <operation>equals</operation>
-            <value>1-800Accountant</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Get Started,Entity Formation,Call in,Bookkeeping Services,1800Acct Homepage,Accounting Services,1-800Accountant Registration,Tax Services,SMB Needs Analysis,Payroll,Paid Digital,Paid Digital Call</value>
-        </criteriaItems>
-        <description>WF to ensure the Online Marketing Leads get back into the Online Marketing Queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Online Marketing Queue Owner</fullName>
         <actions>
             <name>Update_to_Online_Marketing_Queue</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
         <criteriaItems>
             <field>Lead.Status</field>
@@ -1779,11 +1063,7 @@ ISCHANGED(Street)
     </rules>
     <rules>
         <fullName>OpenSky Leads</fullName>
-        <actions>
-            <name>OpenSky_Leads</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.LeadSource</field>
             <operation>equals</operation>
@@ -1792,68 +1072,16 @@ ISCHANGED(Street)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Partner Page</fullName>
-        <actions>
-            <name>Partner_Page_Refer</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Lead_Type__c</field>
-            <operation>contains</operation>
-            <value>Partner Page Referral,Referral</value>
-        </criteriaItems>
-        <description>Partner Page Ref</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Remote SDR</fullName>
         <actions>
             <name>Remote_SDR</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Lead_Type_New__c</field>
             <operation>includes</operation>
             <value>Remote SDR</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Sales Survey 1-1 - Lead Trigger</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.X1_1_Attended__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.X1_1_Scheduled__c</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.Pilot_Group__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Sales Survey Webinar - Lead</fullName>
-        <actions>
-            <name>Survey_Webinar_Lead</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Status</field>
-            <operation>equals</operation>
-            <value>Webinar Attended</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.Pilot_Group__c</field>
-            <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -1881,51 +1109,12 @@ ISCHANGED(Street)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Send Lead to General Lead Queue</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Distribute_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Send leads to the General Lead Queue when the distribution date reaches 14 days.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Send_Lead_to_General_Lead_Queue</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Lead.Distribute_Date__c</offsetFromField>
-            <timeLength>14</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Sprout Leads to Online</fullName>
-        <actions>
-            <name>Update_Owner_to_Queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 or 2</booleanFilter>
-        <criteriaItems>
-            <field>Lead.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Sprout</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Lead.OwnerId</field>
-            <operation>equals</operation>
-            <value>Do Not Reply</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Sync Marketo on Do Not Call</fullName>
         <actions>
             <name>Check_Opt_out_Email</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Lead.Status</field>
             <operation>equals</operation>
@@ -1949,59 +1138,15 @@ ISCHANGED(Street)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Transfer Leads to General Pool Queue</fullName>
-        <actions>
-            <name>Assign_to_General_Queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Transfer_Eligible__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Update Date For Reassignment</fullName>
         <actions>
             <name>Update_Date_For_Reassignment</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
-        <description>When a Bark/Paid Media Lead owner is updated from a queue to a user (Or from General Queue to user) the Date For Reassignment is updated to one business day later</description>
-        <formula>AND(  
-ISCHANGED(OwnerId), 
-OR( 
-BEGINS(PRIORVALUE(OwnerId) , &apos;00G&apos;),  
-PRIORVALUE(Owner_Name__c) = &apos;General Lead&apos;), 
-BEGINS(OwnerId , &apos;005&apos;), 
-OR( ISPICKVAL(LeadSource, &apos;Bark&apos;),
-INCLUDES(Campaign__c, &apos;MVF Global&apos;), 
-INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Vonage Update Dialer Call Count</fullName>
-        <actions>
-            <name>Vonage_Increment_Count</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
-        <criteriaItems>
-            <field>Lead.Vonage_Hidden_Dialer_Call_Count__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Uncheck_Hidden_Box</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
+        <description>When a Bark/Paid Media Lead owner is updated from a queue to a user (Or from General Queue to user) the Date For Reassignment is updated to one business day later</description>
+        <formula>AND(   ISCHANGED(OwnerId),  OR(  BEGINS(PRIORVALUE(OwnerId) , &apos;00G&apos;),   PRIORVALUE(Owner_Name__c) = &apos;General Lead&apos;),  BEGINS(OwnerId , &apos;005&apos;),  OR( ISPICKVAL(LeadSource, &apos;Bark&apos;), INCLUDES(Campaign__c, &apos;MVF Global&apos;),  INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Warm-transfer lead</fullName>
@@ -2038,7 +1183,7 @@ INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
             <name>MALongitude_c_Purge</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Lead.a2Bj0000000sY4HEAU_Purge</description>
         <formula>OR(ISCHANGED(Street),ISCHANGED(City),ISCHANGED(State),ISCHANGED(PostalCode),ISCHANGED(Country))</formula>
         <triggerType>onAllChanges</triggerType>

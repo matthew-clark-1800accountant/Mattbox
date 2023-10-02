@@ -1,5 +1,0 @@
-<apex:page controller="PricingCalcController" standardStyleSheets="false" action="{!doForm}">
-
-    
-  
-</apex:page>

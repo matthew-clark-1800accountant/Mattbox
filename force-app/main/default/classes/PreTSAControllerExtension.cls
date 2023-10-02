@@ -167,12 +167,12 @@ public class PreTSAControllerExtension {
             account.Estimated_Business_Mileage__c = mileage;
             account.Home_Office_Square_Feet__c = office;
             //Updating the Accounts's savings details
-            account.Potential_Business_Mile_Savings__c = '$' + String.valueOf(mileageSavings);
-            account.Potential_Home_Office_Savings__c = '$' + String.valueOf(officeSavings);
-            account.Potential_QBI_Savings__c = '$' + String.valueOf(qbiSavings);
-            account.Potential_SCorp_Savings__c = '$' + String.valueOf(sCorpSavings);
-            account.Potential_Startup_Savings__c = '$' + String.valueOf(startupSavings);
-            account.Potential_Total_Savings__c = '$' + String.valueOf(finalSavings);
+            account.Potential_Business_Mile_Savings__c = mileageSavings;//'$' + String.valueOf(mileageSavings);
+            account.Potential_Home_Office_Savings__c = officeSavings;//'$' + String.valueOf(officeSavings);
+            account.Potential_QBI_Savings__c = qbiSavings;//'$' + String.valueOf(qbiSavings);
+            account.Potential_SCorp_Savings__c = sCorpSavings;//'$' + String.valueOf(sCorpSavings);
+            account.Potential_Startup_Savings__c = startupSavings;//'$' + String.valueOf(startupSavings);
+            account.Potential_Total_Savings__c = finalSavings;//'$' + String.valueOf(finalSavings);
             update account;
         }
         return finalSavings;

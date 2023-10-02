@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Phone_Need_more_digits</fullName>
-    <active>false</active>
-    <errorConditionFormula>LEN(Phone) &lt; 10</errorConditionFormula>
-    <errorMessage>Enter Valid Phone Number ( 10 Digits)</errorMessage>
-</ValidationRule>

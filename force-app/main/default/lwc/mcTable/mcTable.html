@@ -1,0 +1,145 @@
+<template>
+    <template lwc:if={showMaintenanceScreen}>
+        <div style="background-color:whitesmoke;height:50px;align-content:center;display: flex;flex-wrap: wrap;">
+            The multicalendar is currently down for maintenance. Please try again later or contact an administrator for details.
+        </div>
+    </template>
+    <template lwc:else>
+        <div style="display: flex; flex-direction: row; background-color: white;">
+            <lightning-layout multiple-rows="true">
+                <!-- date buttons row -->
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item>
+                            <lightning-button class="date-button" label="View Right Now" onclick={viewRightNow}></lightning-button> 
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <lightning-button-icon class="date-arrow" label="Back" onclick={dateBackward} icon-name="utility:chevronleft"  alternative-text="Change Day" title="Back"></lightning-button-icon>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <lightning-button-icon class="date-arrow" label="Forward" onclick={dateForward} icon-name="utility:chevronright"  alternative-text="Change Day" title="Forward"></lightning-button-icon>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <lightning-input onchange={dateSelected} class="date-button" type="date" name="dateSelection" label="Date field with a predefined value" value={selectedDate} variant="label-hidden"></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>                
+                </lightning-layout-item>
+                
+                <!-- filters row -->
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item style="margin-left:10px">
+                            <lightning-combobox class="view-selector"
+                                name="viewBox"
+                                label="Current Calendar View"
+                                placeholder="BNA Team"
+                                value={filterViewValue}
+                                onchange={handleViewSelection}
+                                options={availableViewFilters}>
+                            </lightning-combobox>
+                        </lightning-layout-item>
+                        <template lwc:if={showTestButton}>
+                            <lightning-layout-item style="margin-top: 20px;">
+                                <lightning-button style="margin:20px;" label="Generate Test Data" title="Non-primary action" onclick={generateTestData} class="slds-m-left_x-small"></lightning-button>
+                            </lightning-layout-item>
+                        </template>                    
+                        <template lwc:if={showToggle}>
+                            <lightning-layout-item>
+                                <lightning-input style="margin:20px;" type="toggle" label="Hide Blocked Reps" onchange={handleBlockToggle} message-toggle-active=""  message-toggle-inactive=""></lightning-input>
+                            </lightning-layout-item>
+                        </template>           
+                        <template lwc:if={showPageButtons}>
+                            <lightning-layout-item>
+                                <div>
+                                    Change Page
+                                    <lightning-layout>
+                                        <lightning-layout-item>
+                                            <lightning-button-icon class="date-arrow" label="Previous Page" onclick={pageBackward} icon-name="utility:chevronleft"  alternative-text="Change PaGE" title="Back"></lightning-button-icon>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item>
+                                            <lightning-button-icon class="date-arrow" label="Next Page" onclick={pageForward} icon-name="utility:chevronright"  alternative-text="Change pAGE" title="Forward"></lightning-button-icon>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div>
+                            </lightning-layout-item>    
+                        </template>                         
+                        
+                        <!-- <lightning-layout-item>
+                            <lightning-button-icon class="date-arrow" label="Refresh Table" onclick={refreshTable} icon-name="utility:refresh"  alternative-text="Refresh" title="Refresh"></lightning-button-icon>
+                        </lightning-layout-item>  -->
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                
+                
+                
+            </lightning-layout>
+
+        </div>    
+        <div class="table-container">
+            <c-mc-appt-mini-details class="minidetails" tabindex="0" onapptreassigned={reassignmentHandler} details={miniDetails} available-reps={repList}></c-mc-appt-mini-details>
+            <template if:true={isLoading}>
+                <lightning-spinner variant="brand" size="medium"> </lightning-spinner>
+            </template>
+            <template if:false={isLoading}>
+                <ul style="height: calc(0.80 * (100vh - 200px));">
+                    <!-- search and timestamp row -->
+                    <li style="max-height: fit-content;">
+                        <lightning-layout>
+                            <lightning-layout-item style="margin-left:10px">
+                                <lightning-input style="width: 270px;" class="rep-input"
+                                    name="enter-search"
+                                    label="Search Reps"
+                                    type="search"
+                                    oncommit={handleSearch}                    
+                                ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="timeslot-row">
+                                <lightning-layout>
+                                    <template if:true={showTimeslotLabels} for:each={timeslotLabels.data} for:item="timeLabel">
+                                        <lightning-layout-item key={timeLabel} class="timeslot-label">
+                                            {timeLabel}
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </li>
+                    <li class="pinned-row-list-item">
+                        <ul>
+                            <template lwc:if={rowsLoaded} iterator:it={pinnedRowList}>
+                                <li key={it.value.Id}>
+                                    <!-- <template lwc:if={it.value.displayRow}>
+                                        <c-mc-row rep={it.value.Rep} is-last-row={it.last} row-scroll-val={scrollValue} date-string={selectedDate} row-id={it.value.Id} column-width={colWidth} 
+                                        onrowdraggedfrom={rowDraggedFromHandler} onupdaterow={onApptDraggedHandler} onapptclicked={apptClickedHandler} onrowscroll={rowScrollHandler} onrowloaded={scrollToNow}></c-mc-row>
+                                    </template>     -->
+                                    <c-mc-row rep={it.value.Rep} is-last-row={it.last} row-scroll-val={scrollValue} date-string={selectedDate} row-id={it.value.Id} column-width={colWidth} 
+                                        onrowdraggedfrom={rowDraggedFromHandler} onupdaterow={onApptDraggedHandler} onapptclicked={apptClickedHandler} onrowscroll={rowScrollHandler}
+                                        onrowloaded={scrollToNow} hide-blocked-reps={blockToggled} onrowpinned={rowPinnedHandler}></c-mc-row>
+                                                                                    
+                                </li>
+                            </template>                  
+                        </ul>
+                    </li>
+                    <li class="row-list-item">
+                        <ul>
+                            <template lwc:if={rowsLoaded} iterator:it={wiredRowList}>
+                                <li key={it.value.Id}>
+                                    <!-- <template lwc:if={it.value.displayRow}>
+                                        <c-mc-row rep={it.value.Rep} is-last-row={it.last} row-scroll-val={scrollValue} date-string={selectedDate} row-id={it.value.Id} column-width={colWidth} 
+                                        onrowdraggedfrom={rowDraggedFromHandler} onupdaterow={onApptDraggedHandler} onapptclicked={apptClickedHandler} onrowscroll={rowScrollHandler} onrowloaded={scrollToNow}></c-mc-row>
+                                    </template>     -->
+                                    <c-mc-row rep={it.value.Rep} is-last-row={it.last} row-scroll-val={scrollValue} date-string={selectedDate} row-id={it.value.Id} column-width={colWidth} 
+                                        onrowdraggedfrom={rowDraggedFromHandler} onupdaterow={onApptDraggedHandler} onapptclicked={apptClickedHandler} onrowscroll={rowScrollHandler}
+                                        onrowloaded={scrollToNow} hide-blocked-reps={blockToggled} onrowpinned={rowPinnedHandler}></c-mc-row>
+                                                                                    
+                                </li>
+                            </template>                     
+                        </ul>
+                    </li>                    
+                </ul>  
+            </template>         
+        </div>        
+    </template>
+                 
+</template>

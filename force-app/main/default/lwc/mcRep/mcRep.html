@@ -1,0 +1,20 @@
+<template>
+    <div id="rep-block" class="rep-container">
+        <div class="rep-inner">
+            <div id="rep-name" class="rep-name">{repName}</div>
+            <lightning-button-icon icon-name="utility:pin" class="menu-icon" onclick={pinClicked}
+                    title="success variant x-small" size="x-small"></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:refresh" class="menu-icon" onclick={refreshClicked}
+                    title="success variant x-small" size="x-small"></lightning-button-icon>
+        </div>        
+        <template lwc:if={showTags}>
+            <div class="rep-tag-list">
+                <template for:each={rep.Tags} for:item="tag">
+                    <lightning-layout-item class="rep-tag" key={tag.Id}>
+                        <div class="rep-tag-text">{tag.Text}</div>
+                    </lightning-layout-item>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

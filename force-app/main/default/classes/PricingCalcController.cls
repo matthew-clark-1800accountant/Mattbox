@@ -40,6 +40,8 @@ public class PricingCalcController {
     public String totalStartupCostInput {get;set;}
     public String runPayrollBeforeInput {get;set;}
     public String filingStatusInput {get;set;}
+    public String leadSourceInput {get;set;}
+    public String leadTypeInput {get;set;}
     
     public String businessMilesInput {get;set;}
     public String officeSqFtInput {get;set;}
@@ -374,6 +376,7 @@ public class PricingCalcController {
         public String id {get;set;}
         public String name {get;set;}
         public Decimal price {get; set;} 
+        public Decimal altPrice {get; set;} 
         public String pbeid {get; set;}
         public Boolean doIt {get; set;}
         public Integer quantity {get; set;}
@@ -401,6 +404,9 @@ public class PricingCalcController {
         public String fieldName {get;set;}
         public String fieldValue {get;set;}
         public String fieldOperator {get;set;}
+        public String fieldName2 {get;set;}
+        public String fieldValue2 {get;set;}
+        public String fieldOperator2 {get;set;}
         public String action {get;set;}
         public String productLabel {get;set;}
     
@@ -735,13 +741,15 @@ public class PricingCalcController {
         
         //String LeadSource = '';
         String Campaign = '';
+        String StateOfFormationCheck = '';
         
-        List<Account> ruleAccList = [SELECT Lead_Type_New__c, Lead_Source__c, Campaign__c FROM Account WHERE Id = :accountID];
+        List<Account> ruleAccList = [SELECT Lead_Type_New__c, Lead_Source__c, Campaign__c, State_of_Formation__c FROM Account WHERE Id = :accountID];
         for (Account raItem : ruleAccList){
             
             LeadTypeNew = raItem.Lead_Type_New__c;
             LeadSource = raItem.Lead_Source__c;
             Campaign = raItem.Campaign__c;
+            StateOfFormationCheck = raItem.State_of_Formation__c;
         
         }
         
@@ -756,6 +764,9 @@ public class PricingCalcController {
         if (Campaign == null) {
             Campaign = '';
         }
+        
+        leadSourceInput = LeadSource;
+        leadTypeInput = LeadTypeNew;
         
         //String LeadTypeNew = [Select Lead_Type_New__c From Account Where Id = :accountID][0].Lead_Type_New__c;
         //String LeadSource = [Select Lead_Source__c From Account Where Id = :accountID][0].Lead_Source__c;
@@ -792,6 +803,9 @@ public class PricingCalcController {
                 tempDRC.fieldName = ruleItem.Criteria_Field_1__c;
                 tempDRC.fieldValue = ruleItem.Field_1_Value__c;
                 tempDRC.fieldOperator = ruleItem.Field_1_Operator__c;
+                tempDRC.fieldName2 = ruleItem.Criteria_Field_2__c;
+                tempDRC.fieldValue2 = ruleItem.Field_2_Value__c;
+                tempDRC.fieldOperator2 = ruleItem.Field_2_Operator__c;
                 tempDRC.action = ruleItem.Action__c;
                 
                 dynamicRules.add(tempDRC);
@@ -1232,6 +1246,32 @@ public class PricingCalcController {
                         
                     }
                 
+                } else if (ruleItem.Criteria_Field_1__c == 'State_of_Formation__c') {
+                
+                    if (ruleItem.Field_1_Operator__c == 'Equal String') {
+                        
+                        if (StateOfFormationCheck == ruleItem.Field_1_Value__c) {
+                        
+                            doThisRule = true;
+                            
+                        }
+                        
+                    }
+                    
+                    if (ruleItem.Field_1_Operator__c == 'Not Equal String') {
+                        
+                        if (StateOfFormationCheck == ruleItem.Field_1_Value__c) {
+                        
+                            
+                            
+                        } else {
+                        
+                            doThisRule = true;
+                        
+                        }
+                        
+                    }
+                
                 }
                 
                 if (ruleItem.Criteria_Field_2__c == 'Lead_Type_New__c') {
@@ -1317,6 +1357,30 @@ public class PricingCalcController {
                             doThisRule = false;
                             
                         }
+                        
+                    }
+                
+                } else if (ruleItem.Criteria_Field_2__c == 'State_of_Formation__c') {
+                
+                    if (ruleItem.Field_2_Operator__c == 'Equal String') {
+                        
+                        if (StateOfFormationCheck == ruleItem.Field_2_Value__c) {
+                        
+                        } else {
+                        
+                            doThisRule = false;
+                            
+                        }
+                        
+                    }
+                    
+                    if (ruleItem.Field_2_Operator__c == 'Not Equal String') {
+                        
+                        if (StateOfFormationCheck == ruleItem.Field_2_Value__c) {
+                        
+                            doThisRule = false;
+                        
+                        } 
                         
                     }
                 
@@ -1596,7 +1660,7 @@ public class PricingCalcController {
                     
                     offerMasterList.add(mcOffer);
                     
-                    // query products for offer
+                    // query products for offers
                     List<Calculator_Offer_Product__c> offerProductQuery = [SELECT Id, Amount__c, Calculator_Offer__c, Name, Delay_Days__c, Master_Product__c, Product__c, Upsell_Product__c, Use_Pricebook__c FROM Calculator_Offer_Product__c WHERE Active__c = true AND Calculator_Offer__c = :offerItem.Id];
                     for(Calculator_Offer_Product__c offerProductItem : offerProductQuery){
                         
@@ -2585,6 +2649,7 @@ public class PricingCalcController {
                         wrapRec.id = acItem.Id;
                         wrapRec.name = acItem.Name;
                         wrapRec.price = pbACItem.UnitPrice;
+                        wrapRec.altPrice = pbACItem.UnitPrice;
                         wrapRec.doIt = false;
                         wrapRec.pbeid = pbACItem.Id;
                         wrapRec.quantity = 1;
@@ -2596,12 +2661,17 @@ public class PricingCalcController {
                         wrapRec.setupFee = acItem.Setup_Fee__c;
                         wrapRec.noSplit = acItem.No_Split_Allowed__c;
                         
+                        if (acItem.Id == '01tf1000003JjrwAAC') {
+                            wrapRec.altPrice = 29.99;
+                        }
+                        
                         // check for price override
                         for(priceOverrideWrapper powItem : overrideList){
                     
                             if (powItem.productPostion == 'A La Carte' && powItem.productId == acItem.Id) {
                             
                                 wrapRec.price = powItem.amount;
+                                wrapRec.altPrice = powItem.amount;
                                 
                             }
                             
@@ -2617,6 +2687,16 @@ public class PricingCalcController {
                                 
                                 // then increment price based on percent which defaults to 1 so not negative effect when not used
                                 wrapRec.price = wrapRec.price * padjItem.percent;
+                                
+                                wrapRec.altPrice = wrapRec.price;
+                                
+                                if (acItem.Id == '01tf1000003JjrwAAC') {
+                                    // first increment price based on amount which defaults to zero so no negative effect when not used
+                                    wrapRec.altPrice = 29.99 + padjItem.amount;
+                                
+                                    // then increment price based on percent which defaults to 1 so not negative effect when not used
+                                    wrapRec.altPrice = wrapRec.altPrice * padjItem.percent;
+                                }
                                 
                             }
                             
@@ -4505,8 +4585,8 @@ public class PricingCalcController {
                 bookkeepingHTMLDesc = pItem.HTML_Description__c;
                 
                 // append description with number of employees
-                bookkeepingDesc = bookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
-                bookkeepingHTMLDesc = bookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
+                bookkeepingDesc = bookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions per month.'; 
+                bookkeepingHTMLDesc = bookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 if (pItem.Billing_Frequency__c == 'One-Time') {
                 
@@ -4557,8 +4637,8 @@ public class PricingCalcController {
                 backBookkeepingHTMLDesc = pItem.HTML_Description__c;
                 
                 // append description with number of employees
-                backBookkeepingDesc = backBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
-                backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
+                backBookkeepingDesc = backBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions per month.'; 
+                backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 // append description with start date
                 backBookkeepingDesc = backBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
@@ -4649,8 +4729,8 @@ public class PricingCalcController {
                 nonProfitBookkeepingHTMLDesc = pItem.HTML_Description__c;
                 
                 // append description with number of employees
-                nonProfitBookkeepingDesc = nonProfitBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
-                nonProfitBookkeepingHTMLDesc = nonProfitBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
+                nonProfitBookkeepingDesc = nonProfitBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions per month.'; 
+                nonProfitBookkeepingHTMLDesc = nonProfitBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 if (pItem.Billing_Frequency__c == 'One-Time') {
                 
@@ -4669,8 +4749,8 @@ public class PricingCalcController {
                 nonProfitBackBookkeepingHTMLDesc = pItem.HTML_Description__c;
                 
                 // append description with number of employees
-                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions.'; 
-                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions.'; 
+                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' For ' + numberOfTransactionsInput + ' transactions per month.'; 
+                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 // append description with start date
                 nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
@@ -5322,10 +5402,12 @@ public class PricingCalcController {
         
         String schedulerURL = sURL+'?TID='+apptType+'&WID='+contactID;
         String schedulerVIPURL = '';
+        String schedulerCSAURL = '';
         
         if (apptType == 'Discovery') {
         
             schedulerVIPURL = sURL+'?TID=DiscoveryVIP&WID='+contactID;
+            schedulerCSAURL = sURL+'?TID=CSAO&WID='+contactID;
             
         }
         
@@ -5336,11 +5418,13 @@ public class PricingCalcController {
         if (doSomeSchedule == false) {
             schedulerURL = '';
             schedulerVIPURL = '';
+            schedulerCSAURL = '';
         }
         
         // update brand on opportunity
         update new Opportunity(
             Id = opportunityID,
+            Sales_Platform__c = 'Pricing Calculator',
             Brand__c = brand
         );
         
@@ -7732,20 +7816,22 @@ public class PricingCalcController {
                 // check to see if we need to zero out price for bundle
                 if (acItem.id == '01tj0000000LLamAAG') {
                 
-                    if (doPersonalReturn && doAdvisory) {
+                    if ((doPersonalReturn || (leadTypeInput != null && leadTypeInput.contains('PTP'))) && doAdvisory) {
                         tmpACPrice = 0;
                     } else {
                         tmpACPrice = acItem.price;
                     }
                     
                 } else if (acItem.id == '01tf1000003JjrwAAC') { 
+                
+                   
                     
-                    if (doBusinessReturn && doPersonalReturn && doAdvisory) {
-                        tmpACPrice = 29.99;
-                    } else if (doPersonalReturn && doAdvisory && doADP && doADB && doLA && doTYR) {
-                        tmpACPrice = 29.99;
-                    } else if (doPersonalReturn && doAdvisory && doNP) {
-                        tmpACPrice = 29.99;
+                    if ((doBusinessReturn || (leadTypeInput != null && leadTypeInput.contains('BTP'))) && (doPersonalReturn || (leadTypeInput != null && leadTypeInput.contains('PTP'))) && doAdvisory) {
+                        tmpACPrice = acItem.altPrice;
+                    } else if ((doPersonalReturn || (leadTypeInput != null && leadTypeInput.contains('PTP'))) && doAdvisory && doADP && doADB && doLA && doTYR) {
+                        tmpACPrice = acItem.altPrice;
+                    } else if ((doPersonalReturn || (leadTypeInput != null && leadTypeInput.contains('PTP'))) && doAdvisory && doNP) {
+                        tmpACPrice = acItem.altPrice;
                     } else {
                         tmpACPrice = acItem.price;
                     }
@@ -8217,7 +8303,11 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuote :: ' + theCOQuote);
             theCOQuote.Quote_Created__c = true;
             
-            if (vipAmount > 4999 && schedulerVIPURL != '') {
+            
+            if (vipAmount > 7999 && schedulerCSAURL != '') {
+                //theCOQuote.Scheduler_URL__c = schedulerCSAURL;
+                theCOQuote.Scheduler_URL__c = schedulerVIPURL;
+            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuote.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8228,7 +8318,9 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteMonth.Quote_Created__c = true;
             
-            if (vipAmount > 4999 && schedulerVIPURL != '') {
+            if (vipAmount > 7999 && schedulerCSAURL != '') {
+                theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
+            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8239,7 +8331,9 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteOneTime.Quote_Created__c = true;
             
-            if (vipAmount > 4999 && schedulerVIPURL != '') {
+            if (vipAmount > 7999 && schedulerCSAURL != '') {
+                theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
+            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
                 theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             }
             

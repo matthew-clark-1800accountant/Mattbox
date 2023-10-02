@@ -1,0 +1,66 @@
+<template>    
+    <template if:true={details}>
+        <div class="slds-box mini-details-block" style={detailStyle} >
+            <lightning-layout>
+                <lightning-layout-item>
+                    <div id="title">{details.title}</div>
+                </lightning-layout-item>
+                <lightning-layout-item alignment-bump="left">
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        onclick={closeDetails}
+                        alternative-text="Close window">
+                    </lightning-button-icon>
+                </lightning-layout-item>
+            </lightning-layout>
+            
+            
+            <div id="type">{details.type}</div>
+            <div id="source">{details.source}</div>
+            <!-- <div id="icon"></div>
+            <div id="disposition">{details.disposition}</div> -->
+            
+            <div id="disposition">
+            <lightning-icon icon-name={details.icon.Name} variant={details.icon.Variant}
+            title="success variant xx-small" size="x-small"></lightning-icon>
+            {details.disposition}</div>
+            <!-- <div>{details.rep.Name}</div> -->
+            <lightning-combobox class="repBox" style="width: 180px; margin-bottom:10px;"
+                name="repBox"
+                label="Assigned Rep"
+                placeholder="Select A Rep"
+                value={selectedRep}
+                onchange={changeOwner}
+                options={availableReps}>
+            </lightning-combobox>
+            <lightning-button variant="brand" label="Save" title="Primary action" onclick={saveRep}  class="x-small"></lightning-button>
+
+            <!-- <lightning-combobox id="rep-select" options={repOptions}></lightning-combobox>
+            <lightning-button id="save-rep" onclick={changeOwner}></lightning-button> -->
+            <lightning-button onclick={openFullDetails} label="Open Details" title="Open Details" class="x-small"></lightning-button> 
+            <template lwc:if={showRejections}>
+                <div class="divider"></div>
+                <div class="rejections-label">Rejections</div>
+                <ul>
+                    <template for:each={details.rejections} for:item="rejection">
+                        <li key={rejection.UserId}>                            
+                            <lightning-layout>
+                                <lightning-layout-item>
+                                    <img src={rejection.PhotoUrl} class="user-image"/>
+                                </lightning-layout-item>
+                                <lightning-layout-item>
+                                    <div>
+                                        <p>{rejection.Name}</p>
+                                        <p>{rejection.RejectedTime}</p>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+        
+    </template>
+</template>

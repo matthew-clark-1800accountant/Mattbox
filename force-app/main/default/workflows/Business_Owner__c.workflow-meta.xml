@@ -11,17 +11,6 @@
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>w_o_SSN</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>Layout_w_o_SSN</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>w/o SSN</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
     <rules>
         <fullName>Remove SSN</fullName>
         <active>true</active>

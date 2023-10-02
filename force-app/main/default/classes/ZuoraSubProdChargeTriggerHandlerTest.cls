@@ -3,7 +3,7 @@ private class ZuoraSubProdChargeTriggerHandlerTest {
     
     @TestSetup static void setupTestData() {
         Id myId = UserInfo.getUserId();
-        Id userId = [SELECT Id FROM User WHERe Id != : myId LIMIT 1].Id;
+        Id userId = [SELECT Id FROM User WHERe Id != : myId AND IsActive=true LIMIT 1].Id;
 
         Account account = new Account(
             Name = 'Test Account',

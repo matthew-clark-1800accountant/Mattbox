@@ -7,6 +7,7 @@ public class AccountStatusHandler {
         }
         Map<Id, Account> mappedAccounts = new Map<Id, Account>([
             SELECT Id, Name, Account_Status__c, ChargeOver_Most_Recent_Payment_Date__c, Finance_Status__c,
+            ChargeOver_Initial_Payment_Date__c, Last_Account_Status__c,
                 (SELECT Id, Name, Initial_Refund_Percentage__c, Status__c, Total_Initial_Paid_Amount__c
                     FROM ChargeOver_Subscriptions__r
                     WHERE (NOT Sale_Completed_By_Detail__c LIKE '%1099issuer%')
@@ -39,6 +40,21 @@ public class AccountStatusHandler {
             WHERE Account__c IN :accountIds
         ]);
 
+        // Map<Id, ChargeOver_Subscription__c> mappedActiveSubscriptions = new Map<Id, ChargeOver_Subscription__c>([
+        //     SELECT Id, Name, Status__c, Account__c, Initial_Refund_Percentage__c,
+        //     (
+        //         SELECT Id, Name, ChargeOver_Subscription__c, Account__c, ChargeOver_Invoice_Status__c, Invoice_Date__c
+        //         FROM ChargeOver_Invoices__r
+        //     ),
+        //     (
+        //         SELECT Id, Name, Status__c
+        //         FROM ChargeOver_Subscription_Line_Items__r
+        //         WHERE Status__c = 'Active'
+        //     )
+        //     FROM ChargeOver_Subscription__c
+        //     WHERE Account__c IN :accountIds
+        // ]);
+
         Map<Id, Account> toUpdateAccounts = new Map<Id, Account>();
         for(Account a : mappedAccounts.values()){
             //Tracking attributes
@@ -53,14 +69,21 @@ public class AccountStatusHandler {
             Boolean firstYear = false;
             Boolean renewed = false;
             Boolean pendingCancel = false;
+            Boolean partnerSubscribed = false;
             for(ChargeOver_Subscription__c cos : a.ChargeOver_Subscriptions__r){
                 //Tracking if they were refunded or not
                 if(cos.Initial_Refund_Percentage__c > 30
                 && cos.Total_Initial_Paid_Amount__c > 0){
                     refunded = true;
                 }
-                if(!mappedSubscriptions.get(cos.Id).ChargeOver_Subscription_Line_Items__r.isEmpty()){
+                if(!mappedSubscriptions.get(cos.Id).ChargeOver_Subscription_Line_Items__r.isEmpty()
+                && a.ChargeOver_Initial_Payment_Date__c != null){ //updated criteria -mc
                     pendingCancel = true;
+                }
+                //if(!mappedActiveSubscriptions.get(cos.Id).ChargeOver_Subscription_Line_Items__r.isEmpty()
+                if(cos.Status__c == 'Current'
+                && a.ChargeOver_Initial_Payment_Date__c == null){ //added new status -mc
+                    partnerSubscribed = true;
                 }
                 //Tracking if all the statuses are cancelled
                 if(null != cos.Status__c && !cos.Status__c.contains('Cancelled')){
@@ -130,7 +153,8 @@ public class AccountStatusHandler {
             }
 
             //After checking all the subscriptions, invoices 
-            if(firstYear && '1st Year Client' != a.Account_Status__c){
+            if(firstYear && '1st Year Client' != a.Account_Status__c
+                && a.ChargeOver_Most_Recent_Payment_Date__c != null){ //updated criteria -mc
                 a.Account_Status__c = '1st Year Client';
                 toUpdateAccounts.put(a.Id, a);
             }
@@ -138,27 +162,36 @@ public class AccountStatusHandler {
                 a.Account_Status__c = 'Suspended';
                 toUpdateAccounts.put(a.Id, a);
             }
-            if(renewed && 'Renewed Client' != a.Account_Status__c){
+            if(renewed && 'Renewed Client' != a.Account_Status__c
+                && a.ChargeOver_Most_Recent_Payment_Date__c != null){ //updated criteria -mc
                 a.Account_Status__c = 'Renewed Client';
                 toUpdateAccounts.put(a.Id, a);
             }
-            if(current && 'Current' != a.Finance_Status__c){
+            if(partnerSubscribed && 'Partner-Subscribed Prospect' != a.Account_Status__c){ //added new status -mc
+                a.Account_Status__c = 'Partner-Subscribed Prospect';
+                toUpdateAccounts.put(a.Id, a);
+            }
+            if(current && 'Current' != a.Finance_Status__c
+            && a.ChargeOver_Most_Recent_Payment_Date__c != null){
                 a.Finance_Status__c = 'Current';
                 toUpdateAccounts.put(a.Id, a);
             }
-            if(pastDue && 'Past Due' != a.Finance_Status__c){
+            if(pastDue && 'Past Due' != a.Finance_Status__c
+            && a.ChargeOver_Most_Recent_Payment_Date__c != null){
                 a.Finance_Status__c = 'Past Due';
                 toUpdateAccounts.put(a.Id, a);
             }
-            if(dormant && 'Dormant' != a.Finance_Status__c){
+            if(dormant && 'Dormant' != a.Finance_Status__c
+            && a.ChargeOver_Most_Recent_Payment_Date__c != null){
                 a.Finance_Status__c = 'Dormant';
                 toUpdateAccounts.put(a.Id, a);
             }
+            
             //If all the subscriptions are cancelled
             if(allCancelled && !mappedAccounts.get(a.Id).ChargeOver_Subscriptions__r.isEmpty()){
                 //Account statuses starting with active pending cancel
                 if(pendingCancel){
-                    if('Active-Pending Cancel (Pause)' != a.Finance_Status__c){
+                    if('Active-Pending Cancel (Pause)' != a.Account_Status__c){ // fixed typo (?) 
                         a.Account_Status__c = 'Active-Pending Cancel (Pause)';
                         toUpdateAccounts.put(a.Id, a);
                     }
@@ -171,13 +204,20 @@ public class AccountStatusHandler {
                             toUpdateAccounts.put(a.Id, a);
                         }
                     } else {
-                        if('Paused' != a.Account_Status__c)
-                            a.Account_Status__c = 'Paused Client';
-                            toUpdateAccounts.put(a.Id, a);
+                        if('Paused' != a.Account_Status__c){
+                            if('Partner-Subscribed Prospect' == a.Account_Status__c || 'Partner-Subscribed Prospect' == a.Last_Account_Status__c){
+                                a.Account_Status__c = 'Prospect';
+                                toUpdateAccounts.put(a.Id, a);
+                            } else {
+                                a.Account_Status__c = 'Paused Client';
+                                toUpdateAccounts.put(a.Id, a);
+                            }
+                        }                            
                     }
                 }
             }
-            if(allCancelled && !mappedAccounts.get(a.Id).ChargeOver_Subscriptions__r.isEmpty()){
+            if(allCancelled && !mappedAccounts.get(a.Id).ChargeOver_Subscriptions__r.isEmpty()
+            && a.ChargeOver_Initial_Payment_Date__c != null){
                 //Finance statuses
                 if(refunded){
                     if(a.Finance_Status__c != 'Refunded'){

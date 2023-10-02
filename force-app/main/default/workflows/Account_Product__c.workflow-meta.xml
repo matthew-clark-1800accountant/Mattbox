@@ -99,16 +99,6 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Payroll Initial Forms</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account_Product__c.Payroll_set_up_email_sent__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Update Payroll Status</fullName>
         <actions>
             <name>Set_AP_Payroll_Status</name>

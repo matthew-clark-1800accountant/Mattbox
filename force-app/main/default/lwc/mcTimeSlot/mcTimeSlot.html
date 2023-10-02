@@ -1,0 +1,24 @@
+<template>
+    <!-- slot block with background shading -->
+    <!-- <lightning-layout multiple-rows="true"> -->
+    <div style="height:100%; position: relative;">
+        <template if:true={showLine}>
+            <div class="verticalLine" style={lineStyle}></div>
+        </template>
+        <ul ondrop={dropHandler} ondragover={dragOverHandler} class="timeslot-container">
+            <template for:each={timeslot.Appointments} for:item="appointment">
+                <!-- <lightning-layout-item key={appointment.Id} size="12"> -->
+                    <li key={appointment.Id} class="appointment-container">
+                        <div>                            
+                            <c-mc-appointment appointment={appointment} rep={rep}></c-mc-appointment>                            
+                        </div>                        
+                    </li>
+                <!-- </lightning-layout-item> -->
+            </template>
+        </ul>
+    </div>
+        <!-- <template if:true={showExpandButton}>            
+            <lightning-button id="expand-appointments" onclick={expandAppointments}></lightning-button>
+        </template> -->
+    <!-- </lightning-layout>     -->
+</template>

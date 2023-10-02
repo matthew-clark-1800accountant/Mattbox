@@ -1,3 +1,0 @@
-<apex:page standardController="Accounting_Process__c" recordSetVar="recordSet"
-extensions="RKExportToExcel.ExportToExcelController" readOnly="true">
-<RKExportToExcel:ExportToExcelComponent exportController="{!exportController}"/></apex:page>

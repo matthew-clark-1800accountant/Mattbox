@@ -1,0 +1,499 @@
+.block {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    top: 0px;
+
+    /* Surface */
+
+    background: #FFFFFF;
+    /* mix-blend-mode: multiply; */
+    /* Grey Outline */
+
+    border: 1px solid rgba(105, 118, 162, 0.38);
+    border-radius: 8px;
+}
+.text-heading {
+    /* Disposition */
+    width: 174px;
+    height: 20px;
+
+    /* v2/075 - Motorcycle/M(500)-20 */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    /* identical to box height, or 143% */
+    letter-spacing: 0.01em;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+    
+    /* 00. On Light / High Emphasis */
+    color: rgba(0, 0, 0, 0.87);
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+.text-subheading {
+    /* Lead Source */
+    width: 152px;
+    height: 16px;
+
+    /* v2/025 - Bike/R(400)-16 */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 16px;
+
+    /* identical to box height, or 160% */
+    letter-spacing: 0.05em;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+    padding-left: 15px;
+    /* 00. On Light / Medium Emphasis */
+    color: rgba(0, 0, 0, 0.54);
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+.text-initials {
+    /* Abbreviation */
+    width: 14px;
+    height: 16px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 16px;
+
+    /* identical to box height, or 160% */
+    letter-spacing: 0.045em;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+    /* 00. On Light / Disabled */
+    color: rgba(0, 0, 0, 0.38);
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+.warning-block {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    top: 0px;
+
+    mix-blend-mode: multiply;
+    background: #FFB673;
+    box-shadow: 0px 4px 24px rgba(254, 182, 115, 0.12);
+    border: 1px solid rgba(117, 65, 17, 0.3);
+    border-radius: 8px;
+}
+.warning-text-heading {
+    /* Disposition */
+    width: 174px;
+    height: 20px;
+
+    /* v2/075 - Motorcycle/SB(600)-16 */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+
+    /* identical to box height, or 143% */
+    letter-spacing: 0.01em;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+    /* Orange 200 */
+    color: #754111;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+.warning-text-subheading {
+    /* Lead Source */
+    width: 152px;
+    height: 16px;
+
+    /* v2/025 - Bike/R(400)-16 */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 16px;
+    /* identical to box height, or 160% */
+
+    letter-spacing: 0.05em;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+    /* Orange 200 */
+    color: #754111;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+.warning-text-initials {
+    /* Abbreviation */
+
+
+width: 14px;
+height: 16px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 10px;
+line-height: 16px;
+/* identical to box height, or 160% */
+
+letter-spacing: 0.045em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* 00. On Light / Disabled */
+
+color: rgba(0, 0, 0, 0.38);
+
+
+}
+.error-block {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    right: 0px;
+    top: calc(50% - 44px/2);
+
+    mix-blend-mode: multiply;
+    /* Red 100 */
+
+    background: #FF8181;
+    border: 1px solid rgba(215, 90, 90, 0.42);
+    box-shadow: 0px 4px 24px rgba(255, 129, 129, 0.12);
+    border-radius: 8px;
+
+}
+.error-text-heading {
+    /* Disposition */
+
+
+width: 174px;
+height: 20px;
+
+/* v2/075 - Motorcycle/SB(600)-16 */
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+letter-spacing: 0.01em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* Red 200 */
+
+color: #70112E;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+}
+.error-text-subheading {
+    /* Lead Source */
+
+
+width: 152px;
+height: 16px;
+
+/* v2/025 - Bike/R(400)-16 */
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 16px;
+/* identical to box height, or 160% */
+
+letter-spacing: 0.05em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* Red 200 */
+
+color: #70112E;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 1;
+}
+.error-text-initials {
+    /* Abbreviation */
+
+
+width: 14px;
+height: 16px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 10px;
+line-height: 16px;
+/* identical to box height, or 160% */
+
+letter-spacing: 0.045em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* 00. On Light / Disabled */
+
+color: rgba(0, 0, 0, 0.38);
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.soft-error-block {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    right: 0px;
+    top: calc(50% - 44px/2);
+
+    /* Red 100 */
+
+    background: linear-gradient(0deg, rgba(255, 129, 129, 0.2), rgba(255, 129, 129, 0.2)), #FFFFFF;
+    box-shadow: 0px 4px 24px rgba(255, 129, 129, 0.12);
+    mix-blend-mode: multiply;
+    /* Red Outline */
+    
+    border: 1px solid rgba(215, 90, 90, 0.42);
+    border-radius: 8px;
+
+}
+.rescheduled-block {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    right: 0px;
+    top: calc(50% - 44px/2);
+
+    /* Red 100 */
+
+    background: #F1F4FF;
+    mix-blend-mode: multiply;
+    /* Grey Outline */
+
+    border: 1px solid rgba(105, 118, 162, 0.38);
+    border-radius: 8px;
+}
+.blocked-block {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 8px;
+    gap: 8px;
+    isolation: isolate;
+
+    position: relative;
+    width: 230px;
+    height: 44px;
+    left: 0px;
+    right: 0px;
+    top: calc(50% - 44px/2);
+
+    /* Red 100 */
+
+    background: #D2CECB;
+    mix-blend-mode: multiply;
+    border: 1px solid #D2CECB;
+    border-radius: 8px;
+}
+.call-number-container {
+    /* Call Count */
+box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px 6px 0px 5px;
+gap: 2px;
+margin-left: 5px;
+width: 30px;
+height: 16px;
+
+color: rgba(105, 118, 162, 0.38);
+
+/* Grey Outline */
+
+border: 1px solid rgba(105, 118, 162, 0.38);
+border-radius: 16px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.warning-call-number-container {
+    /* Call Count */
+box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px 6px 0px 5px;
+gap: 2px;
+margin-left: 5px;
+
+width: 30px;
+height: 16px;
+
+/* Orange 200 */
+color: #754111;
+
+/* Orange Outline */
+border: 1px solid rgba(117, 65, 17, 0.3);
+border-radius: 16px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.error-call-number-container {
+    /* Call Count */
+box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px 6px 0px 5px;
+gap: 2px;
+margin-left: 5px;
+
+width: 30px;
+height: 16px;
+
+/* Red 200 */
+color: #70112E;
+
+/* Red 100 */
+background: #FF8181;
+/* Red Outline */
+
+border: 1px solid rgba(215, 90, 90, 0.42);
+border-radius: 16px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.soft-error-call-number-container {
+    /* Call Count */
+box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px 6px 0px 5px;
+gap: 2px;
+margin-left: 5px;
+
+width: 30px;
+height: 16px;
+
+/* Red 200 */
+color: #70112E;
+
+/* Red Outline */
+border: 1px solid rgba(215, 90, 90, 0.42);
+border-radius: 16px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}

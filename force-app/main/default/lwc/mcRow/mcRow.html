@@ -1,0 +1,23 @@
+<template>
+    <template lwc:if={displayRow}>
+        <lightning-layout vertical-align="stretch">
+            <lightning-layout-item flexibility="auto">
+                <c-mc-rep onrowrefreshed={rowRefreshedHandler}  onrowpinned={rowPinnedHandler} rep={row.Rep} onclick={repDebug}></c-mc-rep>
+            </lightning-layout-item>
+            <lightning-layout class="slds-scrollable_x row" style={rowStyle}>
+                <template lwc:if={timeslotsLoaded}>
+                    <template for:each={row.Timeslots} for:item="timeslot">
+                        <lightning-layout-item flexibility="auto" key={timeslot.Id}>
+                            <c-mc-time-slot rep={row.Rep} timeslot={timeslot} onapptdragged={apptDraggedHandler} onupdaterow={refreshApexData}></c-mc-time-slot>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <lightning-layout-item style="margin-top:15px">
+                        <lightning-spinner variant="brand" size="small" style={spinnerStyle}> </lightning-spinner>
+                    </lightning-layout-item>                    
+                </template>
+            </lightning-layout>
+        </lightning-layout>
+    </template>    
+</template>

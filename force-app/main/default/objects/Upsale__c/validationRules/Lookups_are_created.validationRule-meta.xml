@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Lookups_are_created</fullName>
-    <active>true</active>
-    <errorConditionFormula>ISBLANK(Original_Product__c) || ISBLANK( Upsale_Product__c )</errorConditionFormula>
-    <errorMessage>You should specify both products</errorMessage>
-</ValidationRule>

@@ -58,16 +58,9 @@
     </alerts>
     <alerts>
         <fullName>Awaiting_Corp_Setup_Completion</fullName>
+        <ccEmails>kchen@1800accountant.com</ccEmails>
         <description>Awaiting Corp Setup Completion</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>abenitez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kchen@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Corp_Sales/Awaiting_Corp_Setup_Completion</template>
     </alerts>
@@ -158,17 +151,6 @@
         <template>Administrative/Bank_of_America</template>
     </alerts>
     <alerts>
-        <fullName>Basic_Bookkeeping_Purchase</fullName>
-        <description>Basic Bookkeeping Purchase</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Primary_Contact__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Bookkeeping/Basic_Bookkeeping_Purchase</template>
-    </alerts>
-    <alerts>
         <fullName>CBC_Scheduled</fullName>
         <description>CBC Scheduled</description>
         <protected>false</protected>
@@ -181,40 +163,10 @@
         <template>ClientBooks/New_Appointment_Notification_ClientBooks</template>
     </alerts>
     <alerts>
-        <fullName>Client_verification_checklist_incomplete</fullName>
-        <description>Client verification checklist incomplete</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>gmilkwick@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jmeller@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Administrative/Client_verification_checklist_incomplete</template>
-    </alerts>
-    <alerts>
         <fullName>Corp_Fulfillment_Needed</fullName>
+        <ccEmails>kchen@1800accountant.com</ccEmails>
         <description>Corp Fulfillment Needed</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>abenitez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gfinegan@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kchen@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Corp_Sales/Corp_Sale_Fulfillment</template>
@@ -280,10 +232,6 @@
         <fullName>Discovery_Call_needs_to_be_rescheduled</fullName>
         <description>Discovery Call needs to be rescheduled</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <recipients>
             <field>Sales_Manager__c</field>
             <type>userLookup</type>
@@ -374,18 +322,6 @@
         <template>Corp_Sales/Follow_up_No_forms_received2</template>
     </alerts>
     <alerts>
-        <fullName>Large_Income_Client</fullName>
-        <description>Large Income Client</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>cchou@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Accounting/Large_Income_Client</template>
-    </alerts>
-    <alerts>
         <fullName>Legal_Plan_Survey</fullName>
         <description>Legal Plan Survey</description>
         <protected>false</protected>
@@ -440,10 +376,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dlestoric@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>ecaprio@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
@@ -452,27 +384,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jjones@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>jkeenan@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mcashman@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>spendley@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -496,36 +408,18 @@
     </alerts>
     <alerts>
         <fullName>New_Corp_Sale_Fulfillment_Needed</fullName>
+        <ccEmails>kchen@1800accountant.com</ccEmails>
         <description>New Corp Sale: Fulfillment Needed</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>abenitez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kchen@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Corp_Sales/Fulfillment_Needed</template>
     </alerts>
     <alerts>
         <fullName>New_Dissolution_Corp_Client</fullName>
+        <ccEmails>kchen@1800accountant.com</ccEmails>
         <description>New Dissolution /Corp  Client</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>kchen@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rlerot@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Dissolutions/New_Dissolution_Corp_Client</template>
     </alerts>
@@ -562,15 +456,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>anthonyk@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bpack@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dlestoric@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -582,35 +468,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>israelv@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>jkeenan@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jwade@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mcashman@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mstephens@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rgellert@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -621,10 +483,6 @@
         <ccEmails>inbound@1800accountant.com</ccEmails>
         <description>New Sam&apos;s Club Lead</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Administrative/New_Sam_s_Club_Lead</template>
     </alerts>
@@ -632,10 +490,6 @@
         <fullName>New_Sam_s_Club_Sale</fullName>
         <description>New Sam&apos;s Club Sale</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
         <recipients>
             <recipient>lkush@1800accountant.com</recipient>
             <type>user</type>
@@ -648,7 +502,6 @@
         <fullName>New_mailer_account</fullName>
         <ccEmails>inbound@1800accountant.com</ccEmails>
         <ccEmails>salesmanagers@1800accountant.com</ccEmails>
-        <ccEmails>hera.soh@1800accountant.com</ccEmails>
         <description>New mailer account</description>
         <protected>false</protected>
         <recipients>
@@ -709,54 +562,6 @@
         <template>GetFeedback/Onboarding_No_Show</template>
     </alerts>
     <alerts>
-        <fullName>OpenSky_Account</fullName>
-        <ccEmails>twhiton@1800accountant.com</ccEmails>
-        <description>OpenSky Account</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>hera.soh@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/OpenSky_Leads</template>
-    </alerts>
-    <alerts>
-        <fullName>Payroll_Clients_With_No_401K</fullName>
-        <description>Payroll Clients With No 401K</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>amartinez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>cchou@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>info@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Retirement_Planning/Selling_Retirement_Plan</template>
-    </alerts>
-    <alerts>
-        <fullName>Payroll_Clients_With_No_401K2019</fullName>
-        <description>Payroll Clients With No 401K-2019</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Primary_Contact__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <recipient>amartinez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>cchou@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>info@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Retirement_Planning/Payroll_Clients_With_No_401k</template>
-    </alerts>
-    <alerts>
         <fullName>Rep_has_sent_Corp_Setup_email</fullName>
         <ccEmails>entityspecialist@1800accountant.com</ccEmails>
         <description>Rep has sent Corp Setup email</description>
@@ -767,42 +572,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Corp_Sales/Rep_has_sent_Corp_Setup_email</template>
-    </alerts>
-    <alerts>
-        <fullName>Retirement_Planning_potential</fullName>
-        <description>Retirement Planning potential</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>cchou@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>hera.soh@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Retirement_Planning/Retirement_Planning_potential</template>
-    </alerts>
-    <alerts>
-        <fullName>Retirement_follow_up</fullName>
-        <description>Retirement follow up</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>cchou@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Accounting/Retirement_Planning</template>
-    </alerts>
-    <alerts>
-        <fullName>Selling_Retirement_Plan</fullName>
-        <description>Selling Retirement Plans</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>sdunn@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>info@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Retirement_Planning/Selling_Retirement_Plan</template>
     </alerts>
     <alerts>
         <fullName>Subscription_Appt_Completed_Survey</fullName>
@@ -874,18 +643,6 @@
         <template>Dissolutions/Welcome_Email_tax_return</template>
     </alerts>
     <alerts>
-        <fullName>X2016_Post_Election_Tax_Update</fullName>
-        <description>2016 Post-Election Tax Update</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Primary_Contact__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>info@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Marketing/X2016_Post_Election_Tax_Update</template>
-    </alerts>
-    <alerts>
         <fullName>X2018_Q4_Estimated_Tax</fullName>
         <description>2018 Q4 Estimated Tax</description>
         <protected>false</protected>
@@ -908,17 +665,6 @@
         <senderAddress>info@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/How_are_we_doing_2018</template>
-    </alerts>
-    <alerts>
-        <fullName>shipping</fullName>
-        <description>shipping</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>abenitez@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Corp_Sales/Shipping_Required</template>
     </alerts>
     <alerts>
         <fullName>welcome_email_accountant_portal</fullName>
@@ -1043,172 +789,12 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>BVTO_2016_quantity_manual</fullName>
-        <field>BVTO_2016_quantity__c</field>
-        <formula>BVTO_2016_quantity__c + 1</formula>
-        <name>BVTO 2016 quantity - manual</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Basic_Bookkeeping</fullName>
-        <field>Basic_Bookkeeping__c</field>
-        <literalValue>1</literalValue>
-        <name>Basic Bookkeeping</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>BoA_transferor</fullName>
         <field>BoA_transferor__c</field>
         <formula>$User.FirstName + &quot; &quot; +$User.LastName</formula>
         <name>BoA transferor</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Business_tax_prep_active</fullName>
-        <field>Business_Tax_Prep__c</field>
-        <literalValue>1</literalValue>
-        <name>Business tax prep - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Business_tax_prep_cancelled</fullName>
-        <field>Business_Tax_Prep__c</field>
-        <literalValue>0</literalValue>
-        <name>Business tax prep - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>CP_Bookkeeping_Access</fullName>
-        <field>CP_Bookkeeping_Access__c</field>
-        <literalValue>1</literalValue>
-        <name>CP Bookkeeping Access</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>CP_Bookkeeping_Access_deactivate</fullName>
-        <field>CP_Bookkeeping_Access__c</field>
-        <literalValue>0</literalValue>
-        <name>CP Bookkeeping Access - deactivate</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancelled_Bill62_Tax_Consulting</fullName>
-        <field>Tax_Consulting__c</field>
-        <literalValue>0</literalValue>
-        <name>Cancelled Bill62 Tax Consulting</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Cancelled_Date</fullName>
-        <field>Cancelled_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Cancelled Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Check_off_prevent_dupe_WelcomeEmail_O</fullName>
-        <field>Prevent_Duplicate_Welcome_Emails__c</field>
-        <literalValue>1</literalValue>
-        <name>Check off prevent dupe WelcomeEmail - O</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Check_off_prevent_dupe_WelcomeEmail_S</fullName>
-        <field>Prevent_Duplicate_Welcome_Emails__c</field>
-        <literalValue>1</literalValue>
-        <name>Check off prevent dupe WelcomeEmail - S</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_Books</fullName>
-        <field>Client_Books__c</field>
-        <literalValue>1</literalValue>
-        <name>Client Books</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_Books21</fullName>
-        <field>CP_Bookkeeping_Access__c</field>
-        <literalValue>1</literalValue>
-        <name>Client Books</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_Books_Access_Only_cancelled</fullName>
-        <field>Client_Books_Access_Only__c</field>
-        <literalValue>0</literalValue>
-        <name>Client Books Access Only - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_Books_access</fullName>
-        <field>CP_Bookkeeping_Access__c</field>
-        <literalValue>1</literalValue>
-        <name>Client Books access</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_Books_deactivate</fullName>
-        <field>CP_Bookkeeping_Access__c</field>
-        <literalValue>0</literalValue>
-        <name>Client Books - deactivate</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Client_books_access_only_active</fullName>
-        <field>Client_Books_Access_Only__c</field>
-        <literalValue>1</literalValue>
-        <name>Client books access only - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1233,16 +819,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Date</fullName>
-        <field>Date_Sold__c</field>
-        <formula>NOW()</formula>
-        <name>Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Dead_Accounts</fullName>
         <field>OwnerId</field>
         <lookupValue>deadleads@1800accountant.com</lookupValue>
@@ -1254,156 +830,12 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Dedicated_Cancelled</fullName>
-        <field>Dedicated_Cancelled__c</field>
-        <literalValue>1</literalValue>
-        <name>Dedicated - Cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_Client_Books_active</fullName>
-        <field>Dedicated_Client_Books__c</field>
-        <literalValue>1</literalValue>
-        <name>Dedicated Client Books - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_Client_books_cancelled</fullName>
-        <field>Dedicated_Client_Books__c</field>
-        <literalValue>0</literalValue>
-        <name>Dedicated Client books - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_Date</fullName>
-        <field>Dedicated_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Dedicated Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_Date_one_time</fullName>
-        <field>Dedicated_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Dedicated Date - one time</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_Status</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Dedicated</literalValue>
-        <name>Dedicated Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated_checkbox</fullName>
-        <field>Dedicated__c</field>
-        <literalValue>1</literalValue>
-        <name>Dedicated checkbox</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Discovery_Call_complete</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Advisory #1</literalValue>
-        <name>Discovery Call complete</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Equipment</fullName>
-        <description>reminder to fill in equipment type</description>
-        <field>Equipment__c</field>
-        <formula>BLANKVALUE(Equipment__c, &quot;COMPLETE EQUIPMENT&quot;)</formula>
-        <name>Equipment</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Estimated_Taxes_active</fullName>
-        <field>Estimated_Taxes__c</field>
-        <literalValue>1</literalValue>
-        <name>Estimated Taxes - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Floria_Royals</fullName>
-        <field>Sales_Manager__c</field>
-        <lookupValue>froyals@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Floria Royals</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Full_service_bookkeeping_active</fullName>
-        <field>Full_Service_Bookkeeping__c</field>
-        <literalValue>1</literalValue>
-        <name>Full-service bookkeeping - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Interested_in_Merchant_Services_date</fullName>
         <field>Interested_in_Merchant_Services_Date__c</field>
         <formula>TODAY()</formula>
         <name>Interested in Merchant Services date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>JT_s_Team</fullName>
-        <field>Sales_Manager__c</field>
-        <lookupValue>jkeenan@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>JT&apos;s Team</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Jason_Wade</fullName>
-        <field>Sales_Manager__c</field>
-        <lookupValue>jwade@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Jason Wade</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1448,16 +880,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>LegalZoom_Checkbox</fullName>
-        <field>LegalZoom__c</field>
-        <literalValue>1</literalValue>
-        <name>LegalZoom Checkbox</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>MALatitude_c_Purge</fullName>
         <field>MALatitude__c</field>
         <name>Account.MALatitude_c_Purge</name>
@@ -1476,72 +898,10 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Mark_Stephen</fullName>
-        <field>Sales_Manager__c</field>
-        <lookupValue>ggambetta@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Mark Stephen</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Mark_Stephens</fullName>
-        <field>Sales_Manager__c</field>
-        <lookupValue>ggambetta@1800accountant.com</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Mark Stephens</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Mark_as_LZ</fullName>
-        <field>Type</field>
-        <literalValue>LZ Customer</literalValue>
-        <name>Mark as LZ</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Mark_as_Test</fullName>
-        <field>Type</field>
-        <literalValue>Test</literalValue>
-        <name>Mark as Test</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Merchant_Sold_Date</fullName>
-        <field>Date_Sold__c</field>
-        <formula>Now()</formula>
-        <name>Merchant Sold Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Not_LZ_BIT</fullName>
         <field>LZ_BIT__c</field>
         <literalValue>0</literalValue>
         <name>Not LZ BIT</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Onboarding_Cancelled</fullName>
-        <field>Onboarding_Cancelled__c</field>
-        <literalValue>1</literalValue>
-        <name>Onboarding - Cancelled</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -1554,106 +914,6 @@
         <name>Onboarding Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Onboarding_Dedicated</fullName>
-        <field>Onboarding_Dedicated__c</field>
-        <literalValue>1</literalValue>
-        <name>Onboarding - Dedicated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Onboarding_Dedicated2</fullName>
-        <field>Onboarding_Dedicated__c</field>
-        <literalValue>1</literalValue>
-        <name>Onboarding - Dedicated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Onboarding_No_Show</fullName>
-        <field>Onboarding_No_Show__c</field>
-        <literalValue>0</literalValue>
-        <name>Onboarding No Show</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Onboarding_survey_owner_office</fullName>
-        <field>Onboarding_Survey_Owner_Office__c</field>
-        <formula>TEXT($User.Office__c)</formula>
-        <name>Onboarding survey owner office</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Payment_pending_Onboarding</fullName>
-        <field>payment_pending_onboarding__c</field>
-        <literalValue>1</literalValue>
-        <name>Payment pending - Onboarding</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Payment_pending_Onboarding_Date</fullName>
-        <field>Payment_Pending_Onboarding_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Payment pending - Onboarding Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Payroll_active</fullName>
-        <field>Payroll__c</field>
-        <literalValue>1</literalValue>
-        <name>Payroll - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Personal_tax_prep_active</fullName>
-        <field>Personal_Tax_Prep__c</field>
-        <literalValue>1</literalValue>
-        <name>Personal tax prep - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Personal_tax_prep_cancelled</fullName>
-        <field>Personal_Tax_Prep__c</field>
-        <literalValue>0</literalValue>
-        <name>Personal tax prep - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Pitched_1_1_Attended</fullName>
-        <field>X1_1_Attended__c</field>
-        <literalValue>1</literalValue>
-        <name>Pitched - 1-1 Attended</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1699,40 +959,10 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Prev_Duplicate_welcome_email</fullName>
-        <field>Prevent_Duplicate_Welcome_Emails__c</field>
-        <literalValue>0</literalValue>
-        <name>Prev Duplicate welcome email</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Prevent_Duplicate_Welcome_Email_Date</fullName>
         <field>Prevent_Duplicate_Welcome_Email_Date__c</field>
         <formula>NOW()</formula>
         <name>Prevent Duplicate Welcome Email Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>QBR_Cancelled</fullName>
-        <field>QBR_cancelled__c</field>
-        <literalValue>1</literalValue>
-        <name>QBR - Cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>QBR_Cancelled_date</fullName>
-        <field>Cancelled_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>QBR - Cancelled date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -1745,57 +975,6 @@
         <name>Remote SDR</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Sales_Use_Tax_active</fullName>
-        <field>Sales_Use_Tax__c</field>
-        <literalValue>1</literalValue>
-        <name>Sales &amp; Use Tax - active</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Send_Welcome_Email_Time_Stamp</fullName>
-        <field>Send_Welcome_Email_Time_Stamp__c</field>
-        <formula>NOW()</formula>
-        <name>Send Welcome Email Time Stamp</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Sold</fullName>
-        <field>Merchant_Sales_Status__c</field>
-        <literalValue>Sold</literalValue>
-        <name>Sold</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Sold_by</fullName>
-        <field>Sold_by__c</field>
-        <formula>Owner.FirstName + &quot; &quot; +  Owner.LastName</formula>
-        <name>Sold by</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Acct_Advisory_Client</fullName>
-        <description>Update Acct Advisory Client</description>
-        <field>Advisory_Client__c</field>
-        <literalValue>1</literalValue>
-        <name>Update Acct Advisory Client</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1831,26 +1010,6 @@ TODAY() + 1
         <name>Warm Transfered</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>X2018_BTP_Paid</fullName>
-        <field>X2018_LZ_BTP_Purchased__c</field>
-        <literalValue>1</literalValue>
-        <name>2018 BTP Paid</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>X2018_BTP_cancelled</fullName>
-        <field>X2018_LZ_BTP_Purchased__c</field>
-        <literalValue>0</literalValue>
-        <name>2018 BTP cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -1925,26 +1084,6 @@ TODAY() + 1
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>advisory_1</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>QBR</literalValue>
-        <name>advisory #1</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>advisory_2</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>QBR</literalValue>
-        <name>advisory #2</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>boa_transfer_date</fullName>
         <field>BoA_Transfer_Date__c</field>
         <formula>TODAY()</formula>
@@ -1959,226 +1098,6 @@ TODAY() + 1
         <field>Business_Tax_Prep_purchased_through_LZ__c</field>
         <literalValue>0</literalValue>
         <name>btp</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>btp_purcahsed_chckbox</fullName>
-        <field>Business_Tax_Prep_purchased_through_LZ__c</field>
-        <literalValue>1</literalValue>
-        <name>btp purchased chckbox</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>btp_uncheck</fullName>
-        <field>BTP_Paid__c</field>
-        <literalValue>0</literalValue>
-        <name>btp uncheck</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>bvto_16</fullName>
-        <field>VTO_Business_2016__c</field>
-        <literalValue>1</literalValue>
-        <name>bvto 16</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>bvto_access_BTP_paid</fullName>
-        <field>VTO_Business_2016__c</field>
-        <literalValue>1</literalValue>
-        <name>bvto access - BTP paid</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>cancelled_date2</fullName>
-        <field>Cancelled_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>cancelled date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>dedicated_date2</fullName>
-        <field>Dedicated_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>dedicated date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>discovery_no_show</fullName>
-        <field>Discovery_Call_No_Show__c</field>
-        <literalValue>0</literalValue>
-        <name>discovery no show</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>discovery_reschedule_uncheck</fullName>
-        <field>Discovery_Call_needs_to_be_rescheduled__c</field>
-        <literalValue>0</literalValue>
-        <name>discovery reschedule uncheck</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>estimated_taxes_cancelled</fullName>
-        <field>Estimated_Taxes__c</field>
-        <literalValue>0</literalValue>
-        <name>estimated taxes - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>full_service_bookkeeping_cancelled</fullName>
-        <field>Full_Service_Bookkeeping__c</field>
-        <literalValue>0</literalValue>
-        <name>full-service bookkeeping - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>moved_to_QBR_date</fullName>
-        <field>Moved_to_QBR__c</field>
-        <formula>NOW()</formula>
-        <name>moved to QBR date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>moved_to_adv_1_date</fullName>
-        <field>Moved_to_Advisory_1__c</field>
-        <formula>NOW()</formula>
-        <name>moved to adv 1 date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>moved_to_adv_2_date</fullName>
-        <field>Moved_to_Advisory_2__c</field>
-        <formula>NOW()</formula>
-        <name>moved to adv 2 date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>moved_to_qbr</fullName>
-        <field>Moved_to_QBR__c</field>
-        <formula>NOW()</formula>
-        <name>moved to qbr</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>new_cancel_date</fullName>
-        <field>Cancelled_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>new-cancel date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>payroll_cancelled</fullName>
-        <field>Payroll__c</field>
-        <literalValue>0</literalValue>
-        <name>payroll - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>personal_vto_16</fullName>
-        <field>VTO_Personal_2016__c</field>
-        <literalValue>1</literalValue>
-        <name>personal vto 16</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>qualified</fullName>
-        <field>Lead_Status__c</field>
-        <literalValue>Qualified</literalValue>
-        <name>qualified</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>sales_use_tax_cancelled</fullName>
-        <field>Sales_Use_Tax__c</field>
-        <literalValue>0</literalValue>
-        <name>sales &amp; use tax - cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>survey_date</fullName>
-        <field>Survey_date__c</field>
-        <formula>TODAY()</formula>
-        <name>survey date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>vto_biz_2017</fullName>
-        <field>VTO_Business_2017__c</field>
-        <literalValue>1</literalValue>
-        <name>vto biz 2017</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>vto_personal_2017</fullName>
-        <field>VTO_Personal_2017__c</field>
-        <literalValue>1</literalValue>
-        <name>vto personal 2017</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -2252,47 +1171,13 @@ TODAY() + 1
             <name>Pitched_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.X1_1_Attended__c</field>
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
         <description>Changes lead status to pitched when 1-1 attended equals true</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>2018 BTP Cancelled</fullName>
-        <actions>
-            <name>X2018_BTP_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <booleanFilter>1 or 2</booleanFilter>
-        <criteriaItems>
-            <field>Account.BTP_Cancelled_2018__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.BTP_Refund_2018__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>2018 BTP Paid</fullName>
-        <actions>
-            <name>X2018_BTP_Paid</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.BTP_Paid_2018__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -2571,34 +1456,6 @@ TODAY() + 1
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>BTP purchased 2016 - VTO Access</fullName>
-        <actions>
-            <name>bvto_access_BTP_paid</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.X2016_Business_Tax_Prep_purchased_LZ__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>BTP purchased checkbox</fullName>
-        <actions>
-            <name>btp_purcahsed_chckbox</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Type__c</field>
-            <operation>contains</operation>
-            <value>BTP</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>BTP refund - uncheck paid</fullName>
         <actions>
             <name>btp</name>
@@ -2652,146 +1509,6 @@ TODAY() + 1
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Basic Bookkeeping</fullName>
-        <actions>
-            <name>Basic_Bookkeeping</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Business tax prep - active</fullName>
-        <actions>
-            <name>Business_tax_prep_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 or 2</booleanFilter>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Business Tax Prep</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Non-Profit Tax Prep</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Business tax prep - cancelled</fullName>
-        <actions>
-            <name>Business_tax_prep_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Business Tax Prep</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Non-Profit Tax Prep</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Buying Business Tax Prep - 16 VTO</fullName>
-        <actions>
-            <name>bvto_16</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Business Tax Prep,Corporate Return,Final Tax Return</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Onboarding_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>1/10/2017</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Buying Business Tax Prep - 17 VTO</fullName>
-        <actions>
-            <name>vto_biz_2017</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Business Tax Prep,Corporate Return,Final Tax Return</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Onboarding_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>10/16/2017</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Buying Personal Tax Prep - 16 VTO</fullName>
-        <actions>
-            <name>personal_vto_16</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Personal Tax Prep</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Onboarding_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>1/10/2017</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Buying Personal Tax Prep - 17 VTO</fullName>
-        <actions>
-            <name>vto_personal_2017</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Personal Tax Prep</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Onboarding_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>10/16/2017</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>CAP Pitched Date%2FTime</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Pitched_Finance__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>When CAP services were pitched</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>CBC Scheduled</fullName>
         <actions>
             <name>CBC_Scheduled</name>
@@ -2802,195 +1519,6 @@ TODAY() + 1
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>CP Bookkeeping Access</fullName>
-        <actions>
-            <name>CP_Bookkeeping_Access</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books,Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>CP Bookkeeping Access - deactivate</fullName>
-        <actions>
-            <name>CP_Bookkeeping_Access_deactivate</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books,Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Cancelled Bill62 Tax Consulting</fullName>
-        <actions>
-            <name>Cancelled_Bill62_Tax_Consulting</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>tax consulting</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Cap Rep</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Pitched_Finance__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Assigns Rep that pitches CAP</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Checkbox verification</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND (2 or 3 or 4)</booleanFilter>
-        <criteriaItems>
-            <field>Account.Onboarding_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Verified_Estimated_Tax__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Verified_Loan_Agreement__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Verified_Sales_Tax__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Client_verification_checklist_incomplete</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>90</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Client Books</fullName>
-        <actions>
-            <name>Client_Books21</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1  OR 2</booleanFilter>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Books - access</fullName>
-        <actions>
-            <name>Client_Books_access</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 or 2</booleanFilter>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>notContain</operation>
-            <value>Client Books</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>notContain</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Books Access Only - cancelled</fullName>
-        <actions>
-            <name>Client_Books_Access_Only_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books Access Only</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Books- deactivate</fullName>
-        <actions>
-            <name>Client_Books_deactivate</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 or 2</booleanFilter>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client Outreach Nov 2016</fullName>
-        <actions>
-            <name>X2016_Post_Election_Tax_Update</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Client_Outreach_Nov_2016__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Client books access only - active</fullName>
-        <actions>
-            <name>Client_books_access_only_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Client Books Access Only</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ClientBooks SSO Account</fullName>
         <actions>
             <name>NewClientPortal_AccountSync</name>
@@ -2998,9 +1526,7 @@ TODAY() + 1
         </actions>
         <active>true</active>
         <description>Synchronizes all accounts with new SSO</description>
-        <formula>OR(  ISNEW(), ISCHANGED(Account_Status__c), ISCHANGED(Advisory_Status__c), ISCHANGED(Chargeback_Status__c), ISCHANGED(Finance_Status__c),  ISCHANGED(BTP_Paid_2017__c),  ISCHANGED(BTP_Refund_2017__c),  ISCHANGED(Basic_Bookkeeping__c),  ISCHANGED(Bookkeeping_Specialist__c),  ISCHANGED(Business_Type__c),  ISCHANGED(CP_Bookkeeping_Access__c),  ISCHANGED(CP_Extended_Storage__c),  ISCHANGED(Entity_Tax_Classification__c),  ISCHANGED(Name),  ISCHANGED(OwnerId),  ISCHANGED(P2C_Customer_ID__c),  ISCHANGED(Payroll_Manager__c),  ISCHANGED(Previous_Owner__c),  ISCHANGED(Primary_Contact__c),  ISCHANGED(Schedule_E_2017__c),  ISCHANGED(SmartVault_Folder__c),  ISCHANGED(Tax_Extension_Business_2015__c),  ISCHANGED(Tax_Extension_Business_2016__c),  ISCHANGED(Tax_Extension_Business_2017__c),  ISCHANGED(Tax_Extension_Business__c),  ISCHANGED(Tax_Extension_Personal_2015__c),  ISCHANGED(Tax_Extension_Personal_2016__c),  ISCHANGED(Tax_Extension_Personal_2017__c),  ISCHANGED(Tax_Extension_Personal__c),  ISCHANGED(VTO_Business_2015__c),  ISCHANGED(VTO_Business_2016__c),  ISCHANGED(VTO_Business_2017__c),  ISCHANGED(VTO_Business__c),  ISCHANGED(VTO_Personal_2015__c),  ISCHANGED(VTO_Personal_2016__c),  ISCHANGED(VTO_Personal_2017__c),  ISCHANGED(VTO_Personal__c), ISCHANGED(Lead_Type__c),  ISCHANGED(Lead_Type_New__c),  ISCHANGED(Lead_Source__c),  ISCHANGED(Lead_Source_New__c),  ISCHANGED(X2017_LZ_BTP_Purchased__c), ISCHANGED(X2018_LZ_BTP_Purchased__c), ISCHANGED(X2018_LZ_Equip_Est_Tax_Purchased__c), ISCHANGED(X2019_LZ_BTP_Purchased__c), ISCHANGED(X2020_LZ_BTP_Purchased__c),
-ISCHANGED(X2021_LZ_BTP_Purchased__c),
-ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c), ISCHANGED(BillingCity),  ISCHANGED(BillingCountry),  ISCHANGED(BillingPostalCode),  ISCHANGED(BillingState),  ISCHANGED(BillingStreet), ISCHANGED(PortalAccountOwner__c), ISCHANGED(BK_Specialist__c), ISCHANGED(BK_Status__c), ISCHANGED(BK_Stage__c), ISCHANGED(EIDL_Status__c)  )</formula>
+        <formula>OR(  ISNEW(), ISCHANGED(Account_Status__c), ISCHANGED(Advisory_Status__c), ISCHANGED(Chargeback_Status__c), ISCHANGED(Finance_Status__c),  ISCHANGED(Basic_Bookkeeping__c),  ISCHANGED(Bookkeeping_Specialist__c),  ISCHANGED(Business_Type__c),  ISCHANGED(CP_Bookkeeping_Access__c),  ISCHANGED(CP_Extended_Storage__c),  ISCHANGED(Entity_Tax_Classification__c),  ISCHANGED(Name),  ISCHANGED(OwnerId),  ISCHANGED(P2C_Customer_ID__c),  ISCHANGED(Payroll_Manager__c),  ISCHANGED(Previous_Owner__c),  ISCHANGED(Primary_Contact__c),  ISCHANGED(Schedule_E_2017__c),  ISCHANGED(SmartVault_Folder__c),  ISCHANGED(Tax_Extension_Business_2015__c),  ISCHANGED(Tax_Extension_Business_2016__c),  ISCHANGED(Tax_Extension_Business_2017__c),  ISCHANGED(Tax_Extension_Business__c),  ISCHANGED(Tax_Extension_Personal_2015__c),  ISCHANGED(Tax_Extension_Personal_2016__c),  ISCHANGED(Tax_Extension_Personal_2017__c),  ISCHANGED(Tax_Extension_Personal__c),  ISCHANGED(VTO_Business_2015__c),  ISCHANGED(VTO_Business_2016__c),  ISCHANGED(VTO_Business_2017__c),  ISCHANGED(VTO_Business__c),  ISCHANGED(VTO_Personal_2015__c),  ISCHANGED(VTO_Personal_2016__c),  ISCHANGED(VTO_Personal_2017__c),  ISCHANGED(VTO_Personal__c), ISCHANGED(Lead_Type__c),  ISCHANGED(Lead_Type_New__c),  ISCHANGED(Lead_Source__c),  ISCHANGED(Lead_Source_New__c), ISCHANGED(X2018_LZ_Equip_Est_Tax_Purchased__c), ISCHANGED(X2019_LZ_BTP_Purchased__c), ISCHANGED(X2020_LZ_BTP_Purchased__c), ISCHANGED(X2021_LZ_BTP_Purchased__c), ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c), ISCHANGED(BillingCity),  ISCHANGED(BillingCountry),  ISCHANGED(BillingPostalCode),  ISCHANGED(BillingState),  ISCHANGED(BillingStreet), ISCHANGED(PortalAccountOwner__c), ISCHANGED(EIDL_Status__c)  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -3027,10 +1553,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <name>Corp_Setup_Information_Request</name>
             <type>Alert</type>
         </actions>
-        <actions>
-            <name>Rep_has_sent_Corp_Setup_email</name>
-            <type>Alert</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Account.Corp_setup_link_sent__c</field>
@@ -3054,10 +1576,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Awaiting_Corp_Setup_Completion2</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
                 <name>Follow_up_No_forms_received2</name>
                 <type>Alert</type>
             </actions>
@@ -3065,10 +1583,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
         <workflowTimeTriggers>
-            <actions>
-                <name>Awaiting_Corp_Setup_Completion3</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Follow_up_No_forms_received3</name>
                 <type>Alert</type>
@@ -3078,10 +1592,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
-                <name>Awaiting_Corp_Setup_Completion4</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
                 <name>Follow_up_No_forms_received4</name>
                 <type>Alert</type>
             </actions>
@@ -3089,10 +1599,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
         <workflowTimeTriggers>
-            <actions>
-                <name>Awaiting_Corp_Setup_Completion5</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Follow_up_No_forms_received5</name>
                 <type>Alert</type>
@@ -3119,85 +1625,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <value>No Sale,BTP,Business LP,Prospect</value>
         </criteriaItems>
         <description>Moves dead accounts to the dead queue</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dedicated - Cancelled</fullName>
-        <actions>
-            <name>Cancelled_Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Dedicated_Cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(
-    ISCHANGED( Account_Status__c),
-    ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;Dedicated&quot; ),
-    ISPICKVAL( ( Account_Status__c ) , &quot;Cancelled&quot; )
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dedicated Client Books - active</fullName>
-        <actions>
-            <name>Dedicated_Client_Books_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dedicated Client books - cancelled</fullName>
-        <actions>
-            <name>Dedicated_Client_books_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Dedicated Client Books</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dedicated Date - one time</fullName>
-        <actions>
-            <name>Dedicated_Date_one_time</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Onboarding_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Dedicated client %E2%80%94 Bookkeeping intro%2E email</fullName>
-        <actions>
-            <name>Basic_Bookkeeping_Purchase</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Dedicated_client_Bookkeeping_intro_email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -3234,137 +1661,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>EIN Data Notification</fullName>
-        <active>false</active>
-        <booleanFilter>1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10 or 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25</booleanFilter>
-        <criteriaItems>
-            <field>Account.Reason_for_Applying__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Heavy_Vehicle__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Gambling__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Alcohol_tobacco_or_firearms__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Date_business_aquired__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Type_of_trust__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Trustee_first_name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Trustee_last_name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Trustee_middle_name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Trustee_title__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Date_of_death__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Deceased_First_Name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Deceased_Last_Name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Deceased_Middle_Name__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Business_Industry__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Business_Service_Type__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Applied_for_EIN_before__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Previous_EIN__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.File_annual__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Hire_employees_in_12_months__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Date_of_first_wage_payment__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Num_of_Agricultural_Employees__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Num_of_Household_Employees__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Num_of_Other_Employees__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Organization_Type__c</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Entity Formation Scheduled</fullName>
         <actions>
             <name>New_Entity_Formation_Appointment_Account</name>
@@ -3383,124 +1679,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <active>true</active>
         <formula>ISCHANGED( Equip_Scheduled__c ) &amp;&amp; OwnerId &lt;&gt; &apos;005f100000HXqaD&apos;</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Estimated Taxes - active</fullName>
-        <actions>
-            <name>Estimated_Taxes_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Estimated Taxes</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Floria Royal%27s Team</fullName>
-        <actions>
-            <name>Floria_Royals</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16</booleanFilter>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Floria Porras</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Jason Roman</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Nathan Maggio</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Nathan Slunder</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Elisabeth Beckner</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Dawn Francett</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Julia Warchol</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Christopher Sample</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Colton Harkins</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Michael Grubb</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Christopher Frank</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Ralph Hopper</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Michele Glazer</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Alonzo Swinton</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Chelsea Cone-Suarez</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Alex Meyer</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Full-service bookkeeping - active</fullName>
-        <actions>
-            <name>Full_service_bookkeeping_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Full-Service Bookkeeping</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>How are we doing%3F</fullName>
@@ -3527,216 +1705,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <field>Account.Interested_in_Merchant_Services__c</field>
             <operation>equals</operation>
             <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Jason Wade%27s Team</fullName>
-        <actions>
-            <name>Jason_Wade</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19</booleanFilter>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Jason Wade</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Alex Hoak</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Chris Diveris</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Aaron Nugent</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Anita Sellaro</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>David Lobel</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Tom Zierden</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Daniel Douglass</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Kelvin Robinson</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Edgar Jimenez</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Josh Pritchard</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Michelle Amiot</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Laurie Fleming</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Marcus Holmes</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Christopher Rivera</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Peter Macias</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Brandon Fields</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Bart Hauke</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Catherine Anderson</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Jt Keenan%27s Team</fullName>
-        <actions>
-            <name>JT_s_Team</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19</booleanFilter>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>JT Keenan</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Eileen Caprio</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Keith Marzi</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Shelly Deerwester</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Jonathan Clement</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Tyler Slocum</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Amanda King</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Derek Wolfgang</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Shawn Aaron</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Damien Carapella</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Douglas Bolden</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Jeffrey Raney</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Michael Nicoletti</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Shawn Murphy</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Gregory Oliver,James Blasser</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Melissa Lopez,Anthony Smith</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Michael Aiani,David Waldrop</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Stacy Lopez-Cole,William Larsson</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Angela Post,Michael Choiniere</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -3771,30 +1739,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Last Contact %3E 60 Days</fullName>
-        <actions>
-            <name>Last_Contact_60_Days</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Days_Since_Last_Activity__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>60</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>Onboarding,Dedicated,Subscription,Advisory #1,Advisory #2,QBR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Days_Triggered__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Last Transfer Date</fullName>
         <actions>
             <name>Last_Transfer_Date</name>
@@ -3804,20 +1748,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <description>Last transfer of owner</description>
         <formula>ISCHANGED(OwnerId)</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Lead status - qualified</fullName>
-        <actions>
-            <name>qualified</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Advisory_Status__c</field>
-            <operation>equals</operation>
-            <value>Onboarding</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Legal Plan Survey</fullName>
@@ -3846,33 +1776,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Legal Plan Survey - Pilot</fullName>
-        <actions>
-            <name>Legal_Plan_Survey_Pilot</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Appt_holder</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>LP_Appt_Holder_Office</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Legal_Plan_Appt_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-            <value>Pilot Group 1</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Legal plan no show</fullName>
         <actions>
             <name>Legal_Plan_no_show</name>
@@ -3889,144 +1792,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>LegalZoom</fullName>
-        <actions>
-            <name>LegalZoom_Checkbox</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.lead_source_old__c</field>
-            <operation>equals</operation>
-            <value>LegalZoom</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>LegalZoom Account Flag</fullName>
-        <actions>
-            <name>Mark_as_LZ</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.AccountSource</field>
-            <operation>equals</operation>
-            <value>LegalZoom</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Mark Stephen%27s team</fullName>
-        <actions>
-            <name>Mark_Stephens</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10</booleanFilter>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Giuliana Gambetta</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Thomas Lindsay</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Kenneth Mincey</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Camilla Holmes</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Derek Vacura</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Colin Murray</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Hannah Bell</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Lisamarie Vella</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Regina Ramirez</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Sales_Rep__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Mark as test</fullName>
-        <actions>
-            <name>Mark_as_Test</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Type__c</field>
-            <operation>equals</operation>
-            <value>Test</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Merchant Sold</fullName>
-        <actions>
-            <name>Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Equipment</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Sold</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Merchant_Fulfillment__c</field>
-            <operation>equals</operation>
-            <value>Approved,Shipped,Active,Processing</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New - Cancelled</fullName>
-        <actions>
-            <name>new_cancel_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(
-    ISCHANGED( Account_Status__c),
-    ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;New&quot; ),
-    ISPICKVAL( ( Account_Status__c ) , &quot;Cancelled&quot; )
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>New Agent Referral Account- notification</fullName>
@@ -4049,43 +1814,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <field>Account.Lead_Source__c</field>
             <operation>equals</operation>
             <value>LegalZoom,TSYS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Corp Setup %2F Dissolution Account</fullName>
-        <actions>
-            <name>New_Dissolution_Corp_Client</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>Corp Setup / Dissolution</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>New Mailer Accounts</fullName>
-        <actions>
-            <name>New_mailer_account</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Source__c</field>
-            <operation>equals</operation>
-            <value>1-800Accountant</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Mailer Letter,Mailer Postcard</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -4139,26 +1867,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>No Dissolution 1049</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.BillingState</field>
-            <operation>equals</operation>
-            <value>AL,AK,AS,AR,CA,CO,FL,GU,HA,ID,IL,IA,KS,KY,LA,ME,MD,MA,MI,MS,NE,NV,NC,ND,OK,OR,PR,SC,SD,UT,VT,WV,WY</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>No Dissolution 749</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.BillingState</field>
-            <operation>equals</operation>
-            <value>RI,NJ,AZ,CT,DE,DC,GA,IN,MO,MT,NH,NM,NY,OH,PA,TN,TX,VA,WA,WI</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Not LZ BIT</fullName>
         <actions>
             <name>Not_LZ_BIT</name>
@@ -4173,91 +1881,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Onboarding - Cancelled</fullName>
-        <actions>
-            <name>Onboarding_Cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>cancelled_date2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(
-    ISCHANGED( Account_Status__c),
-    ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;Onboarding&quot; ),
-    ISPICKVAL( ( Account_Status__c ) , &quot;Cancelled&quot; )
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Onboarding - Dedicated</fullName>
-        <actions>
-            <name>Dedicated_Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Onboarding_Dedicated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(
-    ISCHANGED( Account_Status__c),
-    ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;Onboarding&quot; ),
-    ISPICKVAL( ( Account_Status__c ) , &quot;Dedicated&quot; )
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Onboarding Checkbox</fullName>
-        <actions>
-            <name>Dedicated_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Dedicated_checkbox</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Onboarding_Dedicated2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Onboarding_No_Show</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Onboarding_survey_owner_office</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>dedicated_date2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Onboarding_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Onboarding_Checkbox_complete2</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Onboarding Date</fullName>
         <actions>
             <name>Onboarding_Date2</name>
@@ -4270,47 +1893,6 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
             <value>Onboarding</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Onboarding Email</fullName>
-        <actions>
-            <name>Onboarding_Appointment_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>Onboarding</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Onboarding Email New</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>Onboarding,Onboarding - Dedicated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.send_welcome_email__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>New_Onboarding_Appointment_Notification_new</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>2</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Onboarding No Show</fullName>
@@ -4332,123 +1914,11 @@ ISCHANGED(X2022_BTP_Purchased__c), ISCHANGED(VIP__c), ISCHANGED(Embark_client__c
     </rules>
     <rules>
         <fullName>OpenSky Account</fullName>
-        <actions>
-            <name>OpenSky_Account</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Lead_Source__c</field>
             <operation>equals</operation>
             <value>OpenSky</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Payment Pending - Onboarding</fullName>
-        <actions>
-            <name>Payment_pending_Onboarding</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Payment_pending_Onboarding_Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( 
-ISCHANGED( Account_Status__c), 
-ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;Payment Pending&quot; ), 
-ISPICKVAL( ( Account_Status__c ) , &quot;Onboarding&quot; ) 
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Payroll - active</fullName>
-        <actions>
-            <name>Payroll_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Payroll</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Payroll Clients With No 401k</fullName>
-        <actions>
-            <name>Payroll_Clients_With_No_401K2019</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Bill62__Active__c</field>
-            <operation>equals</operation>
-            <value>Yes</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Payroll__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Retirement_Account__c</field>
-            <operation>equals</operation>
-            <value>No</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Do_Not_Contact__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Personal tax prep - active</fullName>
-        <actions>
-            <name>Personal_tax_prep_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Personal Tax Prep</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Personal tax prep - cancelled</fullName>
-        <actions>
-            <name>Personal_tax_prep_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Personal Tax Prep</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Pitched - 1-1 Attended</fullName>
-        <actions>
-            <name>Pitched_1_1_Attended</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Pitched_By</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Status__c</field>
-            <operation>equals</operation>
-            <value>Pitched</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -4460,9 +1930,7 @@ ISPICKVAL( ( Account_Status__c ) , &quot;Onboarding&quot; )
         </actions>
         <active>true</active>
         <description>Workflow to change the Portal Account Owner Email field on the Account any time the Portal Account Owner value changes.</description>
-        <formula>OR(
-ISNEW(),
-ISCHANGED( PortalAccountOwner__c ))</formula>
+        <formula>OR( ISNEW(), ISCHANGED( PortalAccountOwner__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -4480,25 +1948,6 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>QBR - Cancelled</fullName>
-        <actions>
-            <name>QBR_Cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>QBR_Cancelled_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(
-    ISCHANGED( Account_Status__c),
-    ISPICKVAL( PRIORVALUE( Account_Status__c ) , &quot;QBR&quot; ),
-    ISPICKVAL( ( Account_Status__c ) , &quot;Cancelled&quot; )
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>Remote SDR Date</fullName>
         <actions>
             <name>Remote_SDR</name>
@@ -4513,22 +1962,8 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Restrict Equip from</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Equip</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Retirement Discussion</fullName>
-        <actions>
-            <name>Large_Income_Client</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Expected_annual_revenue__c</field>
             <operation>equals</operation>
@@ -4538,11 +1973,7 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
     </rules>
     <rules>
         <fullName>Retirement Follow up</fullName>
-        <actions>
-            <name>Retirement_follow_up</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Schedule_Retirement_Follow_up__c</field>
             <operation>equals</operation>
@@ -4553,61 +1984,6 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
             <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Retirement Planning potential</fullName>
-        <actions>
-            <name>Retirement_Planning_potential</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 or 2 or 3 or 4) and 5</booleanFilter>
-        <criteriaItems>
-            <field>Account.Left_W_2_Job__c</field>
-            <operation>equals</operation>
-            <value>Yes</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Expected_1st_year_revenue__c</field>
-            <operation>equals</operation>
-            <value>&quot;$50,000 - $100,000&quot;,&quot;&gt; $100,000&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Retirement_Account__c</field>
-            <operation>equals</operation>
-            <value>Yes</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Retirement_Amount__c</field>
-            <operation>equals</operation>
-            <value>&quot;$0 - $50,000&quot;,&quot;$50,000 - $100,000&quot;,&quot;$100,000 - $250,000&quot;,&quot;$250,000 +&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>A La Carte,Advisory #1</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Revenue Clearance Filing</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.BillingState</field>
-            <operation>equals</operation>
-            <value>AL,AK,AR,CA,CO,CT,DE,DC,DL,GA,HI,ID,IL,IN,IA,KS,KY,LA,ME,MD,MA,MI,MN,MS,NV,NH,NC,ND,OK,OR,PR,SC,SD,UT,VT,WV,WI,WY</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SOW Trigger</fullName>
-        <active>false</active>
-        <formula>Send_SOW__c = true</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <timeLength>2</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>SOW Trigger Fast</fullName>
@@ -4622,38 +1998,6 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Sales %26 Use Tax - active</fullName>
-        <actions>
-            <name>Sales_Use_Tax_active</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Sales and Use Tax</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Sales 1-1 Scheduled- Reminder</fullName>
-        <actions>
-            <name>Account_1_1_reminder</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.X1_1_Scheduled__c</field>
-            <operation>equals</operation>
-            <value>TOMORROW</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Sales Survey - Webinar - Account</fullName>
@@ -4694,11 +2038,7 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
     </rules>
     <rules>
         <fullName>Selling Retirement Plans</fullName>
-        <actions>
-            <name>Selling_Retirement_Plan</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Bill62__Active__c</field>
             <operation>equals</operation>
@@ -4713,252 +2053,6 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Shipping Required</fullName>
-        <actions>
-            <name>shipping</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Shipping_Required__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Sold by</fullName>
-        <actions>
-            <name>Sold_by</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Account_Number_c__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Subscription Checkbox</fullName>
-        <actions>
-            <name>Subscription_Appt_Completed_Survey</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Subscription_Initial_Appt_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Survey Response</fullName>
-        <actions>
-            <name>survey_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.recommendation__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Advisory %231 Complete</fullName>
-        <actions>
-            <name>Advisory_2_Completed2</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>advisory_1</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>moved_to_qbr</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Advisory_1_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Advisory %231 no show</fullName>
-        <actions>
-            <name>Advisory_1_No_Show</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Advisory_1_No_Show__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Advisory %232 Complete</fullName>
-        <actions>
-            <name>advisory_2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>moved_to_QBR_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Advisory_2_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Advisory %232 no show</fullName>
-        <actions>
-            <name>Advisory_2_No_Show</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Advisory_2_No_Show__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Discovery Call Complete</fullName>
-        <actions>
-            <name>Discovery_Call_Complete_Survey</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Discovery_Call_complete</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>discovery_no_show</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>discovery_reschedule_uncheck</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>moved_to_adv_1_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Discovery_Call_Completed__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Discovery Call No Show</fullName>
-        <actions>
-            <name>Discover_Call_No_Show</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Discovery_Call_No_Show__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Welcome Email</fullName>
-        <actions>
-            <name>Check_off_prevent_dupe_WelcomeEmail_O</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Send_Welcome_Email_Time_Stamp</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.send_welcome_email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Prevent_Duplicate_Welcome_Emails__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TAP - Welcome Email %28uncheck%29</fullName>
-        <actions>
-            <name>Prev_Duplicate_welcome_email</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.send_welcome_email__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TEST EMAIL - Do not use</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.test_emails_DO_NOT_USE__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update Account Owner - Corp Sales</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Corp_setup_link_sent__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Update Date For Reassignment%28Account%29</fullName>
         <actions>
             <name>Update_Date_For_Reassignment_Account</name>
@@ -4966,35 +2060,8 @@ ISCHANGED( PortalAccountOwner__c ))</formula>
         </actions>
         <active>true</active>
         <description>When a Bark/Paid Media Account owner is updated from a queue to a user (Or from General Queue to user) the Date For Reassignment is updated to one business day later</description>
-        <formula>AND( 
-ISCHANGED(OwnerId), 
-OR( 
-BEGINS(PRIORVALUE(OwnerId) , &apos;00G&apos;),  
-PRIORVALUE(Owner_Name__c) = &apos;General Lead&apos; ), 
-BEGINS(OwnerId , &apos;005&apos;), 
-OR( ISPICKVAL( Lead_Source__c, &apos;Bark&apos;),
-ISPICKVAL(Lead_Source__c, &apos;MVF Global&apos;),
-INCLUDES(Campaign__c, &apos;MVF Global&apos;), 
-INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
+        <formula>AND(  ISCHANGED(OwnerId),  OR(  BEGINS(PRIORVALUE(OwnerId) , &apos;00G&apos;),   PRIORVALUE(Owner_Name__c) = &apos;General Lead&apos; ),  BEGINS(OwnerId , &apos;005&apos;),  OR( ISPICKVAL( Lead_Source__c, &apos;Bark&apos;), ISPICKVAL(Lead_Source__c, &apos;MVF Global&apos;), INCLUDES(Campaign__c, &apos;MVF Global&apos;),  INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>VTO Partially Submitted</fullName>
-        <actions>
-            <name>VTO_Partially_Submitted</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.VTO_Partially_submitted__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Warm Transfer</fullName>
@@ -5033,16 +2100,6 @@ INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Warm-transfer account</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Lead_Type_New__c</field>
-            <operation>includes</operation>
-            <value>Warm-Transfer</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Welcome Email - Accountant Portal Appt</fullName>
         <actions>
             <name>welcome_email_accountant_portal</name>
@@ -5057,52 +2114,6 @@ INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Welcome Email - Subscription</fullName>
-        <actions>
-            <name>Welcome_Email_Subscription</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Check_off_prevent_dupe_WelcomeEmail_S</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.send_welcome_email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Account_Status__c</field>
-            <operation>equals</operation>
-            <value>Subscription</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Prevent_Duplicate_Welcome_Emails__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Pilot_Programs__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Zero Corp Return %2F Final Tax Return</fullName>
-        <actions>
-            <name>Welcome_Email_taxreturn</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Active_Products__c</field>
-            <operation>contains</operation>
-            <value>Corporate Return,Final Tax Return</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>a2Bj0000000sY4FEAU_Purge</fullName>
         <actions>
             <name>MALatitude_c_Purge</name>
@@ -5112,75 +2123,9 @@ INCLUDES(Lead_Type_New__c, &apos;Marketing&apos;) ) )</formula>
             <name>MALongitude_c_Purge</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Account.a2Bj0000000sY4FEAU_Purge</description>
         <formula>OR(ISCHANGED(BillingStreet),ISCHANGED(BillingCity),ISCHANGED(BillingState),ISCHANGED(BillingPostalCode),ISCHANGED(BillingCountry))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
-    <rules>
-        <fullName>estimated taxes - cancelled</fullName>
-        <actions>
-            <name>estimated_taxes_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Estimated Taxes</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>full-service bookkeeping - cancelled</fullName>
-        <actions>
-            <name>full_service_bookkeeping_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Full-Service Bookkeeping</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>payroll - cancelled</fullName>
-        <actions>
-            <name>payroll_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Payroll</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>sales %26 use tax - cancelled</fullName>
-        <actions>
-            <name>sales_use_tax_cancelled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Canceled_Suspended_Products__c</field>
-            <operation>contains</operation>
-            <value>Sales and Use Tax</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <tasks>
-        <fullName>Last_Contact_60_Days</fullName>
-        <assignedToType>owner</assignedToType>
-        <dueDateOffset>7</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>Last Contact &gt; 60 Days</subject>
-    </tasks>
 </Workflow>

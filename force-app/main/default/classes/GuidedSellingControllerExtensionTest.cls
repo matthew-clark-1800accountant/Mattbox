@@ -530,7 +530,7 @@ private class GuidedSellingControllerExtensionTest {
 
         String prods = p1.Id + '//Monthly//1//29.99//29.99//29.99,' + p2.Id + '//Annual//1//815//815//815.00,' + p3.Id + '//One-Time//1//0//0//0.00,' + p4.Id + '//Annual//1//365//365//365.00,' + p5.Id + '//Annual//1//1125//1125//1125.00';
         system.debug('++++ ' + prods);
-        String res = GuidedSellingControllerExtension.doSubmit('Standard', prods, opp.Id, ac.Id, 'yrl', '');
+        String res = GuidedSellingControllerExtension.doSubmit('Standard', prods, opp.Id, ac.Id, 'yrl', '', '2023-05-03');
         GuidedSellingEditControllerExtension.doSubmit('Standard', prods, opp.Id, ac.Id, 'yrl', '');
     }
 

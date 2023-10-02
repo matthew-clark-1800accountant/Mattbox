@@ -1,3 +1,0 @@
-<apex:page controller="NewOrderLineController" action="{!init}">
-
-</apex:page>

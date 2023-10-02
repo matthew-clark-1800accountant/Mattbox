@@ -56,6 +56,7 @@ global class EventPostTsaEmailBatch implements Database.Batchable<sObject>, Sche
             SELECT Id, Subject, Description, HtmlValue, DeveloperName, Body 
             FROM EmailTemplate 
             WHERE name = 'Tax savings breakdown'
+            LIMIT 1
         ];
 
         List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();

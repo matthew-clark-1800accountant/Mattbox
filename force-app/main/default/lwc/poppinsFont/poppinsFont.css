@@ -1,0 +1,12 @@
+@font-face {
+    /*
+        font family is used to give a name to the custom font,
+         you use this for referencing the custom font later
+    */
+    font-family: "Poppins";
+ 
+    /*
+        This is the location of the Custom Font
+     */
+    src: url('/resource/Poppins/Poppins-Regular.ttf') format('TrueType');
+ }

@@ -152,11 +152,25 @@ public without sharing class EventTriggerHandler{
 
         
         Map<Event_Field_Update__c, Event> fieldUpdateToEventMap = new Map<Event_Field_Update__c, Event>();
+        List<Id> eventIds = new List<Id>();
+        Map<Id, String> updatedByMap = new Map<Id, String>();
         List<Event_Tracking_Fields__mdt> fieldsToTrack = [SELECT Id, Field_Name__c, IsDate__c, MasterLabel FROM Event_Tracking_Fields__mdt WHERE IsActive__c = true];
         //List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
         List<Event> eventsToSync = new List<Event>();
+        for (Event newEvent : listNewRecords){ eventIds.add(newEvent.Id); }
+        for (Event ev : [SELECT Id, LastModifiedBy.Name FROM Event WHERE Id IN :eventIds]){
+            updatedByMap.put(ev.Id, ev.LastModifiedBy.Name);
+        }
+
+        
         for (Event newEvent : listNewRecords){
+
             Event oldEvent = mapOldRecords.get(newEvent.Id);
+            Boolean updatedBySetter = null;
+            if(updatedByMap.containsKey(newEvent.Id)){
+                updatedBySetter = updatedByMap.get(newEvent.Id) == newEvent.Appointment_Setter__c;
+            }
+
             if (newEvent.StartDateTime != oldEvent.StartDateTime) {
                 eventIdToEventMap.put(newEvent.Id, newEvent);
                 eventsToInsert.add(newEvent);
@@ -192,7 +206,8 @@ public without sharing class EventTriggerHandler{
                         New_Value__c = newValue,
                         Old_Value__c = oldValue,
                         Updated_By__c = newEvent.LastModifiedById,
-                        Update_Time__c = DateTime.now()
+                        Update_Time__c = DateTime.now(),
+                        Updated_by_Setter__c = updatedBySetter
                         ), newEvent);
                 }
             }

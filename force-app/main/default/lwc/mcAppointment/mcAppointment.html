@@ -1,0 +1,37 @@
+<template>
+    <!-- outer block -->
+    <!--todo: add drag events -->
+    <div draggable="true" ondragstart={dragStartHandler} onclick={clickHandler} class={blockStyle} id="apt-block">
+        <lightning-layout horizontal-align="left" multiple-rows="true">
+            <lightning-layout-item size="10">
+                <div class={textHeadingStyle} id="disposition">
+                <lightning-icon icon-name={icon.Name} variant={icon.Variant}
+                title="success variant x-small" size="x-small"></lightning-icon>
+                {headingText}</div>
+            </lightning-layout-item>
+            <!-- <lightning-layout-item>
+                <div class="text-initials" id="icon">{appointment.Icon}</div>
+            </lightning-layout-item> -->            
+            <lightning-layout-item>
+                <template lwc:if={showCallNumber}>
+                    <div class="call-number-container">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.61502 6.62988L7.34502 6.48488C7.04002 6.44988 6.74002 6.55488 6.52502 6.76988L5.60502 7.68988C4.19002 6.96988 3.03002 5.81488 2.31002 4.39488L3.23502 3.46988C3.45002 3.25488 3.55502 2.95488 3.52002 2.64988L3.37502 1.38988C3.31502 0.884883 2.89002 0.504883 2.38002 0.504883H1.51502C0.95002 0.504883 0.48002 0.974883 0.51502 1.53988C0.78002 5.80988 4.19502 9.21988 8.46002 9.48488C9.02502 9.51988 9.49502 9.04988 9.49502 8.48488V7.61988C9.50002 7.11488 9.12002 6.68988 8.61502 6.62988Z" fill="black" fill-opacity="0.54"/>
+                        </svg>                            
+                        <!-- <lightning-icon icon-name="utility:call"
+                        title="success variant x-small" size="xx-small"></lightning-icon> -->
+                        {appointment.NumberOfCalls}</div>
+                </template>
+                <!-- <div class="call-number-container">{totalNumberOfCalls}</div> -->
+            </lightning-layout-item>
+            <lightning-layout-item size="11">
+                <div class={textSubheadingStyle} >{appointment.LeadSource}</div>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <div class={textInitialsStyle}>{appointment.Initials}</div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+        
+    <!-- <c-mc-appt-mini-details details={miniDetails}></c-mc-appt-mini-details> -->
+</template>

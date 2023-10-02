@@ -1,0 +1,23 @@
+.appointment-container {
+    padding-bottom: 2px;
+    position: relative;
+}
+.timeslot-container {
+    /* Appointment */
+/* box-sizing: border-box; */
+
+/* Auto layout */
+
+display: flex;
+flex-direction: column;
+align-items: stretch;
+padding: 4px 5px;
+gap: 7px;
+align-self: stretch;
+
+width: 240px;
+height: 100%;
+
+border: 1px solid #C6CBDB;
+background: #F1F4FF;
+}

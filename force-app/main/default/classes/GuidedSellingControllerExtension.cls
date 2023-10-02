@@ -38,6 +38,10 @@ public without sharing class GuidedSellingControllerExtension {
     public String stringDefaultProducts { get; set; }
     public String theAccountId { get; set; }
     public String defaultCountry { get; set; }
+    //public static String quoteButtonText { get; set; }
+
+    public Date defaultBookkeepingStart { get; set; }
+    public static Date bookkeepingStartDate { get; set; }
 
     // Variables Boolean 
     public Boolean hasRecordId { get; set; }
@@ -62,6 +66,7 @@ public without sharing class GuidedSellingControllerExtension {
     public Account account { get; set; }
     public Business__c business { get; set; }
     public Business_Owner__c businessOwner { get; set; }
+    public Event eventRec { get; set; }
 
     //List Variables
     public List<Business_Owner__c> partners { get; set; }
@@ -164,6 +169,7 @@ public without sharing class GuidedSellingControllerExtension {
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
         hasRecordId = (null == recordId) ? false : true;
 
+        //quoteButtonText = 'Generate Quote';
         //defaultNumForeignOwners = '---';
         defaultState = 'Select a State';
         defaultYearsInBusiness = '---';
@@ -195,7 +201,8 @@ public without sharing class GuidedSellingControllerExtension {
         commutesWithOwnVehicle = false; 
         //eCommerce = false; 
         defaultCountry = 'United States';
-        
+        defaultBookkeepingStart = Date.today();
+
         String recordIdType = recordId?.getSObjectType().getDescribe().getName(); 
         
         Id eventId = ('Event' == recordIdType) ? recordId : null;
@@ -203,18 +210,18 @@ public without sharing class GuidedSellingControllerExtension {
         Id accountId = ('Account' == recordIdType) ? recordId : null;
         Id opportunityId = ('Opportunity' == recordIdType) ? recordId : null;
         System.debug('*checkpoint 2');
-
+        //Event event;
         //If there is an Event Id, get either an Opportunity or Account
         if(null != eventId) {
-            Event event = [SELECT Id, WhatId, WhoId FROM Event WHERE Id = :recordId];
+            eventRec = [SELECT Id, WhatId, WhoId, Subject FROM Event WHERE Id = :recordId];
 
             //Getting either an Account or Opportunity from the Event
-            if(null != event.WhatId && 'Account' == event.WhatId.getSObjectType().getDescribe().getName()) {
-                accountId = event.WhatId;
+            if(null != eventRec.WhatId && 'Account' == eventRec.WhatId.getSObjectType().getDescribe().getName()) {
+                accountId = eventRec.WhatId;
             }
             
-            if(null != event.WhatId && 'Opportunity' == event.WhatId.getSObjectType().getDescribe().getName()) {
-                opportunityId = event.WhatId;
+            if(null != eventRec.WhatId && 'Opportunity' == eventRec.WhatId.getSObjectType().getDescribe().getName()) {
+                opportunityId = eventRec.WhatId;
             }
         }
 
@@ -348,10 +355,10 @@ public without sharing class GuidedSellingControllerExtension {
 
         //Calculator Environment logic
         environment = 'Standard';
+        System.debug('checking lead source');
         if(null != opportunity.Account.Lead_Source__c) {
-                
             //Setting the LegalZoom script here: Priority for LegalZoom script: 1.BTP 2.BAP
-            if('LegalZoom' == opportunity.Account.Lead_Source__c) {
+            if('LegalZoom' == opportunity.Account.Lead_Source__c && null != opportunity.Account.Lead_Type_New__c) {
                 if(opportunity.Account.Lead_Type_New__c?.contains('BTP')) {
                     btp = true;
                     useBTPLegalZoomScript = true;   
@@ -401,8 +408,15 @@ public without sharing class GuidedSellingControllerExtension {
         System.debug('*checkpoint 5');
 
         getProductData();
+        
     }
 
+    public void updateEventSubject(){
+        if(eventRec != null && eventRec.Subject != null && !eventRec.Subject.toLowerCase().contains('guided selling')){
+            eventRec.Subject += ' - Guided Selling';
+            update eventRec;
+        }
+    }
     public void getProductData() {
         
         Map<Id, Product2> products = new Map<Id, Product2>([
@@ -476,7 +490,7 @@ public without sharing class GuidedSellingControllerExtension {
                 }
 
                 if('Contains String' == rule.Operator__c) {
-                    if(userValue.containsIgnoreCase(rule.Value__c)) {
+                    if(userValue != null && userValue.containsIgnoreCase(rule.Value__c)) {
                         if('Remove Product' == rule.Action__c) {
                             allProducts.remove(rule.Product_Name__c);
                         } else {
@@ -491,7 +505,7 @@ public without sharing class GuidedSellingControllerExtension {
                 }
 
                 if('Does Not Contain String' == rule.Operator__c) {
-                    if(!userValue.containsIgnoreCase(rule.Value__c)) {
+                    if(userValue == null || !userValue.containsIgnoreCase(rule.Value__c)) {
                         if('Remove Product' == rule.Action__c) {
                             allProducts.remove(rule.Product_Name__c);
                         } else {
@@ -539,7 +553,7 @@ public without sharing class GuidedSellingControllerExtension {
                 }
 
                 if('Contains String' == rule.Operator__c) {
-                    if(accountValue.containsIgnoreCase(rule.Value__c)) {
+                    if(accountValue != null && accountValue.containsIgnoreCase(rule.Value__c)) {
                         if('Remove Product' == rule.Action__c) {
                             allProducts.remove(rule.Product_Name__c);
                         } else {
@@ -554,7 +568,7 @@ public without sharing class GuidedSellingControllerExtension {
                 }
 
                 if('Does Not Contain String' == rule.Operator__c) {
-                    if(!accountValue.containsIgnoreCase(rule.Value__c)) {
+                    if(accountValue == null || !accountValue.containsIgnoreCase(rule.Value__c)) {
                         if('Remove Product' == rule.Action__c) {
                             allProducts.remove(rule.Product_Name__c);
                         } else {
@@ -1049,14 +1063,15 @@ public without sharing class GuidedSellingControllerExtension {
         if(d == null || d == '') {
             con.Description = title + ': ' + note;
         } else {
-            con.Description = d + '\n' + title + ': ' + note;
+            //con.Description = d + '\n' + title + ': ' + note;
+            con.Description = title + ': ' + note;
         }
         update con;
     }
 
     @RemoteAction
     public static void saveAnswers(String answers, String businessId, String accId, String environment) {
-
+        System.debug('saveAnswers');
         Map<String,String> answersMap = new Map<String,String>();
         List<String> answersList = new List<String>();
         List<String> answersSplitList = new List<String>();
@@ -1143,6 +1158,9 @@ public without sharing class GuidedSellingControllerExtension {
 
             update acc;
             
+            //bookkeepingStartDate = Date.valueOf(answersMap.get('What transaction date should your bookkeeper start on'));
+            //System.debug(answersMap.get('What transaction date should your bookkeeper start on'));
+            //System.debug('*bookkeepingStartDate: '+bookkeepingStartDate);
         }
     }
 
@@ -1378,8 +1396,8 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     @RemoteAction
-    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String delProds) {
-        
+    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String delProds, String bookStartDate) {
+        //quoteButtonText = 'Next Section';
         // Initialize class variables
 
         String packageName = '';
@@ -1469,7 +1487,7 @@ public without sharing class GuidedSellingControllerExtension {
                     p.price = dataProdList[3];
                     p.freqPrice = dataProdList[4];
                     p.subtotal = dataProdList[5];
-                    
+                    System.debug(p);
                     prodSelecDataList.add(p);
                 }
             } else {
@@ -1479,7 +1497,7 @@ public without sharing class GuidedSellingControllerExtension {
                 p.price = dataProdList[3];
                 p.freqPrice = dataProdList[4];
                 p.subtotal = dataProdList[5];
-                
+                System.debug(p);
                 prodSelecDataList.add(p);
             }
         }
@@ -1688,7 +1706,7 @@ public without sharing class GuidedSellingControllerExtension {
             apptType = 'EForm';
         }
         
-        String schedulerURL = sURL + '?TID=' + apptType + '	&WID=' + contactId + '&EmailCampaignID=' + emailCampId;
+        String schedulerURL = sURL + '?TID=' + apptType + ' &WID=' + contactId + '&EmailCampaignID=' + emailCampId;
         String schedulerVIPURL = '';
 
         String schedulerURLReturn = sURL + ',' + apptType + ',' + contactId + ',' + emailCampId;
@@ -1716,7 +1734,8 @@ public without sharing class GuidedSellingControllerExtension {
             Customized_Bundle__c = false,
             Name_of_Offer_Package__c = packageName,
             Brand__c = brand,
-            Email_Campaign_ID__c = emailCampId
+            Email_Campaign_ID__c = emailCampId,
+            Sales_Platform__c = 'Guided Selling'
         );
 
         // Creation of the quote
@@ -1758,7 +1777,13 @@ public without sharing class GuidedSellingControllerExtension {
                 Bundle__c = 'None',
                 Calc_Savings_Amount__c = acc.Potential_Total_Savings__c
             );
-        
+            if(bookStartDate != null){
+                System.debug('bookkepingStartDate: '+bookStartDate);
+                //theQuote.Calc_Bookkeeping_Start_Date__c  = Datetime.newInstance(bookkeepingStartDate, Time.newInstance(0,0,0,0)).format('yyyy-MM-dd');//mc
+                theQuote.Calc_Bookkeeping_Start_Date__c = bookStartDate;
+            } else {
+                System.debug('bookkepingStartDate null');
+            }
             insert theQuote;
             quoteID = theQuote.Id;
         }
@@ -1851,7 +1876,7 @@ public without sharing class GuidedSellingControllerExtension {
             coQuoteAnnualId = theCOQuote.Id;
         } 
 
-        createLineItems(prodSelecDataList, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId);
+        createLineItems(prodSelecDataList, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate);
         
         sleep(3000);
 
@@ -1885,8 +1910,8 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     //Decimal productPassAdjustment, List<SelectedProduct> prodSelectedList, String calcIdPass, String bundlePass, String productDescription, String opportunityIdPass, String pricebookEntryIdPass, String productIdPass, Integer quantityPass, String timePass, String timeDefPass, String billingTimePass, String quoteIdPass, String coQuoteIdPass, String coQuoteIdMonthPass, String coQuoteIdOneTimePass, String sowDescPass, String sowDescPassHTML, String accountIdPass, Decimal sortOrderPass, Boolean doFeePass, Decimal feeAmountPass, String feeDesc, Boolean oneTimePass, Boolean noSplitPass)
-    public static void createLineItems(List<SelectedProduct> prodOriginalList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId) {
-        
+    public static void createLineItems(List<SelectedProduct> prodOriginalList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId, String bookStartDate) {
+        Set<Id> backBookkeepingIds = new Map<Id, Product2>([SELECT Id FROM Product2 WHERE Name LIKE '%Back Bookkeeping%']).keySet();
         Map<String, Boolean> seenValues = new Map<String, Boolean>();
         List<SelectedProduct> prodSelectedList = new List<SelectedProduct>(); 
 
@@ -1927,6 +1952,11 @@ public without sharing class GuidedSellingControllerExtension {
                 subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
 
                 OpportunityLineItem oli;
+                System.debug('OLI debug:');
+                    System.debug(tmpACPrice);
+                    System.debug(subAmount);
+                    System.debug(financeAmount);
+                    System.debug(subTotalAmount);
 
                 if(oppId != null && String.valueOf(oppId) != '') {
                      oli = new OpportunityLineItem(
@@ -1963,14 +1993,20 @@ public without sharing class GuidedSellingControllerExtension {
                 }
                 
                 if(coMonthQuoteId != null && coMonthQuoteId != '') {
+                    String descrip = p.description;
+                    String HTMLDesc=p.HTMLdescription;
+                    if(backBookkeepingIds.contains(p.id)){
+                        descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                        HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                    }
                     ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
                         ChargeOver_Quote__c = Id.valueOf(coMonthQuoteId),
                         Product__c = Id.valueOf(p.id),
                         Price_Per_Unit__c = tmpACPrice,
                         Quantity__c = Integer.valueOf(p.quantity),
                         Contract_Amount__c = subTotalAmount,
-                        Product_Description__c = p.description,
-                        HTML_Description__c = p.HTMLdescription,
+                        Product_Description__c =  descrip,
+                        HTML_Description__c = HTMLdesc,
                         Account__c = accId,
                         Sales_Source__c = 'Sales',
                         sort_Order__c = p.sortOrder,
@@ -1979,6 +2015,7 @@ public without sharing class GuidedSellingControllerExtension {
                     );
                     if(coli != null) {
                         coliList.add(coli);
+                        System.debug(coli);
                     }
                 }
             } else {
@@ -1988,6 +2025,11 @@ public without sharing class GuidedSellingControllerExtension {
                     subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
 
                     OpportunityLineItem oli;
+                    System.debug('OLI debug:');
+                    System.debug(tmpACPrice);
+                    System.debug(subAmount);
+                    System.debug(financeAmount);
+                    System.debug(subTotalAmount);
 
                     if(oppId != null && String.valueOf(oppId) != '') {
                         oli = new OpportunityLineItem(
@@ -2024,14 +2066,20 @@ public without sharing class GuidedSellingControllerExtension {
                     }
                     
                     if(coOneTimeQuoteId != null && coOneTimeQuoteId != '') {
+                        String descrip = p.description;
+                        String HTMLDesc=p.HTMLdescription;
+                        if(backBookkeepingIds.contains(p.id)){
+                            descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                            HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                        }
                         ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
                             ChargeOver_Quote__c = Id.valueOf(coOneTimeQuoteId),
                             Product__c = Id.valueOf(p.id),
                             Price_Per_Unit__c = tmpACPrice,
                             Quantity__c = Integer.valueOf(p.quantity),
                             Contract_Amount__c = subTotalAmount,
-                            Product_Description__c = p.description,
-                            HTML_Description__c = p.HTMLdescription,
+                            Product_Description__c = descrip,
+                            HTML_Description__c = HTMLDesc,
                             Account__c = accId,
                             Sales_Source__c = 'Sales',
                             sort_Order__c = p.sortOrder,
@@ -2060,8 +2108,10 @@ public without sharing class GuidedSellingControllerExtension {
                         subAmount = (tmpACPrice / 6) * Integer.valueOf(p.quantity);
                         OLIPayInstall = '6-Pay';
                     } else {
-                        financeAmount = (tmpACPrice / 12) * 1.2;
-                        subAmount = ((tmpACPrice / 12) * 1.2) * Integer.valueOf(p.quantity);
+                        // financeAmount = (tmpACPrice / 12) * 1.2;
+                        // subAmount = ((tmpACPrice / 12) * 1.2) * Integer.valueOf(p.quantity);
+                        financeAmount = tmpACPrice;
+                        subAmount = tmpACPrice * Integer.valueOf(p.quantity);
                         if (p.billing == 'Annual') {
                             OLIPayInstall = 'Yearly';
                         } else if(p.billing == 'One-Time') {
@@ -2075,7 +2125,12 @@ public without sharing class GuidedSellingControllerExtension {
                     subTotalAmount = tmpACPrice * Integer.valueOf(p.quantity);
                 
                     OpportunityLineItem oli;
-
+                    System.debug('OLI debug:');
+                    System.debug(tmpACPrice);
+                    System.debug(subAmount);
+                    System.debug(financeAmount);
+                    System.debug(subTotalAmount);
+                    System.debug(p.quantity);
                     if(oppId != null && oppId != '') {
                         oli = new OpportunityLineItem(
                             Description = p.name,
@@ -2112,6 +2167,12 @@ public without sharing class GuidedSellingControllerExtension {
                         
                     ChargeOver_Quote_Line_Item__c coli;
                     if (p.billing == 'One-Time' && p.noSplitAllowed == false) {
+                        String descrip = p.description;
+                        String HTMLDesc=p.HTMLdescription;
+                        if(backBookkeepingIds.contains(p.id)){
+                            descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                            HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                        }
                         if(coOneTimeQuoteId != null && coOneTimeQuoteId != '') {
                             coli = new ChargeOver_Quote_Line_Item__c(
                                 ChargeOver_Quote__c = Id.valueOf(coOneTimeQuoteId),
@@ -2119,8 +2180,8 @@ public without sharing class GuidedSellingControllerExtension {
                                 Price_Per_Unit__c = tmpACPrice,
                                 Quantity__c = Integer.valueOf(p.quantity),
                                 Contract_Amount__c = subTotalAmount,
-                                Product_Description__c = p.description,
-                                HTML_Description__c = p.HTMLdescription,
+                                Product_Description__c = descrip,
+                                HTML_Description__c = HTMLDesc,
                                 Account__c = accId,
                                 of_times_this_should_recur__c = 1,
                                 Sales_Source__c = 'Sales',
@@ -2131,14 +2192,20 @@ public without sharing class GuidedSellingControllerExtension {
                         }
                     } else {
                         if(coAnnualQuoteId != null && coAnnualQuoteId != '') {
+                            String descrip = p.description;
+                            String HTMLDesc=p.HTMLdescription;
+                            if(backBookkeepingIds.contains(p.id)){
+                                descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                                HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                            }
                             coli = new ChargeOver_Quote_Line_Item__c(
                                 ChargeOver_Quote__c = Id.valueOf(coAnnualQuoteId),
                                 Product__c = Id.valueOf(p.id),
                                 Price_Per_Unit__c = tmpACPrice,
                                 Quantity__c = Integer.valueOf(p.quantity),
                                 Contract_Amount__c = subTotalAmount,
-                                Product_Description__c = p.description,
-                                HTML_Description__c = p.HTMLdescription,
+                                Product_Description__c = descrip,
+                                HTML_Description__c = HTMLDesc,
                                 Account__c = accId,
                                 Sales_Source__c = 'Sales',
                                 sort_Order__c = p.sortOrder,
@@ -2378,6 +2445,8 @@ public without sharing class GuidedSellingControllerExtension {
         options.add(new SelectOption('251-500', '251-500'));
         options.add(new SelectOption('501-750', '501-750'));
         options.add(new SelectOption('751-1000', '751-1000'));
+        options.add(new SelectOption('1001-1250', '1001-1250'));
+        options.add(new SelectOption('1251-1500', '1251-1500'));
         return options;
     } 
 

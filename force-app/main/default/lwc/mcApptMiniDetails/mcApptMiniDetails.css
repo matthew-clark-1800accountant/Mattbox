@@ -1,0 +1,42 @@
+.mini-details-block{
+    position:fixed; 
+    z-index:2; 
+    background-color:white;
+    width:230px; 
+    min-height:100px; 
+    max-height:2000px; 
+    height:auto;
+}
+.divider{
+    /* Divider */
+    /* width: 296px; */
+    height: 1px;
+
+    margin: 20px;
+    /* 02. Utility/Outline */
+    background: rgba(18, 23, 36, 0.2);
+}
+.rejections-label{
+    /* v2/100 - Car/SB(600)-24 */
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+letter-spacing: 0.02em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* 00. On Light / High Emphasis */
+
+color: rgba(0, 0, 0, 0.87);
+}
+.user-image{
+    height:40px;
+    width:40px;
+    border-radius: 50%;
+    margin-right: 15px; 
+    margin-top: 5px;
+}

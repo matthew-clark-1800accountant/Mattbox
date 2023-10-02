@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Vonage_Contact_Made__c</fullName>
-    <defaultValue>false</defaultValue>
-    <description>Checkbox for a call which has outcomes meaning the agent has spoken to the appropriate person</description>
-    <externalId>false</externalId>
-    <label>Vonage Contact Made</label>
-    <type>Checkbox</type>
-</CustomField>

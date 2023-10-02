@@ -15,17 +15,4 @@
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
     </outboundMessages>
-    <rules>
-        <fullName>OrderCreateECID</fullName>
-        <actions>
-            <name>Order_Create</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Order.Email_Campaign_ID__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
 </Workflow>

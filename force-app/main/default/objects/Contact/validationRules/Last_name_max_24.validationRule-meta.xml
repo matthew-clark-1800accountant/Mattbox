@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Last_name_max_24</fullName>
-    <active>false</active>
-    <errorConditionFormula>LEN(LastName) &gt;= 24</errorConditionFormula>
-    <errorMessage>First Name exceeded Character limit</errorMessage>
-</ValidationRule>

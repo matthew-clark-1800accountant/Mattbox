@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Billing_Rejected_Email</fullName>
-        <ccEmails>lkush@1800accountant.com</ccEmails>
-        <description>Billing Rejected Email</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Internal/Billing_Rejected</template>
-    </alerts>
-    <alerts>
         <fullName>EIN_Tax_Filing_Quote_Sent</fullName>
         <description>EIN Tax Filing Quote Sent</description>
         <protected>false</protected>
@@ -36,26 +24,6 @@
         <senderAddress>salesforce@1800accountant.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Internal/New_Sam_s_Club_Purchase</template>
-    </alerts>
-    <alerts>
-        <fullName>Notify_Bill_Processing_team_that_an_order_has_been_submitted</fullName>
-        <description>Notify Bill Processing team that an order has been submitted</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>bvanremoortere@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kboles@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lkush@1800accountant.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>salesforce@1800accountant.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Internal/New_Sales_Order_Billing_Notify</template>
     </alerts>
     <alerts>
         <fullName>Quote_Sent</fullName>
@@ -105,115 +73,6 @@
         <template>Zuora_Products_2018/Sprout_Quote_Sent</template>
     </alerts>
     <fieldUpdates>
-        <fullName>A_Status_No_Sale</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>No Sale</literalValue>
-        <name>A Status: No Sale</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>A_la_carte</fullName>
-        <field>StageName</field>
-        <literalValue>A La Carte</literalValue>
-        <name>A la carte</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_No_Sale</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>No Sale</literalValue>
-        <name>Account - No Sale</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_No_Sale2</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>No Sale</literalValue>
-        <name>Account - No Sale</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_No_Sale3</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>No Sale</literalValue>
-        <name>Account: No Sale</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_No_Sale4</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>No Sale</literalValue>
-        <name>Account: No Sale</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_Status_Cancelled</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Cancelled</literalValue>
-        <name>Account Status - Cancelled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_Status_Onboarding</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Onboarding</literalValue>
-        <name>Account Status Onboarding</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_Status_Onboarding2</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Onboarding</literalValue>
-        <name>Account Status - Onboarding</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Account_Status_Payment_Penting</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Payment Pending</literalValue>
-        <name>Account Status - Payment Penting</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Closed_Lost_Reason_Update</fullName>
         <description>Updates Closed Lost Reason to Opportunity Expired.</description>
         <field>Closed_Lost_Reason__c</field>
@@ -225,64 +84,12 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Corp_setup</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Corp Setup / Dissolution</literalValue>
-        <name>Corp setup</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Created_Date_Time</fullName>
         <field>Created_Date_Time__c</field>
         <formula>NOW()</formula>
         <name>Created Date/Time</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dedicated</fullName>
-        <field>Dedicated__c</field>
-        <literalValue>1</literalValue>
-        <name>Dedicated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dissolution_749_SO</fullName>
-        <field>D749S__c</field>
-        <literalValue>1</literalValue>
-        <name>Dissolution - $749  SO</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dissolution_SO_1049</fullName>
-        <field>D1049S__c</field>
-        <literalValue>1</literalValue>
-        <name>Dissolution SO 1049</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Dissolution_SO_749</fullName>
-        <field>D749S__c</field>
-        <literalValue>1</literalValue>
-        <name>Dissolution SO 749</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
@@ -318,117 +125,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Paid</fullName>
-        <field>Paid_Time__c</field>
-        <formula>NOW()</formula>
-        <name>Paid</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>RCF_Sales_Order</fullName>
-        <field>RCF_S__c</field>
-        <literalValue>1</literalValue>
-        <name>RCF - Sales Order</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Remove_CC</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>no_CC</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Remove CC</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Billing_Pending</fullName>
-        <field>StageName</field>
-        <literalValue>Billing Pending</literalValue>
-        <name>Stage — Billing Pending</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Billing_Rejected</fullName>
-        <field>StageName</field>
-        <literalValue>Billing Rejected</literalValue>
-        <name>Stage: Billing Rejected</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Closed_Lost</fullName>
-        <field>StageName</field>
-        <literalValue>Closed Lost</literalValue>
-        <name>Stage: Closed Lost</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Closed_Refund</fullName>
-        <field>StageName</field>
-        <literalValue>Closed / Refund</literalValue>
-        <name>Stage - Closed / Refund</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Not_Sold</fullName>
-        <field>StageName</field>
-        <literalValue>Not Sold</literalValue>
-        <name>Stage: Not Sold</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Onboarding_Dedicated</fullName>
-        <field>StageName</field>
-        <literalValue>Onboarding - Dedicated</literalValue>
-        <name>Stage - Onboarding Dedicated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_Subscription</fullName>
-        <field>StageName</field>
-        <literalValue>Subscription</literalValue>
-        <name>Stage: Subscription</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Stage_sold</fullName>
-        <field>StageName</field>
-        <literalValue>Sold</literalValue>
-        <name>Stage: sold</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_Close_date_to_today</fullName>
         <field>CloseDate</field>
         <formula>today()</formula>
@@ -437,113 +133,6 @@
         <operation>Formula</operation>
         <protected>false</protected>
         <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Opportunity_Stage_after_14_days</fullName>
-        <field>StageName</field>
-        <literalValue>Closed Lost</literalValue>
-        <name>Update Opportunity Stage after 14 days</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Sold_By</fullName>
-        <field>Sold_by__c</field>
-        <formula>$User.FirstName + &quot; &quot; + $User.LastName</formula>
-        <name>Update Sold By</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Updating_Opportunity_Stage_after_14_days</fullName>
-        <field>StageName</field>
-        <literalValue>Closed Lost</literalValue>
-        <name>Updating Opportunity Stage after 14 days</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Upsell</fullName>
-        <field>StageName</field>
-        <literalValue>Upsell</literalValue>
-        <name>Upsell</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>account_status_subscription</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>Subscription</literalValue>
-        <name>account status = subscription</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>alc</fullName>
-        <field>Account_Status__c</field>
-        <literalValue>A La Carte</literalValue>
-        <name>alc</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ded_date</fullName>
-        <field>Dedicated_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>ded date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>onboarding_date</fullName>
-        <field>Onboarding_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>onboarding date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>subscription_date</fullName>
-        <field>Subscription_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>subscription date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>update</fullName>
-        <field>Sold_by__c</field>
-        <formula>CreatedBy.FirstName  + &quot; &quot; + CreatedBy.LastName</formula>
-        <name>update</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-        <targetObject>AccountId</targetObject>
     </fieldUpdates>
     <outboundMessages>
         <fullName>Request_Bin</fullName>
@@ -572,38 +161,6 @@
         <useDeadLetterQueue>false</useDeadLetterQueue>
     </outboundMessages>
     <rules>
-        <fullName>Billing Rejected</fullName>
-        <actions>
-            <name>Billing_Rejected_Email</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.StageName</field>
-            <operation>equals</operation>
-            <value>Billing Rejected</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Billing processing notification</fullName>
-        <actions>
-            <name>Notify_Bill_Processing_team_that_an_order_has_been_submitted</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Update_Sold_By</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.StageName</field>
-            <operation>equals</operation>
-            <value>Sold</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Client-Closed Opportunity</fullName>
         <actions>
             <name>Sale_Completed_by_Client</name>
@@ -619,66 +176,18 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Corp Setup status</fullName>
-        <actions>
-            <name>Corp_setup</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Stage_sold</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid - Corp Offer / Dissolution,Behalf/Affirm Paid - Corp Offer/Dissolution</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Created Date%2FTime</fullName>
         <actions>
             <name>Created_Date_Time</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.CreatedDate</field>
             <operation>equals</operation>
             <value>TODAY</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>InsideSales - Gross Sales</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>contains</operation>
-            <value>CC Paid,Behalf Paid,Behalf Paid - Need Monthly CC</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Amount</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>InsideSales - Opportunity Won</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid,Behalf Paid,Behalf Paid - Need Monthly CC</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Amount</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Opp Name Cleaning</fullName>
@@ -690,7 +199,7 @@
             <name>Opp_Type</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Removes the hyphen from the opportunity name upon creation</description>
         <formula>IF  (  CONTAINS(Name,&apos;-&apos;),true,false  )</formula>
         <triggerType>onCreateOnly</triggerType>
@@ -720,266 +229,16 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Paid</fullName>
-        <actions>
-            <name>Paid</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid,Behalf Paid - Need Monthly CC,Behalf Paid</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Remove CC</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Opportunity.CreatedDate</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Default Opportunity- Corp</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Remove_CC</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>3</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SO Change</fullName>
-        <actions>
-            <name>Account_Status_Onboarding</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.StageName</field>
-            <operation>equals</operation>
-            <value>Onboarding - Dedicated,Onboarding</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Sams Club Purchase</fullName>
-        <actions>
-            <name>New_Sams_Club_Purchase</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Name</field>
-            <operation>equals</operation>
-            <value>Sams Club Purchase</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Set Close date to today</fullName>
         <actions>
             <name>Update_Close_date_to_today</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.OwnerId</field>
             <operation>notEqual</operation>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A A La Carte</fullName>
-        <actions>
-            <name>A_la_carte</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>alc</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2 )</booleanFilter>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid - A LA Carte</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Behalf / Affirm Paid - A La Carte</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Billing Pending</fullName>
-        <actions>
-            <name>Stage_Billing_Pending</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Partial CC</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Waiting on Behalf / Affirm</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Waiting on Check</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Billing Rejected</fullName>
-        <actions>
-            <name>Stage_Billing_Rejected</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Rejected</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Closed %2F Refund</fullName>
-        <actions>
-            <name>Stage_Closed_Refund</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2 ) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Refunded</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Behalf / Affirm Refunded</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>6/11/2015</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Closed Lost</fullName>
-        <actions>
-            <name>Stage_Closed_Lost</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Lost,Behalf / Affirm- Lost</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Not Sold</fullName>
-        <actions>
-            <name>Stage_Not_Sold</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Not Billed,Corp Offer - In Progress,Corp Offer - Do Not Contact</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Onboarding Dedicated</fullName>
-        <actions>
-            <name>Account_Status_Onboarding2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Stage_Onboarding_Dedicated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>onboarding_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Behalf Paid</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Behalf Paid - Need Monthly CC,CC Paid- Corp Upsell,Behalf / Affirm Paid</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Stage%3A Subscription</fullName>
-        <actions>
-            <name>Stage_Subscription</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>account_status_subscription</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>subscription_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>CC Paid - Subscription,Behalf / Affirm Paid - Subscription</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Upsell</fullName>
-        <actions>
-            <name>Upsell</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Billing_Status__c</field>
-            <operation>equals</operation>
-            <value>Existing Client Upsell</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>
