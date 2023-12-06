@@ -1,0 +1,7 @@
+<apex:page controller="LiveChatUniversalPageController" >
+
+    
+      <apex:iframe src="https://1800accountant.com/sfapi/schedule/index.php?Type=Marketing&Frame=1&Channel=Digital&Campaign=LiveChatDynamic&EmailCampaignID=LiveChatDynamic&SetterID={!$User.Id}&Setter={!$User.FirstName} {!$User.LastName}" height="680" scrolling="true" id="leadIframe"/>
+     
+
+</apex:page>

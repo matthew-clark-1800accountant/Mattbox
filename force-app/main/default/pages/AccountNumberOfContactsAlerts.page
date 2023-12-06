@@ -1,0 +1,10 @@
+<apex:page StandardController="Account">
+<script>
+window.document.onload = new function(e)
+{
+  if('{!Account.Lead_Source__c}' == 'ZenBusiness' && Number('{!Account.of_Connected_Calls__c}') >= 7){
+    alert('You cannot call this Account. The ZenBusiness number of calls allowed has been reached.');
+  }
+}
+</script>
+</apex:page>

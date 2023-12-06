@@ -1,0 +1,5 @@
+<apex:page standardController="Account" rendered="{!Account.Blacklisted__c == TRUE}">
+ <script type="text/javascript">
+  { window.alert("This account has been blacklisted - Please refer to account notes for more info"); }
+ </script>
+</apex:page>

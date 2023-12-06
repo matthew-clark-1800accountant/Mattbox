@@ -1,0 +1,14 @@
+<apex:page action="{!if($User.Alias !='hsohe' && $User.Alias != 'c62' && $User.Alias != 'LKush' && $User.Alias != 'API' && $User.Alias != 'BVanr' && $User.Alias != 'James' && $User.Alias != 'crich' && $User.Alias != 'brendon',
+    null,
+    urlFor($Action.Task.Delete, $CurrentPage.Parameters.id, [retURL='/00T'], true)
+    )
+    }"
+  standardController="Task">
+     <apex:pageBlock >
+        <apex:PageMessage summary="You are not allowed to delete Tasks"
+            severity="Warning"
+            strength="3"/>
+        <apex:pageMessages />
+    </apex:pageBlock>
+
+</apex:page>

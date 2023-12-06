@@ -156,6 +156,13 @@ public without sharing class GuidedSellingControllerExtension {
         return JSON.serialize(this.productToIdentifier); 
     }
 
+    public List<String> defaultProductNames = new List<String>{'Personal Return' ,'Advisory','1-800Accountant Access','Loan Agreement' ,'Business Return'};
+    public List<String> defaultProductNamesBtp = new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' , 'Audit Defense - Business' , 'Audit Defense - Personal' ,'Two-Year Review' , 'Loan Agreement'};
+    public List<String> defaultProductNamesBundle= new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' ,  'Business Return', 'Custom Accounting Package', 'Personal Financial Planning', 'Loan Agreement'};
+
+    public Id recordOwnerId;
+    public Boolean useStaticPackage { get; set; }
+
     // public void setproductIdToPrice(Map<Id, Decimal> setproductIdToPrice) {
     //    this.productIdToPrice = setproductIdToPrice;
     //}
@@ -164,6 +171,7 @@ public without sharing class GuidedSellingControllerExtension {
     //}
 
     public GuidedSellingControllerExtension(ApexPages.StandardController stdController) {
+        useStaticPackage = false;
         System.debug('*checkpoint 1');
         //First identify the record Id passed in the parameters through the flow
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
@@ -213,7 +221,8 @@ public without sharing class GuidedSellingControllerExtension {
         //Event event;
         //If there is an Event Id, get either an Opportunity or Account
         if(null != eventId) {
-            eventRec = [SELECT Id, WhatId, WhoId, Subject FROM Event WHERE Id = :recordId];
+            eventRec = [SELECT Id, WhatId, WhoId, Subject, OwnerId FROM Event WHERE Id = :recordId];
+            recordOwnerId = eventRec.OwnerId;
 
             //Getting either an Account or Opportunity from the Event
             if(null != eventRec.WhatId && 'Account' == eventRec.WhatId.getSObjectType().getDescribe().getName()) {
@@ -228,21 +237,30 @@ public without sharing class GuidedSellingControllerExtension {
         //If there is a Lead Id, it was converted and we can get the Opportunity Id
         if(null != leadId) {
             Lead lead = [
-                SELECT Id, Name, Entity_Type__c, Company, LeadSource, Email, Owner.Name, Owner.Email, ConvertedOpportunityId
+                SELECT Id, Name, Entity_Type__c, Company, LeadSource, Email, Owner.Name, Owner.Email, ConvertedOpportunityId, OwnerId
                 FROM Lead
                 WHERE Id = :leadId
             ];
             opportunityId = lead.ConvertedOpportunityId;
+            recordOwnerId = lead.OwnerId;
         }
 
         //In the case an Event has an Account and Opportunity, we only want the Opportunity
-        if(null == opportunityId && null != accountId) {
+        if(null != opportunityId && null != accountId) {
             Opportunity findLatestOpportunity = [
-                SELECT Id, Name, AccountId FROM Opportunity WHERE AccountId = :accountId ORDER BY CreatedDate DESC LIMIT 1
+                SELECT Id, Name, AccountId, OwnerId FROM Opportunity WHERE AccountId = :accountId ORDER BY CreatedDate DESC LIMIT 1
             ];
             opportunityId = findLatestOpportunity.Id;
+            recordOwnerId = findLatestOpportunity.OwnerId;
         }
-
+        if(null != opportunityId && null == recordOwnerId){
+            Opportunity findLatestOpportunity = [
+                SELECT Id, Name, AccountId, OwnerId FROM Opportunity WHERE Id = :opportunityId
+            ];
+            recordOwnerId = findLatestOpportunity.OwnerId;
+        }
+        User recordOwner = [SELECT Id, Skills_Sales__c FROM User WHERE Id = :recordOwnerId];
+        useStaticPackage = recordOwner.Skills_Sales__c.contains('Bundle Packages');
         //Now we need to have an Opportunity Id at this point as the source of data for the page
         if(null == opportunityId && null != recordId) {
             throw new NoOpportunityIdFoundException(noOpportunityFound);
@@ -601,11 +619,17 @@ public without sharing class GuidedSellingControllerExtension {
                     businessReturnId = p.Id;
                 }
 
-                //BTP default products
-                if(btp){
-                    if('Personal Return' == p.Guided_Selling_Identifier__c || 'Advisory'== p.Guided_Selling_Identifier__c || '1-800Accountant Access' == p.Guided_Selling_Identifier__c
-                    || 'Audit Defense - Business' == p.Guided_Selling_Identifier__c || 'Audit Defense - Personal' == p.Guided_Selling_Identifier__c
-                    || 'Two-Year Review' == p.Guided_Selling_Identifier__c || 'Loan Agreement' == p.Guided_Selling_Identifier__c) {
+                if(useStaticPackage){
+                    if(defaultProductNamesBundle.contains(p.Guided_Selling_Identifier__c)) {
+                        defaultProducts.add(p);
+                        if(null == stringDefaultProducts) {
+                            stringDefaultProducts = p.Guided_Selling_Identifier__c;
+                        } else {
+                            stringDefaultProducts += ', ' + p.Guided_Selling_Identifier__c;
+                        }
+                    }
+                } else if(btp) { //BTP default products
+                    if(defaultProductNamesBtp.contains(p.Guided_Selling_Identifier__c)) {
                         defaultProducts.add(p);
                         if(null == stringDefaultProducts) {
                             stringDefaultProducts = p.Guided_Selling_Identifier__c;
@@ -614,8 +638,7 @@ public without sharing class GuidedSellingControllerExtension {
                         }
                     }
                 } else {
-                    if('Personal Return' == p.Guided_Selling_Identifier__c || 'Advisory'== p.Guided_Selling_Identifier__c || '1-800Accountant Access' == p.Guided_Selling_Identifier__c
-                    || 'Loan Agreement' == p.Guided_Selling_Identifier__c || 'Business Return' == p.Guided_Selling_Identifier__c) {
+                    if(defaultProductNames.contains(p.Guided_Selling_Identifier__c)) {
                         defaultProducts.add(p);
                         if(null == stringDefaultProducts) {
                             stringDefaultProducts = p.Guided_Selling_Identifier__c;
@@ -862,12 +885,12 @@ public without sharing class GuidedSellingControllerExtension {
             account.Home_Office_Square_Feet__c = office;
 
             //Updating the Accounts's savings details
-            account.Potential_Business_Mile_Savings__c = '$' + String.valueOf(mileageSavings);
-            account.Potential_Home_Office_Savings__c = '$' + String.valueOf(officeSavings);
-            account.Potential_QBI_Savings__c = '$' + String.valueOf(qbiSavings);
-            account.Potential_SCorp_Savings__c = '$' + String.valueOf(sCorpSavings);
-            account.Potential_Startup_Savings__c = '$' + String.valueOf(startupSavings);
-            account.Potential_Total_Savings__c = '$' + String.valueOf(finalSavings);
+            account.Potential_Business_Mile_Savings__c = mileageSavings;//'$' + String.valueOf(mileageSavings);
+            account.Potential_Home_Office_Savings__c = officeSavings;//'$' + String.valueOf(officeSavings);
+            account.Potential_QBI_Savings__c = qbiSavings;//'$' + String.valueOf(qbiSavings);
+            account.Potential_SCorp_Savings__c = sCorpSavings;//'$' + String.valueOf(sCorpSavings);
+            account.Potential_Startup_Savings__c = startupSavings;//'$' + String.valueOf(startupSavings);
+            account.Potential_Total_Savings__c = finalSavings;//'$' + String.valueOf(finalSavings);
             update account;
         }
 
@@ -1396,7 +1419,7 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     @RemoteAction
-    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String delProds, String bookStartDate) {
+    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String delProds, String bookStartDate, String useStatic) {
         //quoteButtonText = 'Next Section';
         // Initialize class variables
 
@@ -1631,6 +1654,7 @@ public without sharing class GuidedSellingControllerExtension {
         leadTypeNew = acc.Lead_Type_New__c;
         leadSource = acc.Lead_Source__c;
         contactId = acc.Primary_Contact_ID__c;
+        if(leadTypeNew == null){leadTypeNew='';}
 
         Opportunity opp = [SELECT Id, StageName, OwnerId, Email_Campaign_ID__c FROM Opportunity WHERE Id = :oppId];
         emailCampId = opp.Email_Campaign_ID__c;
@@ -1708,13 +1732,17 @@ public without sharing class GuidedSellingControllerExtension {
         
         String schedulerURL = sURL + '?TID=' + apptType + ' &WID=' + contactId + '&EmailCampaignID=' + emailCampId;
         String schedulerVIPURL = '';
+        String schedulerCSAURL = '';
 
         String schedulerURLReturn = sURL + ',' + apptType + ',' + contactId + ',' + emailCampId;
         String schedulerVIPURLReturn = '';
+        String schedulerCSAURLReturn = '';
         
         if (apptType == 'Discovery') {
             schedulerVIPURL = sURL + '?TID=DiscoveryVIP' + '&WID=' + contactId + '&EmailCampaignID=' + emailCampId;
             schedulerVIPURLReturn = sURL + ',VIP,' + contactId + ',' + emailCampId;
+            schedulerCSAURL = sURL + '?TID=CSAO&WID='+contactID+ '&EmailCampaignID=' + emailCampId;
+            schedulerCSAURLReturn = sURL + ',CSAO,' + contactId + ',' + emailCampId;
         }
         
         if (advisory == true || busiRet == true || persRet == true || payroll == true || bookk == true || brand == 'EzBizFile') {
@@ -1725,7 +1753,10 @@ public without sharing class GuidedSellingControllerExtension {
             schedulerURL = '';
             schedulerVIPURL = '';
         }
-        
+        System.debug('useStatic: '+useStatic);
+        if(useStatic == 'true'){
+            packageName = 'Custom Accounting Package';
+        }
         // update opportunity
         
         update new Opportunity(
@@ -1775,7 +1806,7 @@ public without sharing class GuidedSellingControllerExtension {
                 //Calc_State_of_Residence__c = business.State_of_Residence__c,
                 billingSchedule__c = billingTime,
                 Bundle__c = 'None',
-                Calc_Savings_Amount__c = acc.Potential_Total_Savings__c
+                Calc_Savings_Amount__c = String.valueOf(acc.Potential_Total_Savings__c)
             );
             if(bookStartDate != null){
                 System.debug('bookkepingStartDate: '+bookStartDate);
@@ -1879,8 +1910,12 @@ public without sharing class GuidedSellingControllerExtension {
         createLineItems(prodSelecDataList, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate);
         
         sleep(3000);
-
-        if(schedulerVIPURL != '' && vipAmount > 4999) {
+        
+        if (((leadSource == '1-800Accountant' && vipAmount > 3499) || vipAmount > 7499) && schedulerCSAURL != '') {
+            theCOQuoteMonth.Scheduler_URL__c = schedulerCSAURL;
+            theCOQuoteOneTime.Scheduler_URL__c = schedulerCSAURL;
+            theCOQuote.Scheduler_URL__c = schedulerCSAURL;
+        } else if(schedulerVIPURL != '' && vipAmount > 4999) {
             theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             theCOQuote.Scheduler_URL__c = schedulerVIPURL;
@@ -1901,8 +1936,9 @@ public without sharing class GuidedSellingControllerExtension {
             update theCOQuote;
         }
 
-
-        if(schedulerVIPURL != '' && vipAmount > 4999) {
+        if (((leadSource == '1-800Accountant' && vipAmount > 3499) || vipAmount > 7499) && schedulerCSAURL != '') {
+            return schedulerCSAURLReturn;
+        } else if(schedulerVIPURL != '' && vipAmount > 4999) {
             return schedulerVIPURLReturn;
         } else {
             return schedulerURLReturn;

@@ -1,0 +1,17 @@
+<apex:page StandardController="Contact">
+<script>
+window.document.onload = new function(e)
+{
+    if(Number('{!Contact.of_Connected_Calls__c}') >= 3 && '{!Contact.LeadSource}' == 'ZenBusiness' && Number('{!Contact.of_Emails__c}') >= 2) {
+      alert('You cannot call or email this Contact. The ZenBusiness number of calls and emails allowed has been reached.');
+    } else 2
+    if(Number('{!Contact.of_Connected_Calls__c}') >= 3 && '{!Contact.LeadSource}' == 'ZenBusiness' && ('' != '{!Contact.of_Emails__c}' || Number('{!Contact.of_Emails__c}') < 2)) {
+      alert('You cannot call this Contact. The ZenBusiness number of calls allowed has been reached.');
+    }
+    if(('' != '{!Contact.of_Connected_Calls__c}' || Number('{!Contact.of_Connected_Calls__c}') < 3) && '{!Contact.LeadSource}' == 'ZenBusiness' && Number('{!Contact.of_Emails__c}') >= 2) {
+      alert('You cannot email this Contact. The ZenBusiness number of emails allowed has been reached.');
+    }
+  }
+}
+</script>
+</apex:page>

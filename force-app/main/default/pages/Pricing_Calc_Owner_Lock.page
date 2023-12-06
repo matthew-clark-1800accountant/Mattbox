@@ -1,0 +1,90 @@
+<apex:page controller="PricingCalcController" standardStyleSheets="false">
+
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            
+            <title>Pricing Calculator Quote</title>
+            
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+            
+            
+            <style>
+                .form-group {
+                    margin-bottom: 0px;
+                    font-size: 12px;
+                }
+                h2 {
+                    font-size: 20px;
+                }
+                h1 {
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                    font-size: 28px;
+                }
+            </style>
+            
+
+            
+        </head>
+
+        <body>
+
+            <apex:form >
+            
+                <apex:actionFunction name="doSubmit" action="{!doPay}"/>
+ 
+    
+                <div class="container">
+        
+                    <div class="row">
+        
+                        <div class="col-12" style="text-align:center;"><h1>Calculator Locked</h1></div>
+        
+                    </div>
+    
+    
+                    <div class="row">
+        
+                        <div class="col-2"></div>
+            
+                        <div class="col-10">
+                            
+                            <p>This Opportunity is owned by another user and you do not have access to edit.</p>
+                            <p>Please create a new Opportunity to generate a new quote.</p>
+            
+                        </div>
+        
+                        <div class="col-1"></div>
+                        
+                    </div>
+        
+                            
+                           
+                        
+        
+                            <div class="row">
+                                <div class="col-2"></div>
+                               <div class="col-8">
+                                   <apex:commandButton styleClass="btn btn-primary" style="width:100%;height:200px;" action="{!doRedirect}" value="Back to Opportunity"/>
+                               </div>
+             
+                            </div>
+        
+                       
+        
+                    
+        
+                </div>
+
+            </apex:form>
+
+        </body>
+        
+    </html>
+  
+</apex:page>

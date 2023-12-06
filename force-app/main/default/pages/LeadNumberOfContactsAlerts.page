@@ -1,0 +1,10 @@
+<apex:page StandardController="Lead">
+<script>
+window.document.onload = new function(e)
+{
+  if('{!Lead.LeadSource}' == 'ZenBusiness' && Number('{!Lead.of_Connected_Calls__c}') >= 7){
+    alert('You cannot call this Lead. The ZenBusiness number of calls allowed has been reached.');
+  }
+}
+</script>
+</apex:page>

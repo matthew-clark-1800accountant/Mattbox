@@ -1,0 +1,622 @@
+<apex:page doctype="html-5.0" standardStylesheets="false" controller="ON24EventMakeLeadRegistrationController" showHeader="false" sidebar="false" cache="false" applyBodyTag="false" applyHtmlTag="false" >
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>1-800Accountant - Webinar Registration</title>
+            <!--
+            <meta property="og:title" content="Introduction to Business Taxes" />
+            <meta property="og:type" content="activity" />
+            <meta property="og:url" content="http://1800accountant.com/webinar/sf1/webinar-register.php" />
+            <meta property="og:image" content="http://1800accountant.com/webinar/sf1/webinar-files/but-ical.png" />
+            <meta property="og:site_name" content="Introduction to Business Taxes" />
+            <meta property="fb:admins" content="100003007913048" />
+            <meta property="og:description" content="1800-Accountant is conducting a great webinar on Introduction to Business Taxes.  I have already signed up! You can register here: http://1800accountant.com/webinar/sf1/webinar-register.php"/>
+            
+            <meta name="keywords" content="tax webinar, business taxes webinar, " />
+            <meta name="description" content="Live Webinar Intro to Business Taxes - Sign up FREE!" />
+            -->
+            <meta http-equiv="Pragma" content="no-cache"/>
+            
+            <style type="text/css">
+                
+                @charset "utf-8";
+                *{
+                margin:0;
+                padding:0;
+                }
+                
+                
+                img, a img{
+                border:0 none;
+                }
+                
+                img{
+                vertical-align:middle;
+                }
+                
+                a{
+                outline:0;
+                }
+                
+                input:focus, textarea:focus, select:focus{
+                outline: none;
+                }
+                
+                textarea {
+                resize: none;
+                }
+                
+                /*img, div, input { behavior: url("iepngfix.htc") }*/
+                
+                
+                .imgCenter{
+                display:block;
+                margin:0 auto;
+                clear:both;
+                }
+                
+                .imgRight{
+                float:right;
+                }
+                
+                .imgLeft{
+                float:left;
+                }
+                
+                .none{
+                display:none;
+                }
+                
+                .underlined{
+                text-decoration:underline;
+                }
+                
+                .textCenter{
+                text-align:center;
+                }
+                
+                .textLeft{
+                text-align:left;
+                }
+                
+                .textRight{
+                text-align:right;
+                }
+                
+                .clear{
+                clear:both;
+                height:0;
+                line-height:0;
+                font-size:0;
+                }
+                
+                body{
+                font-size:12px;
+                background:#ecf1f3;
+                font-family:Arial, Helvetica, sans-serif;
+                }
+                
+                /*-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; 
+                filter: alpha(opacity=0);*/
+                
+                #header{
+                width:100%;
+                height: 10em;
+                /*padding: 2em 5%;*/
+                vertical-align: middle;
+                text-align: center;
+                }
+                
+                #header h1, #header h2{
+                display: inline-block;
+                vertical-align: middle;
+                }
+                
+                #header h1{
+                font-size: 37px;
+                line-height: auto;
+                padding-top: 25px;
+                }
+                
+                .whiteheadertext{
+                color:#ffffff;
+                }
+                
+                .blackheadertext{
+                color:#ffffff;
+                }       
+                
+                #header h2{
+                font-size: 22px;
+                line-height: auto;
+                }   
+                
+                .h2{
+                color:#20c668;
+                text-align: center;
+                }
+                                
+                .header{
+                /*background:url(http://1800accountant.com/webinar/sf1/vibrant/images/header-blue.jpg) repeat-x left top; */
+                background-color: #2d323b;
+                display: inline-block;
+                vertical-align: middle;
+                }
+                
+                /*not in use - trying to vertically align logos
+                .header:before{
+                content: "";
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                }*/
+                
+                .logoElements{
+                text-align: center;
+                height: 100%;
+                }
+                
+                .logoElements2{
+                text-align: center;
+                height: auto;
+                vertical-align: middle;
+                padding-top: 25px;
+                padding-right: 20px;
+                }
+                
+                /*to manage logos in header*/
+                .logoElements:before{
+                content: "";
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                }
+                
+                .logoCenterVertically{
+                display: inline-block;
+                vertical-align: middle;
+                width: 300px;
+                }
+                
+                .wrapper{
+                width: 960px;
+                margin:0 auto;
+                display:block;
+                vertical-align: center;
+                }
+                
+                .content{
+                /*background:url(http://1800accountant.com/webinar/sf1/vibrant/images/content.jpg) repeat-y;
+                margin-top:22px;*/
+                }
+                
+                .contenttop{
+                /*background:url(http://1800accountant.com/webinar/sf1/vibrant/images/contenttop.jpg) no-repeat left top;*/
+                }
+                
+                .contentbottom{
+                /*background:url(http://1800accountant.com/webinar/sf1/vibrant/images/contentbottom.jpg) no-repeat left bottom;
+                padding-bottom: 25px;*/
+                }           
+                
+                .leftbox{
+                width:588px;
+                float:left;
+                margin:34px 0 0 31px;
+                }   
+                
+                .leftbox h1{
+                color: #555c67;
+                font-size: 29px;
+                line-height: 30px;
+                text-align: center;
+                }
+                
+                #videobox{
+                width:560px;
+                height:333px;
+                margin:20px auto 22px;
+                display:block;
+                }   
+                
+                .video{
+                /*background:url(http://1800accountant.com/webinar/sf1/vibrant/images/video-blue.gif) no-repeat left top; */
+                }   
+                
+                
+                
+                .videocodebox{
+                padding:10px;
+                width:540px;
+                height:300px;
+                }   
+                
+                .reserve{
+                float:right;
+                width:289px;
+                background:url(http://1800accountant.com/webinar/sf1/vibrant/images/reserve.jpg) repeat-y left top;
+                margin:36px 31px 0 0;
+                }   
+                
+                .inputbg{
+                background:url(http://1800accountant.com/webinar/sf1/vibrant/images/inputbg.gif) no-repeat left top;
+                width:241px;
+                height:36px;
+                margin:0 auto 15px;
+                display:block;
+                }   
+                
+                .inputbg input, .inputbg select{
+                border: 0 none;
+                color: #555555;
+                font-size: 15px;
+                margin: 8px 0 0 10px;
+                width: 219px;
+                }
+                .reserve h3{
+                text-align:center;
+                color:#222222;
+                font-size:16px;
+                margin-bottom:20px;
+                }
+                
+                .reserve h3 span{
+                color:#ed0000;
+                }   
+                
+                .sms{
+                color: #555555;
+                line-height: 20px;
+                margin-bottom: 27px;
+                text-align: center;
+                }   
+                
+                input[type="image"]{
+                margin:0 auto;
+                display:block;
+                }   
+                
+                .privacy{
+                color:#d1ccbc;
+                text-align:center;
+                margin-bottom:10px;
+                line-height:24px;
+                font-size:12px;
+                text-transform:uppercase;
+                }   
+                
+                .privacy a{
+                color:#d1ccbc;
+                text-decoration:none;
+                }
+                
+                .privacy a:hover{
+                text-decoration:underline;
+                }
+                
+                .footer{
+                width:100%;
+                height:auto;
+                margin:23px 0 0 0;
+                padding-top: 10px;
+                padding-bottom: 15px;
+                padding-left: 0;
+                padding-right: 0;
+                background-color: #2d323b;
+                }
+                
+                #footer p{
+                text-align:center;
+                color:#828282;
+                line-height:47px;
+                }   
+                
+                #footer p a {
+                text-decoration:none;
+                color:#828282;
+                padding: 0 5px;
+                }   
+                
+                #footer p a:hover{
+                text-decoration:underline;
+                }
+                
+                #footer-black{
+                background:url(http://1800accountant.com/webinar/sf1/vibrant/images/footer-black.jpg) repeat-x left top;
+                }   
+                
+                
+                #footer-dark-gray{
+                background:url(http://1800accountant.com/webinar/sf1/vibrant/images/footer-dark-grey.jpg) repeat-x left top;
+                }   
+                
+                
+                /** footer css adds **/
+                #footer p{
+                line-height: normal;
+                }       
+                
+                #navfooterlist li
+                {
+                display: inline;
+                list-style-type: none;
+                padding-right:10px;
+                
+                }
+                #navfooterlist li a{
+                text-decoration:none;   
+                font-size: 12px;
+                }
+                /** end footer css adds **/ 
+                
+            </style>    
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <!--
+                <script language="javascript" src="js/cookie.js" type="text/javascript"></script>
+            <script language="javascript" src="js/dynajax.js" type="text/javascript"></script>
+            <script language="javascript" src="js/gen_validatorv31.js"></script>
+            <script language="javascript" src="js/detect_timezone.js"></script>
+            -->
+                <script language="javascript" type="text/javascript"  charset="utf-8">
+                    
+                    $(document).ready(function(){
+                    $('#sms_slide').slideUp();
+                    $('#sms_on').click(function(){
+                        if($("#sms_on").is(':checked'))
+                        {
+                            $('#sms_slide').slideDown();
+                        }
+                        else
+                        {
+                            $('#sms_slide').slideUp();          
+                        }
+                    });
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     
+                    
+                });
+            
+            
+            
+            var rname="";
+            var remail="";
+            var is_infusion=0;
+            function copy_fields(){
+                
+                rdateset=document.getElementById('dates').value;
+                rwebitime=document.getElementById('times').value;
+                rname=document.getElementById('name').value;
+                remail=document.getElementById('email').value;
+                rtimezone=document.getElementById('timezone').value;
+                $.cookie("dateset", rdateset, { path: '/' });
+                $.cookie("webitime", rwebitime, { path: '/' });
+                $.cookie("name", rname, { path: '/' });
+                $.cookie("email", remail, { path: '/' });
+                $.cookie("timezone", rtimezone, { path: '/' });
+                $('#ajaxloader').css({'display': 'block'}); 
+                
+            }
+            function setCookie(c_name,value,exdays)
+            {
+                var exdate=new Date();
+                exdate.setDate(exdate.getDate() + exdays);
+                var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+                document.cookie=c_name + "=" + c_value;
+            }
+            
+            
+            
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                
+                return true;
+            }
+            
+            function setCountryCode() {
+                document.myform.phonenumber.value = document.myform.cc.options[document.myform.cc.selectedIndex].value;
+                return true;
+            }
+            
+            
+            </script>
+            
+            
+            <style type="text/css">
+                .leftbox p
+                {
+                    margin-bottom:10px;
+                }
+            </style>
+            </head>
+            <body>
+                <div id="ajaxloader" style="display:none;background-color: rgba(0, 0, 0, 0.8);     color: #FFFFFF;          font-family: Tahoma,Arial,Helvetica,sans-serif;     height: 50px;     padding-top: 10px;     position: fixed;     text-align: center;     top: 0;     width: 100%;     z-index: 100;">
+                    <div class="loading"><img src="http://1800accountant.com/webinar/sf1/webinar-files/loader2.gif" style="border:none;"/><br/><span>Registering To Webinar...</span></div></div>
+                    <div id="currentPage">
+                        <div id="header" class="header" style="display: inline-block;">
+                                    
+                                                                               
+                            <img class="logoElements" src="{!URLFOR($Resource.GreenOnTransparent)}" title="1-800Accountant Logo" align="left" height="auto" width="300"/>
+                            <img class="logoElements2" src="{!URLFOR($Resource.Kabbage3)}" title="Kabbage Logo" vertical-align="middle" align="right" height="auto" width="270"/> 
+                            
+                                <div class="wrapper">
+                                <h1 class="whiteheadertext">FREE Webinar : {!IF($CurrentPage.parameters.EventName != null, $CurrentPage.parameters.EventName, "Intro to Business Taxes")}</h1>
+                                <h2 class="h2">Presented by 1-800Accountant</h2>
+                                    <!-- <img src="{!URLFOR($Resource.GreenOnTransparent)}" title="1-800Accountant Logo" align="left" vertical-align="middle" height="125" width="250"/>
+                                    <img src="{!URLFOR($Resource.Kabbage3)}" title="Kabbage Logo" align="right" vertical-align="middle" height="80" width="250"/> -->
+                                </div>
+                                </div>
+                                
+                                <div class="wrapper">
+                                    <div class="content">
+                                        <div class="contenttop">
+                                            <div class="contentbottom">
+                                                <div class="leftbox">
+                                                    <h1>FREE Webinar : {!IF($CurrentPage.parameters.EventName != null, $CurrentPage.parameters.EventName, "Intro to Business Taxes")}</h1>
+                                                    <div id="videobox" class="video" style="{!IF($CurrentPage.parameters.EventName == "Intro to Business Taxes" || $CurrentPage.parameters.EventName == null ,"","display:none")}">
+                                                        
+                                                        <div class="videocodebox">
+                                                            <!-- START OF THE PLAYER EMBEDDING TO COPY-PASTE -->
+                                                                <script type="text/javascript" src="http://1800accountant.com/webinar/sf1/player/jwplayer.js"></script>
+            <!-- END OF THE PLAYER EMBEDDING -->
+            <div id="player"></div>
+            <script type="text/javascript"> 
+            jwplayer('player').setup({
+                'flashplayer': 'http://1800accountant.com/webinar/sf1/player/player.swf',
+                'file': 'https://s3.amazonaws.com/1800ACCOUNTANT/intro+to+biz+tax+landing+page+video_HB.mp4',
+                'feature': 'related',
+                'controlbar': 'over',
+                'autostart': 'true',
+                'width': '540',
+                'height': '300'
+                
+            });                                 
+            </script> 
+            
+            
+        </div>
+    </div>
+    
+    <img src="http://1800accountant.com/webinar/sf1/vibrant/images/register.jpg" style="margin-bottom:20px;" />
+    
+    
+    <!--
+    
+    <div style="width:100%; background:#cecece; padding:1px; margin-bottom:20px;">
+        <div style="width:99%; background:#f1f1f1; border:4px solid #fff;">
+            <h1 style="border-bottom: 1px dotted #CCCCCC;
+                       color: #555c67;
+                       font-family:Arial, Helvetica, sans-serif;
+                       font-size: 21px;
+                       letter-spacing: -0.01em;
+                       line-height: 38px;
+                       margin: 0 15px 10px;
+                       padding: 0 0 2px;
+                       text-align: left;
+                       text-shadow:0px 0px 0px; ">Webinar Presentation</h1>
+            <div style="background:url('http://1800accountant.com/webinar/sf1/webinar-files/box-pic.gif') no-repeat left top; float:left; width:100px; height:123px; padding:7px; margin:0px 10px 10px 10px;"> 
+                <!-- <img width="100" height="100" src="http://1800accountant.com/webinar/sf1/webinar-files/1800_AVATAR_fpzvccj65r_3314.png" /> 
+                <p style="font-size: 12px;
+                          line-height: 11px;
+                          color:#5c5c5c;
+                          margin: 6px 0 0;
+                          font-family:Arial, Helvetica, sans-serif;
+                          text-align: center;font-size:10px;">1800-Accountant</p> 
+            </div>
+            
+            <p style="color: #666666;
+                      font-family: Arial,Helvetica,sans-serif;
+                      font-size: 15px;
+                      line-height: 24px;
+                      margin:0 0 0 10px;
+                      padding:0px 10px 0px 0px;
+                      text-align: left;">
+                <strong style="color:#111111;">Topic:</strong> {!IF($CurrentPage.parameters.EventName != null, $CurrentPage.parameters.EventName, "Intro to Business Taxes")}<br />
+                <strong style="color:#111111;">Presenter:</strong> 1-800Accountant<br />
+                
+                
+                <strong style="color:#111111;">Date and Time:</strong> Select from menu </p>
+            <br style="clear:both;" />
+        </div>
+    </div>
+    -->
+    
+    <p>All business owners should speak with a tax professional regarding their tax responsibilities at the local, state and federal levels immediately upon forming a new business. 1-800Accountant's webinar and consultation prevents a business owner from having to do hours of research, therefore saving them a lot of time. Since the webinar and consultation are free, clients also avoid having to pay billable hours to a local tax professional. Many seasoned business owners say they learned more from 1-800Accountant's webinar than their current CPA or accountant.</p>
+    <ul>
+    </ul>
+    <ul>
+    </ul>                                   </div>
+
+<div class="reserve">
+    
+    <div style="display: block;">   
+       <img src="http://1800accountant.com/webinar/sf1/vibrant/images/reservetop.jpg" />
+        
+        
+        
+        
+        <!--  DISPLAYING THE DATE AND TIME DROPDOWN  -->
+        
+        
+        
+        
+        
+            
+        <apex:form id="theForm">
+            <apex:pageMessages />
+            <apex:actionFunction action="{!insertLead}" name="InsertRecord_JS" Rerender="statuses" status="Status1" oncomplete="doSubmit();"/>
+    <apex:actionFunction action="{!eventRegister}" name="doSubmit" status="Status2" reRender="statuses, msg"/>
+    <apex:outputPanel id="statuses">
+        <apex:actionStatus id="Status1" startText="...Inserting Record Into DB..." />
+        <apex:actionStatus id="Status2" startText="...Calling Web Service..." />
+    </apex:outputPanel>
+            <input type="hidden" name="setter" value="Kabbage Registration Page"/>
+            <input type="hidden" name="Email_Campaign_ID__c" value="{!$CurrentPage.parameters.EmailCampaignID}"/>
+            <div style="margin-left:10px;margin-bottom:15px;font-size:14px;font-weight:bold;color:#000000;">1. Which Webinar Do You Want to Attend?</div>
+            <div class="inputbg">
+                
+                <apex:selectList value="{!selEvent}" multiselect="false" size="1" label="Select an Event Time">
+                    <apex:selectOptions value="{!lstSO}"/>
+                </apex:selectList>
+                                
+            </div>
+
+            <div style="margin-left:10px;margin-bottom:15px;font-size:14px;font-weight:bold;color:#000000; padding-top:10px;">2. Where To Send The Invitation:</div>
+            <div style="margin-left:25px;margin-bottom:15px;font-size:14px;font-weight:bold;color:#000000; padding-top:0px;">First Name:</div>
+            <div class="inputbg">
+                <apex:inputText value="{!FirstName}" label="First Name" required="true"/>
+            </div>
+            <div style="margin-left:25px;margin-bottom:10px;font-size:14px;font-weight:bold;color:#000000; padding-top:0px;">Last Name:</div>
+            <div class="inputbg">
+                <apex:inputText value="{!LastName}" label="Last Name" required="true"/>
+            </div>
+            
+            <div style="margin-left:25px;margin-bottom:10px;font-size:14px;font-weight:bold;color:#000000; padding-top:0px;">Email Address:</div>
+            <div class="inputbg">
+                <apex:inputText value="{!Email}" label="Email" required="true"/>
+            </div>
+            <div style="margin-left:25px;margin-bottom:10px;font-size:14px;font-weight:bold;color:#000000; padding-top:0px;">Phone Number:</div>
+            <div class="inputbg">
+                <apex:inputText value="{!Phone}" label="Phone" required="true"/>
+            </div>
+            
+            <input class="submit" onclick="InsertRecord_JS();return false;" type="image" id="frmsubmit" src="http://1800accountant.com/webinar/sf1/vibrant/images/registernow.jpg" alt="Submit Form" />
+            
+            
+           
+            
+        </apex:form>
+        
+        <img src="http://1800accountant.com/webinar/sf1/vibrant/images/reservebottom.jpg" />
+    </div>
+</div>
+
+<br class="clear" />
+
+</div>
+</div>
+</div>
+</div>
+<div id="footer" class="footer">
+    <div class="wrapper">
+    </div>
+</div>
+
+
+<!-- end google analytics code -->
+
+
+</div>  
+
+
+</body>
+     
+</html>
+</apex:page>

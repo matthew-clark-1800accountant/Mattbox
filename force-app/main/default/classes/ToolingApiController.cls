@@ -19,7 +19,7 @@ public with sharing class ToolingApiController {
     public static String runQuery(String query){
 
         String userToTrace = System.UserInfo.getUserId();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/query/?q=';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/query/?q=';
         String escapedQuery = EncodingUtil.urlEncode(query, 'UTF-8');
         HttpRequest req; 
         HttpResponse res; 
@@ -64,7 +64,7 @@ public with sharing class ToolingApiController {
     //     // updateObject('WorkflowOutboundMessage', recId, omString);
     //     // return omString;
 
-    //     String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/WorkflowOutboundMessage/';
+    //     String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/WorkflowOutboundMessage/';
     //     printLomgString(endPoint+recId+'/');
     //     HttpRequest req; 
     //     HttpResponse res; 
@@ -93,7 +93,7 @@ public with sharing class ToolingApiController {
         //https://spotter--dev1.my.salesforce.com/services/data/v43.0/tooling/sobjects/ApexLog/07L02000008G3PSEA0/Body/
         //logId = '07L02000008G3PSEA0';
         String userToTrace = System.UserInfo.getUserId();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/' + logId + '/Body/';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/' + logId + '/Body/';
         HttpRequest req; 
         HttpResponse res; 
         Http h; 
@@ -111,7 +111,7 @@ public with sharing class ToolingApiController {
         List<ApexLog> oldLogs = [SELECT Id, Application, DurationMilliseconds, LogLength, StartTime FROM ApexLog WHERE StartTime < LAST_N_DAYS:3];
         System.debug(oldLogs);
         String userToTrace = System.UserInfo.getUserId();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/';
         HttpRequest req; 
         HttpResponse res; 
         Http h; 
@@ -136,7 +136,7 @@ public with sharing class ToolingApiController {
         List<ApexLog> oldLogs = [SELECT Id, Application, DurationMilliseconds, LogLength, StartTime FROM ApexLog WHERE Status = 'Success'];
         System.debug(oldLogs);
         String userToTrace = System.UserInfo.getUserId();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/ApexLog/';
         HttpRequest req; 
         HttpResponse res; 
         Http h; 
@@ -159,7 +159,7 @@ public with sharing class ToolingApiController {
 
     public static void deleteOldFlags(){
         String userToTrace = System.UserInfo.getUserId();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/TraceFlag/';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/TraceFlag/';
         HttpRequest req; 
         HttpResponse res; 
         Http h;
@@ -189,7 +189,7 @@ public with sharing class ToolingApiController {
 
     @future(callout=true)
     public static void updateObject(String objectType, String recId, String jsonBody){
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/'+objectType+'/';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/sobjects/'+objectType+'/';
         printLomgString(endPoint+recId+'/');
         printLomgString(jsonBody);
         HttpRequest req; 
@@ -233,7 +233,7 @@ public with sharing class ToolingApiController {
         CompositeRequestWrapper compReq = new CompositeRequestWrapper();
         compReq.allOrNone = true;
         compReq.compositeRequest = new List<CompositeSubrequestWrapper>();
-        String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite';
+        String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/composite';
         for(String id : idList){
             CompositeSubrequestWrapper subReq = new CompositeSubrequestWrapper();
             subReq.method = 'DELETE';
@@ -272,7 +272,7 @@ public with sharing class ToolingApiController {
     //     CompositeRequestWrapper compReq = new CompositeRequestWrapper();
     //     compReq.allOrNone = true;
     //     compReq.compositeRequest = new List<CompositeSubrequestWrapper>();
-    //     String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/tooling/composite/';
+    //     String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/tooling/composite/';
     //     for(String id : idToRecordJson.keySet()){
     //         CompositeSubrequestWrapper subReq = new CompositeSubrequestWrapper();
     //         subReq.method = 'PATCH';
@@ -283,7 +283,7 @@ public with sharing class ToolingApiController {
     //         subReq.referenceId = 'refid'+id;
     //         compReq.compositeRequest.add(subReq);
     //     }
-    //     // String endPoint = URL.getSalesforceBaseUrl().toExternalForm()+'/services/data/v43.0/composite/sobjects?ids=';
+    //     // String endPoint = Url.getOrgDomainUrl().toExternalForm()+'/services/data/v43.0/composite/sobjects?ids=';
     //     // for(String id : idList){
     //     //     endPoint += id+',';
     //     // }

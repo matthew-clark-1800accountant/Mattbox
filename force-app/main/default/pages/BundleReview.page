@@ -8,6 +8,7 @@
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'/>
         <apex:stylesheet value="{!URLFOR( $Resource.bootstrap, 'bootstrap-5.0.1-dist/css/bootstrap.min.css' )}" />
         <link href="/PreTSA/slds/css/ow9l8zZWNn84MUcs05171A/min/scoped/one:oneNamespace,force:sldsTokens,force:base,force:formFactorLarge/slds.css" type="text/css" class="user" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <apex:slds />
         <style>
             
@@ -16,6 +17,24 @@
             margin: 0 auto;
             float: center;
             width: 1024px;
+            }
+
+            #logoComp {
+            text-align: left;   
+            z-index: 15;
+            position: absolute;
+            }
+            
+            #logo {
+            width: 200px;
+            margin-top: 20px;
+            }
+
+            #logoBarBig, #logoBarSmallTop, #logoBarSmallBotton {
+            height: 50px;
+            width: 100%;
+            z-index: 12;
+            background-color: white;
             }
             
             .slds-scope button {
@@ -44,6 +63,38 @@
             .slds-scope .slds-box {
             border: none;
             }
+
+            .spinnerBg{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                background-color: #000;
+                opacity: 0.2;
+                z-index: 999999;
+            }
+            @keyframes spinner {
+        0% {
+          transform: translate3d(-50%, -50%, 0) rotate(0deg);
+        }
+        100% {
+          transform: translate3d(-50%, -50%, 0) rotate(360deg);
+        }
+      }
+      .spin::before {
+        animation: 1.5s linear infinite spinner;
+        animation-play-state: inherit;
+        border: solid 5px #cfd0d1;
+        border-bottom-color: #1c87c9;
+        border-radius: 50%;
+        content: "";
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        transform: translate3d(-50%, -50%, 0);
+        will-change: transform;
+      }
             
             p {
             font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
@@ -65,7 +116,7 @@
             }
             
             #titleTable {
-            margin-top: 20px;
+            margin-top: 50px;
             }
             
             #titleTable td {
@@ -222,6 +273,17 @@
             line-height: 64px;
             }
             
+            #backgroundRest {
+            background: #8BD5C6;
+            opacity: 0.5;
+            position: fixed;
+            transform: rotate(-4.91deg);
+            left: -5%;
+            right: -5%;
+            height: 60%;
+            top: 40%;
+            }            
+
             .savings {
             font-size: 48px;
             line-height: 64px;
@@ -284,6 +346,7 @@
             padding: 10px;
             float: left;
             width: 351px;
+            margin-left: 50px;
             }
             
             .btnOrange:hover {
@@ -490,6 +553,11 @@
     </head>
     <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"/>
     <script type='text/javascript'>
+    Visualforce.remoting.timeout = 85000;
+    Visualforce.remoting.escape = false;
+
+    
+
     function calculateSavings() {
         document.getElementById('savAmount').innerHTML = 'Calculating...'
         var entityType = $('[data-id="entityType"]').val();
@@ -514,8 +582,10 @@
             var income = $('[data-id="income"]').val();
             var eventId = '{!$CurrentPage.parameters.id}';
             var recordId = '{!$CurrentPage.parameters.recordId}';
+            console.log('sending calc');
             Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.calculateSavings', entityType, profits, startup, mileage, office, filingStatus, income, eventId, recordId, function(r,e){
-                document.getElementById('savAmount').innerHTML = '$'+e.result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+              console.log('calculation complete');
+              document.getElementById('savAmount').innerHTML = '$'+e.result.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             });
             $('[data-id="profits"]').removeClass('hidden').prop('disabled', false);
             $('[data-id="startup"]').removeClass('hidden').prop('disabled', false);
@@ -529,31 +599,140 @@
         }
     }
 
-    var userLead = {};
-    
+    var idList = [];
+    var userLead = {Entity_Type__c: 'LLC', Estimated_First_Year_Profits__c: '50000', Total_Startup_Costs__c: '5000', Estimated_Business_Mileage__c: '15000', Home_Office_Square_Feet__c: '150', Filing_Status__c: 'Single', Personal_Income__c: '50000'};
+    var validEmailEntered = false;
+    var defaultLead = '{!defaultLeadValues}';
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParameters = new URLSearchParams(queryString);
+    if(urlParameters.has('leadId')){
+        userLead.Id = urlParameters.get('leadId');
+    }
+
     function emailEntered(inputElement){
       console.log(inputElement.value);
-      
-      Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.getOrCreateLead', inputElement.value, function(r,e){
-        userLead = e.result;
-        console.log(userLead);
+      if(!validateEmail(inputElement.value)){
+        //make visual change
+        document.getElementsByClassName('email')[0].style.border = "1px solid #dd1616"; //red outline
+        return;
+      }
+      document.getElementsByClassName('email')[0].style.border = "1px solid #ced4da"; //normal gray outline
+
+      validEmailEntered = true;
+      if(userLead.Id){
+        userLead['Email'] = inputElement.value;
+      } else {
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.getLead', inputElement.value, function(r,e){
+        console.log(e.result);
+        console.log(e);
+        console.log(r);
+        userLead.Id = e.result;
+        userLead['Email'] = inputElement.value;
+        //userLead = JSON.parse(e.result);
       });
+      }
     }
 
     function updateField(fieldName, fieldValue){
-      Object.defineProperty(userLead, fieldName, {
-        value: fieldValue,
-        writable: true
-      });
-      console.log(userLead);
-      // Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.updateLead', userLead, function(r,e){
-      //   console.log('lead updated: '+e.result);
+      // Object.defineProperty(userLead, fieldName, {
+      //   value: fieldValue,
+      //   writable: true
       // });
+      userLead[fieldName] = fieldValue;
+      console.log(userLead);
+    //   if(Object.hasOwn(userLead, 'Id')){
+    //     console.log('sending lead data '+JSON.stringify(userLead));
+    //     Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.updateLead', JSON.stringify(userLead), function(r,e){
+    //       console.log('lead updated: '+e.result);
+    //     });
+    //   }
+      
     }
+
+    function signup(){
+        if(!validEmailEntered){
+            document.getElementsByClassName('email')[0].style.border = "1px solid #dd1616"; //red outline
+            return;
+        }
+        if(userLead.Id){
+            finishRegistration();
+        } else {
+            goToPage2();
+        }
+    }
+
+    function finishRegistration(){
+        console.log('sending lead data '+JSON.stringify(userLead));
+        showSpinner();
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.upsertAndConvertLead', JSON.stringify(userLead), function(r,e){
+            idList = [...e.result];
+            console.log(e);
+            hideSpinner();
+            goToPage3();
+        });
+    }
+
+    function subscribeNow(){
+        showSpinner();
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.generateQuotes', 'Standard', idList[2], idList[0], JSON.stringify(userLead), 'yrl', function(r,e){
+            console.log(e.result);
+            hideSpinner();
+            window.open(e.result, _self);
+        });
+    }
+
+    function goToPage1(){
+        console.log('gotopage1');
+        document.getElementsByClassName('page1')[0].style.display = 'block';
+        document.getElementsByClassName('page2')[0].style.display = 'none';
+        document.getElementsByClassName('page3')[0].style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
+    function goToPage2(){
+        console.log('gotopage2');
+        document.getElementsByClassName('page1')[0].style.display = 'none';
+        document.getElementsByClassName('page2')[0].style.display = 'block';
+        document.getElementsByClassName('page3')[0].style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
+    function goToPage3(){
+        console.log('gotopage3');
+        document.getElementsByClassName('page1')[0].style.display = 'none';
+        document.getElementsByClassName('page2')[0].style.display = 'none';
+        document.getElementsByClassName('page3')[0].style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function validateEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function showSpinner(){
+        document.getElementsByClassName('spinnerBg')[0].style.display = 'block';
+        document.getElementsByClassName('spin')[0].style.display = 'block';
+    }
+
+
+    function hideSpinner(){
+        document.getElementsByClassName('spinnerBg')[0].style.display = 'none';
+        document.getElementsByClassName('spin')[0].style.display = 'none';
+    }
+
     </script>
     <body class="body" id="" onload="calculateSavings()">
+        <div class="spinnerBg" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+            &nbsp;
+        </div>
+        <div class="spin" style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%; display: none">
+        </div>
         <div class="slds-scope">
-            <div class="myapp">
+            
+            
+            <div class="page1 myapp">
                 <div class="slds-grid slds-wrap">
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">
@@ -569,7 +748,7 @@
                         </div>
                         
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
-                            <table id="titleTable">
+                            <table id="titleTable" style="margin-top: 100px;">
                                 <tr> 
                                     <td id="title">
                                         <p>Calculate Your Tax Savings and Purchase our Small Business Essentials Package</p>
@@ -594,7 +773,7 @@
                             <apex:form id="form">
                                 <spam id="formTitle">Enter your business details </spam>
                                 <div class="form-floating">
-                                  <apex:inputText style="background-image: none" html-data-id="entityType" styleClass="form-select" value="{!inputEmail}" onchange="emailEntered(this);" size="1" id="email"/>
+                                  <apex:inputText style="background-image: none" html-data-id="entityType" required="true" styleClass="form-select email" value="{!inputEmail}" onchange="emailEntered(this);" size="1" id="email"/>
                                   <label style="display:inline-block" for="email">Email</label>
                                 </div>
                                 <div class="form-floating">
@@ -606,7 +785,7 @@
                                 </div>
                                 <div class="form-floating">
                                     <apex:selectList html-data-id="profits" styleClass="form-select" value="{!defaultProfits}" onchange="calculateSavings(); updateField('Estimated_First_Year_Profits__c', this.value)" size="1">
-                                        <apex:selectOptions value="{!currency}" id="sfyp"></apex:selectOptions>
+                                        <apex:selectOptions value="{!currencyProfit}" id="sfyp"></apex:selectOptions>
                                     </apex:selectList>
                                     <label for="sfyp">Estimated First Year Profits</label>
                                 </div>
@@ -635,7 +814,7 @@
                                     <label for="fs">Filing Status</label>
                                 </div>
                                 <div class="form-floating">
-                                    <apex:selectList html-data-id="income" styleClass="form-select" value="{!defaultIncome}" onchange="calculateSavings(); updateField('Personal_Income__c', this.value)" size="1">
+                                    <apex:selectList html-data-id="income" styleClass="form-select" value="{!defaultIncome}" onchange="updateField('Personal_Income__c', this.value); calculateSavings();" size="1">
                                         <apex:selectOptions value="{!currency}" id="pi"></apex:selectOptions>
                                     </apex:selectList>
                                     <label for="pi">Personal Income</label>
@@ -675,7 +854,7 @@
                                 <p class="corpCTxt" id="corpCTxt"></p>
                             </div>
                             <div id="divBtn">
-                                <button class="btnOrange" onclick="window.open('{!schedulerURL}')">Sign up now! </button>
+                                <button class="btnOrange" style="margin-left: 50px;" onclick="signup()">Sign up now! </button>
                             </div>
                         </div>
                     </div>
@@ -684,7 +863,7 @@
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="third">
                             <div id="divBtn">
-                                <button class="btnOrange" onclick="window.open('{!schedulerURL}')">Sign up now! </button>
+                                <button class="btnOrange" style="margin-left: 50px;" onclick="signup()">Sign up now! </button>
                             </div>
                             
                             <div class="note">
@@ -723,6 +902,167 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="page2 myapp" style="display: none">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">
+                            <div >
+                                <table>
+                                    <tr> 
+                                        <td>
+                                            <img id="logo" src="{!$Resource.Logo}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <table id="titleTable">
+                                <tr> 
+                                    <td id="title">
+                                        <p>We just need a few more details to finalize your account.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap" id="acolumn-reverse">
+                    <!-- left column -->
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4" style="padding-left: 75px;">
+                        <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small" id="afirst">
+                            <apex:form id="aform" style="width: 80%;">
+                                <div class="form-floating">
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('FirstName', this.value);" size="1" id="firstname"/>
+                                    <label style="display:inline-block" for="firstname">First Name</label>
+                                </div>
+                                
+                                <div class="form-floating">
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('Company', this.value);" size="1" id="company"/>
+                                    <label style="display:inline-block" for="company">Company Name</label>
+                                </div>
+                            </apex:form>
+                        </div>
+                    </div>
+                    
+                    <!-- right column -->
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4" style="padding-left: 75px;">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="bsecondText">
+                            <apex:form id="bform" style="width: 80%;">
+                                <div class="form-floating">
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('LastName', this.value);" size="1" id="lastname"/>
+                                    <label style="display:inline-block" for="lastname">Last Name</label>
+                                </div>
+                            </apex:form>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <div class="corpC">
+                                <p class="corpCTxt" id="bcorpCTxt"></p>
+                            </div>
+                            <div id="bdivBtn" style="display: flex; justify-content: center;" >
+                                <button class="btnOrange" onclick="finishRegistration()">Finish Registration </button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <hr/>
+                    </div>
+                    
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <div id="footer">
+                                <div id="footerText">
+                                    <p id="pOne">© 2023 All Rights Reserved.</p>
+                                    <p id="pTwo">1-800Accountant Business Services.</p>
+                                </div>
+                                <div id="footerBtns">
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="contact" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/contact')">Contact</button>
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="privacy" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/privacy-policy')">Privacy Policy</button>
+                                    <div class="dividerFooter"/>
+                                    <button type="button" class="footerBtn" id="terms" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/terms-of-services')">Terms of Service</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page3 myapp" style="display: none">
+                <div id="backgroundRest" style="display: block;"></div>
+                <div class="slds-grid slds-wrap" id="smallBar">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4" id="logoBarSmallTop">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                            <div id="logoComp">
+                                <img id="logo" src="{!$Resource.Logo}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bundle" style="width: 100%; height: 100%; padding-bottom: 131.17px; padding-left: 260px; padding-right: 260px; justify-content: center; align-items: center; display: inline-flex;     z-index: 1;
+                    position: relative;">
+                    <div style="align-self: stretch; padding-top: 95.94px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 33.94px; display: inline-flex">
+                    <div style="width: 1280px; height: 643.95px; padding: 32px; background: white; box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16); border-radius: 8px; justify-content: flex-start; align-items: flex-start; gap: 18.53px; display: inline-flex">
+                    <div style="width: 400px; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
+                    <div style="text-align: center; color: #F15F22; font-size: 33.94px; font-family: Poppins; font-weight: 600; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">Special Offer</div>
+                    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 95.94px; font-family: Poppins; font-weight: 600; line-height: 155.23px; word-wrap: break-word">$2,789</div>
+                    </div>
+                    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="text-align: center"><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23%</span></div>
+                    </div>
+                    <div id="divBtn">
+                        <button class="btnOrange" style="margin-top:30px" onclick="subscribeNow()">Subscribe Now </button>
+                    </div>
+                    </div>
+                    <div style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 16px; display: inline-flex">
+                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80;">task_alt</span> Business and personal annual tax filings</div>
+                    <div style="width: 32px; height: 32px; position: relative">
+                     
+                    </div>
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees</div>
+                    </div>
+                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business tax planning and unlimited year-round consulting</div>
+                    <div style="width: 32px; height: 32px; position: relative">
+                    
+                    </div>
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Enjoy a custom-built tax plan from your accounting team and get the best possible tax savings</div>
+                    </div>
+                    <div style="align-self: stretch; height: 66px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Personal financial planning</div>
+                    <div style="width: 32px; height: 32px; position: relative">
+                    
+                    </div>
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Plan for retirement while also helping your immediate tax situation</div>
+                    </div>
+                    <div style="align-self: stretch; height: 120px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Industry leading bookkeeping and software</div>
+                    <div style="width: 32px; height: 32px; position: relative">
+                    
+                    </div>
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Use our popular ClientBooks software to manage all aspects of small business accounting with automated bookkeeping, expense management, invoicing, payment processing, reporting tools, and more</div>
+                    </div>
+                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Unlimited Premier Support</div>
+                    <div style="width: 32px; height: 32px; position: relative">
+                    
+                    </div>
+                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Engage your accountant team whenever you need advice or help. Rest easy knowing you're covered by America's top small-business accounting firm</div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
             </div>
         </div>
     </body>

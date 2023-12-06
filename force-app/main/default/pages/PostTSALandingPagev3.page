@@ -1,0 +1,1387 @@
+<apex:page standardController="Event" standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" extensions="PostTSALandingPageController">
+    <link REL="SHORTCUT ICON" HREF="{!URLFOR($Resource.accountantLogoFavicon)}"/>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Tax Savings Analysis</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+            <link href="/TSA/slds/css/ow9l8zZWNn84MUcs05171A/min/scoped/one:oneNamespace,force:sldsTokens,force:base,force:formFactorLarge/slds.css" type="text/css" class="user" rel="stylesheet"/>
+        <apex:slds />
+            
+            <style>         
+                
+                body { 
+                font-family: 'Poppins';
+                margin: 0 auto;
+                float: center;
+                width: 1024px;
+                }
+                
+                .slds-scope button {
+                font-family: 'Poppins';
+                color: none;
+                }
+                
+                .slds-scope td {
+                font-family: 'Poppins';
+                }
+                
+                .slds-scope button, button {
+                font-size: 17px;
+                font-weight: 600;
+                }
+                
+                .slds-scope hr {
+                color: grey;
+                margin: 0;
+                }
+                
+                .slds-scope {
+                font-family: 'Poppins';
+                font-weight: 400;
+                color: #FFFFFF;
+                }
+                
+                #orgBtn {
+                color: #FFFFFF;
+                }
+                
+                .slds-scope .slds-box {
+                border: none;
+                }
+                
+                p {
+                font-family: 'Poppins';
+                font-weight: 400;
+                line-height: 1.8;
+                }
+                
+                #header {
+                font-family: 'Poppins';
+                background-color: #FFFFFF;
+                background: #FFFFFF;
+                margin: 0 auto;
+                position: fixed;    
+                padding: 10px 0;
+                top: 0;
+                left: 2%;
+                right: 2%
+                }
+                
+                .btnOrange {
+                font-family: 'Poppins';
+                background-color: #EF541F;
+                background: #EF541F;
+                border: 1px solid #EF541F;
+                color: #FFFFFF;
+                border-radius: 30px;
+                padding: 7px;
+                float: right;
+                width: 300px;
+                }
+                
+                .btnOrange:hover, .chooseMailbtn:hover, .popUpchoosebtn:hover {
+                background-color: #FFFFFF;
+                border: 1px solid #dddddd;
+                background: #FFFFFF;
+                color: #EF541F;
+                }
+                
+                #companyName, #statement, #popUpTitle {
+                font-weight: 400;
+                }
+                
+                #companyName, #statement, #companyDetail, #popUpTitle {
+                text-align: center;
+                font-family: 'Poppins';
+                color: black;
+                }
+                
+                #companyDetail p {
+                line-height: 44px;
+                font-size: 29px;
+                font-style: normal;
+                font-weight: 300;
+                letter-spacing: 0.75px;
+                text-align: center;
+                }
+                
+                #companyName, #titleExpect {
+                font-size: 25px;
+                font-weight: 600;
+                }
+                
+                #statement, #txtExpect {
+                font-size: 17px;
+                }
+                
+                #popUpTitle {
+                font-size: 22px;
+                line-height: 40px;
+                text-align: center;
+                letter-spacing: 0.75px;
+                margin-bottom: 35px;
+                }
+                
+                .noteStatement, .noteStatements {
+                font-family: 'Poppins';
+                font-weight: 400;
+                text-align: center;
+                float: center;
+                }
+                
+                .noteTxtStatement, .noteTxtStatements {
+                font-family: 'Poppins';
+                font-weight: 400;
+                text-align: center;
+                }
+                
+                #titleTable {
+                font-family: 'Poppins';
+                font-weight: 400;
+                margin-top: 50px;
+                }
+                
+                #titleTable td, #titleTab td {
+                padding: 1%;
+                }
+                
+                .normalLine {
+                font-size: 22px;
+                }
+                .blankLine {
+                font-size: 29.664px;
+                }
+                
+                .titleBox {
+                font-size: 25px;
+                }
+                
+                .amountbox {
+                font-size: 30px;
+                font-weight: 600;
+                }
+                
+                .noteBox {
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
+                letter-spacing: 0.75px;
+                color: rgba(18, 23, 36, 0.65);
+                }
+                
+                #mainLineList, #lineList {
+                font-family: 'Poppins';
+                font-weight: 400;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                list-style-type: none;
+                }
+                
+                #lineList {
+                padding-bottom: 171px;
+                }
+                
+                ul li::before {
+                content: "&#10003;";  
+                color: #289982;
+                font-weight: bold;
+                display: inline-block;
+                padding: 5px;
+                }
+                
+                .whiteBox, .whiteMainBox, .centerBox {
+                font-family: 'Poppins';
+                font-weight: 400;
+                border-radius: 7px;
+                background-color: white;
+                border: 1px solid #dddddd;
+                padding: 20px; 
+                color: black;
+                width: 500px;
+                margin-bottom: 10%;
+                }
+                
+                .popUpwhiteBox {
+                font-family: 'Poppins';
+                font-weight: 400;
+                border-radius: 7px;
+                background-color: white;
+                border: 1px solid #dddddd;
+                padding: 20px; 
+                color: black;
+                width: 70%;
+                margin: 0 auto;
+                }
+                
+                .centerBox {
+                margin-left: 50%;
+                }
+                
+                .whiteMainBox {
+                float: right;
+                }
+                
+                .whiteBox {
+                float: left;
+                }
+                
+                .reviewStart, .speakRep  {
+                font-family: 'Poppins';
+                width: 30%;
+                font-size: 22px;
+                border: 2px solid #289982;
+                border-radius: 20px;
+                padding: 7px;
+                float: center;
+                display: inline-block;
+                }
+                
+                .reviewStart  {
+                background-color: #289982;
+                color: white;
+                background: #289982;
+                }
+                
+                .speakRep {
+                background-color: white;
+                color: black;
+                background: white;
+                }
+                
+                .reviewStart:hover, .speakRep:hover {
+                background-color: #E6E6E6;
+                border: 2px solid #289982;
+                background: #E6E6E6;
+                color: #289982;
+                }
+                
+                #choosebtndiv {
+                font-family: 'Poppins';
+                background-color: white;
+                color: #000000;
+                background: white;
+                font-size: 17px;
+                font-weight: 600;
+                }
+                
+                .choosebtn {
+                width: 80%;
+                background-color: white;
+                color: #000000;
+                background: white;
+                border: 2px solid #289982;
+                border-radius: 20px;
+                padding: 7px;
+                float: center;
+                margin: 5px;
+                }
+                
+                .choosebtn:hover {
+                background-color: #289982;
+                border: 2px solid #289982;
+                background: #289982;
+                color: #FFFFFF;
+                }
+                
+                .popUpbtns {
+                margin-top: 25px;
+                }
+                
+                .popUpbtnCancel {
+                margin-top: 5px;
+                color: rgba(18, 23, 36, 0.65);
+                }
+                
+                .popUpchoosebtn, .popUpCancel {
+                display: block;
+                }
+                
+                .popUpCancel {
+                font-family: 'Poppins';
+                width: 250px;
+                background-color: white;
+                line-height: 16px;
+                font-weight: 600;
+                letter-spacing: 0.75px;
+                background: white;
+                font-size: 14px;
+                border: 1px solid white;
+                border-radius: 20px;
+                padding: 7px;
+                float: center;
+                margin-top: 15px;
+                }
+                
+                .popUpCancel:hover {
+                background-color: #EAEDED;
+                border: 2px solid #EAEDED;
+                background: #EAEDED;
+                color: rgba(18, 23, 36, 0.65);
+                }
+                
+                .chooseMailbtn {
+                font-family: 'Poppins';
+                width: 80%;
+                background-color: #EF541F;
+                color: #FFFFFF;
+                background: #EF541F;
+                font-size: 15px;
+                border: 1px solid #EF541F;
+                border-radius: 20px;
+                padding: 7px;
+                float: center;
+                margin: 5px;                
+                }
+
+                
+                button.popUpchoosebtn {
+                width: 250px;
+                font-family: 'Poppins';
+                background-color: #EF541F;
+                color: #FFFFFF;
+                background: #EF541F;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 16px;
+                letter-spacing: 0.75px;
+                border: 1px solid #EF541F;
+                border-radius: 20px;
+                padding: 7px;
+                float: center;
+                margin: 5px;         
+                }
+                
+                #taxTitle {
+                font-family: 'Poppins';
+                font-size: 22px;
+                font-weight: 600;
+                color: black;
+                margin-bottom: 24px;
+                }
+                
+                .txtYourSav {
+                font-family: 'Poppins';
+                color: #289982;
+                font-weight: 600;
+                }
+                
+                #tableStrategy  {
+                font-family: 'Poppins';
+                font-weight: 400;
+                font-size: 17px;
+                border-collapse: collapse;
+                width: 100%;
+                color: black;
+                }
+                
+                #tableStrategy td {
+                padding-bottom: 12px;
+                }
+                
+                td.txtStrategy {
+                text-align: left;
+                }
+                
+                td.txtYourSav {
+                text-align: right;
+                }
+                
+                #greenBox {
+                font-family: 'Poppins';
+                font-weight: 400;
+                background-color: #EAF6F4;
+                width: 90%;
+                float: right;
+                display: block;
+                padding: 24px;
+                }
+                
+                .note {
+                width: 90%;
+                text-align: right;
+                margin-top: 10px;
+                float: right;
+                }
+                
+                .noteTxt {
+                font-family: 'Poppins';
+                font-weight: 400;
+                color: rgba(18, 23, 36, 0.65);
+                font-size: 15px;
+                text-align: left;
+                }
+                
+                #whitebox {
+                padding: 24px;
+                }
+                
+                #tableBisiness {
+                font-family: 'Poppins';
+                font-weight: 400;
+                font-size: 17px;
+                border-collapse: collapse;
+                width: 90%;
+                color: black;
+                }
+                
+                #tableBisiness td {
+                border: none;
+                padding-bottom: 12px;
+                vertical-align: text-top;
+                }
+                
+                #tableBisinessTitle {
+                font-family: 'Poppins';
+                font-size: 20px;
+                color: black;
+                text-align: left;
+                font-weight: 600;
+                margin-bottom: 24px;
+                }
+                
+                td.txtIndustry {
+                text-align: left;
+                }
+                
+                td.txtConsulting {
+                text-align: right;
+                }
+                
+                .txtConsulting {
+                font-weight: 600;
+                }
+                
+                #expect {
+                width: 30%;
+                display: inline-block;
+                margin: 10px;
+                vertical-align: text-top;
+                }
+                
+                #expecttitle {
+                font-family: 'Poppins';
+                font-weight: 400;
+                display: flex;
+                align-items: center;
+                vertical-align: text-top;
+                }
+                
+                #titleExpect, #txtExpect {
+                font-family: 'Poppins';
+                font-weight: 400;
+                color: black;
+                vertical-align: text-top;
+                }
+                
+                #txtExpect {
+                text-align: left;
+                }
+                
+                #titleExpect {
+                font-weight: 600;
+                display: inline-block;
+                vertical-align: text-top;
+                }
+                
+                #number {
+                font-family: 'Poppins';
+                font-weight: 400;
+                display: inline-block;
+                align-items: text-top;
+                justify-content: center;
+                width: 50px;
+                font-size: 30px;
+                height: 50px;
+                border-radius: 50%;
+                border: 3px solid #289982;
+                background-color: #FFFFFF;
+                color: #289982;
+                margin: 5px;
+                }
+                
+                .divider{
+                width: 10px;
+                height: auto;
+                display: inline-block;
+                }
+                
+                #buttons {
+                margin-top: 56px;
+                margin-bottom: 56px;
+                }
+                
+                #footer {
+                align-items: center;
+                padding: 0px 0px 24px;
+                left: 10%;
+                right: 10%
+                height: 76px;
+                }
+                
+                #footerText {
+                color: black;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                letter-spacing: 0.75px;
+                text-align: center;
+                width: 60%;
+                display: inline-block;
+                }
+                
+                #footerBtns, #contact, #privacy, #terms, .footerBtn, #pOne, #pTwo {
+                display: inline-block;
+                }
+                
+                button.footerBtn {
+                align-items: stretch;
+                font-size: 14px;
+                letter-spacing: 0.75px;
+                text-align: center;
+                padding: 5px;
+                background-color: white;
+                background: white;
+                border-style: none;
+                }
+                
+                .footerBtn:hover {
+                background-color: #BAE3FE;
+                background: #BAE3FE;
+                }
+                
+                .dividerFooter {
+                width: 5px;
+                height: auto;
+                display: inline-block;
+                }
+                
+                .custPopup { 
+                background-color: white; 
+                border-width: 2px; 
+                border-style: solid; 
+                z-index: 9999; 
+                left: 20%;
+                right: 20%;
+                padding:11px; 
+                position: absolute; 
+                width: 600px; 
+                margin: 0 auto;
+                top:100px; 
+                } 
+                
+                .popupBackground { 
+                background-color:black;
+                opacity: 0.20;
+                filter: alpha(opacity = 20);
+                position: absolute;
+                width: 100%;
+                align-items: center;
+                top: 0;
+                left: 0;
+                z-index: 9998; 
+                }
+                
+                .slds-scope p.noteBoxPopUp {
+                font-weight: bold;
+                font-size: 16.8px;
+                line-height: 24px;
+                text-align: center;
+                letter-spacing: 0.75px;
+                color: rgba(18, 23, 36, 0.91);
+                margin: 0px 0px;
+                }
+                
+                @media screen and (min-width: 1300px) {
+                body { 
+                float: center;
+                width: 1024px;
+                margin: 0 auto;
+                }
+                }
+                
+                @media screen and (max-width: 1300px) {
+                body { 
+                width: 80%;
+                left: 10%;
+                right: 10%;
+                float: center;
+                }
+                
+                #expect {
+                width: 100%;
+                display: block;
+                margin: 0px;
+                }
+                
+                .whiteBox, .whiteMainBox {
+                width: 100%;
+                float: center;
+                }
+                
+                .centerBox {
+                width: 500px;
+                }
+                
+                .choosebtn, .chooseMailbtn, #footerText {
+                width: 100%;
+                }
+                
+                #footer {
+                width: 100%;
+                left: 5%;
+                right: 5%
+                }
+                }
+                
+                @media screen and (max-width: 1000px) {
+                .centerBox {
+                margin-left: 40%;
+                width: 500px;
+                }
+                .custPopup { 
+                margin: 0 auto;
+                left: 0%;
+                right: 0%;
+                }
+                }
+                
+                @media screen and (max-width: 969px) {
+                #lineList {
+                padding-bottom: 73px;
+                }
+                .centerBox {
+                margin-left: 30%;
+                }
+                }
+                
+                @media screen and (max-width: 880px) {
+                .centerBox {
+                margin-left: 20%;
+                width: 500px;
+                }
+                }
+                
+                @media screen and (max-width: 790px) {
+                .centerBox {
+                margin-left: 10%;
+                width: 500px;
+                }
+                }
+                
+                @media screen and (max-width: 768px) {
+                body { 
+                margin: 0;
+                width: 98%;
+                left: 1%;
+                right: 1%;
+                }
+                
+                .whiteBox, .centerBox, .whiteMainBox, #tableBisiness {
+                width: 100%;
+                float: center;
+                }
+                
+                #greenBox {
+                float: none;
+                }
+                
+                #marginGreenBox {
+                width: 100%;
+                margin-left: 24px;
+                margin-right: 24px;
+                }
+                
+                #companyName, #statement, #companyDetail, .noteStatement, .noteStatements, .noteTxtStatements, .noteTxtStatement, #companyDetail p {
+                width: 100%;
+                text-align: left;
+                }
+                
+                .note {
+                width: 90%;
+                float: left;
+                text-align: left;
+                }
+                
+                .reviewStart, .speakRep {
+                display: block;
+                width: 90%;
+                }
+                
+                .btnOrange {
+                display: block;
+                width: 100%;
+                }
+                
+                .slds-scope button.btnOrange {
+                font-size: 14px;
+                }
+                
+                #expect {
+                width: 100%;
+                display: block;
+                margin: 0px;
+                }
+                
+                #lineList {
+                padding-bottom: 0px;
+                }
+                
+                .centerBox, .whiteMainBox {
+                margin-left: 0%;
+                }
+                
+                .normalLine {
+                font-size: 17px;
+                }
+                
+                .custPopup { 
+                width: 92%;
+                margin: 0 auto;
+                left: 2%;
+                }
+                
+                }
+                
+            </style>
+        </head>
+        <apex:form >
+            <body class="body" id="">
+                <apex:outputText rendered="{!AND(!pageHasEvent, !!pageHasOpportunity)}">
+                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">URL is missing the required Event Id parameter.</div>
+                </apex:outputText>
+                <apex:outputText rendered="{!AND(!eventHasOpportunity, pageHasEvent)}">
+                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">The Event must be related to an Opportunity.</div>
+                </apex:outputText>
+                <apex:outputText rendered="{!OR(AND(pageHasEvent, eventHasOpportunity), pageHasOpportunity)}">
+                    <div class="slds-scope">
+                        <div class="myapp">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="header">
+                                        <div >
+                                            <table id="headerTable">
+                                                <tr> 
+                                                    <td>
+                                                        <img id="logo" src="{!$Resource.Logo}"/>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btnOrange" onclick="window.open('{!opportunity.ChargeOver_Quote_URL__c}?utm_source=Quote+Link&utm_term=Client&utm_medium=Marketing+Email&utm_content=PostTSAPage1')">Review &#38; Get Started</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                                        <table id="titleTable">
+                                            <tr> 
+                                                <td id="companyName">
+                                                    <apex:outputText rendered="{!pageHasEvent}" value="{!opportunity.Account.Name}" escape="false" />
+                                                    <apex:outputText rendered="{!pageHasOpportunity}" value="Welcome back, {!firstName}" escape="false"/>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                <apex:outputText rendered="{!pageHasEvent}">
+                                                <td id="companyDetail">
+                                                    <p>We estimate we will save you&nbsp;<apex:outputText style="color:#289982;font-weight: 600;" value="{0, Number, Currency}" escape="false"><apex:param value="{!potentialSavings}"/></apex:outputText><apex:outputText style="color:#289982;font-weight: 600;" value="*" escape="false"></apex:outputText> on your business taxes in your first year.</p>
+                                                </td>
+                                                </apex:outputText>
+                                            </tr>
+                                            <tr> 
+                                                <td id="statement">
+                                                    <apex:outputText rendered="{!pageHasEvent}">
+                                                        <div class="noteStatement">
+                                                            <p class="noteTxtStatement">
+                                                                Thanks again for taking the time to complete your tax savings analysis call recently. Below you’ll 
+                                                                find the package we quoted you as well as information about the tax savings we expect to acquire 
+                                                                for you with our small-business specialized tax planning. Please review the details below and you
+                                                                can process your order now or speak with&nbsp;<apex:outputText style="color:#2ECCFA" value="{!opportunity.Owner.Name}" escape="false" /> again for additional questions or help 
+                                                                getting started.
+                                                            </p>
+                                                        </div>
+                                                    </apex:outputText>
+                                                <apex:outputText rendered="{!pageHasOpportunity}">
+                                                    <div class="noteStatement">
+                                                        <p class="noteTxtStatement">
+                                                            Here's the package we put together for you in your Tax Savings Forecast. Check it out and let us know if you have any questions or need any help!
+                                                        </p>
+                                                    </div>
+                                                </apex:outputText>      
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                        <div class="{!whatBoxClass}" id="">
+                                            <center>
+                                                <p class="titleBox">Personalized Plan</p>
+                                                <p class="amountbox">
+                                                    <apex:outputText value="{0, Number, Currency}">
+                                                        <apex:param value="{!opportunity.Amount}"/>
+                                                    </apex:outputText>
+                                                </p>
+                                                <p class="noteBox">See your payment schedule by clicking Review &#38; Get Started below.</p>
+                                            </center>
+                                            <ul id="mainLineList">
+                                                <apex:repeat value="{!productNames}" var="productName">
+                                                    <li class="normalLine"> {!productName}</li>
+                                                </apex:repeat>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 6))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 5))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 4))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 3))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 2))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!AND(!isMobile, (productNames.size < 1))}">
+                                                    <div class="blankLine"><br/></div>
+                                                </apex:outputText>
+                                            </ul> 
+                                            <center>
+                                                <div id="orgBtn">
+                                                    <button type="button" class="chooseMailbtn" onclick="window.open('{!opportunity.ChargeOver_Quote_URL__c}?utm_source=Quote+Link&utm_term=Client&utm_medium=Marketing+Email&utm_content=PostTSAPage1')">Review &#38; Get Started</button>
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <apex:outputText rendered="{!AND(opportunity.Amount <= 3999, pageHasEvent)}">
+                                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4">
+                                        <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                            <div class="whiteBox" id="">
+                                                <center>
+                                                    <p class="titleBox">Full Coverage</p>
+                                                    <p class="amountbox">$4,999</p>
+                                                    <apex:outputText rendered="{!!isMobile}">
+                                                        <p class="noteBox"><br/><br/></p>
+                                                    </apex:outputText> 
+                                                </center>
+                                                <ul id="mainLineList">
+                                                    <li class="normalLine"> Business Tax Preparation</li>
+                                                    <li class="normalLine"> Tax Advisory</li>
+                                                    <li class="normalLine"> Personal Tax Preparation</li>
+                                                    <li class="normalLine"> 1-800Accountant Access</li>
+                                                    <li class="normalLine"> Payroll services (1 employee)</li>
+                                                    <li class="normalLine"> Full Service Bookkeeping (&lt;75 tx/mo.)</li>
+                                                    <apex:repeat value="{!productsPastSix}" var="extraLines" rendered="{!AND(!isMobile, numberOfProducts > 6)}">
+                                                        <div class="blankLine" style = "font-size: 28.664px;"><br/> </div>
+                                                    </apex:repeat>
+                                                </ul> 
+                                                <center>
+                                                    <!-- <button type="button" class="choosebtn" onclick="window.open('{!schedulerURL}')"></button> -->
+                                                    <div id="choosebtndiv">
+                                                    	<apex:commandButton styleClass="choosebtn" value="Choose this package" action="{!showPopup}" rerender="tstpopup"/>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputText>
+                                
+                                <apex:outputPanel id="tstpopup">
+                                    <iframe src="google.com" style="display:none;" onload="assignHeight()"></iframe>
+                                    <apex:outputPanel id="popupBackground" styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+                                    <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                                        <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                            <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                                <div id="popUpTitle">
+                                                    <apex:outputText value="Full service packages are customized uniquely to each business, industry and requirements. Please schedule a follow-up with your tax expert for a complete quote." escape="false" />
+                                                </div>
+                                                <div class="popUpwhiteBox" id="">
+                                                    <center>
+                                                        <p class="titleBox">Full Coverage</p>
+                                                        <p class="noteBoxPopUp">Due Today</p>
+                                                        <p class="amountbox">$4,999</p>
+                                                    </center>
+                                                    <ul id="mainLineList">
+                                                        <li class="normalLine"> Business Tax Preparation</li>
+                                                        <li class="normalLine"> Tax Advisory</li>
+                                                        <li class="normalLine"> Personal Tax Preparation</li>
+                                                        <li class="normalLine"> 1-800Accountant Access</li>
+                                                        <li class="normalLine"> Payroll services (1 employee)</li>
+                                                        <li class="normalLine"> Bookkeeping (&lt;75 tx/mo.)</li>
+                                                    </ul> 
+                                                </div>
+                                                <div class="popUpbtns" id="">
+                                                    <center>
+                                                        <button type="button" class="popUpchoosebtn" onclick="window.open('{!fullServiceSchedulerURL}')">Speak Again With Your Rep</button>
+                                                        <div class="popUpbtnCancel" id="">
+                                                            <apex:commandButton value="Cancel" styleClass="popUpCancel" action="{!closePopup}" rerender="tstpopup"/>
+                                                        </div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                
+                                
+                                <apex:outputText rendered="{!pageHasEvent}">
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                                        <table id="titleTable">
+                                            <tr> 
+                                                <td id="companyDetail">
+                                                    <p><apex:outputText style="color:#289982;font-weight: 600;" value="*" escape="false"></apex:outputText>Potential Tax Savings and Business Info</p>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                <td id="statement">
+                                                    <div class="noteStatements">
+                                                        <p class="noteTxtStatements">
+                                                            Based on our conversation we have compiled this data and calculated your estimated tax savings utilizing 
+                                                            our industry and state-specific planning strategies.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4" id="marginGreenBox">
+                                        <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                            <div id="greenBox">
+                                                <table id="tableStrategy">
+                                                    <tr>
+                                                        <p id="taxTitle">Potential Savings Details</p>
+                                                    </tr>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Potential_SCorp_Savings__c))}">
+                                                        <tr> 
+                                                            <td class="txtStrategy">
+                                                                <div>
+                                                                    <apex:outputText value="Entity Classification Election" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtYourSav">
+                                                                <div>
+                                                                <apex:outputText value="{0, Number, Currency}" escape="false"><apex:param value="{!sSavings}"/></apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Potential_Home_Office_Savings__c))}">
+                                                        <tr> 
+                                                            <td class="txtStrategy">
+                                                                <div>
+                                                                    <apex:outputText value="Home Office Deduction" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtYourSav">
+                                                                <div>
+                                                                <apex:outputText value="{0, Number, Currency}" escape="false"><apex:param value="{!homeOfficeSavings}"/></apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Potential_Business_Mile_Savings__c))}">
+                                                        <tr> 
+                                                            <td class="txtStrategy">
+                                                                <div>
+                                                                    <apex:outputText value="Business Mileage Deduction" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtYourSav">
+                                                                <div>
+                                                                <apex:outputText value="{0, Number, Currency}" escape="false"><apex:param value="{!businessMileageSavings}"/></apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Potential_QBI_Savings__c))}">
+                                                        <tr> 
+                                                            <td class="txtStrategy">
+                                                                <div>
+                                                                    <apex:outputText value="Qualified Business Income Deduction" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtYourSav">
+                                                                <div>
+                                                                <apex:outputText value="{0, Number, Currency}" escape="false"><apex:param value="{!qbiSavings}"/></apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Potential_Startup_Savings__c))}">
+                                                        <tr style="border-bottom: 2px solid #C7D3D3"> 
+                                                            <td class="txtStrategy">
+                                                                <div>
+                                                                    <apex:outputText value="Startup Cost Expense vs Amortization" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtYourSav">
+                                                                <div>
+                                                                <apex:outputText value="{0, Number, Currency}" escape="false"><apex:param value="{!startupSavings}"/></apex:outputText>
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <tr> 
+                                                        <td class="txtStrategy">
+                                                            <p style="font-weight: 600;">Minimum potential first year tax savings</p>
+                                                        </td>
+                                                        <td class="txtYourSav">
+                                                            <apex:outputText value="{0, Number, Currency}*" escape="false"><apex:param value="{!potentialSavings}"/></apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="note">
+                                                <p class="noteTxt">
+                                                    * These potential savings are based on your business details gathered
+                                                    during the initial call with a 1800Accountant representative.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4">
+                                        <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                            <div id="whitebox">
+                                                <table id="tableBisiness">
+                                                    <tr>
+                                                        <p id="tableBisinessTitle">{!opportunity.Account.Name}</p>
+                                                    </tr>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Industry))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Industry Type" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{!opportunity.Account.Industry}" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(totalStartupCosts))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Total Startup Cost" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, $###,###,###,###}">
+                                                                        <apex:param value="{!totalStartupCosts}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(projectedRevenue))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Projected First Year Revenue" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, $###,###,###,###}">
+                                                                        <apex:param value="{!projectedRevenue}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(projectedProfit))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Projected First Year Profit" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, $###,###,###,###}">
+                                                                        <apex:param value="{!projectedProfit}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(personalIncome))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Personal Income" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, $###,###,###,###}">
+                                                                        <apex:param value="{!personalIncome}"/>
+                                                                    </apex:outputText>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Personal_Return_Filing_Status__c))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Filing Status" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{!opportunity.Account.Personal_Return_Filing_Status__c}" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Expected_Number_of_Employees__c))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Number of Employees" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{!opportunity.Account.Expected_Number_of_Employees__c}" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(ISBLANK(opportunity.Account.Number_of_owners__c))}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Number of Owners" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{!opportunity.Account.Number_of_owners__c}" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(0 = homeOfficeSqFt)}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Square Footage of Home Office" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, ###,###,###,###}">
+                                                                        <apex:param value="{!homeOfficeSqFt}"/>
+                                                                    </apex:outputText>
+                                                                    <apex:outputText value=" FT" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(0 = businessMileage)}">
+                                                        <tr> 
+                                                            <td class="txtIndustry">
+                                                                <div>
+                                                                    <apex:outputText value="Business Mileage" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="txtConsulting">
+                                                                <div>
+                                                                    <apex:outputText value="{0, number, ###,###,###,###}">
+                                                                        <apex:param value="{!businessMileage}"/>
+                                                                    </apex:outputText>
+                                                                    <apex:outputText value=" Miles" escape="false" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                        <center>
+                                            <div id="buttons">
+                                                <button type="button" class="reviewStart" onclick="window.open('{!opportunity.ChargeOver_Quote_URL__c}?utm_source=Quote+Link&utm_term=Client&utm_medium=Marketing+Email&utm_content=PostTSAPage1')">Review &#38; Get Started</button>
+                                                <div class="divider"/>
+                                                <button type="button" class="speakRep" style="color: black;" onclick="window.open('{!schedulerURL}')">Speak with your tax specialist</button>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                            </apex:outputText>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                                        <table id="titleTab">
+                                            <tr> 
+                                                <td id="companyDetail">
+                                                    <center>
+                                                        <apex:outputText rendered="{!pageHasEvent}">
+                                                            <p>What you can expect</p>
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!pageHasOpportunity}">
+                                                            <p>Next Steps</p>
+                                                        </apex:outputText>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                <td id="statement">
+                                                    <center>
+                                                        <div class="noteStatements">
+                                                            <apex:outputText rendered="{!pageHasEvent}">
+                                                                <p class="noteTxtStatements">
+                                                                    In three steps we'll help you with your accounting.
+                                                                </p>
+                                                            </apex:outputText>
+                                                            <apex:outputText rendered="{!pageHasOpportunity}">
+                                                                <p class="noteTxtStatements">
+                                                                    Here's what to do next and what to expect.
+                                                                </p>
+                                                            </apex:outputText>
+                                                        </div>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                        <center>
+                                            <div id="expect">
+                                                <div id="containerExpect">
+                                                    <div id="expecttitle">
+                                                        <span id="number">1</span>
+                                                        <apex:outputText rendered="{!pageHasOpportunity}">
+                                                            <p id="titleExpect">Review Plan</p>
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!pageHasEvent}">
+                                                            <p id="titleExpect">Discover</p>
+                                                        </apex:outputText>
+                                                    </div>
+                                                    <apex:outputText rendered="{!pageHasEvent}">
+                                                        <p id="txtExpect">You’ll be assigned an accountant and have an introductory call to discuss your business goals and setup.</p>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!pageHasOpportunity}">
+                                                        <p id="txtExpect">Click the button to review your quote in depth, including your payment schedule.</p>
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div id="expect">
+                                                <div id="expecttitle">
+                                                    <span id="number">2</span>
+                                                    <apex:outputText rendered="{!pageHasEvent}">
+                                                        <p id="titleExpect">Prepare &#38; Plan</p>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!pageHasOpportunity}">
+                                                        <p id="titleExpect">Accept</p>
+                                                    </apex:outputText>
+                                                </div>
+                                                <apex:outputText rendered="{!pageHasEvent}">
+                                                    <p id="txtExpect">Your accountant will design a strategy to achieve your tax and finance goals and assemble your financial team.</p>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!pageHasOpportunity}">
+                                                    <p id="txtExpect">If you haven't already, click "Review &amp; Get Started" to accept the quote and get started.</p>
+                                                </apex:outputText>
+                                            </div>
+                                            <div id="expect">
+                                                <div id="expecttitle">
+                                                    <span id="number">3</span>
+                                                    <apex:outputText rendered="{!pageHasEvent}">
+                                                        <p id="titleExpect">Implement</p>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!pageHasOpportunity}">
+                                                        <p id="titleExpect">Log On</p>
+                                                    </apex:outputText>
+                                                </div>
+                                                <apex:outputText rendered="{!pageHasEvent}">
+                                                    <p id="txtExpect">We are on your team to accomplish your accounting and tax goals so you can focus on managing and growing your business.</p>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!pageHasOpportunity}">
+                                                    <p id="txtExpect">We'll send you a link to set up your 1-800Accountant log in. </p>
+                                                </apex:outputText>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small">
+                                        <center>
+                                            <div id="buttons">
+                                                <apex:outputText rendered="{!pageHasEvent}">
+                                                    <button type="button" class="reviewStart" onclick="window.open('{!opportunity.ChargeOver_Quote_URL__c}?utm_source=Quote+Link&utm_term=Client&utm_medium=Marketing+Email&utm_content=PostTSAPage1')">Review &#38; Get Started</button>
+                                                    <div class="divider"/>
+                                                    <button type="button" class="speakRep" style="color: black;" onclick="window.open('{!schedulerURL}')">Speak with your tax specialist</button>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!pageHasOpportunity}">
+                                                    <button type="button"  style="width: 380px;" class="chooseMailbtn" onclick="window.open('{!opportunity.ChargeOver_Quote_URL__c}?utm_source=Quote+Link&utm_term=Client&utm_medium=Marketing+Email&utm_content=PostTSAPage1')">Review &#38; Get Started</button>
+                                                </apex:outputText>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <hr/>
+                                </div>
+                                
+                                <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                                        <div id="footer">
+                                            <div id="footerText">
+                                                <p id="pOne">© 2022 All Rights Reserved.</p>
+                                                <p id="pTwo">1-800Accountant Business Services.</p>
+                                            </div>
+                                            <div id="footerBtns">
+                                                <div class="dividerFooter"/>
+                                                <button type="button" class="footerBtn" id="contact" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/contact')">Contact</button>
+                                                <div class="dividerFooter"/>
+                                                <button type="button" class="footerBtn" id="privacy" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/privacy-policy')">Privacy Policy</button>
+                                                <div class="dividerFooter"/>
+                                                <button type="button" class="footerBtn" id="terms" style="color: #0780A6;" onclick="window.open('https://1800accountant.com/terms-of-services')">Terms of Service</button>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputText>
+            </body>
+        </apex:form>
+        <script>
+        function assignHeight() { 
+            
+            var x = document.documentElement.scrollHeight + 'px;';
+            var fm = document.getElementsByClassName('popupBackground');
+            fm[0].setAttribute('style', 'height: ' + x);
+        }
+        </script>
+    </html>
+</apex:page>

@@ -1,0 +1,32 @@
+<apex:page title="SubscriptionManagement" standardController="Account" id="page" extensions="SubscriptionManagementController" action="{!updateAccess}">
+    <apex:pageBlock title="Active Subscriptions">
+        <apex:pageBlockTable value="{!activesubscriptions}" var="activesub">
+            <apex:column value="{!activesub.Bill62__Product__r.Product_Categories__c}"/>
+            <apex:column value="{!activesub.Bill62__Status__c}"/>
+            <apex:column value="{!activesub.Bill62__Start_Date__c}"/>
+            <apex:column value="{!activesub.Bill62__End_Date__c}"/>
+            <apex:column value="{!activesub.Bill62__Billing_Frequency__c}"/>
+            <apex:column value="{!activesub.CP_Access__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock title="Pending Products or Services">
+        <apex:pageBlockTable value="{!pendingsubscriptions}" var="pendingsub">
+            <apex:column value="{!pendingsub.Bill62__Product__r.Product_Categories__c}"/>
+            <apex:column value="{!pendingsub.Bill62__Status__c}"/>
+            <apex:column value="{!pendingsub.Bill62__Start_Date__c}"/>
+            <apex:column value="{!pendingsub.Bill62__End_Date__c}"/>
+            <apex:column value="{!pendingsub.Bill62__Billing_Frequency__c}"/>
+            <apex:column value="{!pendingsub.CP_Access__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+        <apex:pageBlock title="Past Products or Services">
+        <apex:pageBlockTable value="{!pastsubscriptions}" var="pastsub">
+            <apex:column value="{!pastsub.Bill62__Product__r.Product_Categories__c}"/>
+            <apex:column value="{!pastsub.Bill62__Status__c}"/>
+            <apex:column value="{!pastsub.Bill62__Start_Date__c}"/>
+            <apex:column value="{!pastsub.Bill62__End_Date__c}"/>
+            <apex:column value="{!pastsub.Bill62__Billing_Frequency__c}"/>
+            <apex:column value="{!pastsub.CP_Access__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardController="Case">
+    <apex:pageMessage strength="1" severity="warning" 
+        summary="'This Case's Account has no value for 'Sold By'. Notification Tasks will not be created unless this field has a value"
+        rendered="{!Case.Account_Sales_Rep__c = null}"       
+    />
+</apex:page>

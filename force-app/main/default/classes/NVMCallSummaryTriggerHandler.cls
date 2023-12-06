@@ -1,0 +1,87 @@
+public with sharing class NVMCallSummaryTriggerHandler {
+
+    public static void updateTracking(List<NVMStatsSF__NVM_Call_Summary__c> summaries){
+        try{
+            updateTrackingWithIds(new List<Id>(new Map<Id, NVMStatsSF__NVM_Call_Summary__c>(summaries).keySet()));
+        } catch (Exception ex){ System.debug(ex.getMessage()); }
+    }
+
+    public static void updateTrackingWithIds(List<Id> summaryIds){
+        List<String> ignoredQueues = new List<String>{'DID Queue', 'SMS Queue', ''};
+        List<NVMStatsSF__NVM_Call_Summary__c> summaries = 
+            [SELECT Id, CreatedDate,
+            NVMStatsSF__Ring_List__c, NVMStatsSF__Agent_List__c,
+            NVMStatsSF__NVM_AgentID__c, NVMStatsSF__Agent2_ID__c
+            FROM NVMStatsSF__NVM_Call_Summary__c 
+            WHERE Id IN :summaryIds
+            AND NVMStatsSF__Ring_List__c != null
+            AND (NOT (NVMStatsSF__Queue_Name__c IN :ignoredQueues))];
+        
+        Map<String, NVMStatsSF__NVM_Call_Summary__c> indexToCallSummary = new Map<String, NVMStatsSF__NVM_Call_Summary__c>();
+        Map<String, Integer> indexToCallTime = new Map<String, Integer>();
+        Map<String, Integer> indexToRingTime = new Map<String, Integer>();
+        List<Rep_Call_Tracking__c> recordsToUpsert = new List<Rep_Call_Tracking__c>();
+        Set<String> agentIds = new Set<String>();
+        Map<String, NVMStatsSF__NVM_Agent_Summary__c> agentIdToAgentSummary = new Map<String, NVMStatsSF__NVM_Agent_Summary__c>();
+        //List<String> combinedIds = new List<String>();
+        Date curDate = summaries[0].CreatedDate.dateGMT();
+        Map<String, Boolean> summaryIdToIsLive = new Map<String, Boolean>();
+        for(NVMStatsSF__NVM_Call_Summary__c summary : summaries){
+            if(summary.NVMStatsSF__Agent_List__c!=null && summary.NVMStatsSF__Agent_List__c!=''){
+                for(String agentId : summary.NVMStatsSF__Agent_List__c.split(',')){
+                    agentIds.add(agentId.trim().split('-')[0]);
+                    String index = agentId.trim().split('-')[0]+'-'+summary.Id;
+                    indexToCallTime.put(index, Integer.valueOf(agentId.trim().split('-')[1]));
+                    indexToCallSummary.put(index, summary);
+                }
+            }
+            if(summary.NVMStatsSF__Ring_List__c!=null && summary.NVMStatsSF__Ring_List__c!=''){
+                for(String agentId : summary.NVMStatsSF__Ring_List__c.split(',')){
+                    String ringTime = agentId.trim().split(':')[1];
+                    if(ringTime == '0'){ continue; } //ignore ring times of 0
+                    agentIds.add(agentId.trim().split(':')[0]);
+                    String index = agentId.trim().split(':')[0]+'-'+summary.Id;
+                    
+                    indexToRingTime.put(index, Integer.valueOf(agentId.trim().split(':')[1]));
+                    indexToCallSummary.put(index, summary);
+                }
+            }            
+        }
+        System.debug(agentIds);
+        for(NVMStatsSF__NVM_Agent_Summary__c agentSummary : 
+            [SELECT Id, NVMStatsSF__AgentID__c, NVMStatsSF__Agent__c FROM NVMStatsSF__NVM_Agent_Summary__c WHERE NVMStatsSF__Date__c = :curDate AND NVMStatsSF__AgentID__c IN :agentIds]){
+                agentIdToAgentSummary.put(agentSummary.NVMStatsSF__AgentID__c, agentSummary);
+        }
+
+        for(String index : indexToCallSummary.keySet()){
+            NVMStatsSF__NVM_Call_Summary__c summary = indexToCallSummary.get(index);
+            String agentId = index.split('-')[0];
+            Rep_Call_Tracking__c trackingRec = new Rep_Call_Tracking__c(
+                Combined_Index__c = index,
+                Vonage_Call_Summary__c = summary.Id,
+                Vonage_AgentID__c = agentId
+            );
+            if(indexToCallTime.containsKey(index)){
+                trackingRec.Call_Time__c = indexToCallTime.get(index);
+            }
+            if(indexToRingTime.containsKey(index)){
+                trackingRec.Ring_Time__c = indexToRingTime.get(index);
+            }
+            if(agentId == summary.NVMStatsSF__NVM_AgentID__c){
+                trackingRec.Is_Agent_1__c = true;
+                //trackingRec.Rep_User__c = summary.NVMStatsSF__Agent__c;
+            }
+            if(agentId == summary.NVMStatsSF__Agent2_ID__c){
+                trackingRec.Is_Agent_2__c = true;
+                //trackingRec.Rep_User__c = summary.NVMStatsSF__Agent2__c;
+            }
+            if(agentIdToAgentSummary.containsKey(agentId)){
+                NVMStatsSF__NVM_Agent_Summary__c agentSummary = agentIdToAgentSummary.get(agentId);
+                trackingRec.Vonage_Agent_Summary__c = agentSummary.Id;
+                trackingRec.Rep_User__c = agentSummary.NVMStatsSF__Agent__c;
+            }
+            recordsToUpsert.add(trackingRec);
+        }
+        upsert recordsToUpsert Rep_Call_Tracking__c.fields.Combined_Index__c;
+    }
+}

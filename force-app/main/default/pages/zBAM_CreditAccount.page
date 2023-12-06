@@ -1,0 +1,27 @@
+<apex:page title="Credit an Account" showHeader="true" sidebar="false" tabStyle="Zuora__CustomerAccount__c" controller="zBAM_CreditAccount">
+    <apex:form >
+    	<apex:outputPanel id="error">
+			<zqu:Notification options="{!notificationOptions}" />
+			<apex:actionFunction name="continueToNextPage" action="{!confirmError}" immediate="true" rerender="error" />
+		</apex:outputPanel>
+        <apex:pageBlock title="Credit Account" id="credit">
+            <apex:pageBlockSection columns="1">
+            	<apex:outputText value="{!zuoraAccount.Name}" label="Account Name" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2"  showHeader="true" title="Account Information">
+                <apex:outputText value="{!zuoraAccount.Zuora__Balance__c}" label="Account Balance" />
+                <apex:outputText value="{!zuoraAccount.Zuora__CreditBalance__c}" label="Credit Balance" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" showHeader="true" title="Credit Amount">
+                <apex:outputText value="{!maxCredit}" label="Maximum Credit Allowed" />
+                <apex:inputText value="{!creditAmount}" label="Credit Amount" >
+                    <apex:actionSupport event="onchange" action="{!verifyAmount}" reRender="credit" />
+                </apex:inputText>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!creditAccount}" value="Credit Account" />
+                <apex:commandButton action="{!cancel}" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
