@@ -110,7 +110,7 @@ public with sharing class MulticalendarDataServiceTest {
     static void testGetRepTimeslots(){
         Datetime todayDate = Datetime.now();
         //String dateString = '2023-06-15T00:00:00.000-04:00';
-        String dateString = todayDate.format('yyyy-MM-dd')+'T00:00:00.000-04:00';
+        String dateString = todayDate.format('yyyy-MM-dd')+'T00:00:00.000-05:00';
         User u = [SELECT Id FROM User WHERE Name = 'Matthew Clark'];
 
         Event ev = new Event(Subject='BLOCK', Type_of_Appointment__c='Calendar Block', StartDateTime=Datetime.now(), EndDateTime=Datetime.now().addMinutes(60), OwnerId=u.Id);

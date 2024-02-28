@@ -36,7 +36,8 @@ public with sharing class NVMCallSummaryTriggerHandlerTest {
                 NVMStatsSF__NVM_AgentID__c = '1234',
                 NVMStatsSF__Agent2_ID__c = '5678',
                 NVMStatsSF__dateAgentId__c = '202311021160',
-                NVMStatsSF__Queue_Name__c = 'Good queue'
+                NVMStatsSF__Queue_Name__c = 'Good queue',
+                NVMStatsSF__Queue_Agent_Queue_List__c = 'Live Transfer'
             );
             insert callSummary;
         //}

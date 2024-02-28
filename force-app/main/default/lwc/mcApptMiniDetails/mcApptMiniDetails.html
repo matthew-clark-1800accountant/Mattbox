@@ -16,7 +16,7 @@
             </lightning-layout>
             
             
-            <div id="type">{details.type}</div>
+            <div id="name">{details.name}</div>
             <div id="source">{details.source}</div>
             <!-- <div id="icon"></div>
             <div id="disposition">{details.disposition}</div> -->
@@ -32,7 +32,8 @@
                 placeholder="Select A Rep"
                 value={selectedRep}
                 onchange={changeOwner}
-                options={availableReps}>
+                options={availableReps}
+                dropdown-alignment="auto">
             </lightning-combobox>
             <lightning-button variant="brand" label="Save" title="Primary action" onclick={saveRep}  class="x-small"></lightning-button>
 

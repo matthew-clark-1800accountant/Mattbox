@@ -49,7 +49,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 			if(isDelete)
 			{
 				System.debug(LoggingLevel.FINE,'isDelete trigger block AFTER');
-//                deleteHandler(oldMap);
+
 			}
 			if(isInsert)
 			{
@@ -179,6 +179,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 		Map<String, Active_Subscriptions__c> activeSubscriptions = new Map<String, Active_Subscriptions__c>();
 		Set<String> alreadyCreatedSubscriptionsLineItems = new Set<String>();
 		Map<String,Date> mostRecentExpirationDate = new Map<String,Date>();
+		Map<String,Date> latestRenewDate = new Map<String,Date>();
 		for (Active_Subscriptions__c subscription : [
 				SELECT Id, Subscription_Status__c, SOW_Description__c, Subscription_Amount__c, Account__c, Unique_Identifier__c,
 						Cancelled_Date__c, Total_Purchased__c, Payment_Status__c, Expiration_Date__c, Category__c, Start_Date__c, Oldest_Overdue_Due_Date__c,
@@ -223,7 +224,6 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 
 		for(ChargeOver_Subscription_Line_Item__c sli : triggerNewMapCustom.values())
 		{
-//			System.debug('sli -- ' + sli.Id + ' - ' + sli.Converted_From_Subscription__c + ' - ' + sli);
 			Boolean subPaused = ('Suspended'.equalsIgnoreCase(sli.ChargeOver_Subscription__r.Status__c));
 			Boolean sliSubOverdue = ('Overdue'.equalsIgnoreCase(sli.ChargeOver_Subscription__r.Status__c));
 			String uniqueId = (String) sli.Product__c + (String) sli.Account__c;
@@ -243,6 +243,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 					mostRecentExpirationDate.put(uniqueId,sli.Service_End_Date__c);
 				}
 			}
+			
 
 			/**Check for cancellation status based on criteria.
 			 * Active = No Cancel Date, CO Sub status not paused.
@@ -292,7 +293,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 
 				//Needed to add an if checking specifically for conversions because they won't create a new active sub.
 				//So the insertion will directly fire this.
-//				if(isUpdate || (!isUpdate && null != sli.Converted_From_Subscription__c))
+
 
 				if(isUpdate)
 				{
@@ -319,11 +320,6 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 							{
 								//This block should fire retro-actively only for records where this field value is empty.
 								//This field is only really used on insert going forward. Empty field values on existing ASL should be okay.
-								
-//								if(String.isEmpty(asl.ASL_Unique_Id__c))
-//								{
-//									asl.ASL_Unique_Id__c = sli.Id + '';
-//								}
 
 								if(sli.Oldest_Overdue_Due_Date__c != asl.Oldest_Overdue_Due_Date__c)
 								{
@@ -402,7 +398,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 					System.debug(LoggingLevel.FINE, 'subHasAslRecords :: ' + subHasAslRecords);
 					if(subHasAslRecords && currentQuantityOfExistingASL < sli.Quantity__c)
 					{
-//						difference = sli.Quantity__c - currentQuantityOfExistingASL;
+
 						while(difference < sli.Quantity__c){ difference++; }
 					}
 					else if(!subHasAslRecords || currentQuantityOfExistingASL == 0)
@@ -487,7 +483,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 
 					if(null != oldestDueDate){ activeSubscription.Oldest_Overdue_Due_Date__c = oldestDueDate; }
 
-//					activeSubscription.Cancelled_Date__c = (isActive) ? null : cancelDate;
+
 					System.debug(LoggingLevel.FINE, 'isActive :: ' + isActive + ' for record with ID :: ' + activeSubscription.Id);
 
 					activeSubscription.Line_Items_Last_Modified__c = Datetime.now();
@@ -540,6 +536,29 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 			}
 		}
 
+		Set<Id> activeSubscriptionIds = new Set<Id>();
+		for(ChargeOver_Subscription_Line_Item__c sli : (List<ChargeOver_Subscription_Line_Item__c>)Trigger.new){
+			if(sli.Active_Subscription__c != null){
+				activeSubscriptionIds.add(sli.Active_Subscription__c);
+			}			
+		}
+		List<ChargeOver_Subscription_Line_Item__c> items = [SELECT Id, Product__c, Account__c, ChargeOver_Subscription__r.Date_of_Next_Invoice_Generation__c FROM ChargeOver_Subscription_Line_Item__c WHERE Active_Subscription__c IN :activeSubscriptionIds];
+		for(ChargeOver_Subscription_Line_Item__c sli : items){
+			String uniqueId = (String) sli.Product__c + (String) sli.Account__c;
+			if(null != sli.ChargeOver_Subscription__r.Date_of_Next_Invoice_Generation__c )
+			{
+				if(!latestRenewDate.containsKey(uniqueId))
+				{
+					latestRenewDate.put(uniqueId,sli.ChargeOver_Subscription__r.Date_of_Next_Invoice_Generation__c );
+				}
+				else if(latestRenewDate.containsKey(uniqueId) && latestRenewDate.get(uniqueId) < sli.ChargeOver_Subscription__r.Date_of_Next_Invoice_Generation__c )
+				{
+					//Should overwrite the current map value with the most recent expiration date.
+					latestRenewDate.put(uniqueId,sli.ChargeOver_Subscription__r.Date_of_Next_Invoice_Generation__c );
+				}
+			}
+		}
+
 		System.debug(LoggingLevel.FINE,'recordsToPerformDmlOn :: ' + recordsToPerformDmlOn);
 		if(null != recordsToPerformDmlOn && !recordsToPerformDmlOn.isEmpty())
 		{
@@ -551,6 +570,10 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 				if(mostRecentExpirationDate.containsKey(sub.Unique_Identifier__c))
 				{
 					sub.Expiration_Date__c = mostRecentExpirationDate.get(sub.Unique_Identifier__c);
+				}
+				if(latestRenewDate.containsKey(sub.Unique_Identifier__c))
+				{
+					sub.Renewal_Date__c = latestRenewDate.get(sub.Unique_Identifier__c);
 				}
 			}
 			upsert recordsToPerformDmlOn.values() Unique_Identifier__c; //need alternative upsert id?
@@ -627,7 +650,7 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 			{
 				Active_Subscription_Line__c asl = (Active_Subscription_Line__c) aslr;
 				System.debug('post set asl fetched :: ' + asl);
-//				if(sliRecordsProcessed.contains(asl.ChargeOver_Subscription_Line_Item__c)){ continue; }
+
 				aslToUpdateMap.put(asl.Id,asl);
 				Boolean convASL = false;
 				//Capture already related ASL records so we do not duplicate.
@@ -721,6 +744,19 @@ public with sharing class ChargeOverSubLineItemTriggerHandler {
 
 		System.debug(LoggingLevel.DEBUG,'output...' + output);
 		update output.values();
+	}
+
+	public static Date maxDate(List<Date> dateList){
+		if(dateList == null || dateList.isEmpty()){
+			return null;
+		}
+		Date maxDate = dateList[0];
+		for(Integer i=1; i<dateList.size(); i++){
+			if(dateList[i] > maxDate){
+				maxDate = dateList[i];
+			}
+		}
+		return maxDate;
 	}
 
 }

@@ -23,10 +23,13 @@ public class MarkHistoricalUpdateTest {
 
     @TestSetup
     private static void testSetup() {
+        Account acc = new Account(Name='test');
+        insert acc;
         ChargeOver_Subscription_Line_Item__c testCosl = new ChargeOver_Subscription_Line_Item__c(
             Status__c = 'Active',
             Service_End_Date__c = Date.today().addDays(-3),
-            Cancel_Date_Time__c = Date.today()
+            Cancel_Date_Time__c = Date.today(),
+            Account__c = acc.Id
         );
         insert testCosl;
     }

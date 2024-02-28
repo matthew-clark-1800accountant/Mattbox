@@ -18,6 +18,8 @@ private class LeadAccountCorrectNextContactTest{
 
     @TestSetup
     private static void testSetup() {
+        User sdrQueue = [SELECT Id FROM User WHERE Name = 'SDR Queue' LIMIT 1];
+
         Id profileId = [SELECT Id, Name FROM Profile WHERE Name = 'Standard User' LIMIT 1].Id;
         User testUser = TestDataGenerator.createTestUser(profileId);
         insert testUser;
@@ -29,6 +31,24 @@ private class LeadAccountCorrectNextContactTest{
 
         Account account = TestDataGenerator.createTestAccountWithoutOwner();
         account.NextContactTime__c = badDate;
+        insert account;
+
+        //Datetime badDate = datetime.newInstance(4000, 12, 1);
+        lead = TestDataGenerator.createTestLead(sdrQueue.Id);
+        lead.NVMConnect__NextContactTime__c = badDate;
+        lead.Distribute_Date__c = Date.today();
+        lead.Status = 'Attempted';
+        //lead.Dialer_Tier__c = 'Tier 1';
+        lead.LeadSource = 'Inc. Authority';
+        insert lead;
+
+        account = TestDataGenerator.createTestAccountWithoutOwner();
+        account.NextContactTime__c = badDate;
+        account.OwnerId = sdrQueue.Id;
+        account.Distribute_Date__c = Date.today();
+        account.Lead_Status__c = 'Attempted';
+        //account.Dialer_Tier__c = 'Tier 1';
+        account.Lead_Source__c = 'Inc. Authority';
         insert account;
     }
      

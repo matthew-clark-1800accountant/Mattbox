@@ -32,7 +32,7 @@
                             <lightning-combobox class="view-selector"
                                 name="viewBox"
                                 label="Current Calendar View"
-                                placeholder="BNA Team"
+                                placeholder="Select View"
                                 value={filterViewValue}
                                 onchange={handleViewSelection}
                                 options={availableViewFilters}>
@@ -82,7 +82,7 @@
                 <lightning-spinner variant="brand" size="medium"> </lightning-spinner>
             </template>
             <template if:false={isLoading}>
-                <ul style="height: calc(0.80 * (100vh - 200px));">
+                <ul>
                     <!-- search and timestamp row -->
                     <li style="max-height: fit-content;">
                         <lightning-layout>
@@ -96,7 +96,7 @@
                             </lightning-layout-item>
                             <lightning-layout-item class="timeslot-row">
                                 <lightning-layout>
-                                    <template if:true={showTimeslotLabels} for:each={timeslotLabels.data} for:item="timeLabel">
+                                    <template if:true={timeslotLabels.data} for:each={timeslotLabels.data} for:item="timeLabel">
                                         <lightning-layout-item key={timeLabel} class="timeslot-label">
                                             {timeLabel}
                                         </lightning-layout-item>

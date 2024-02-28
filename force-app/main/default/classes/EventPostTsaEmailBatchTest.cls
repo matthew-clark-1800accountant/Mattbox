@@ -29,7 +29,8 @@ private class EventPostTsaEmailBatchTest{
         //Match all criteria for email to go out and link to be generated
         Account account = TestDataGenerator.createTestAccountWithoutOwner();
         account.Current_Year_Profit_Projection__c = '50000';
-        account.Potential_Total_Savings__c = '$12,321';
+        account.Potential_Total_Savings__c = 12321;
+        account.Account_Status__c = 'Prospect';
         insert account;
 
         Contact contact = TestDataGenerator.createTestContact(account);

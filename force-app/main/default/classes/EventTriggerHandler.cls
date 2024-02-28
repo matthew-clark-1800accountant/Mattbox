@@ -199,6 +199,9 @@ public without sharing class EventTriggerHandler{
                         newValue = (String) newEvent.get(fieldName);
                         oldValue = (String) oldEvent.get(fieldName);
                     }
+                    Datetime curTime = Datetime.now();
+                    Boolean withinChangeWindow = (curTime > oldEvent.StartDateTime.addMinutes(-15) && curTime < oldEvent.EndDateTime);
+                    
 
                     System.debug(field.MasterLabel+' changed');
                     fieldUpdateToEventMap.put(new Event_Field_Update__c(
@@ -207,7 +210,8 @@ public without sharing class EventTriggerHandler{
                         Old_Value__c = oldValue,
                         Updated_By__c = newEvent.LastModifiedById,
                         Update_Time__c = DateTime.now(),
-                        Updated_by_Setter__c = updatedBySetter
+                        Updated_by_Setter__c = updatedBySetter,
+                        Update_made_in_change_window__c = withinChangeWindow
                         ), newEvent);
                 }
             }

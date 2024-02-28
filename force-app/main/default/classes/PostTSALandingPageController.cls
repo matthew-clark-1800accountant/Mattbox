@@ -122,12 +122,12 @@ public class PostTSALandingPageController {
                     simplify the process, I am converting all currency variables to decimals stripped of $ and commas so that the formatting can be done on the front end appropriately */
                     
                     //Savings numbers
-                    potentialSavings = (null != opportunity.Account.Potential_Total_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_Total_Savings__c) : 0;
-                    sSavings = (null != opportunity.Account.Potential_SCorp_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_SCorp_Savings__c) : 0;
-                    homeOfficeSavings = (null != opportunity.Account.Potential_Home_Office_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_Home_Office_Savings__c) : 0;
-                    businessMileageSavings = (null != opportunity.Account.Potential_Business_Mile_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_Business_Mile_Savings__c) : 0;
-                    qbiSavings = (null != opportunity.Account.Potential_QBI_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_QBI_Savings__c) : 0;
-                    startupSavings = (null != opportunity.Account.Potential_Startup_Savings__c) ? currencyStringToDecimal(opportunity.Account.Potential_Startup_Savings__c) : 0;
+                    potentialSavings = (null != opportunity.Account.Potential_Total_Savings__c) ? (opportunity.Account.Potential_Total_Savings__c) : 0;
+                    sSavings = (null != opportunity.Account.Potential_SCorp_Savings__c) ? (opportunity.Account.Potential_SCorp_Savings__c) : 0;
+                    homeOfficeSavings = (null != opportunity.Account.Potential_Home_Office_Savings__c) ? (opportunity.Account.Potential_Home_Office_Savings__c) : 0;
+                    businessMileageSavings = (null != opportunity.Account.Potential_Business_Mile_Savings__c) ? (opportunity.Account.Potential_Business_Mile_Savings__c) : 0;
+                    qbiSavings = (null != opportunity.Account.Potential_QBI_Savings__c) ? (opportunity.Account.Potential_QBI_Savings__c) : 0;
+                    startupSavings = (null != opportunity.Account.Potential_Startup_Savings__c) ? (opportunity.Account.Potential_Startup_Savings__c) : 0;
 
                     //Account Information
                     totalStartupCosts = (null != opportunity.Account.Total_Startup_Costs__c) ? currencyStringToDecimal(opportunity.Account.Total_Startup_Costs__c) : 0;

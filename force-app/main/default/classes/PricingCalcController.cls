@@ -28,7 +28,7 @@ public class PricingCalcController {
     //public List<Product2> bundle1List {get;set;}
     //public List<String> acList {get;set;}
     
-    Public String entityTypeInput {get;set;}
+    public String entityTypeInput {get;set;}
     public String industryTypeInput {get;set;}
     public String numberOfEmployeesInput {get;set;}
     public String numberOfOwnersInput {get;set;}
@@ -47,6 +47,7 @@ public class PricingCalcController {
     public String officeSqFtInput {get;set;}
     public String foreignStateInput {get;set;}
     public String bookKeepingStartDateInput {get;set;}
+    public String bookKeepingEndDateInput {get;set;}
     
     
     public String bundle {get;set;}
@@ -63,7 +64,7 @@ public class PricingCalcController {
     public String UserSkill {get;set;}
     public String BundleOverride {get;set;}
     
-    Public String entityTypeClass {get;set;}
+    public String entityTypeClass {get;set;}
     public String industryTypeClass {get;set;}
     public String numberOfEmployeesClass {get;set;}
     public String numberOfOwnersClass {get;set;}
@@ -77,6 +78,7 @@ public class PricingCalcController {
     public String filingStatusClass {get;set;}
     public String stateOfIncorporationClass {get;set;}
     public String bookKeepingStartDateClass {get;set;}
+    public String bookKeepingEndDateClass {get;set;}
     
     public String businessMilesClass {get;set;}
     public String officeSqFtClass {get;set;}
@@ -648,6 +650,7 @@ public class PricingCalcController {
         //Boolean SellClientBooks;
         
         Boolean isBTPPrecheck = false;
+        Boolean isPTPPrecheck = false;
         
         // quote id is passed only in cases where we are editing an existing quote
         quoteID = ApexPages.currentPage().getParameters().get('Q');
@@ -782,7 +785,7 @@ public class PricingCalcController {
             UserRole = '';
         }
         
-        String DefaultProductID = '';
+        List<String> defaultProductIDList = new List<String>();
         
         Map<String, String> productMessages = new Map<String, String>();
 
@@ -1408,7 +1411,7 @@ public class PricingCalcController {
                 
                 if (ruleItem.Action__c == 'Default Product') {
                 
-                    DefaultProductID = ruleItem.Product__c;
+                    defaultProductIDList.add(ruleItem.Product__c);
                 
                 }
                 
@@ -1498,6 +1501,7 @@ public class PricingCalcController {
         foreignStateClass = '';
         stateOfIncorporationClass = '';
         bookKeepingStartDateClass = '';
+        bookKeepingEndDateClass = '';
         
         List<Calculator_Field__c> myFieldList = [SELECT Id, Name, Required_In_Environment__c FROM Calculator_Field__c];
         for(Calculator_Field__c fieldItem : myFieldList){
@@ -1571,6 +1575,10 @@ public class PricingCalcController {
                     bookKeepingStartDateClass = ' jq_req1';
                 }
                 
+                if (fieldItem.Name == 'Bookkeeping End Date') {
+                    bookKeepingEndDateClass = ' jq_req1';
+                }
+                
             
             }
         
@@ -1583,8 +1591,8 @@ public class PricingCalcController {
         if (LeadTypeNew.contains('BTP')) {
             isBTPPrecheck = true;       
         }
-        if (LeadTypeNew.contains('BTP')) {
-            isBTPPrecheck = true;       
+        if (LeadTypeNew.contains('PTP')) {
+            isPTPPrecheck = true;       
         }
         if (LeadTypeNew.contains('Sprout')) {
         //    showBundles = true;       
@@ -2363,6 +2371,7 @@ public class PricingCalcController {
             businessMilesInput = '10000';
             officeSqFtInput = '300';
             bookKeepingStartDateInput = '';
+            bookKeepingEndDateInput = '';
             
             // get defaults from account
             List <Account> accList = [SELECT Industry, Expected_1st_year_revenue__c, Entity_Tax_Classification__c, Total_Startup_Costs__c, NumberOfEmployees, Number_of_owners__c, Trans_Per_Month__c, Personal_Income__c, Rental_Properties__c, Name, BillingState, BillingStreet, BillingCity, BillingPostalCode, BillingCountry, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, Estimated_Business_Mileage__c, Home_Office_Square_Feet__c, State_of_Residence__c, State_of_Formation__c, Foreign_State__c FROM Account WHERE Id = :accountID];
@@ -2567,7 +2576,7 @@ public class PricingCalcController {
             if (quoteID != '') {
             
                 // if we are editing a quote, pull default values from custom fields
-                List<Quote> quoteList = [SELECT Id, Calc_Entity_Type__c, Calc_Industry_Type__c, Calc_Number_of_Employees__c, Calc_Number_of_Owners__c, Calc_Number_of_Rental_Properties__c, Calc_Number_of_Transactions__c, Calc_Personal_Income__c, Calc_Projected_1st_Year_Profit__c, Calc_Projected_1st_Year_Revenue__c, Calc_Total_Startup_Cost__c, Calc_Run_Payroll_Before__c, OpportunityId, AccountId, billingSchedule__c, Bundle__c, Calc_Filing_Status__c, Calc_Business_Miles__c, Calc_Office_Square_Footage__c, Calc_State_of_Incorporation__c, Calc_Foreign_State__c, Calc_Bookkeeping_Start_Date__c FROM Quote WHERE Id = :quoteID];
+                List<Quote> quoteList = [SELECT Id, Calc_Entity_Type__c, Calc_Industry_Type__c, Calc_Number_of_Employees__c, Calc_Number_of_Owners__c, Calc_Number_of_Rental_Properties__c, Calc_Number_of_Transactions__c, Calc_Personal_Income__c, Calc_Projected_1st_Year_Profit__c, Calc_Projected_1st_Year_Revenue__c, Calc_Total_Startup_Cost__c, Calc_Run_Payroll_Before__c, OpportunityId, AccountId, billingSchedule__c, Bundle__c, Calc_Filing_Status__c, Calc_Business_Miles__c, Calc_Office_Square_Footage__c, Calc_State_of_Incorporation__c, Calc_Foreign_State__c, Calc_Bookkeeping_Start_Date__c, Calc_Bookkeeping_End_Date__c FROM Quote WHERE Id = :quoteID];
                 
                 for(Quote quoteItem : quoteList){
                 
@@ -2590,6 +2599,7 @@ public class PricingCalcController {
                     officeSqFtInput = quoteItem.Calc_Office_Square_Footage__c;
                     foreignStateInput = quoteItem.Calc_Foreign_State__c;
                     bookKeepingStartDateInput = quoteItem.Calc_Bookkeeping_Start_Date__c;
+                    bookKeepingEndDateInput = quoteItem.Calc_Bookkeeping_End_Date__c;
                     
                     // get billing schedule
                     
@@ -2662,7 +2672,8 @@ public class PricingCalcController {
                         wrapRec.noSplit = acItem.No_Split_Allowed__c;
                         
                         if (acItem.Id == '01tf1000003JjrwAAC') {
-                            wrapRec.altPrice = 29.99;
+                            wrapRec.altPrice = 329.89;
+                            wrapRec.price = 439.89;
                         }
                         
                         // check for price override
@@ -2692,12 +2703,12 @@ public class PricingCalcController {
                                 
                                 if (acItem.Id == '01tf1000003JjrwAAC') {
                                     // first increment price based on amount which defaults to zero so no negative effect when not used
-                                    wrapRec.altPrice = 29.99 + padjItem.amount;
+                                    wrapRec.altPrice = 329.89 + padjItem.amount;
                                 
                                     // then increment price based on percent which defaults to 1 so not negative effect when not used
                                     wrapRec.altPrice = wrapRec.altPrice * padjItem.percent;
                                 }
-                                
+                                 
                             }
                             
                         }
@@ -2713,10 +2724,8 @@ public class PricingCalcController {
                         wrapRec.productDescription = acItem.Description;
                         
                         // do we have a default rule for this product?
-                        if (DefaultProductID != '') {
-                            if (acItem.Id == DefaultProductID) {
-                                wrapRec.doIt = true;
-                            }
+                        if (defaultProductIDList.contains(acItem.Id)) {
+                            wrapRec.doIt = true;
                         }
                         
                         if (masterProductIDList.contains(acItem.Id)) {
@@ -3523,10 +3532,13 @@ public class PricingCalcController {
             
             // if we aren't prepopulating from a previous attempt, then set default selections
             if (prevSel == false) {
+                doBusinessReturn = doPersonalReturn = true;
+                if(isBTPPrecheck || entityTypeInput == 'Non-Profit') {doBusinessReturn = false;}
+                if(isPTPPrecheck) {doPersonalReturn = false;}
             
                 if (isBTPPrecheck) {
                 
-                    doPersonalReturn = true;
+                    //doPersonalReturn = true;
                     doAdvisory = true;
                     
                     for(myWrapperClass acItem : acList){
@@ -3537,16 +3549,19 @@ public class PricingCalcController {
                             acItem.quantity = 1;
                         }
                         
+                        //audit defense business
                         if ('01tf1000003JjrgAAC' == acItem.id) {
                             acItem.doIt = true;
                             acItem.quantity = 1;
                         }
                         
+                        //audit defense personal
                         if ('01tf1000003JjrfAAC' == acItem.id) {
                             acItem.doIt = true;
                             acItem.quantity = 1;
                         }
                         
+                        //two year review
                         if ('01tf1000003JjrhAAC' == acItem.id) {
                             acItem.doIt = true;
                             acItem.quantity = 1;
@@ -3555,23 +3570,21 @@ public class PricingCalcController {
                         if ('01tj0000000LLamAAG' == acItem.id) {
                             acItem.doIt = true;
                             acItem.quantity = 1;
-                        }
-                    
-                    }
-                
+                        }                    
+                    }                
                 } else {
                 
-                    if (entityTypeInput == 'Non-Profit') {
-                        doBusinessReturn = false;
-                    } else {
-                        doBusinessReturn = true;
-                    }
+                    // if (entityTypeInput == 'Non-Profit') {
+                    //     doBusinessReturn = false;
+                    // } else {
+                    //     doBusinessReturn = true;
+                    // }
                     
                     if (entityTypeInput == 'S Corporation') {
                         doPayroll = true;
                     }
                     
-                    doPersonalReturn = true;
+                    //doPersonalReturn = true;
                     doAdvisory = true;
                     
                     for(myWrapperClass acItem : acList){
@@ -3595,6 +3608,16 @@ public class PricingCalcController {
                                 acItem.quantity = 1;
                             }
                         }
+
+                        // if(!LeadTypeNew.contains('PTP') && !LeadTypeNew.contains('BTP') && (acItem.name == 'Custom Accounting Package')){
+                        //     acItem.doIt = true;
+                        //     acItem.quantity = 1;
+                        // }
+
+                        // if(acItem.name == 'Personal Financial Planning'){
+                        //     acItem.doIt = true;
+                        //     acItem.quantity = 1;
+                        // }
                     
                     }
                 }
@@ -4641,8 +4664,8 @@ public class PricingCalcController {
                 backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 // append description with start date
-                backBookkeepingDesc = backBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
-                backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                backBookkeepingDesc = backBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput + ' and ending ' + bookKeepingEndDateInput; 
+                backBookkeepingHTMLDesc = backBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput + ' and ending ' + bookKeepingEndDateInput; 
                 
                 if (pItem.Billing_Frequency__c == 'One-Time') {
                 
@@ -4753,8 +4776,8 @@ public class PricingCalcController {
                 nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' For  ' + numberOfTransactionsInput + ' transactions per month.'; 
                 
                 // append description with start date
-                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
-                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput; 
+                nonProfitBackBookkeepingDesc = nonProfitBackBookkeepingDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput + ' and ending ' + bookKeepingEndDateInput; 
+                nonProfitBackBookkeepingHTMLDesc = nonProfitBackBookkeepingHTMLDesc + ' Back Bookkeeping services will cover the period beginning ' + bookKeepingStartDateInput + ' and ending ' + bookKeepingEndDateInput; 
                 
                 if (pItem.Billing_Frequency__c == 'One-Time') {
                 
@@ -4935,7 +4958,8 @@ public class PricingCalcController {
                 billingSchedule__c = billingTime,
                 Bundle__c = bundle,
                 Calc_Savings_Amount__c = potentialSavings,
-                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput
+                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput,
+                Calc_Bookkeeping_End_Date__c = bookKeepingEndDateInput
             );
             
             // delete quote line items
@@ -4996,7 +5020,8 @@ public class PricingCalcController {
                 billingSchedule__c = billingTime,
                 Bundle__c = bundle,
                 Calc_Savings_Amount__c = potentialSavings,
-                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput
+                Calc_Bookkeeping_Start_Date__c = bookKeepingStartDateInput,
+                Calc_Bookkeeping_End_Date__c = bookKeepingEndDateInput
             );
         
             insert theQuote;
@@ -5026,17 +5051,67 @@ public class PricingCalcController {
                 FROM Account 
                 WHERE Id = :accountID
             ];
+            //List<Account> accList = [
+            //    SELECT Industry, Expected_1st_year_revenue__c, Entity_Tax_Classification__c, State_of_Formation__c, 
+            //    Total_Startup_Costs__c, NumberOfEmployees, Number_of_owners__c, Primary_Contact_ID__c, 
+            //    Trans_Per_Month__c, Personal_Income__c, Rental_Properties__c, Personal_Return_Filing_Status__c, Current_Year_Profit_Projection__c, 
+            //    Estimated_Business_Mileage__c, Home_Office_Square_Feet__c 
+            //    FROM Account 
+            //    WHERE Id = :accountID
+            //];
             for (Account accItem : accList){
             
                 // save contact id
                 contactID = accItem.Primary_Contact_ID__c;
                 
-                accItem.Potential_Business_Mile_Savings__c = busMileSavings;
-                accItem.Potential_Home_Office_Savings__c = homeOfficeSavings;
-                accItem.Potential_QBI_Savings__c = qbiSavings;
-                accItem.Potential_SCorp_Savings__c = sCorpSavings;
-                accItem.Potential_Startup_Savings__c = startupExpSavings;
-                accItem.Potential_Total_Savings__c = potentialSavings;
+                String cleanBusMileSavings = busMileSavings.replace('$', '').trim();
+                Decimal decimalBusMileSavings = 0.00;
+                
+                if (cleanBusMileSavings != '') {
+                    decimalBusMileSavings = Decimal.valueOf(cleanBusMileSavings);
+                }
+
+                String cleanHomeOfficeSavings = homeOfficeSavings.replace('$', '').trim();
+                Decimal decimalHomeOfficeSavings = 0.00;
+                
+                if (cleanHomeOfficeSavings != '') {
+                    decimalHomeOfficeSavings = Decimal.valueOf(cleanHomeOfficeSavings);
+                }
+                
+                String cleanQbiSavings = qbiSavings.replace('$', '').trim();
+                Decimal decimalQbiSavings = 0.00;
+                
+                if (cleanQbiSavings != '') {
+                    decimalQbiSavings = Decimal.valueOf(cleanQbiSavings);
+                }
+                
+                String cleanSCorpSavings = sCorpSavings.replace('$', '').trim();
+                Decimal decimalSCorpSavings = 0.00;
+                
+                if (cleanSCorpSavings != '') {
+                    decimalSCorpSavings = Decimal.valueOf(cleanSCorpSavings);
+                }
+                
+                String cleanStartupExpSavings = startupExpSavings.replace('$', '').trim();
+                Decimal decimalStartupExpSavings = 0.00;
+                
+                if (cleanStartupExpSavings != '') {
+                    decimalStartupExpSavings = Decimal.valueOf(cleanStartupExpSavings);
+                }
+                
+                String cleanPotentialSavings = potentialSavings.replace('$', '').trim();
+                Decimal decimalPotentialSavings = 0.00;
+                
+                if (cleanPotentialSavings != '') {
+                    decimalPotentialSavings = Decimal.valueOf(cleanPotentialSavings);
+                }
+                
+                accItem.Potential_Business_Mile_Savings__c = decimalBusMileSavings;
+                accItem.Potential_Home_Office_Savings__c = decimalHomeOfficeSavings;
+                accItem.Potential_QBI_Savings__c = decimalQbiSavings;
+                accItem.Potential_SCorp_Savings__c = decimalSCorpSavings;
+                accItem.Potential_Startup_Savings__c = decimalStartupExpSavings;
+                accItem.Potential_Total_Savings__c = decimalPotentialSavings;
                 accItem.Estimated_Business_Mileage__c = businessMilesInput;
                 accItem.Home_Office_Square_Feet__c = officeSqFtInput;
                 accItem.Foreign_State__c = foreignStateInput;
@@ -5317,7 +5392,20 @@ public class PricingCalcController {
                     doBookAdv = true;
                 }
                
-                if (acItem.Id != '01tf1000004VPb5AAG' && acItem.Id != '01tf1000004hsUWAAY' && acItem.Id != '01t3Z000004bH2fQAE' && acItem.Id != '01t3Z0000057HZGQA2' && acItem.Id != '01tf1000003rJGkAAM' && acItem.Id != '01tf1000003JjrkAAC' && acItem.Id != '01tf1000004q0lgAAA' && acItem.Id != '01tf1000004q0lbAAA' && acItem.Id != '01tj0000000LLamAAG' && acItem.Id != '01tf1000003JjrhAAC' && acItem.Id != '01tf1000003JjrgAAC' && acItem.Id != '01tf1000003JjrfAAC' && acItem.Id != '01tj0000003mdhMAAQ' && acItem.Id != '01tj0000000uEdUAAU') {
+                if (acItem.Id != '01tf1000004VPb5AAG' 
+                && acItem.Id != '01tf1000004hsUWAAY' 
+                && acItem.Id != '01t3Z000004bH2fQAE' 
+                && acItem.Id != '01t3Z0000057HZGQA2' 
+                && acItem.Id != '01tf1000003rJGkAAM' 
+                && acItem.Id != '01tf1000003JjrkAAC' 
+                && acItem.Id != '01tf1000004q0lgAAA' 
+                && acItem.Id != '01tf1000004q0lbAAA' 
+                && acItem.Id != '01tj0000000LLamAAG' 
+                && acItem.Id != '01tf1000003JjrhAAC' 
+                && acItem.Id != '01tf1000003JjrgAAC' 
+                && acItem.Id != '01tf1000003JjrfAAC' 
+                && acItem.Id != '01tj0000003mdhMAAQ' 
+                && acItem.Id != '01tj0000000uEdUAAU') {
                     doSomeSchedule = true;
                 }
             }
@@ -5400,14 +5488,14 @@ public class PricingCalcController {
             
         }
         
-        String schedulerURL = sURL+'?TID='+apptType+'&WID='+contactID;
+        String schedulerURL = sURL+'?TID='+apptType+'&WID='+contactID+'&OtherTrackingID=Pricing%20Calculator';
         String schedulerVIPURL = '';
         String schedulerCSAURL = '';
         
         if (apptType == 'Discovery') {
         
-            schedulerVIPURL = sURL+'?TID=DiscoveryVIP&WID='+contactID;
-            schedulerCSAURL = sURL+'?TID=CSAO&WID='+contactID;
+            schedulerVIPURL = sURL+'?TID=DiscoveryVIP&WID='+contactID+'&OtherTrackingID=Pricing%20Calculator';
+            schedulerCSAURL = sURL+'?TID=CSAO&WID='+contactID+'&OtherTrackingID=Pricing%20Calculator';
             
         }
         
@@ -5792,7 +5880,7 @@ public class PricingCalcController {
             makeLineItems(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Tax Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
             
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (businessAdjustment * businessQuantity);
+            vipAmount = vipAmount + getVIPAmount(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Tax Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
             
         }
         
@@ -5862,7 +5950,7 @@ public class PricingCalcController {
             makeLineItems(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Tax Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (personalAdjustment * personalQuantity);
+            vipAmount = vipAmount + getVIPAmount(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Tax Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput);
 
         }
         
@@ -6536,7 +6624,7 @@ public class PricingCalcController {
             makeLineItems(taxAdvisoryPrice, offerProductList, 'acheck', bundle, 'Advisory', opportunityID, taxAdvisoryPBEID, taxAdvisoryID, taxAdvisoryQuantity, taxAdvisoryTime, taxAdvisoryTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, taxAdvisoryDesc, taxAdvisoryHTMLDesc, accountID, taxAdvisorySort, false, 0.00, '', taxAdvisoryOT, payrollNoSplit, '', numberOfEmployeesInput);
  
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (taxAdvisoryPrice * taxAdvisoryQuantity); 
+            vipAmount = vipAmount + getVIPAmount(taxAdvisoryPrice, offerProductList, 'acheck', bundle, 'Advisory', opportunityID, taxAdvisoryPBEID, taxAdvisoryID, taxAdvisoryQuantity, taxAdvisoryTime, taxAdvisoryTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, taxAdvisoryDesc, taxAdvisoryHTMLDesc, accountID, taxAdvisorySort, false, 0.00, '', taxAdvisoryOT, payrollNoSplit, '', numberOfEmployeesInput); 
  
         }
         
@@ -6606,7 +6694,7 @@ public class PricingCalcController {
             makeLineItems(bookkeepingAdjustment, offerProductList, 'bkcheck', bundle, 'Bookkeeping', opportunityID, bookkeepingPBEID, bookkeepingID, bookkeepingQuantity, bookkeepingTime, bookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bookkeepingDesc, bookkeepingHTMLDesc, accountID, bookkeepingSort, false, 0.00, '', bookkeepingOT, bookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (bookkeepingAdjustment * bookkeepingQuantity); 
+            vipAmount = vipAmount + getVIPAmount(bookkeepingAdjustment, offerProductList, 'bkcheck', bundle, 'Bookkeeping', opportunityID, bookkeepingPBEID, bookkeepingID, bookkeepingQuantity, bookkeepingTime, bookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bookkeepingDesc, bookkeepingHTMLDesc, accountID, bookkeepingSort, false, 0.00, '', bookkeepingOT, bookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput); 
 
         }
         
@@ -7382,7 +7470,7 @@ public class PricingCalcController {
             makeLineItems(backBookkeepingAdjustment, offerProductList, 'bbkcheck', bundle, 'Back Bookkeeping', opportunityID, backBookkeepingPBEID, backBookkeepingID, backBookkeepingQuantity, backBookkeepingTime, backBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backBookkeepingDesc, backBookkeepingHTMLDesc, accountID, backBookkeepingSort, false, 0.00, '', backBookkeepingOT, backBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (backBookkeepingAdjustment * backBookkeepingQuantity);
+            vipAmount = vipAmount + getVIPAmount(backBookkeepingAdjustment, offerProductList, 'bbkcheck', bundle, 'Back Bookkeeping', opportunityID, backBookkeepingPBEID, backBookkeepingID, backBookkeepingQuantity, backBookkeepingTime, backBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backBookkeepingDesc, backBookkeepingHTMLDesc, accountID, backBookkeepingSort, false, 0.00, '', backBookkeepingOT, backBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7452,7 +7540,7 @@ public class PricingCalcController {
             makeLineItems(foreignStateAdjustment, offerProductList, 'fscheck', bundle, 'Foreign State', opportunityID, foreignStatePBEID, foreignStateID, foreignStateQuantity, foreignStateTime, foreignStateTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, foreignStateDesc, foreignStateHTMLDesc, accountID, foreignStateSort, false, 0.00, '', foreignStateOT, foreignStateNoSplit, '', numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (foreignStateAdjustment * foreignStateQuantity);
+            vipAmount = vipAmount + getVIPAmount(foreignStateAdjustment, offerProductList, 'fscheck', bundle, 'Foreign State', opportunityID, foreignStatePBEID, foreignStateID, foreignStateQuantity, foreignStateTime, foreignStateTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, foreignStateDesc, foreignStateHTMLDesc, accountID, foreignStateSort, false, 0.00, '', foreignStateOT, foreignStateNoSplit, '', numberOfEmployeesInput);
 
         }
         
@@ -7522,7 +7610,7 @@ public class PricingCalcController {
             makeLineItems(backPayrollAdjustment, offerProductList, 'bpycheck', bundle, 'Back Quarterly Payroll', opportunityID, backPayrollPBEID, backPayrollID, backPayrollQuantity, backPayrollTime, backPayrollTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backPayrollDesc, backPayrollHTMLDesc, accountID, backPayrollSort, false, 0.00, '', backPayrollOT, backPayrollNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (backPayrollAdjustment * backPayrollQuantity);
+            vipAmount = vipAmount + getVIPAmount(backPayrollAdjustment, offerProductList, 'bpycheck', bundle, 'Back Quarterly Payroll', opportunityID, backPayrollPBEID, backPayrollID, backPayrollQuantity, backPayrollTime, backPayrollTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backPayrollDesc, backPayrollHTMLDesc, accountID, backPayrollSort, false, 0.00, '', backPayrollOT, backPayrollNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7592,7 +7680,7 @@ public class PricingCalcController {
             makeLineItems(backBusinessAdjustment, offerProductList, 'bbcheck', bundle, 'Back Business Return', opportunityID, backBusinessPBEID, backBusinessID, backBusinessQuantity, backBusinessTime, backBusinessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backBusinessDesc, backBusinessHTMLDesc, accountID, backBusinessSort, false, 0.00, '', backBusinessOT, backBusinessNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (backBusinessAdjustment * backBusinessQuantity);
+            vipAmount = vipAmount + getVIPAmount(backBusinessAdjustment, offerProductList, 'bbcheck', bundle, 'Back Business Return', opportunityID, backBusinessPBEID, backBusinessID, backBusinessQuantity, backBusinessTime, backBusinessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backBusinessDesc, backBusinessHTMLDesc, accountID, backBusinessSort, false, 0.00, '', backBusinessOT, backBusinessNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7662,7 +7750,7 @@ public class PricingCalcController {
             makeLineItems(backPersonalAdjustment, offerProductList, 'bpcheck', bundle, 'Back Personal Return', opportunityID, backPersonalPBEID, backPersonalID, backPersonalQuantity, backPersonalTime, backPersonalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backPersonalDesc, backPersonalHTMLDesc, accountID, backPersonalSort, false, 0.00, '', backPersonalOT, backPersonalNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (backPersonalAdjustment * backPersonalQuantity);
+            vipAmount = vipAmount + getVIPAmount(backPersonalAdjustment, offerProductList, 'bpcheck', bundle, 'Back Personal Return', opportunityID, backPersonalPBEID, backPersonalID, backPersonalQuantity, backPersonalTime, backPersonalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, backPersonalDesc, backPersonalHTMLDesc, accountID, backPersonalSort, false, 0.00, '', backPersonalOT, backPersonalNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7732,7 +7820,7 @@ public class PricingCalcController {
             makeLineItems(nonProfitBookkeepingAdjustment, offerProductList, 'npbcheck', bundle, 'Non-Profit Bookkeeping', opportunityID, nonProfitBookkeepingPBEID, nonProfitBookkeepingID, nonProfitBookkeepingQuantity, nonProfitBookkeepingTime, nonProfitBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, nonProfitBookkeepingDesc, nonProfitBookkeepingHTMLDesc, accountID, nonProfitBookkeepingSort, false, 0.00, '', nonProfitBookkeepingOT, nonProfitBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (nonProfitBookkeepingAdjustment * nonProfitBookkeepingQuantity);
+            vipAmount = vipAmount + getVIPAmount(nonProfitBookkeepingAdjustment, offerProductList, 'npbcheck', bundle, 'Non-Profit Bookkeeping', opportunityID, nonProfitBookkeepingPBEID, nonProfitBookkeepingID, nonProfitBookkeepingQuantity, nonProfitBookkeepingTime, nonProfitBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, nonProfitBookkeepingDesc, nonProfitBookkeepingHTMLDesc, accountID, nonProfitBookkeepingSort, false, 0.00, '', nonProfitBookkeepingOT, nonProfitBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7802,7 +7890,7 @@ public class PricingCalcController {
             makeLineItems(nonProfitBackBookkeepingAdjustment, offerProductList, 'npbbcheck', bundle, 'Non-Profit Back Bookkeeping', opportunityID, nonProfitBackBookkeepingPBEID, nonProfitBackBookkeepingID, nonProfitBackBookkeepingQuantity, nonProfitBackBookkeepingTime, nonProfitBackBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, nonProfitBackBookkeepingDesc, nonProfitBackBookkeepingHTMLDesc, accountID, nonProfitBackBookkeepingSort, false, 0.00, '', nonProfitBackBookkeepingOT, nonProfitBackBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + (nonProfitBackBookkeepingAdjustment * nonProfitBackBookkeepingQuantity);
+            vipAmount = vipAmount + getVIPAmount(nonProfitBackBookkeepingAdjustment, offerProductList, 'npbbcheck', bundle, 'Non-Profit Back Bookkeeping', opportunityID, nonProfitBackBookkeepingPBEID, nonProfitBackBookkeepingID, nonProfitBackBookkeepingQuantity, nonProfitBackBookkeepingTime, nonProfitBackBookkeepingTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, nonProfitBackBookkeepingDesc, nonProfitBackBookkeepingHTMLDesc, accountID, nonProfitBackBookkeepingSort, false, 0.00, '', nonProfitBackBookkeepingOT, nonProfitBackBookkeepingNoSplit, numberOfTransactionsInput, numberOfEmployeesInput);
 
         }
         
@@ -7905,8 +7993,12 @@ public class PricingCalcController {
                         
                     } else {
                     
-                        tmpACPrice2 = tmpACPrice / 12;
-                    
+                        if (acItem.Id == '01tf1000003JjrwAAC') {
+                            tmpACPrice2 = tmpACPrice / 11;
+                        } else {
+                            tmpACPrice2 = tmpACPrice / 12;
+                        }
+
                     }
                     
                     tmpACPrice2 = tmpACPrice2.setScale(2, RoundingMode.HALF_UP);
@@ -8304,10 +8396,9 @@ public class PricingCalcController {
             theCOQuote.Quote_Created__c = true;
             
             
-            if (vipAmount > 7999 && schedulerCSAURL != '') {
-                //theCOQuote.Scheduler_URL__c = schedulerCSAURL;
-                theCOQuote.Scheduler_URL__c = schedulerVIPURL;
-            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
+            if (((LeadSource == '1-800Accountant' || LeadSource == 'Bark' || LeadSource =='Inc. Authority' || LeadSource =='ZenBusiness') || vipAmount > 7499.00) && schedulerCSAURL != '') {
+                theCOQuote.Scheduler_URL__c = schedulerCSAURL;
+            } else if (vipAmount > 4999.00 && schedulerVIPURL != '') {
                 theCOQuote.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8318,9 +8409,9 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteMonth.Quote_Created__c = true;
             
-            if (vipAmount > 7999 && schedulerCSAURL != '') {
-                theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
-            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
+            if (((LeadSource == '1-800Accountant' || LeadSource == 'Bark' || LeadSource =='Inc. Authority' || LeadSource =='ZenBusiness') || vipAmount > 7499.00) && schedulerCSAURL != '') {
+                theCOQuoteMonth.Scheduler_URL__c = schedulerCSAURL;
+            } else if (vipAmount > 4999.00 && schedulerVIPURL != '') {
                 theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8331,9 +8422,9 @@ public class PricingCalcController {
             System.debug(LoggingLevel.FINER, 'setting madeYear to true for theCOQuoteMonth :: ' + theCOQuoteMonth);
             theCOQuoteOneTime.Quote_Created__c = true;
             
-            if (vipAmount > 7999 && schedulerCSAURL != '') {
-                theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
-            } else if (vipAmount > 4999 && schedulerVIPURL != '') {
+            if (((LeadSource == '1-800Accountant' || LeadSource == 'Bark' || LeadSource =='Inc. Authority' || LeadSource =='ZenBusiness') || vipAmount > 7499.00) && schedulerCSAURL != '') {
+                theCOQuoteOneTime.Scheduler_URL__c = schedulerCSAURL;
+            } else if (vipAmount > 4999.00 && schedulerVIPURL != '') {
                 theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             }
             
@@ -8997,6 +9088,73 @@ public class PricingCalcController {
         insert coqLIPass;
         
         
+    }
+    
+    public Decimal getVIPAmount(Decimal productPassAdjustment, List<offerProductWrapperClass> offerProductListPass, String calcIdPass, String bundlePass, String productDescription, String opportunityIdPass, String pricebookEntryIdPass, String productIdPass, Integer quantityPass, String timePass, String timeDefPass, String billingTimePass, String quoteIdPass, String coQuoteIdPass, String coQuoteIdMonthPass, String coQuoteIdOneTimePass, String sowDescPass, String sowDescPassHTML, String accountIdPass, Decimal sortPass, Boolean doFeePass, Decimal feeAmountPass, String feeDesc, Boolean oneTimePass, Boolean noSplitPass, String numberOfTransactionsInputPass, String numberOfEmployeesInputPass)
+    {
+        
+        // default variables declared here
+        Decimal subTotalAmount = 0.00;
+        Decimal tmpACPrice = 0.00;
+ 
+        // check for bundle price
+        for(offerProductWrapperClass opwItem : offerProductListPass){
+            
+            if (opwItem.calcId == calcIdPass && bundlePass == opwItem.offerId && opwItem.usePricebook == false) {
+                
+                productPassAdjustment = opwItem.amount;
+                
+            } 
+            
+        }
+    
+        // now we do something different depending on the timeframe for billing selected
+        if (timePass == 'Monthly') {
+            
+            subTotalAmount = productPassAdjustment * quantityPass;
+        
+        } else {
+        
+            if (noSplitPass == true) {
+                billingTimePass = 'yrl';
+            }
+            
+            if (billingTimePass == 'mon') {
+
+                if (timeDefPass == 'Monthly') {
+                
+                    subTotalAmount = productPassAdjustment * quantityPass;
+                    
+                } else {
+                
+                    subTotalAmount = (productPassAdjustment * 1.2) * quantityPass;
+    
+                }
+
+            } else {
+                
+                if (timeDefPass == 'Monthly') {
+                    
+                    tmpACPrice = productPassAdjustment * 11;
+                    
+                } else {
+                
+                    tmpACPrice = productPassAdjustment;
+                
+                }
+
+                tmpACPrice = tmpACPrice.setScale(2, RoundingMode.HALF_UP);
+                
+                subTotalAmount = tmpACPrice * quantityPass;
+
+            }
+            
+        }
+        
+        // return vip amount
+        subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
+        return subTotalAmount;
+
     }
     
     public Decimal getDynamicAmount(String productNamePass, String entityTypeInputPass, String industryTypeInputPass, String numberOfEmployeesInputPass, String numberOfOwnersInputPass, String numberOfRentalPropertiesInputPass, String personalIncomeInputPass, String projectedFirstYearProfitInputPass, String projectedFirstYearRevenueInputPass, String stateOfIncorporationInputPass, String totalStartupCostInputPass, String numberOfTransactionsInputPass, String filingStatusInputPass, String businessMilesInputPass, String officeSqFtInputPass, String foreignStateInputPass) 

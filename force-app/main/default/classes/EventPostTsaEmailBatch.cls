@@ -21,6 +21,7 @@ global class EventPostTsaEmailBatch implements Database.Batchable<sObject>, Sche
             +'FROM Event ' 
             +'WHERE DAY_ONLY(StartDateTime) = :aTimeAgo '
             +'AND What.Type = \'Opportunity\' ' 
+            +'AND (Event.Account.Account_Status__c = \'Prospect\' OR Event.Account.Account_Status__c = \'Partner-Subscribed Prospect\')'
             +'AND Secondary_Disposition_Details__c != \'Sale\' '
             +'AND Secondary_Disposition_Details__c != \'Cancelled\' ' 
             +'AND Subject LIKE \'%1on1%\' ' 
@@ -66,7 +67,7 @@ global class EventPostTsaEmailBatch implements Database.Batchable<sObject>, Sche
             //As long as we have a quote, potential savings, and a profit projection, send the email
             if(null != o.ChargeOver_Quote_URL__c &&
             null != o.Account.Potential_Total_Savings__c &&
-            '$0' != o.Account.Potential_Total_Savings__c &&
+            3000 >= o.Account.Potential_Total_Savings__c &&
             null != o.Account.Current_Year_Profit_Projection__c &&
             '0' != o.Account.Current_Year_Profit_Projection__c &&
             null == o.Post_TSA_Link__c){
@@ -78,16 +79,16 @@ global class EventPostTsaEmailBatch implements Database.Batchable<sObject>, Sche
                 message.setSubject('Thanks again! Tax savings breakdown');
                 message.toAddresses = new String[] { o.Account.Primary_Contact_Email__c};
                 message.optOutPolicy = 'FILTER';
-                //If owned by a queue or null, give default values
-                if('General Lead Queue' == o.Account.Owner.Name
-                || 'Dead Leads Queue' == o.Account.Owner.Name
-                || null == o.Account.Owner.Name){
+                //If owned by a queue or owner is null, give default values
+                if('General Lead Queue' == o.Owner.Name
+                || 'Dead Leads Queue' == o.Owner.Name
+                || null == o.Owner.Name){
                     message.setSenderDisplayName('Taylor Covey');
                     message.setReplyTo('1on1@1800accountant.com');
                     message.setHtmlBody(message.getHtmlBody().replace('General Lead Queue', 'Taylor Covey'));
                 } else {
-                    message.setSenderDisplayName(o.Account.Owner.Name);
-                    message.setReplyTo(o.Account.Owner.Email);
+                    message.setSenderDisplayName(o.Owner.Name);
+                    message.setReplyTo(o.Owner.Email);
                 }
                 //Send email and save Link to the Opportunity
                 if(!Test.isRunningTest()){

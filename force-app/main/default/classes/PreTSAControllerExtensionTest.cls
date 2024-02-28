@@ -57,7 +57,7 @@ public class PreTSAControllerExtensionTest {
         Decimal totalSavings = PreTSAControllerExtension.calculateSavings('LLC', '50000', '5000', '15000', '150', 'Single', '50000', testEvent.Id, '');
         //Testing that the Account was updated
         Account testAccount2 = [SELECT Id, Name, Potential_Total_Savings__c FROM Account WHERE Name = 'Pre TSA Test' LIMIT 1];
-        System.assertEquals(testAccount2.Potential_Total_Savings__c, '$'+String.valueOf(totalSavings));
+        System.assertEquals(testAccount2.Potential_Total_Savings__c, totalSavings);
     }
     @TestSetup
     static void makeData(){

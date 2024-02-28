@@ -39,9 +39,15 @@ public without sharing class GuidedSellingControllerExtension {
     public String theAccountId { get; set; }
     public String defaultCountry { get; set; }
     //public static String quoteButtonText { get; set; }
+    public String quoteId { get; set; }
 
     public Date defaultBookkeepingStart { get; set; }
     public static Date bookkeepingStartDate { get; set; }
+    public static Date bookkeepingEndDate { get; set; }
+    public Date formationDate { get; set; }
+    public String existingBookkeepingStart { get; set; }
+    public String existingBookkeepingEnd { get; set; }
+    public String billingFreq {get; set;}
 
     // Variables Boolean 
     public Boolean hasRecordId { get; set; }
@@ -56,6 +62,7 @@ public without sharing class GuidedSellingControllerExtension {
     public Boolean commutesWithOwnVehicle { get; set; }
     //public Boolean eCommerce { get; set; }
     public Boolean btp { get; set; }
+    public Boolean isNonProfit { get; set; }
 
     // Variables Integer 
     public Integer numRequiredFields {get; set;}
@@ -68,18 +75,168 @@ public without sharing class GuidedSellingControllerExtension {
     public Business_Owner__c businessOwner { get; set; }
     public Event eventRec { get; set; }
 
+
+    List<String> btpDefaultProducts = new  List<String>{'Personal Return','Advisory','1-800Accountant Access','Audit Defense - Business','Audit Defense - Personal','Two-Year Review','Loan Agreement'};
+    List<String> nonbtpDefaultProducts = new  List<String>{'Personal Return','Advisory','1-800Accountant Access','Loan Agreement','Business Return'};
+    //public List<String> defaultProductNames = new List<String>{'Personal Return' ,'Advisory','1-800Accountant Access','Loan Agreement' ,'Business Return'};
+    //public List<String> defaultProductNamesBtp = new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' , 'Audit Defense - Business' , 'Audit Defense - Personal' ,'Two-Year Review' , 'Loan Agreement'};
+    public List<String> defaultProductNamesBundle= new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' ,  'Business Return', 'Loan Agreement'};
+    public List<String> existingQuoteProductNames = new List<String>();
+    
+    public List<String> disabledProductNames = new List<String>{'Dedicated Bookkeeping', 'Personal Financial Planning', 'Custom Accounting Package'};
     //List Variables
     public List<Business_Owner__c> partners { get; set; }
-    public List<Product2> finalProducts { get; set; }
-    public List<Product2> defaultProducts { get; set; }
-    public List<Product2> frequentProducts { get; set; }
-    public List<Product2> businessProducts { get; set; }
-    public List<Product2> personalProducts { get; set; }
-    public List<Product2> payrollProducts { get; set; }
-    public List<Product2> bookkeepingProducts { get; set; }
-    public List<Product2> entityFormationProducts { get; set; }
+    //public List<Product2> finalProducts { get; set; }
+    public List<GuidedSellingProduct> finalProducts { get{
+        if(guidedSellingProducts == null){
+            return new List<GuidedSellingProduct>();
+        } else {
+            return guidedSellingProducts;
+        }       
+    } set; }
+    public String finalProductsJson {get {return JSON.serialize(finalProducts);} set;}
+    //public List<Product2> defaultProducts { get; set; }
+    public List<GuidedSellingProduct> defaultProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0 || btp == null){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(useStaticPackage && defaultProductNamesBundle.contains(p.Product.Guided_Selling_Identifier__c)){
+                    tempList.add(p);
+                } else if(btp && btpDefaultProducts.contains(p.Product.Guided_Selling_Identifier__c)){
+                    tempList.add(p);
+                } else if(!btp && nonbtpDefaultProducts.contains(p.Product.Guided_Selling_Identifier__c)) {
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    //public List<Product2> frequentProducts { get; set; }
+    public List<GuidedSellingProduct> frequentProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if('A La Carte' != p.Product.Calculator_Location__c){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String frequentProductsJson {get {return JSON.serialize(frequentProducts);} set;}
+    //public List<Product2> businessProducts { get; set; } 
+    public List<GuidedSellingProduct> businessProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(p.Product.Name != null && (p.Product.Name.containsIgnoreCase('business')
+                || p.Product.Name == 'Quarterly Estimated Taxes')){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String businessProductsJson {get {return JSON.serialize(businessProducts);} set;}
+    //public List<Product2> personalProducts { get; set; }
+    public List<GuidedSellingProduct> personalProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(p.Product.Name != null && (p.Product.Name.containsIgnoreCase('personal')
+                || p.Product.Name == 'Quarterly Estimated Taxes')){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String personalProductsJson {get {return JSON.serialize(personalProducts);} set;}
+    //public List<Product2> payrollProducts { get; set; }
+    public List<GuidedSellingProduct> payrollProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(p.Product.Name != null && p.Product.Name.containsIgnoreCase('payroll')){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String payrollProductsJson {get {return JSON.serialize(payrollProducts);} set;}
+
+    //public List<Product2> bookkeepingProducts { get; set; }
+    public List<GuidedSellingProduct> bookkeepingProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(p.Product.Name != null && (p.Product.Name.containsIgnoreCase('bookkeeping') || p.Product.Name.containsIgnoreCase('books'))){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String bookkeepingProductsJson {get {return JSON.serialize(bookkeepingProducts);} set;}
+    //public List<Product2> entityFormationProducts { get; set; }
+    public List<GuidedSellingProduct> entityFormationProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(p.Product.Name != null && (p.Product.Name.containsIgnoreCase('entity') || p.Product.Name.containsIgnoreCase('Corp State Filing Fee') || p.Product.Name.containsIgnoreCase('LLC State Filing Fee'))){
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String entityFormationProductsJson {get {return JSON.serialize(entityFormationProducts);} set;}
+    public List<GuidedSellingProduct> tempSelectedProducts { get {
+        if(guidedSellingProducts == null || guidedSellingProducts.size() == 0){
+            return new List<GuidedSellingProduct> ();
+        } else {
+            List<GuidedSellingProduct> tempList = new List<GuidedSellingProduct>();
+            for(GuidedSellingProduct p : guidedSellingProducts){
+                if(existingQuoteProductNames.contains(p.Product.Guided_Selling_Identifier__c)){
+                    tempList.add(p);
+                } else if(useStaticPackage && defaultProductNamesBundle.contains(p.Product.Guided_Selling_Identifier__c)){
+                    tempList.add(p);
+                } else if(btp && btpDefaultProducts.contains(p.Product.Guided_Selling_Identifier__c)){
+                    tempList.add(p);
+                } else if(!btp && nonbtpDefaultProducts.contains(p.Product.Guided_Selling_Identifier__c)) {
+                    tempList.add(p);
+                }
+            }
+            return tempList;
+        }
+    } set; }
+    public String selectedProductsJson {get {return JSON.serialize(tempSelectedProducts);} set;}
     public List<Product_Offer__mdt> offersOfProducts { get; set; }
-    
+    public List<GuidedSellingProduct> guidedSellingProducts { get; set; }
+    public Map<String, GuidedSellingProduct> guidedSellingProductsIdMap { get; set; }
+    public static Decimal quoteTotalAnnual {get;set;}
+    public static Decimal quoteTotalMonthly {get;set;}
+    public static Decimal quoteTotal {get { 
+        if(quoteTotalAnnual == null || quoteTotalMonthly == null){
+            return 0;
+        }
+        return quoteTotalAnnual + quoteTotalMonthly; }}
+
     //Map Variables
     public Map<String, String> disabledMessage { get; set; }
     public Map<Id, Decimal> defaultPrices { get; set; }
@@ -105,18 +262,20 @@ public without sharing class GuidedSellingControllerExtension {
         }
     }
     public static String getsfBaseUrl(){
+        System.debug('getsfBaseUrl');
         if(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName() == null){
             return 'https://1800accountant.lightning.force.com';
         } else {
             return 'https://1800accountant--'+environmentName+'.sandbox.lightning.force.com';
         }
+        
     }
 
     public static String getsiteBaseUrl(){
-        Site mySite = [select Id from Site where Name = 'Guided_Selling_Client_View'];
-        SiteDetail mySiteDetail = [select SecureURL from SiteDetail where DurableId = :mySite.Id];
+        Site mySite = [select Id from Site where Name = 'Guided_Selling_Client_View' LIMIT 1];
+        SiteDetail mySiteDetail = [select SecureURL from SiteDetail where DurableId = :mySite.Id LIMIT 1];
         String url = mySiteDetail.SecureURL.substring(0, mySiteDetail.SecureURL.indexOf('.com/')+4);
-        System.debug(url);
+        System.debug('getsiteBaseUrl');
         return url;
     }
 
@@ -127,7 +286,9 @@ public without sharing class GuidedSellingControllerExtension {
             urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Scheduler'
             AND Environment__c = 'default'];
         } 
+        System.debug('getschedulerBaseUrl');
         return urls[0].Endpoint__c;
+        
     }
 
     public static String getsocketBaseUrl(){
@@ -137,28 +298,35 @@ public without sharing class GuidedSellingControllerExtension {
             urls = [SELECT Endpoint__c FROM Guided_Selling_URL__mdt WHERE URL_Type__c = 'Socket'
             AND Environment__c = 'default'];
         } 
+        System.debug('getsocketBaseUrl');
         return urls[0].Endpoint__c;
     }
 
     public void setproductToPrice(Map<Id, Decimal> dumperVar) {
         this.productToPrice = dumperVar;
+        System.debug('setproductToPrice');
+
     }
 
-    public String getproductToPrice() { 
+    public String getproductToPrice() {         
+        System.debug('getproductToPrice');
         return JSON.serialize(this.productToPrice); 
     }
 
     public void setproductToIdentifier(Map<Id, String> dumperVar) {
         this.productToIdentifier = dumperVar;
+        System.debug('setproductToIdentifier');
     }
 
     public String getproductToIdentifier() { 
+        System.debug('getproductToIdentifier');
         return JSON.serialize(this.productToIdentifier); 
     }
 
-    public List<String> defaultProductNames = new List<String>{'Personal Return' ,'Advisory','1-800Accountant Access','Loan Agreement' ,'Business Return'};
-    public List<String> defaultProductNamesBtp = new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' , 'Audit Defense - Business' , 'Audit Defense - Personal' ,'Two-Year Review' , 'Loan Agreement'};
-    public List<String> defaultProductNamesBundle= new List<String>{'Personal Return' , 'Advisory', '1-800Accountant Access' ,  'Business Return', 'Custom Accounting Package', 'Personal Financial Planning', 'Loan Agreement'};
+    public Boolean isValidQuoteId(){
+        return (quoteId != null && quoteId != 'null' && Id.valueOf(quoteId).getSObjectType().getDescribe().getName() == 'Quote');
+    }
+
 
     public Id recordOwnerId;
     public Boolean useStaticPackage { get; set; }
@@ -171,12 +339,13 @@ public without sharing class GuidedSellingControllerExtension {
     //}
 
     public GuidedSellingControllerExtension(ApexPages.StandardController stdController) {
-        useStaticPackage = false;
+        useStaticPackage = true;
         System.debug('*checkpoint 1');
+        //Integer i = 5/0;
         //First identify the record Id passed in the parameters through the flow
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
         hasRecordId = (null == recordId) ? false : true;
-
+        if(recordId == null){ recordId = '00UDM000005BArh2AG';}
         //quoteButtonText = 'Generate Quote';
         //defaultNumForeignOwners = '---';
         defaultState = 'Select a State';
@@ -200,6 +369,8 @@ public without sharing class GuidedSellingControllerExtension {
         //defaultOtherInvestments = '---';
         defaultOffice = '---';
         defaultMileage = '---';
+        existingBookkeepingStart = '';
+        existingBookkeepingEnd = '';
         firstBusiness = false;
         runPayrollBefore = false;
         hasEmployeesContractors = false;
@@ -210,6 +381,19 @@ public without sharing class GuidedSellingControllerExtension {
         //eCommerce = false; 
         defaultCountry = 'United States';
         defaultBookkeepingStart = Date.today();
+        //formationDate = Date.today();
+        quoteTotalAnnual = 0;
+        quoteTotalMonthly = 0;
+        quoteId = ApexPages.currentPage().getParameters().get('Q');
+
+        if(isValidQuoteId()){
+            Quote curQuote = [SELECT billingSchedule__c, Calc_Bookkeeping_Start_Date__c, Calc_Bookkeeping_End_Date__c FROM Quote WHERE Id = :quoteId LIMIT 1];
+            billingFreq = curQuote.billingSchedule__c;
+            existingBookkeepingStart = curQuote.Calc_Bookkeeping_Start_Date__c;
+            existingBookkeepingEnd = curQuote.Calc_Bookkeeping_End_Date__c;
+        } else {
+            System.debug('no quote id found: '+quoteId);
+        }
 
         String recordIdType = recordId?.getSObjectType().getDescribe().getName(); 
         
@@ -218,10 +402,10 @@ public without sharing class GuidedSellingControllerExtension {
         Id accountId = ('Account' == recordIdType) ? recordId : null;
         Id opportunityId = ('Opportunity' == recordIdType) ? recordId : null;
         System.debug('*checkpoint 2');
-        //Event event;
+
         //If there is an Event Id, get either an Opportunity or Account
         if(null != eventId) {
-            eventRec = [SELECT Id, WhatId, WhoId, Subject, OwnerId FROM Event WHERE Id = :recordId];
+            eventRec = [SELECT Id, WhatId, WhoId, Subject, OwnerId FROM Event WHERE Id = :recordId LIMIT 1];
             recordOwnerId = eventRec.OwnerId;
 
             //Getting either an Account or Opportunity from the Event
@@ -260,7 +444,7 @@ public without sharing class GuidedSellingControllerExtension {
             recordOwnerId = findLatestOpportunity.OwnerId;
         }
         User recordOwner = [SELECT Id, Skills_Sales__c FROM User WHERE Id = :recordOwnerId];
-        useStaticPackage = recordOwner.Skills_Sales__c.contains('Bundle Packages');
+        //useStaticPackage = recordOwner.Skills_Sales__c.contains('Bundle Packages');
         //Now we need to have an Opportunity Id at this point as the source of data for the page
         if(null == opportunityId && null != recordId) {
             throw new NoOpportunityIdFoundException(noOpportunityFound);
@@ -278,13 +462,14 @@ public without sharing class GuidedSellingControllerExtension {
                 Account.Lead_Source_Date__c        
                 FROM Opportunity 
                 WHERE Id = :opportunityId
+                LIMIT 1
             ];
         }
 
         theAccountId = opportunity.AccountId;
 
         if(opportunity.AccountId != null) {
-            business = [
+            List<Business__c> businesses = [
                 SELECT Id, Name, Account__c, Anticipated_Revenue__c, Industry__c, Business_Type__c, Number_of_Owners__c, Startup_Costs__c, Years_In_Business__c, 
                 Profit_Projection__c, Home_Office_Square_Feet__c,
                 State_of_incorporation__c, Monthly_Bookkeeping_Transactions__c, Number_of_Employees__c, Tax_Filing_Status__c,
@@ -293,7 +478,13 @@ public without sharing class GuidedSellingControllerExtension {
                 First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :opportunity.AccountId
+                LIMIT 1
             ];
+            if(businesses.size()>0){
+                business = businesses[0];
+            } else {
+                business = new Business__c();
+            }
         }
 
         Integer numEmpl = 0;
@@ -328,7 +519,7 @@ public without sharing class GuidedSellingControllerExtension {
         //defaultInvestorFunding = (business.Investor_Funding__c != null) ? business.Investor_Funding__c : '---';
         defaultNumTransactions = (business.Monthly_Bookkeeping_Transactions__c != null) ? String.valueOf(business.Monthly_Bookkeeping_Transactions__c) : '---';
         //defaultNumForeignOwners = (business.Number_of_Foreign_Owners__c != null) ? business.Number_of_Foreign_Owners__c : '---';
-        defaultNumEmployees = (business.Number_of_Employees__c != null) ? String.valueOf(numEmpl) : '---';
+        defaultNumEmployees = (business.Number_of_Employees__c != null) ? String.valueOf(numEmpl+1) : '---';
         defaultFilingStatus = (business.Tax_Filing_Status__c != null) ? business.Tax_Filing_Status__c : 'Select a Filing Status';
         defaultPersonalIncome = (business.W2_Income__c != null) ? business.W2_Income__c : '---';
         defaultNumberOfRentalProperties = (business.Number_of_Rental_Properties__c != null) ? business.Number_of_Rental_Properties__c : '---';
@@ -343,10 +534,11 @@ public without sharing class GuidedSellingControllerExtension {
         commutesWithOwnVehicle = business.Commutes_With_Own_Vehicle__c;
         //eCommerce = business.E_Commerce__c;
 
-        user = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id];
+        user = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id LIMIT 1];
 
-        account = [SELECT Id, Lead_Type_New__c, Lead_Source__c FROM Account WHERE Id = :opportunity.AccountId];
+        account = [SELECT Id, Lead_Type_New__c, Lead_Source__c, Entity_Tax_Classification__c FROM Account WHERE Id = :opportunity.AccountId LIMIT 1];
         
+        isNonProfit = account.Entity_Tax_Classification__c  == 'Non-Profit';
         if(!String.isBlank(business.Id)) {
             businessId = business.Id;
             partners = [
@@ -361,7 +553,10 @@ public without sharing class GuidedSellingControllerExtension {
                 FROM Business_Owner__c
                 WHERE Business__c = :business.Id
                 AND Primary_Contact__c = true
+                LIMIT 1
             ];
+        } else {
+            businessOwner = new Business_Owner__c();
         }
         System.debug('*checkpoint 4');
 
@@ -375,6 +570,7 @@ public without sharing class GuidedSellingControllerExtension {
         environment = 'Standard';
         System.debug('checking lead source');
         if(null != opportunity.Account.Lead_Source__c) {
+                
             //Setting the LegalZoom script here: Priority for LegalZoom script: 1.BTP 2.BAP
             if('LegalZoom' == opportunity.Account.Lead_Source__c && null != opportunity.Account.Lead_Type_New__c) {
                 if(opportunity.Account.Lead_Type_New__c?.contains('BTP')) {
@@ -425,8 +621,20 @@ public without sharing class GuidedSellingControllerExtension {
 
         System.debug('*checkpoint 5');
 
-        getProductData();
-        
+        defaultProducts = new List<GuidedSellingProduct>(); //filter all products based on GSID and account fields
+        frequentProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Calculator_Location__c
+        businessProducts = new List<GuidedSellingProduct>();  //filter all products based on p.Name
+        personalProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        payrollProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        bookkeepingProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        finalProducts = new List<GuidedSellingProduct>(); //the same list as allProducts
+        entityFormationProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        disabledMessage = new Map<String, String>();
+        guidedSellingProductsIdMap = new Map<String, GuidedSellingProduct>();
+        productToIdentifier = new Map<Id, String>();
+        productToPrice = new Map<Id, Decimal>();
+        defaultPrices = new Map<Id, Decimal>();
+        System.debug('*checkpoint 6');
     }
 
     public void updateEventSubject(){
@@ -435,10 +643,19 @@ public without sharing class GuidedSellingControllerExtension {
             update eventRec;
         }
     }
+
+    @RemoteAction
+    public static void updateRegistrationDate(Id accountId, Date formationDate){
+        Account acc = new Account(Id=accountId, Registration_Date__c=formationDate);
+        update acc;
+    }
+
     public void getProductData() {
+        //System.debug('bookkeepingStartString: '+bookkeepingStartString);
         
         Map<Id, Product2> products = new Map<Id, Product2>([
-            SELECT Id, Name, Guided_Selling_Identifier__c, Calculator_Location__c, AnnualMonthlyOption__c, Billing_Frequency__c, Disable_QTY_on_Calc__c
+            SELECT Id, Name, Guided_Selling_Identifier__c, Calculator_Location__c, AnnualMonthlyOption__c, 
+            Billing_Frequency__c, Disable_QTY_on_Calc__c, sort_Order__c, No_Split_Allowed__c, HTML_Description__c
             FROM Product2 
             WHERE Guided_Selling_Identifier__c != null 
             AND Environment__c INCLUDES (:environment) 
@@ -446,19 +663,28 @@ public without sharing class GuidedSellingControllerExtension {
             ORDER BY Name
         ]);
 
-        defaultProducts = new List<Product2>();
-        frequentProducts = new List<Product2>();
-        businessProducts = new List<Product2>();
-        personalProducts = new List<Product2>();
-        payrollProducts = new List<Product2>();
-        bookkeepingProducts = new List<Product2>();
-        finalProducts = new List<Product2>();
-        entityFormationProducts = new List<Product2>();
-        Set<String> allProducts = new Set<String>();
+        // for(Product2 p : products.values()){
+        //     productIdToDescription.put(p.Id, p.Description);
+        //     productIdToHTML.put(p.Id, p.HTML_Description__c);
+        //     p.Description = '';
+        //     p.HTML_Description__c = '';
+        // }
+
+        defaultProducts = new List<GuidedSellingProduct>(); //filter all products based on GSID and account fields
+        frequentProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Calculator_Location__c
+        businessProducts = new List<GuidedSellingProduct>();  //filter all products based on p.Name
+        personalProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        payrollProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        bookkeepingProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        finalProducts = new List<GuidedSellingProduct>(); //the same list as allProducts
+        entityFormationProducts = new List<GuidedSellingProduct>(); //filter all products based on p.Name
+        Set<String> allProducts = new Set<String>(); //add each product, then remove some based on Product_Configuration__mdt 
         disabledMessage = new Map<String, String>();
         List<Id> allProductIds = new List<Id>();
+        guidedSellingProductsIdMap = new Map<String, GuidedSellingProduct>();
 
         for(Product2 p : products.values()) {
+            p.HTML_Description__c = p.HTML_Description__c?.substring(0,Math.min(1000,p.HTML_Description__c.length())).escapeHtml4().escapeJava();
             allProducts.add(p.Guided_Selling_Identifier__c);
             allProductIds.add(p.Id);
         }
@@ -477,128 +703,35 @@ public without sharing class GuidedSellingControllerExtension {
             if(null != userFieldValue) {
                 Map<String, Object> serializedUser = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(user));
                 String userValue = String.valueOf(serializedUser.get(userFieldValue));
-                if('Equals' == rule.Operator__c) {
-                    if(userValue == rule.Value__c) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
+                if(compareValueWithList(rule.Operator__c, userValue, rule.Value__c.split(','))){
+                    if('Remove Product' == rule.Action__c) {
+                        allProducts.remove(rule.Product_Name__c);
+                    } else {
+                        if(null == disabledProducts) {
+                            disabledProducts = rule.Product_Name__c;
                         } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
+                            disabledProducts += ', ' + rule.Product_Name__c;
                         }
+                        disabledMessage.put(rule.Product_Name__c, rule.Message__c);
                     }
-                }
-
-                if('Not Equal' == rule.Operator__c) {
-                    if(userValue != rule.Value__c) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
-                        }
-                    }
-                }
-
-                if('Contains String' == rule.Operator__c) {
-                    if(userValue != null && userValue.containsIgnoreCase(rule.Value__c)) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
-                        }
-                    }
-                }
-
-                if('Does Not Contain String' == rule.Operator__c) {
-                    if(userValue == null || !userValue.containsIgnoreCase(rule.Value__c)) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
-                        }
-                    }
-                }
+                }                
             }
 
             if(null != accountFieldValue) {
                 Map<String, Object> serializedAccount = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(account));
                 String accountValue = String.valueOf(serializedAccount.get(accountFieldValue));
-                if('Equals' == rule.Operator__c) {
-                    if(accountValue == rule.Value__c) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
+                if(compareValueWithList(rule.Operator__c, accountValue, rule.Value__c.split(','))){
+                    if('Remove Product' == rule.Action__c) {
+                        allProducts.remove(rule.Product_Name__c);
+                    } else {
+                        if(null == disabledProducts) {
+                            disabledProducts = rule.Product_Name__c;
                         } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
+                            disabledProducts += ', ' + rule.Product_Name__c;
                         }
+                        disabledMessage.put(rule.Product_Name__c, rule.Message__c);
                     }
-                }
-
-                if('Not Equal' == rule.Operator__c) {
-                    if(accountValue != rule.Value__c) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                        }
-                    }
-                }
-
-                if('Contains String' == rule.Operator__c) {
-                    if(accountValue != null && accountValue.containsIgnoreCase(rule.Value__c)) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
-                        }
-                    }
-                }
-
-                if('Does Not Contain String' == rule.Operator__c) {
-                    if(accountValue == null || !accountValue.containsIgnoreCase(rule.Value__c)) {
-                        if('Remove Product' == rule.Action__c) {
-                            allProducts.remove(rule.Product_Name__c);
-                        } else {
-                            if(null == disabledProducts) {
-                                disabledProducts = rule.Product_Name__c;
-                            } else {
-                                disabledProducts += ', ' + rule.Product_Name__c;
-                            }
-                            disabledMessage.put(rule.Product_Name__c, rule.Message__c);
-                        }
-                    }
-                }
+                }    
             }
         }
 
@@ -607,7 +740,8 @@ public without sharing class GuidedSellingControllerExtension {
         Map<String, Id> productIdToIdentifier = new Map<String, Id>();
         for(Product2 p : products.values()) {
             if(allProducts.contains(p.Guided_Selling_Identifier__c)) {
-                finalProducts.add(p);
+                guidedSellingProductsIdMap.put(p.Guided_Selling_Identifier__c, new GuidedSellingProduct(p));
+                //finalProducts.add(p);
                 productIdToIdentifier.put(p.Guided_Selling_Identifier__c, p.Id);
                 productToIdentifier.put(p.Id, p.Guided_Selling_Identifier__c);
                 
@@ -621,7 +755,7 @@ public without sharing class GuidedSellingControllerExtension {
 
                 if(useStaticPackage){
                     if(defaultProductNamesBundle.contains(p.Guided_Selling_Identifier__c)) {
-                        defaultProducts.add(p);
+                        //defaultProducts.add(p);
                         if(null == stringDefaultProducts) {
                             stringDefaultProducts = p.Guided_Selling_Identifier__c;
                         } else {
@@ -629,8 +763,8 @@ public without sharing class GuidedSellingControllerExtension {
                         }
                     }
                 } else if(btp) { //BTP default products
-                    if(defaultProductNamesBtp.contains(p.Guided_Selling_Identifier__c)) {
-                        defaultProducts.add(p);
+                    if(btpDefaultProducts.contains(p.Guided_Selling_Identifier__c)) {
+                        //defaultProducts.add(p);
                         if(null == stringDefaultProducts) {
                             stringDefaultProducts = p.Guided_Selling_Identifier__c;
                         } else {
@@ -638,8 +772,8 @@ public without sharing class GuidedSellingControllerExtension {
                         }
                     }
                 } else {
-                    if(defaultProductNames.contains(p.Guided_Selling_Identifier__c)) {
-                        defaultProducts.add(p);
+                    if(nonbtpDefaultProducts.contains(p.Guided_Selling_Identifier__c)) {
+                        //defaultProducts.add(p);
                         if(null == stringDefaultProducts) {
                             stringDefaultProducts = p.Guided_Selling_Identifier__c;
                         } else {
@@ -650,8 +784,8 @@ public without sharing class GuidedSellingControllerExtension {
                     if(null != opportunity.Account.Entity_Tax_Classification__c) {
                         if('Non-Profit' != opportunity.Account.Entity_Tax_Classification__c) {
                             if('Business Return' == p.Guided_Selling_Identifier__c) {
-                                if(!defaultProducts.contains(p)) {
-                                    defaultProducts.add(p);
+                                if(stringDefaultProducts == null || !stringDefaultProducts.contains(p.Guided_Selling_Identifier__c)) {
+                                    //defaultProducts.add(p);
                                     if(null == stringDefaultProducts) {
                                         stringDefaultProducts = p.Guided_Selling_Identifier__c;
                                     } else {
@@ -661,7 +795,7 @@ public without sharing class GuidedSellingControllerExtension {
                             }
                         } else {
                             if('Non-Profit Tax Preparation' == p.Guided_Selling_Identifier__c) {
-                                defaultProducts.add(p);
+                                //defaultProducts.add(p);
                                 if(null == stringDefaultProducts) {
                                     stringDefaultProducts = p.Guided_Selling_Identifier__c;
                                 } else {
@@ -671,7 +805,7 @@ public without sharing class GuidedSellingControllerExtension {
                         }
                         if('S Corporation' == opportunity.Account.Entity_Tax_Classification__c) {
                             if('Payroll' == p.Guided_Selling_Identifier__c) {
-                                defaultProducts.add(p);
+                                //defaultProducts.add(p);
                                 if(null == stringDefaultProducts) {
                                     stringDefaultProducts = p.Guided_Selling_Identifier__c;
                                 } else {
@@ -682,7 +816,7 @@ public without sharing class GuidedSellingControllerExtension {
                     }
                     if(null != opportunity.Account.Website_Selling_Goods__c && true == opportunity.Account.Website_Selling_Goods__c) {
                         if('Sales & Use Tax' == p.Guided_Selling_Identifier__c) {
-                            defaultProducts.add(p);
+                            //defaultProducts.add(p);
                             if(null == stringDefaultProducts) {
                                 stringDefaultProducts = p.Guided_Selling_Identifier__c;
                             } else {
@@ -692,31 +826,34 @@ public without sharing class GuidedSellingControllerExtension {
                     }
                 }
                         
-                if('A La Carte' != p.Calculator_Location__c) {
-                    frequentProducts.add(p);
-                }
+                // if('A La Carte' != p.Calculator_Location__c) {
+                //     frequentProducts.add(p);
+                // }
 
-                if(p.Name.containsIgnoreCase('business')) {
-                    businessProducts.add(p);
-                }
+                // if(p.Name.containsIgnoreCase('business')) {
+                //     businessProducts.add(p);
+                // }
 
-                if(p.Name.containsIgnoreCase('personal')) {
-                    personalProducts.add(p);
-                }
+                // if(p.Name.containsIgnoreCase('personal')) {
+                //     personalProducts.add(p);
+                // }
 
-                if(p.Name.containsIgnoreCase('payroll')) {
-                    payrollProducts.add(p);
-                }
+                // if(p.Name.containsIgnoreCase('payroll')) {
+                //     payrollProducts.add(p);
+                // }
 
-                if(p.Name.containsIgnoreCase('bookkeeping') || p.Name.containsIgnoreCase('books')) {
-                    bookkeepingProducts.add(p);
-                }
+                // if(p.Name.containsIgnoreCase('bookkeeping') || p.Name.containsIgnoreCase('books')) {
+                //     bookkeepingProducts.add(p);
+                // }
 
-                if(p.Name.containsIgnoreCase('entity') || p.Name.containsIgnoreCase('Corp State Filing Fee') || p.Name.containsIgnoreCase('LLC State Filing Fee')) {
-                    entityFormationProducts.add(p);
-                }
-            }  
+                // if(p.Name.containsIgnoreCase('entity') || p.Name.containsIgnoreCase('Corp State Filing Fee') || p.Name.containsIgnoreCase('LLC State Filing Fee')) {
+                //     entityFormationProducts.add(p);
+                // }
+            }  else {
+                System.debug('allProducts does not contain '+p.Guided_Selling_Identifier__c);
+            }
         }
+        System.debug('productToIdentifier: '+productToIdentifier);
 
         List<Product_Pricing_Rule__mdt> overrideRules = [
             SELECT Id, MasterLabel, Quote_Field2__c, Product_Name__c, Field_Value__c, Price_Adjustment__c, User_Field__c, Account_Field__c, Flat_Price_Override__c
@@ -726,7 +863,8 @@ public without sharing class GuidedSellingControllerExtension {
             AND Active__c = true
         ];
 
-        Business__c b = [
+        Business__c b;
+        List<Business__c> bList = [
                 SELECT Id, Name, Account__c, Anticipated_Revenue__c, Industry__c, Business_Type__c, Number_of_Owners__c, Startup_Costs__c, Years_In_Business__c, 
                 Profit_Projection__c, Home_Office_Square_Feet__c,
                 State_of_incorporation__c, Monthly_Bookkeeping_Transactions__c, Number_of_Employees__c, Tax_Filing_Status__c,
@@ -735,10 +873,16 @@ public without sharing class GuidedSellingControllerExtension {
                 First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :opportunity.AccountId
+                LIMIT 1
             ];
+            if(bList.isEmpty()){
+                b = new Business__c();
+            } else {
+                b = bList[0];
+            }
 
-        User u = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id];
-        Account a = [SELECT Id, Lead_Type_New__c, Lead_Source__c FROM Account WHERE Id = :opportunity.AccountId];
+        User u = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id LIMIT 1];
+        Account a = [SELECT Id, Lead_Type_New__c, Lead_Source__c FROM Account WHERE Id = :opportunity.AccountId LIMIT 1];
 
         productToPrice = new Map<Id, Decimal>();
         defaultPrices = new Map<Id, Decimal>();
@@ -841,12 +985,73 @@ public without sharing class GuidedSellingControllerExtension {
              
         for(PricebookEntry pb : prices) {
             if(null != productIdToIdentifier.get(pb.Product2.Guided_Selling_Identifier__c)) {
-                productToPrice.put(productIdToIdentifier.get(pb.Product2.Guided_Selling_Identifier__c), pb.UnitPrice);
-                defaultPrices.put(productIdToIdentifier.get(pb.Product2.Guided_Selling_Identifier__c), pb.UnitPrice);
+                Decimal price = pb.UnitPrice;
+                if(pb.Product2.Guided_Selling_Identifier__c == '1-800Accountant Access'){
+                    price = price * (11.0/12.0);
+                }
+                productToPrice.put(productIdToIdentifier.get(pb.Product2.Guided_Selling_Identifier__c), price);
+                defaultPrices.put(productIdToIdentifier.get(pb.Product2.Guided_Selling_Identifier__c), price);
             }
         }
+        for(String gsid : productIdToIdentifier.keySet()){
+            Double adjustedPrice = productToPrice.get(productIdToIdentifier.get(gsid));//+0.03;
+            guidedSellingProductsIdMap.get(gsid).adjustedPrice = adjustedPrice;
+            guidedSellingProductsIdMap.get(gsid).subtotal = adjustedPrice;//qty=1 and freq=default
+        }
+
+        if(isValidQuoteId()){
+            System.debug('quoteId: '+quoteId);
+            List<OpportunityLineItem> oppItems = [SELECT Payment_Cycle__c, Installment_Payment_Schedule__c, Quantity, UnitPrice, Description FROM OpportunityLineItem WHERE OpportunityId = :opportunity.Id];
+            Map<String,String> prodNameToGsid = new Map<String, String>();
+            for(Product2 prod : [SELECT Name, Guided_Selling_Identifier__c FROM Product2 WHERE Guided_Selling_Identifier__c != null]){
+                prodNameToGsid.put(prod.Name, prod.Guided_Selling_Identifier__c);
+            }
+            for(OpportunityLineItem oli : oppItems){
+                String curGsid = prodNameToGsid.get(oli.Description);
+                GuidedSellingProduct curProd = guidedSellingProductsIdMap.get(curGsid);
+                curProd.currentQuantity =  oli.Quantity.intValue();
+                //curProd.adjustedPrice = oli.UnitPrice;
+                curProd.subtotal = oli.UnitPrice*oli.Quantity;
+                if(new List<String>{'Monthly', 'Annual', 'One-Time'}.contains(oli.Installment_Payment_Schedule__c)){
+                    curProd.currentBillingFrequency = oli.Installment_Payment_Schedule__c;
+                } else {
+                    curProd.currentBillingFrequency = new Map<String,String>{'mon'=>'Monthly', 'one'=>'One-Time', 'yrl'=>'Annual'}.get(oli.Payment_Cycle__c);
+                }
+                existingQuoteProductNames.add(curGsid);
+            }
+            // Quote curQuote = [SELECT billingSchedule__c, Calc_Bookkeeping_Start_Date__c FROM Quote WHERE Id = :quoteId LIMIT 1];
+            // billingFreq = curQuote.billingSchedule__c;
+            // existingBookkeepingStart = curQuote.Calc_Bookkeeping_Start_Date__c;
+        } else {
+            System.debug('no quoteId found');
+        }
+        guidedSellingProducts = guidedSellingProductsIdMap.values();
+        Double monthlyTotal = 0;
+        Double annualTotal = 0;
+        for(GuidedSellingProduct p : tempSelectedProducts){//defaultProducts){
+            p.selected = true;
+            if(p.currentBillingFrequency == 'Monthly'){
+                monthlyTotal += p.subtotal;
+            } else {
+                annualTotal += p.subtotal;
+            }   
+            System.debug(p);
+        }
+        quoteTotalAnnual = annualTotal;
+        quoteTotalMonthly = monthlyTotal;
+
+        System.debug('guidedSellingProducts: ');
+        for(GuidedSellingProduct p : guidedSellingProducts){
+            if(disabledProductNames.contains(p.Product.Name)){
+                p.enabled = false;
+            }
+            System.debug(p);
+        }
+        //System.debug(finalProductsJson);
+        //System.debug(JSON.deserialize(selectedProductsJson, List<GuidedSellingProduct>.class));
 
         ApexPages.currentPage().getParameters().put('rerender', 'dProds, fProds, frProds, bProds, pProds, payProds, bkkProds, eProds');
+        //return billingFreq;
     }
 
     @RemoteAction
@@ -873,6 +1078,7 @@ public without sharing class GuidedSellingControllerExtension {
                 Potential_Startup_Savings__c, Potential_Total_Savings__c, Foreign_State__c
                 FROM Account
                 WHERE Id =:accountId
+                LIMIT 1
             ];
 
             //Updating the Account business details
@@ -897,6 +1103,33 @@ public without sharing class GuidedSellingControllerExtension {
         String result = String.valueOf(sCorpSavings) +','+ String.valueOf(officeSavings) +','+ String.valueOf(mileageSavings) +','+ String.valueOf(qbiSavings) +','+ String.valueOf(startupSavings) +','+ String.valueOf(finalSavings);
         
         return result;
+    }
+
+    public static Boolean compareValueWithList(String comparator, String value, List<String> valueList){
+        System.debug(value+', '+comparator+', '+valueList);
+        if('Not Equal' == comparator){
+            return !compareValueWithList('Equals', value, valueList);
+        }
+        if('Does Not Contain String' == comparator){
+            return !compareValueWithList('Contains String', value, valueList);
+        }
+        
+        for(String valueFromList : valueList){
+            if('Equals' == comparator && value == valueFromList){
+                return true;
+            }
+            if('Contains String' == comparator && value != null && value.containsIgnoreCase(valueFromList)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @RemoteAction
+    public static void updateQuoteTotals(Double monthlyTotal, Double annualTotal){
+        quoteTotalMonthly = monthlyTotal;
+        quoteTotalAnnual = annualTotal;
     }
 
     public class businessWrapper {
@@ -950,7 +1183,7 @@ public without sharing class GuidedSellingControllerExtension {
             if(!checkForContacts.isEmpty()) {
                 existingContactId = checkForContacts[0].Id;
                 
-                Account acc = [SELECT Id, Name, Account_Status__c, CreatedDate FROM Account WHERE Id = :checkForContacts[0].AccountId];
+                Account acc = [SELECT Id, Name, Account_Status__c, CreatedDate FROM Account WHERE Id = :checkForContacts[0].AccountId LIMIT 1];
                 
                 if(acc.Account_Status__c == 'Prospect' || acc.Account_Status__c == 'Paused Client' || acc.Account_Status__c == 'Refunded Client') {
                     if(acc.CreatedDate > lastYear) {
@@ -1037,6 +1270,7 @@ public without sharing class GuidedSellingControllerExtension {
                 FROM Event 
                 WHERE Type_of_Appointment__c = 'Tax Savings Analysis' 
                 AND (WhoId =:rId OR WhatId =:rId OR Id =:rId) 
+                LIMIT 1
             ];
         } else {
             System.debug('rid: '+rid+', accId: '+accId);
@@ -1053,6 +1287,7 @@ public without sharing class GuidedSellingControllerExtension {
                 AND (WhoId =:rId OR WhatId =:rId OR Id =:rId) 
                 AND (Account__c =:accId) 
                 //AND StartDateTime = TODAY
+                LIMIT 1
             ];
         }
 
@@ -1074,14 +1309,14 @@ public without sharing class GuidedSellingControllerExtension {
     @RemoteAction
     public static String isOpportunityPaid(String oppId) {
                
-        Opportunity opp = [SELECT Id, StageName FROM Opportunity WHERE Id =:oppId];
+        Opportunity opp = [SELECT Id, StageName FROM Opportunity WHERE Id =:oppId LIMIT 1];
         return opp.StageName;
     }
 
     @RemoteAction
     public static void saveNote(String accId, String title, String note) {
         
-        Contact con = [SELECT Id, Description FROM Contact WHERE Id =:accId];
+        Contact con = [SELECT Id, Description FROM Contact WHERE Id =:accId LIMIT 1];
         String d = con.Description;
         if(d == null || d == '') {
             con.Description = title + ': ' + note;
@@ -1093,7 +1328,7 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     @RemoteAction
-    public static void saveAnswers(String answers, String businessId, String accId, String environment) {
+    public static Map<String,String> saveAnswers(String answers, String businessId, String accId, String environment) {
         System.debug('saveAnswers');
         Map<String,String> answersMap = new Map<String,String>();
         List<String> answersList = new List<String>();
@@ -1104,10 +1339,16 @@ public without sharing class GuidedSellingControllerExtension {
         }
 
         if(!answersList.isEmpty()) {
+            System.debug(answersList);
             for(String s : answersList) {
                 answersSplitList = s.split('\\?');
+                System.debug(answersSplitList);
                 if(!answersSplitList.isEmpty()) {
-                    answersMap.put(answersSplitList[0], answersSplitList[1]);
+                    if(answersSplitList.size() == 1){
+                        answersMap.put(answersSplitList[0], null);
+                    } else {
+                        answersMap.put(answersSplitList[0], answersSplitList[1]);
+                    }                    
                 }
             }
         }
@@ -1129,7 +1370,7 @@ public without sharing class GuidedSellingControllerExtension {
             bus.Number_of_Owners__c = answersMap.get('How many owners does your business have');
             //bus.Number_of_Foreign_Owners__c = answersMap.get('How many owners are outside the USA');
             bus.Run_Payroll_Before__c = (answersMap.get('Have you run payroll before') == 'Yes') ? true : false;
-            bus.Has_Employees_Contractors__c = (answersMap.get('Do you currently have any employees or contractors') == 'Yes') ? true : false;
+            bus.Has_Employees_Contractors__c = (answersMap.get('Do you currently have any employees') == 'Yes') ? true : false;
             bus.Number_of_Employees__c = String.valueOf(answersMap.get('How many employees do you have'));
             //bus.Number_of_Contractors__c = answersMap.get('How many contractors do you have');
             bus.Tax_Filing_Status__c = answersMap.get('What is your tax filing status');
@@ -1184,7 +1425,9 @@ public without sharing class GuidedSellingControllerExtension {
             //bookkeepingStartDate = Date.valueOf(answersMap.get('What transaction date should your bookkeeper start on'));
             //System.debug(answersMap.get('What transaction date should your bookkeeper start on'));
             //System.debug('*bookkeepingStartDate: '+bookkeepingStartDate);
+            
         }
+        return answersMap;
     }
 
     @RemoteAction
@@ -1208,7 +1451,7 @@ public without sharing class GuidedSellingControllerExtension {
         Boolean needConUpdate = false;
         Business_Owner__c busOwner = new Business_Owner__c(Id = businessOwnerId);
         Business__c bus = new Business__c(Id = businessId);
-        Account acc = [SELECT Id, Primary_Contact__c, BillingState, BillingCountry, BillingStreet, BillingPostalCode, BillingCity FROM Account WHERE Id = :accId];
+        Account acc = [SELECT Id, Primary_Contact__c, BillingState, BillingCountry, BillingStreet, BillingPostalCode, BillingCity FROM Account WHERE Id = :accId LIMIT 1];
         Contact con = new Contact(Id = acc.Primary_Contact__c);
         if(infoType == 'personal') {
             busOwner.Phone__c = phone;
@@ -1251,7 +1494,7 @@ public without sharing class GuidedSellingControllerExtension {
         if(needConUpdate == true) {
             update con;
         }
-    }
+    } 
 
     @RemoteAction
     public static String getBusinessInfo(String accId) {
@@ -1264,6 +1507,7 @@ public without sharing class GuidedSellingControllerExtension {
                 First_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
                 WHERE Account__r.Id = :accId
+                LIMIT 1
             ];
 
             String response = String.valueOf(business.Run_Payroll_Before__c);
@@ -1418,10 +1662,20 @@ public without sharing class GuidedSellingControllerExtension {
         return updURL;
     }
 
+    //input review:
+    //environment: only used to determine pricing mdt to use
+    //listProdSelected: primary product data
+    //oppId/accOd: used to update the opportunity and create the quotes and line items
+    //billingTime: used to determine branding (?) as well as opp/quote data
+    //delProds: used to filter out input products
     @RemoteAction
-    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String delProds, String bookStartDate, String useStatic) {
+    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String bookStartDate, String useStatic, String bookEndDate, Double quoteTotal) {
         //quoteButtonText = 'Next Section';
         // Initialize class variables
+        System.debug('doSubmit');
+        System.debug(listProdSelected);
+        System.debug(environment);
+        List<GuidedSellingProduct> selectedProds = (List<GuidedSellingProduct>) JSON.deserialize(listProdSelected, List<GuidedSellingProduct>.class);
 
         String packageName = '';
         String quoteID = '';
@@ -1455,83 +1709,24 @@ public without sharing class GuidedSellingControllerExtension {
             FROM Product_Offer__mdt 
             WHERE Active__c = true 
             AND Environment__c = :environment];
-        Set<String> packageNameSet = new Set<String>();
-        List<Product_Offer__mdt> offerDefaultList = new List<Product_Offer__mdt>();
-        
-        for(Product_Offer__mdt offerProductItem : offerList) {
-            if(offerProductItem.Default_Parent__c == true) {
-                String label = offerProductItem.MasterLabel;
-                List<String> labelList = label.split('-');
-                packageNameSet.add(labelList[0]);
-                offerDefaultList.add(offerProductItem);
-            }
-        }
-
-        for(Product_Offer__mdt offerItem : offerDefaultList) {
-            if(offerItem.Default_Parent__c == true && packageNameSet.size() == 1) {
-                packageName = (new list<string>(packageNameSet))[0];
-            }
-        }
-
-        // Get data for each selected product
-        
-        List<String> prodSelectedList = listProdSelected.split(',');
-        List<SelectedProduct> prodSelecDataList = new List<SelectedProduct>();
-        Set<String> prodSelecDataSet = new Set<String>();
+            
         Set<String> prodsIds = new Set<String>();
         
-        for(String prod : prodSelectedList) {
-            String pro = prod.replace('[', '');
-            String p = pro.replace(']', '');
-            prodSelecDataSet.add(p);
-        }
 
-        List<String> deletedProdsList = delProds.split(',');
-        Set<String> deletedProdsSet = new Set<String>();
-        
-        for(String dp : deletedProdsList) {
-            String pro = dp.replace('[', '');
-            String pr = pro.replace(']', '');
-            String p = pr.replace(' ', '');
-            deletedProdsSet.add(p);
-        }
-
-        for(String prod : prodSelecDataSet) {
-            List<String> dataProdList = prod.split('//');
-            SelectedProduct p = new SelectedProduct();
-            String oldId = dataProdList[0];
-            String newId = oldId.replace(' ', '');
-
-            if(deletedProdsSet.size() > 0) {
-                if(!deletedProdsSet.contains(newId)) { 
-                    p.id = newId;
-                    p.billing = dataProdList[1];
-                    p.quantity = dataProdList[2];
-                    p.price = dataProdList[3];
-                    p.freqPrice = dataProdList[4];
-                    p.subtotal = dataProdList[5];
-                    System.debug(p);
-                    prodSelecDataList.add(p);
-                }
-            } else {
-                p.id = newId;
-                p.billing = dataProdList[1];
-                p.quantity = dataProdList[2];
-                p.price = dataProdList[3];
-                p.freqPrice = dataProdList[4];
-                p.subtotal = dataProdList[5];
-                System.debug(p);
-                prodSelecDataList.add(p);
+        // // Get products ids from the selected ones
+        Decimal vipAmount = quoteTotal;
+        if(vipAmount == null){
+            System.debug('quoteTotal not found');
+            vipAmount = 0.00;
+            for(GuidedSellingProduct prod : selectedProds) {
+                vipAmount += prod.subtotal;
             }
         }
-
-        // Get products ids from the selected ones
-        
-        for(SelectedProduct prod : prodSelecDataList) {
-            prodsIds.add(prod.id);
+        for(GuidedSellingProduct prod : selectedProds) {
+            prodsIds.add(prod.Product.Id);
         }
 
-        // Get standard Pricebook id
+        // // Get standard Pricebook id
 
         String standardPriceBookID = '';
         List<Pricebook2> pbList = [
@@ -1543,7 +1738,7 @@ public without sharing class GuidedSellingControllerExtension {
             standardPriceBookID = pbItem.Id;
         }
 
-        // Get Pricebook Entries ids from the selected products
+        // // Get Pricebook Entries ids from the selected products
         
         List<PricebookEntry> pbAllList = [
             SELECT Id, UnitPrice, Name, IsActive, Pricebook2Id, Product2Id 
@@ -1553,110 +1748,116 @@ public without sharing class GuidedSellingControllerExtension {
 
         // Get Product information from the selected ones
 
-        List<Product2> productList = [
+        Map<Id,Product2> productList = new Map<Id, Product2>([
             SELECT Id, Calculator_Location__c, Name, AnnualMonthlyOption__c, Billing_Frequency__c, HTML_Description__c, Description, No_Split_Allowed__c, Guided_Selling_Identifier__c, sort_Order__c
             FROM Product2 
-            WHERE Id IN :prodsIds];
+            WHERE Id IN :prodsIds]);
         
         Decimal businessTax = 0.00;
         Decimal personalTax = 0.00;
+        
 
-        for(SelectedProduct prodSelec : prodSelecDataList) {
-            for(Product2 prodData : productList) {
-                if(prodSelec.id == String.valueOf(prodData.Id)) {
-                    prodSelec.description = prodData.Description;
-                    prodSelec.HTMLdescription = prodData.HTML_Description__c;
-                    prodSelec.noSplitAllowed = prodData.No_Split_Allowed__c;
-                    prodSelec.sellingIdentifier = prodData.Guided_Selling_Identifier__c;
-                    prodSelec.name = prodData.Name;
-                    prodSelec.location = prodData.Calculator_Location__c;
-                    prodSelec.sortOrder = prodData.sort_Order__c;
-                    if(prodData.Name == 'Entity Formation') {
-                        entityFormation = true;
-                    }
-                    if(prodData.Name == 'ClientBooks') {
-                        clientBooks = true;
-                    }
-                    if(prodData.Calculator_Location__c == 'Advisory') {
-                        advisory = true;
-                    }
-                    if(prodData.Name == 'Bookkeeping Advisory') {
-                        bookkAdv = true;
-                    }
-                    if(prodData.Calculator_Location__c == 'Bookkeeping') {
-                        bookk = true;
-                    }
-                    if(prodData.Calculator_Location__c == 'Payroll') {
-                        payroll = true;
-                    }
-                    if(prodData.Name == 'Back Bookkeeping') {
-                        backBookk = true;
-                    }
-                    if(prodData.Name == 'Personal Tax Advisory') {
-                        persTaxAdv = true;
-                    }
-                    if(prodData.Name == 'Personal Tax Preparation') {
-                        persTaxPrep = true;
-                    }
-                    if (prodData.Calculator_Location__c == 'Business Return') {
-                        busiRet = true;
-                        businessTax = Decimal.valueOf(prodSelec.price);
-                    }
-                    if (prodData.Calculator_Location__c == 'Personal Return') {
-                        persRet = true;
-                        personalTax = Decimal.valueOf(prodSelec.price);
-                    }
-                }
+        for(GuidedSellingProduct prodData : selectedProds) {
+            // prodSelec.description = prodData.Description;
+            // prodSelec.HTMLdescription = prodData.HTML_Description__c;
+            // prodSelec.noSplitAllowed = prodData.No_Split_Allowed__c;
+            // prodSelec.sellingIdentifier = prodData.Guided_Selling_Identifier__c;
+            // prodSelec.name = prodData.Name;
+            // prodSelec.location = prodData.Calculator_Location__c;
+            // prodSelec.sortOrder = prodData.sort_Order__c;
+            System.debug('setting flags for '+prodData.Product.Name);
+
+            System.debug(prodData);
+            System.debug(productList.get(prodData.Id));
+            prodData.Product.Description = productList.get(prodData.Product.Id).Description;
+            prodData.Product.HTML_Description__c = productList.get(prodData.Product.Id).HTML_Description__c;
+
+            if(prodData.Product.Name == 'Entity Formation') {
+                entityFormation = true;
             }
+            if(prodData.Product.Name == 'ClientBooks') {
+                clientBooks = true;
+            }
+            if(prodData.Product.Calculator_Location__c == 'Advisory') {
+                advisory = true;
+            }
+            if(prodData.Product.Name == 'Bookkeeping Advisory') {
+                bookkAdv = true;
+            }
+            if(prodData.Product.Calculator_Location__c == 'Bookkeeping') {
+                bookk = true;
+            }
+            if(prodData.Product.Calculator_Location__c == 'Payroll') {
+                payroll = true;
+            }
+            if(prodData.Product.Name == 'Back Bookkeeping') {
+                backBookk = true;
+            }
+            if(prodData.Product.Name == 'Personal Tax Advisory') {
+                persTaxAdv = true;
+            }
+            if(prodData.Product.Name == 'Personal Tax Preparation') {
+                persTaxPrep = true;
+            }
+            if (prodData.Product.Calculator_Location__c == 'Business Return') {
+                busiRet = true;
+                businessTax = Decimal.valueOf(prodData.subtotal);
+            }
+            if (prodData.Product.Calculator_Location__c == 'Personal Return') {
+                persRet = true;
+                personalTax = Decimal.valueOf(prodData.subtotal);
+            }
+            
 
             for(PricebookEntry pbe : pbAllList) {
-                if(prodSelec.id == String.valueOf(pbe.Product2Id)) {
-                    prodSelec.pbeId = pbe.Id;
+                if(prodData.Product.Id == String.valueOf(pbe.Product2Id)) {
+                    prodData.pbeId = pbe.Id;
                 }
             }
 
             for(Product_Offer__mdt offerProductItem : offerList) {
-                if(offerProductItem.Product__c == prodSelec.sellingIdentifier) {
-                    prodSelec.isInOffer = true;
-                    prodSelec.delayDays = offerProductItem.Delay_Days__c;
+                if(offerProductItem.Product__c == prodData.Product.Guided_Selling_Identifier__c) {
+                    prodData.isInOffer = true;
+                    prodData.delayDays = offerProductItem.Delay_Days__c.intValue();
                 } else {
-                    prodSelec.isInOffer = false;
+                    prodData.isInOffer = false;
                 }
             } 
         }
 
         // Extra for: some special calculations on prods
 
-        Decimal vipAmount = 0.00;
+        // Decimal vipAmount = 0.00;
 
-        for(SelectedProduct prodSelec : prodSelecDataList) {
-            if(prodSelec.location == 'Advisory') {
-                prodSelec.price = String.valueOf(((businessTax + personalTax) / (869 + 390)) * 1199);
-            }
+        // for(SelectedProduct prodSelec : prodSelecDataList) {
+        //     if(prodSelec.location == 'Advisory') {
+        //         prodSelec.price = String.valueOf(((businessTax + personalTax) / (869 + 390)) * 1199);
+        //     }
 
-            if(advisory == true && persTaxPrep == true) {
-                if(prodSelec.name == 'Loan Agreement') {
-                    prodSelec.price = '0.00';
-                    prodSelec.freqPrice = '0.00';
-                    prodSelec.subtotal = '0.00';
-                }
-            }
+        //     if(advisory == true && persTaxPrep == true) {
+        //         if(prodSelec.name == 'Loan Agreement') {
+        //             prodSelec.price = '0.00';
+        //             prodSelec.freqPrice = '0.00';
+        //             prodSelec.subtotal = '0.00';
+        //         }
+        //     }
 
-            vipAmount = vipAmount + Decimal.valueOf(prodSelec.subtotal);
-        }
+        //     vipAmount = vipAmount + Decimal.valueOf(prodSelec.subtotal);
+        // }
 
         // Get data for the quote creation
 
         Account acc = [
             SELECT Id, Name, Potential_Total_Savings__c, Lead_Type_New__c, Lead_Source__c, Primary_Contact_ID__c, BillingState, BillingCountry, BillingStreet, BillingCity, BillingPostalCode 
             FROM Account 
-            WHERE Id = :accId];
+            WHERE Id = :accId
+            LIMIT 1];
         leadTypeNew = acc.Lead_Type_New__c;
         leadSource = acc.Lead_Source__c;
         contactId = acc.Primary_Contact_ID__c;
         if(leadTypeNew == null){leadTypeNew='';}
 
-        Opportunity opp = [SELECT Id, StageName, OwnerId, Email_Campaign_ID__c FROM Opportunity WHERE Id = :oppId];
+        Opportunity opp = [SELECT Id, StageName, OwnerId, Email_Campaign_ID__c FROM Opportunity WHERE Id = :oppId LIMIT 1];
         emailCampId = opp.Email_Campaign_ID__c;
 
         // Missing fields from original query: Name, Account__c, Has_Employees_Contractors__c, File_Return_Yourself__c, Has_Rental_Properties__c, Is_Working_From_Home__c, 
@@ -1667,7 +1868,8 @@ public without sharing class GuidedSellingControllerExtension {
                 Anticipated_Revenue__c, State_of_incorporation__c, Startup_Costs__c, Run_Payroll_Before__c, Tax_Filing_Status__c, 
                 Yearly_Business_Miles__c, Home_Office_Square_Feet__c, Years_In_Business__c, Foreign_State_of_Incorporation__c
                 FROM Business__c 
-                WHERE Account__r.Id = :accId];
+                WHERE Account__r.Id = :accId
+                LIMIT 1];
 
         String livingAbroad = 'No';
         // if (business.Foreign_Income__c == true) {
@@ -1730,18 +1932,18 @@ public without sharing class GuidedSellingControllerExtension {
             apptType = 'EForm';
         }
         
-        String schedulerURL = sURL + '?TID=' + apptType + ' &WID=' + contactId + '&EmailCampaignID=' + emailCampId;
+        String schedulerURL = sURL + '?TID=' + apptType + '	&WID=' + contactId + '&EmailCampaignID=' + emailCampId+'&OtherTrackingID=Guided%20Selling';
         String schedulerVIPURL = '';
         String schedulerCSAURL = '';
 
         String schedulerURLReturn = sURL + ',' + apptType + ',' + contactId + ',' + emailCampId;
-        String schedulerVIPURLReturn = '';
+        String schedulerVIPURLReturn = ''; 
         String schedulerCSAURLReturn = '';
         
         if (apptType == 'Discovery') {
-            schedulerVIPURL = sURL + '?TID=DiscoveryVIP' + '&WID=' + contactId + '&EmailCampaignID=' + emailCampId;
+            schedulerVIPURL = sURL + '?TID=DiscoveryVIP' + '&WID=' + contactId + '&EmailCampaignID=' + emailCampId+'&OtherTrackingID=Guided%20Selling';
             schedulerVIPURLReturn = sURL + ',VIP,' + contactId + ',' + emailCampId;
-            schedulerCSAURL = sURL + '?TID=CSAO&WID='+contactID+ '&EmailCampaignID=' + emailCampId;
+            schedulerCSAURL = sURL + '?TID=CSAO&WID='+contactID+ '&EmailCampaignID=' + emailCampId+'&OtherTrackingID=Guided%20Selling';
             schedulerCSAURLReturn = sURL + ',CSAO,' + contactId + ',' + emailCampId;
         }
         
@@ -1757,8 +1959,11 @@ public without sharing class GuidedSellingControllerExtension {
         if(useStatic == 'true'){
             packageName = 'Custom Accounting Package';
         }
+
+        Boolean isCSA = ((leadSource == '1-800Accountant' || leadSource =='Bark' || leadSource == 'Inc. Authority' || leadSource == 'ZenBusiness') && advisory) || ((leadSource != '1-800Accountant' || leadSource != 'Bark' || leadSource != 'Inc. Authority' || leadSource != 'ZenBusiness') && vipAmount >= 7500 && advisory);
+        Boolean isVIP = (!isCSA && vipAmount >= 5000);
         // update opportunity
-        
+        System.debug('updating Opportunity');
         update new Opportunity(
             Id = oppId,
             Pricebook2Id = standardPriceBookID,
@@ -1770,57 +1975,91 @@ public without sharing class GuidedSellingControllerExtension {
         );
 
         // Creation of the quote
-
-        List<Quote> quoteList = [SELECT Id FROM Quote WHERE OpportunityId = :oppId];
-        if(quoteList.size() > 0) {
-            // What happen if there is already an existing quuote???
+        Quote theQuote = new Quote(
+            Name = acc.Name + ' Quote',
+            OpportunityId = oppId,
+            Pricebook2Id = standardPriceBookID,
+            Calc_Entity_Type__c = business.Business_Type__c,
+            //Calc_Foreign_Owners__c = business.Number_of_Foreign_Owners__c,
+            Calc_Industry_Type__c = business.Industry__c,
+            Calc_Living_Abroad__c = livingAbroad,
+            //Calc_Number_of_Contractors__c = business.Number_of_Contractors__c,
+            Calc_Number_of_Employees__c = business.Number_of_Employees__c,
+            //Calc_Number_of_K1s__c = business.Number_of_K1_Investments__c,
+            Calc_Number_of_Owners__c = business.Number_of_Owners__c,
+            Calc_Number_of_Transactions__c = business.Monthly_Bookkeeping_Transactions__c,
+            Calc_Number_of_Rental_Properties__c = business.Number_of_Rental_Properties__c,
+            Calc_Personal_Income__c = business.W2_Income__c,
+            Calc_Projected_1st_Year_Profit__c = business.Profit_Projection__c,
+            Calc_Projected_1st_Year_Revenue__c = business.Anticipated_Revenue__c,
+            Calc_State_of_Incorporation__c = business.State_of_incorporation__c,
+            //Calc_Total_Investor_Funding__c = business.Investor_Funding__c,
+            Calc_Total_Startup_Cost__c = business.Startup_Costs__c,
+            //Calc_Website_Selling_Goods__c = E_Commerce,
+            //Calc_Worked_with_Accountant__c = business.workedWithAccountantInPastInput,
+            Calc_Run_Payroll_Before__c = runPayrollBefore,
+            Calc_Filing_Status__c = business.Tax_Filing_Status__c,
+            Calc_Business_Miles__c = business.Yearly_Business_Miles__c,
+            Calc_Office_Square_Footage__c = String.valueOf(business.Home_Office_Square_Feet__c),
+            Calc_Foreign_State__c = business.Foreign_State_of_Incorporation__c,
+            Calc_Years_in_Business__c = business.Years_In_Business__c,
+            //Calc_State_of_Residence__c = business.State_of_Residence__c,
+            billingSchedule__c = billingTime,
+            Bundle__c = 'None',
+            Calc_Savings_Amount__c = String.valueOf(acc.Potential_Total_Savings__c)
+        );
+        if(bookStartDate != null){
+            System.debug('bookkepingStartDate: '+bookStartDate);
+            //theQuote.Calc_Bookkeeping_Start_Date__c  = Datetime.newInstance(bookkeepingStartDate, Time.newInstance(0,0,0,0)).format('yyyy-MM-dd');//mc
+            theQuote.Calc_Bookkeeping_Start_Date__c = bookStartDate;
+            theQuote.Calc_Bookkeeping_End_Date__c = bookEndDate;
         } else {
-            Quote theQuote = new Quote(
-                Name = acc.Name + ' Quote',
-                OpportunityId = oppId,
-                Pricebook2Id = standardPriceBookID,
-                Calc_Entity_Type__c = business.Business_Type__c,
-                //Calc_Foreign_Owners__c = business.Number_of_Foreign_Owners__c,
-                Calc_Industry_Type__c = business.Industry__c,
-                Calc_Living_Abroad__c = livingAbroad,
-                //Calc_Number_of_Contractors__c = business.Number_of_Contractors__c,
-                Calc_Number_of_Employees__c = business.Number_of_Employees__c,
-                //Calc_Number_of_K1s__c = business.Number_of_K1_Investments__c,
-                Calc_Number_of_Owners__c = business.Number_of_Owners__c,
-                Calc_Number_of_Transactions__c = business.Monthly_Bookkeeping_Transactions__c,
-                Calc_Number_of_Rental_Properties__c = business.Number_of_Rental_Properties__c,
-                Calc_Personal_Income__c = business.W2_Income__c,
-                Calc_Projected_1st_Year_Profit__c = business.Profit_Projection__c,
-                Calc_Projected_1st_Year_Revenue__c = business.Anticipated_Revenue__c,
-                Calc_State_of_Incorporation__c = business.State_of_incorporation__c,
-                //Calc_Total_Investor_Funding__c = business.Investor_Funding__c,
-                Calc_Total_Startup_Cost__c = business.Startup_Costs__c,
-                //Calc_Website_Selling_Goods__c = E_Commerce,
-                //Calc_Worked_with_Accountant__c = business.workedWithAccountantInPastInput,
-                Calc_Run_Payroll_Before__c = runPayrollBefore,
-                Calc_Filing_Status__c = business.Tax_Filing_Status__c,
-                Calc_Business_Miles__c = business.Yearly_Business_Miles__c,
-                Calc_Office_Square_Footage__c = String.valueOf(business.Home_Office_Square_Feet__c),
-                Calc_Foreign_State__c = business.Foreign_State_of_Incorporation__c,
-                Calc_Years_in_Business__c = business.Years_In_Business__c,
-                //Calc_State_of_Residence__c = business.State_of_Residence__c,
-                billingSchedule__c = billingTime,
-                Bundle__c = 'None',
-                Calc_Savings_Amount__c = String.valueOf(acc.Potential_Total_Savings__c)
-            );
-            if(bookStartDate != null){
-                System.debug('bookkepingStartDate: '+bookStartDate);
-                //theQuote.Calc_Bookkeeping_Start_Date__c  = Datetime.newInstance(bookkeepingStartDate, Time.newInstance(0,0,0,0)).format('yyyy-MM-dd');//mc
-                theQuote.Calc_Bookkeeping_Start_Date__c = bookStartDate;
-            } else {
-                System.debug('bookkepingStartDate null');
+            System.debug('bookkepingStartDate null');
+        }
+        System.debug(theQuote);
+        List<Quote> quoteList = [SELECT Id FROM Quote WHERE OpportunityId = :oppId LIMIT 1];
+        if(!quoteList.isEmpty()) {
+            quoteId = quoteList[0].Id;
+            theQuote.Id = quoteId;
+            update theQuote;
+            // delete quote line items
+
+            List<QuoteLineItem> oldQLI = [SELECT Id FROM QuoteLineItem WHERE QuoteId = :quoteID];
+            delete oldQLI;
+            
+            // delete opportunity line items
+            List<OpportunityLineItem> oldOLI = [SELECT Id FROM OpportunityLineItem WHERE OpportunityId = :oppId];
+            delete oldOLI;
+            
+            // delete chargeover quotes
+            List<ChargeOver_Quote__c> oldCOQ = [SELECT Id FROM ChargeOver_Quote__c WHERE Quote__c = :quoteID];
+            for(ChargeOver_Quote__c cOQItem : oldCOQ){
+                
+                // delete chargeover quote line items
+                List<ChargeOver_Quote_Line_Item__c> oldCOQLI = [SELECT Id FROM ChargeOver_Quote_Line_Item__c WHERE ChargeOver_Quote__c = :cOQItem.Id];
+                delete oldCOQLI;
+                
             }
+            
+            delete oldCOQ;
+            
+            //sleep(3000);
+            
+            // get quote number from quote
+            List <Quote> currentQuote = [SELECT Id, QuoteNumber FROM Quote WHERE Id = :quoteID];
+            for(Quote cqItem : currentQuote){
+                quoteNum = cqItem.QuoteNumber;
+            }
+        } else {
+            
             insert theQuote;
             quoteID = theQuote.Id;
+
+            Quote currentQuote = [SELECT Id, QuoteNumber FROM Quote WHERE Id = :quoteID LIMIT 1];
+            quoteNum = currentQuote.QuoteNumber;
         }
 
-        Quote currentQuote = [SELECT Id, QuoteNumber FROM Quote WHERE Id = :quoteID];
-        quoteNum = currentQuote.QuoteNumber;
+        
 
         // Check for existing event related to opportunity and assign email campaign id if it exists
 
@@ -1836,7 +2075,7 @@ public without sharing class GuidedSellingControllerExtension {
             for (Event eve : eventList){
                 eve.Email_Campaign_ID__c = emailCampId;
             }
-
+            System.debug(eventList);
             update eventList;
         }
         
@@ -1857,18 +2096,19 @@ public without sharing class GuidedSellingControllerExtension {
         Boolean doOneTimeQuote = false;
         Boolean doAnnualQuote = false;
 
-        for(SelectedProduct prodSelec : prodSelecDataList) {
-            if(prodSelec.billing == 'Monthly' && coQuoteMonthId == '') {
+        for(GuidedSellingProduct prodSelec : selectedProds) {
+            if(prodSelec.currentBillingFrequency == 'Monthly' && coQuoteMonthId == '') {
                 doMonthlyQuote = true;
             }
-            if(prodSelec.billing == 'One-Time') {
+            if(prodSelec.currentBillingFrequency == 'One-Time') {
                 doOneTimeQuote = true;
             }
-            if(prodSelec.billing == 'Annual') {
+            if(prodSelec.currentBillingFrequency == 'Annual') {
                 doAnnualQuote = true;
             }
         }
 
+        System.debug('creating CO Quotes');
         List<String> dataForQuoteMon = new list<String>{shortAccName, 'mon', accId, quoteID, quoteNum, '-m', oppId, brand, contactId, acc.BillingStreet, acc.BillingCity, acc.BillingState, acc.BillingPostalCode, acc.BillingCountry, schedulerURL, packageName, '', schedulerVIPURL};
         theCOQuoteMonth = getChargeOverQuote(dataForQuoteMon);
 
@@ -1907,56 +2147,57 @@ public without sharing class GuidedSellingControllerExtension {
             coQuoteAnnualId = theCOQuote.Id;
         } 
 
-        createLineItems(prodSelecDataList, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate);
+        createLineItems(selectedProds, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate);
         
         sleep(3000);
         
-        if (((leadSource == '1-800Accountant' && vipAmount > 3499) || vipAmount > 7499) && schedulerCSAURL != '') {
+        if (isCSA && schedulerCSAURL != '') {
             theCOQuoteMonth.Scheduler_URL__c = schedulerCSAURL;
             theCOQuoteOneTime.Scheduler_URL__c = schedulerCSAURL;
             theCOQuote.Scheduler_URL__c = schedulerCSAURL;
-        } else if(schedulerVIPURL != '' && vipAmount > 4999) {
+        } else if(schedulerVIPURL != '' && isVIP) {
             theCOQuoteMonth.Scheduler_URL__c = schedulerVIPURL;
             theCOQuoteOneTime.Scheduler_URL__c = schedulerVIPURL;
             theCOQuote.Scheduler_URL__c = schedulerVIPURL;
         }
 
-        if(coQuoteMonthId != '') {
+        if(coQuoteMonthId != '' && !Test.isRunningTest()) {
             theCOQuoteMonth.Quote_Created__c = true;     
             update theCOQuoteMonth;
         }
 
-        if(coQuoteOneTimeId != '') {
+        if(coQuoteOneTimeId != '' && !Test.isRunningTest()) {
             theCOQuoteOneTime.Quote_Created__c = true;
             update theCOQuoteOneTime;       
         }
 
-        if(coQuoteAnnualId != '') {
+        if(coQuoteAnnualId != '' && !Test.isRunningTest()) {
             theCOQuote.Quote_Created__c = true;
             update theCOQuote;
         }
 
-        if (((leadSource == '1-800Accountant' && vipAmount > 3499) || vipAmount > 7499) && schedulerCSAURL != '') {
+        
+        if (isCSA && schedulerCSAURL != '') {
+            System.debug('schedulerCSAURLReturn: '+schedulerCSAURLReturn);
             return schedulerCSAURLReturn;
-        } else if(schedulerVIPURL != '' && vipAmount > 4999) {
+        } else if(schedulerVIPURL != '' && isVip) {
+            System.debug('schedulerVIPURLReturn: '+schedulerVIPURLReturn);
             return schedulerVIPURLReturn;
         } else {
+            System.debug('schedulerURLReturn: '+schedulerURLReturn);
             return schedulerURLReturn;
         }
     }
 
     //Decimal productPassAdjustment, List<SelectedProduct> prodSelectedList, String calcIdPass, String bundlePass, String productDescription, String opportunityIdPass, String pricebookEntryIdPass, String productIdPass, Integer quantityPass, String timePass, String timeDefPass, String billingTimePass, String quoteIdPass, String coQuoteIdPass, String coQuoteIdMonthPass, String coQuoteIdOneTimePass, String sowDescPass, String sowDescPassHTML, String accountIdPass, Decimal sortOrderPass, Boolean doFeePass, Decimal feeAmountPass, String feeDesc, Boolean oneTimePass, Boolean noSplitPass)
-    public static void createLineItems(List<SelectedProduct> prodOriginalList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId, String bookStartDate) {
+    public static void createLineItems(List<GuidedSellingProduct> prodSelectedList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId, String bookStartDate) {
+        System.debug('createLineItems');
+        System.debug(oppId);
+        System.debug(qId);
+        System.debug(coMonthQuoteId);
+        System.debug(coOneTimeQuoteId);
+        System.debug(coAnnualQuoteId);
         Set<Id> backBookkeepingIds = new Map<Id, Product2>([SELECT Id FROM Product2 WHERE Name LIKE '%Back Bookkeeping%']).keySet();
-        Map<String, Boolean> seenValues = new Map<String, Boolean>();
-        List<SelectedProduct> prodSelectedList = new List<SelectedProduct>(); 
-
-        for (SelectedProduct s : prodOriginalList) {
-            if (!seenValues.containsKey(s.id)) { 
-                seenValues.put(s.id, true);
-                prodSelectedList.add(s);
-            }
-        }
 
         Datetime holdDate;
         String holdDateString = '';
@@ -1967,298 +2208,145 @@ public without sharing class GuidedSellingControllerExtension {
         Decimal subTotalAmount = 0.00;
         Decimal financeAmount = 0.00;
         String OLIPayInstall = '';
+        Double quoteSalesPrice = 0;
+        Double quoteSubtotal = 0;
+        Double quoteFirstChargeTotal = 0;
+        Double quoteFirstChargePrice = 0;
 
         List<OpportunityLineItem> oliList = new List<OpportunityLineItem>();
         List<QuoteLineItem> qliList = new List<QuoteLineItem>();
         List<ChargeOver_Quote_Line_Item__c> coliList = new List<ChargeOver_Quote_Line_Item__c>();
 
-        for(SelectedProduct p : prodSelectedList) {
+        for(GuidedSellingProduct p : prodSelectedList) {
+            System.debug(p);
+            //System.debug('processing '+p.Product.Name+', '+p.currentBillingFrequency+', '+p.Product.Billing_Frequency__c);
+            //System.debug('No Split Allowed: '+p.Product.No_Split_Allowed__c);
             if (Integer.valueOf(p.delayDays) > 0) {
                 holdDate = System.today() + Integer.valueOf(p.delayDays);
                 holdDateString = String.valueOf(holdDate);
             }
+            Boolean customMonthly = p.currentBillingFrequency == 'Monthly' && p.Product.Billing_Frequency__c != 'Monthly';
+            Integer qty = p.currentQuantity;
+            Integer numPayments = p.numOfPayments;
+            Id pbeId = Id.valueOf(p.pbeId);
+            Id prodId = Id.valueOf(p.Product.Id);
+            //String OLIPayInstall = '';
+            String OLIPayCycle = '';
+            String COQuoteId;
+            quoteSalesPrice = p.subtotal/qty;
+            if(customMonthly){
+                quoteSalesPrice *= numPayments;
+            }                
+            quoteSubtotal = quoteSalesPrice*qty;
+            quoteFirstChargeTotal = quoteSubtotal / numPayments;
+            quoteFirstChargePrice = quoteFirstChargeTotal / qty;
 
-            subAmount = Decimal.valueOf(p.subtotal);
-            tmpACPrice = Decimal.valueOf(p.freqPrice);
-            subTotalAmount = Decimal.valueOf(p.price) * Integer.valueOf(p.quantity);
-
-            if(p.billing == 'Monthly') {
-                subAmount = subAmount.setScale(2, RoundingMode.HALF_UP);
-                tmpACPrice = tmpACPrice.setScale(2, RoundingMode.HALF_UP);
-                subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
-
-                OpportunityLineItem oli;
-                System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
-
-                if(oppId != null && String.valueOf(oppId) != '') {
-                     oli = new OpportunityLineItem(
-                        Description = p.name,
-                        OpportunityId = Id.valueOf(oppId),
-                        PricebookEntryId = Id.valueOf(p.pbeId),
-                        Product2Id = Id.valueOf(p.id),
-                        Quantity = Integer.valueOf(p.quantity),
-                        UnitPrice = Decimal.valueOf(p.price),
-                        Payment_Cycle__c = 'mon',
-                        First_Charge_Price__c = tmpACPrice,
-                        First_Charge_Total__c = subAmount,
-                        Installment_Payment_Schedule__c = 'Monthly'
-                    );
-                    if(oli != null) {
-                        insert oli;
+            if(p.currentBillingFrequency == 'Monthly'){
+                COQuoteId = coMonthQuoteId;
+                OLIPayCycle = 'mon';
+                OLIPayInstall = 'Monthly';
+            } else if (p.currentBillingFrequency == 'One-Time' && p.Product.No_Split_Allowed__c == true){
+                COQuoteId = coOneTimeQuoteId;
+                OLIPayCycle = 'one';
+                OLIPayInstall = 'One-Time';
+            } else if (p.currentBillingFrequency == 'Annual' || (p.currentBillingFrequency == 'One-Time' && p.Product.No_Split_Allowed__c == false)){
+                COQuoteId = coAnnualQuoteId;
+                OLIPayCycle = 'yrl';
+                if (billingFinance == '2pay') {
+                    OLIPayInstall = '2-Pay';
+                } else if (billingFinance == '3pay') {
+                    OLIPayInstall = '3-Pay';
+                } else if (billingFinance == '4pay') {
+                    OLIPayInstall = '4-Pay';
+                } else if (billingFinance == '6pay') {
+                    OLIPayInstall = '6-Pay';
+                } else {
+                    if (p.currentBillingFrequency == 'Annual') {
+                        OLIPayInstall = 'Yearly';
+                    } else if(p.currentBillingFrequency == 'One-Time') {
+                        OLIPayInstall = 'One-Time';
                     }
                 }
-        
-                if(qId != null && qId != '') {
-                    QuoteLineItem qli = new QuoteLineItem(
-                        QuoteId = Id.valueOf(qId),
-                        OpportunityLineItemId = oli.Id,
-                        PricebookEntryId = Id.valueOf(p.pbeId),
-                        Product2Id = Id.valueOf(p.id),
-                        Quantity = Decimal.valueOf(p.quantity),
-                        UnitPrice = Decimal.valueOf(p.price),
-                        First_Charge_Price__c = tmpACPrice,
-                        First_Charge_Total__c = subAmount
-                    );
-                    if(qli != null) {
-                        qliList.add(qli);
-                    }
-                }
-                
-                if(coMonthQuoteId != null && coMonthQuoteId != '') {
-                    String descrip = p.description;
-                    String HTMLDesc=p.HTMLdescription;
-                    if(backBookkeepingIds.contains(p.id)){
-                        descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                        HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                    }
-                    ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
-                        ChargeOver_Quote__c = Id.valueOf(coMonthQuoteId),
-                        Product__c = Id.valueOf(p.id),
-                        Price_Per_Unit__c = tmpACPrice,
-                        Quantity__c = Integer.valueOf(p.quantity),
-                        Contract_Amount__c = subTotalAmount,
-                        Product_Description__c =  descrip,
-                        HTML_Description__c = HTMLdesc,
-                        Account__c = accId,
-                        Sales_Source__c = 'Sales',
-                        sort_Order__c = p.sortOrder,
-                        Sold_in_Offer__c = p.isInOffer,
-                        Date_Time_Invoice_Being_Held_Until__c = holdDateString
-                    );
-                    if(coli != null) {
-                        coliList.add(coli);
-                        System.debug(coli);
-                    }
-                }
-            } else {
-                if(p.billing == 'One-Time' && p.noSplitAllowed == true) {
-                    subAmount = subAmount.setScale(2, RoundingMode.HALF_UP);
-                    tmpACPrice = tmpACPrice.setScale(2, RoundingMode.HALF_UP);
-                    subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
-
-                    OpportunityLineItem oli;
-                    System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
-
-                    if(oppId != null && String.valueOf(oppId) != '') {
-                        oli = new OpportunityLineItem(
-                            Description = p.name,
-                            OpportunityId = Id.valueOf(oppId),
-                            PricebookEntryId = Id.valueOf(p.pbeId),
-                            Product2Id = Id.valueOf(p.id),
-                            Quantity = Integer.valueOf(p.quantity),
-                            UnitPrice = Decimal.valueOf(p.price),
-                            Payment_Cycle__c = 'one',
-                            First_Charge_Price__c = tmpACPrice,
-                            First_Charge_Total__c = subAmount,
-                            Installment_Payment_Schedule__c = 'One-Time'
-                        );
-                        if(oli != null) {
-                            insert oli;
-                        }
-                    }
-            
-                    if(qId != null && qId != '') {
-                        QuoteLineItem qli = new QuoteLineItem(
-                            QuoteId = Id.valueOf(qId),
-                            OpportunityLineItemId = oli.Id,
-                            PricebookEntryId = Id.valueOf(p.pbeId),
-                            Product2Id = Id.valueOf(p.id),
-                            Quantity = Decimal.valueOf(p.quantity),
-                            UnitPrice = Decimal.valueOf(p.price),
-                            First_Charge_Price__c = tmpACPrice,
-                            First_Charge_Total__c = subAmount
-                        );
-                        if(qli != null) {
-                            qliList.add(qli);
-                        }
-                    }
-                    
-                    if(coOneTimeQuoteId != null && coOneTimeQuoteId != '') {
-                        String descrip = p.description;
-                        String HTMLDesc=p.HTMLdescription;
-                        if(backBookkeepingIds.contains(p.id)){
-                            descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                            HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                        }
-                        ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
-                            ChargeOver_Quote__c = Id.valueOf(coOneTimeQuoteId),
-                            Product__c = Id.valueOf(p.id),
-                            Price_Per_Unit__c = tmpACPrice,
-                            Quantity__c = Integer.valueOf(p.quantity),
-                            Contract_Amount__c = subTotalAmount,
-                            Product_Description__c = descrip,
-                            HTML_Description__c = HTMLDesc,
-                            Account__c = accId,
-                            Sales_Source__c = 'Sales',
-                            sort_Order__c = p.sortOrder,
-                            Sold_in_Offer__c = p.isInOffer,
-                            Date_Time_Invoice_Being_Held_Until__c = holdDateString
-                        );
-                        if(coli != null) {
-                            coliList.add(coli);
-                        }
-                    }
-                } else if(p.billing == 'Annual' || (p.billing == 'One-Time' && p.noSplitAllowed == false)) {
-                    if (billingFinance == '2pay') {
-                        financeAmount = (tmpACPrice / 2);
-                        subAmount = (tmpACPrice / 2) * Integer.valueOf(p.quantity);
-                        OLIPayInstall = '2-Pay';
-                    } else if (billingFinance == '3pay') {
-                        financeAmount = (tmpACPrice / 3);
-                        subAmount = (tmpACPrice / 3) * Integer.valueOf(p.quantity);
-                        OLIPayInstall = '3-Pay';
-                    } else if (billingFinance == '4pay') {
-                        financeAmount = (tmpACPrice / 4);
-                        subAmount = (tmpACPrice / 4) * Integer.valueOf(p.quantity);
-                        OLIPayInstall = '4-Pay';
-                    } else if (billingFinance == '6pay') {
-                        financeAmount = (tmpACPrice / 6);
-                        subAmount = (tmpACPrice / 6) * Integer.valueOf(p.quantity);
-                        OLIPayInstall = '6-Pay';
-                    } else {
-                        // financeAmount = (tmpACPrice / 12) * 1.2;
-                        // subAmount = ((tmpACPrice / 12) * 1.2) * Integer.valueOf(p.quantity);
-                        financeAmount = tmpACPrice;
-                        subAmount = tmpACPrice * Integer.valueOf(p.quantity);
-                        if (p.billing == 'Annual') {
-                            OLIPayInstall = 'Yearly';
-                        } else if(p.billing == 'One-Time') {
-                            OLIPayInstall = 'One-Time';
-                        }
-                    }
-
-                    tmpACPrice = tmpACPrice.setScale(2, RoundingMode.HALF_UP);
-                    subAmount = subAmount.setScale(2, RoundingMode.HALF_UP);
-                    financeAmount = financeAmount.setScale(2, RoundingMode.HALF_UP);
-                    subTotalAmount = tmpACPrice * Integer.valueOf(p.quantity);
-                
-                    OpportunityLineItem oli;
-                    System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
-                    System.debug(p.quantity);
-                    if(oppId != null && oppId != '') {
-                        oli = new OpportunityLineItem(
-                            Description = p.name,
-                            OpportunityId = Id.valueOf(oppId),
-                            PricebookEntryId = Id.valueOf(p.pbeId),
-                            Product2Id = Id.valueOf(p.id),
-                            Quantity = Integer.valueOf(p.quantity),
-                            UnitPrice = tmpACPrice,
-                            Payment_Cycle__c = 'yrl',
-                            First_Charge_Price__c = financeAmount,
-                            First_Charge_Total__c = subAmount,
-                            Installment_Payment_Schedule__c = OLIPayInstall
-                        );
-                        if(oli != null) {
-                            insert oli;
-                        }
-                    }
-        
-                    if(qId != null && qId != '') {
-                        QuoteLineItem qli = new QuoteLineItem(
-                            QuoteId = Id.valueOf(qId),
-                            OpportunityLineItemId = oli.Id,
-                            PricebookEntryId = Id.valueOf(p.pbeId),
-                            Product2Id = Id.valueOf(p.id),
-                            Quantity = Integer.valueOf(p.quantity),
-                            UnitPrice = tmpACPrice,
-                            First_Charge_Price__c = financeAmount,
-                            First_Charge_Total__c = subAmount
-                        );
-                        if(qli != null) {
-                            qliList.add(qli);
-                        }
-                    }
-                        
-                    ChargeOver_Quote_Line_Item__c coli;
-                    if (p.billing == 'One-Time' && p.noSplitAllowed == false) {
-                        String descrip = p.description;
-                        String HTMLDesc=p.HTMLdescription;
-                        if(backBookkeepingIds.contains(p.id)){
-                            descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                            HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                        }
-                        if(coOneTimeQuoteId != null && coOneTimeQuoteId != '') {
-                            coli = new ChargeOver_Quote_Line_Item__c(
-                                ChargeOver_Quote__c = Id.valueOf(coOneTimeQuoteId),
-                                Product__c = Id.valueOf(p.id),
-                                Price_Per_Unit__c = tmpACPrice,
-                                Quantity__c = Integer.valueOf(p.quantity),
-                                Contract_Amount__c = subTotalAmount,
-                                Product_Description__c = descrip,
-                                HTML_Description__c = HTMLDesc,
-                                Account__c = accId,
-                                of_times_this_should_recur__c = 1,
-                                Sales_Source__c = 'Sales',
-                                sort_Order__c = p.sortOrder,
-                                Sold_in_Offer__c = p.isInOffer,
-                                Date_Time_Invoice_Being_Held_Until__c = holdDateString
-                            );
-                        }
-                    } else {
-                        if(coAnnualQuoteId != null && coAnnualQuoteId != '') {
-                            String descrip = p.description;
-                            String HTMLDesc=p.HTMLdescription;
-                            if(backBookkeepingIds.contains(p.id)){
-                                descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                                HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
-                            }
-                            coli = new ChargeOver_Quote_Line_Item__c(
-                                ChargeOver_Quote__c = Id.valueOf(coAnnualQuoteId),
-                                Product__c = Id.valueOf(p.id),
-                                Price_Per_Unit__c = tmpACPrice,
-                                Quantity__c = Integer.valueOf(p.quantity),
-                                Contract_Amount__c = subTotalAmount,
-                                Product_Description__c = descrip,
-                                HTML_Description__c = HTMLDesc,
-                                Account__c = accId,
-                                Sales_Source__c = 'Sales',
-                                sort_Order__c = p.sortOrder,
-                                Sold_in_Offer__c = p.isInOffer,
-                                Date_Time_Invoice_Being_Held_Until__c = holdDateString
-                            );  
-                        } 
-                    }
-                    if(coli != null) {
-                        coliList.add(coli);
-                    }
-                }  
             }
+            System.debug('COQuoteId result: '+COQuoteId);
+
+            OpportunityLineItem oli;
+            if(oppId != null && String.valueOf(oppId) != '') {
+                oli = new OpportunityLineItem(
+                   Description = p.Product.Name,
+                   OpportunityId = Id.valueOf(oppId),
+                   PricebookEntryId = pbeId,
+                   Product2Id = prodId,
+                   Quantity = qty,
+                   UnitPrice = quoteSalesPrice,
+                   Payment_Cycle__c = OLIPayCycle,
+                   First_Charge_Price__c = quoteFirstChargePrice,
+                   First_Charge_Total__c = quoteFirstChargeTotal,
+                   Installment_Payment_Schedule__c = OLIPayInstall
+               );
+               if(oli != null) {
+                   //oliList.add(oli);
+                   System.debug(oli);
+                   insert oli;
+               }
+           }
+
+            if(qId != null && qId != '') {
+                QuoteLineItem qli = new QuoteLineItem(
+                    QuoteId = Id.valueOf(qId),
+                    OpportunityLineItemId = oli.Id,
+                    PricebookEntryId =pbeId,
+                    Product2Id = prodId,
+                    Quantity = qty,
+                    UnitPrice = quoteSalesPrice,
+                    First_Charge_Price__c = quoteFirstChargePrice,
+                    First_Charge_Total__c = quoteFirstChargeTotal
+                );
+                if(qli != null) {
+                    System.debug(qli);
+                    qliList.add(qli);
+                }
+            }
+
+            if(COQuoteId != null && COQuoteId != '') {
+                String descrip = p.Product.Description;
+                String HTMLDesc = p.Product.HTML_Description__c;
+                System.debug(COQuoteId);
+                if(backBookkeepingIds.contains(prodId)){
+                    descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                    HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                }
+                ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
+                    ChargeOver_Quote__c = Id.valueOf(COQuoteId),
+                    Product__c = prodId,
+                    Price_Per_Unit__c = p.subtotal/qty,
+                    Quantity__c = qty,
+                    Contract_Amount__c = quoteSubtotal,
+                    Product_Description__c =  descrip,
+                    HTML_Description__c = HTMLdesc,
+                    Account__c = accId,
+                    Sales_Source__c = 'Sales',
+                    sort_Order__c = p.Product.sort_Order__c,
+                    Sold_in_Offer__c = p.isInOffer,
+                    Date_Time_Invoice_Being_Held_Until__c = holdDateString
+                );
+                if(coli != null) {
+                    System.debug(coli);
+                    coliList.add(coli);
+                }
+            }
+
+
+
+            
         }
         insert qliList;
         insert coliList;
     }
+
+    // public static List<GuidedSellingProduct> getProductFromLineItem(List<OpportunityLineItem> items){
+
+    // }
 
     public static void sleep(Long milliSeconds) {
         Long timeDiff = 0;

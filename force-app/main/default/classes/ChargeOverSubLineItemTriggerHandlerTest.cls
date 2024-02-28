@@ -181,6 +181,7 @@ private class ChargeOverSubLineItemTriggerHandlerTest
 			//This date needs to be in the future vs today.
 			subNew.Service_End_Date__c = Date.today().addDays(5);
 			subNew.Converted_From_Subscription__c = sub.Id;
+            subNew.Account__c = sli.Applied_Account__c;
 			insert subNew;
 
 			ChargeOver_Subscription_Line_Item__c newSli = new ChargeOver_Subscription_Line_Item__c();

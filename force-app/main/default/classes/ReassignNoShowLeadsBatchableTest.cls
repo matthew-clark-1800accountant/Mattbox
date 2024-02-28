@@ -63,7 +63,7 @@ public with sharing class ReassignNoShowLeadsBatchableTest {
     static void testBatch(){
 
         Test.startTest();
-        Database.executeBatch(new ReassignNoShowLeadsBatchable(), 10);
+        Database.executeBatch(new ReassignNoShowLeadsBatchable(), 20);
         Test.stopTest();
 
         List<User> generalLeadQueue = [SELECT Id FROM User WHERE Name = 'General Lead Queue' LIMIT 1];
@@ -94,5 +94,10 @@ public with sharing class ReassignNoShowLeadsBatchableTest {
         System.assert(ct.NextFireTime != null);
         System.debug(ct);
         Test.stopTest();
+    }
+
+    @isTest
+    public static void testBusinessDays(){
+        Assert.areNotEqual(null,  new ReassignNoShowLeadsBatchable().lastBusinessDays);
     }
 }

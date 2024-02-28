@@ -1,7 +1,7 @@
 public with sharing class ReassignNoShowLeadsBatchable implements Database.Batchable<sObject>, Schedulable {
     public class CustomException extends Exception {}
     public string queryString = 'SELECT Id, WhoId, Account__c FROM Event WHERE Lead_Source__c = \'1-800Accountant\' '
-    +'AND Appointment_Disposition__c = \'No Show\' AND Type_of_Appointment__c =\'Tax Savings Analysis\' AND StartDateTime IN :timeslots';
+    +'AND Appointment_Disposition__c = \'No Show\' AND Type_of_Appointment__c =\'Tax Savings Analysis\' AND StartDateTime >= :startTime AND EndDateTime < :todayTime';// IN :timeslots';
     public boolean isWeekend = false;
     public ReassignNoShowLeadsBatchable() {
 
@@ -15,8 +15,9 @@ public with sharing class ReassignNoShowLeadsBatchable implements Database.Batch
 
     public Database.QueryLocator start(Database.BatchableContext context) {   
         System.debug('start(): '+queryString);
-        List<Datetime> timeslots = lastBusinessDays;
-        System.debug(timeslots);
+        //List<Datetime> timeslots = lastBusinessDays;
+        System.debug(startTime);
+        System.debug(todayTime);
         System.debug(Database.query(queryString));
         return Database.getQueryLocator(queryString);
     }
@@ -26,14 +27,38 @@ public with sharing class ReassignNoShowLeadsBatchable implements Database.Batch
         set;
     }
 
+    public Datetime startTime{
+        get {
+            Datetime today = todayTime;
+            String day = today.format('EEEE');
+            if(day == 'Monday'){
+                return today.addDays(-2);
+            } else if (day == 'Sunday'){
+                System.debug('isWeekend');
+                isWeekend = true;
+                return today; //just to avoid errors
+            } else {
+                return today.addDays(-1);
+            }
+        }
+        set;
+    }
+
+    public Datetime todayTime{
+        get{
+            return Datetime.now().addHours(-Datetime.now().hour()).addMinutes(-Datetime.now().minute());
+        }
+        set;
+    }
+
     public List<Datetime> lastBusinessDays{
         get {
-            Datetime today = roundToHalfHourTime(Datetime.now());
+            Datetime today = Datetime.now().addHours(Datetime.now().hour()).addMinutes(Datetime.now().minute());
             List<Datetime> timeslots = new List<Datetime>();
             String day = today.format('EEEE');
             if(day == 'Monday'){
                 timeslots.add(today.addDays(-3));
-                timeslots.add(today.addDays(-2));
+                //timeslots.add(today.addDays(-2));
             } else if (day == 'Sunday' || day == 'Saturday'){
                 timeslots.add(today); //just to avoid errors
                 System.debug('isWeekend');
@@ -41,6 +66,7 @@ public with sharing class ReassignNoShowLeadsBatchable implements Database.Batch
             } else {
                 timeslots.add(today.addDays(-1));
             }
+            timeslots.add(today);
             return timeslots;
         }
         set;

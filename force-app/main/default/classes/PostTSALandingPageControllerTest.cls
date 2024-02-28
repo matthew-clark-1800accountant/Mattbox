@@ -40,7 +40,7 @@ public class PostTSALandingPageControllerTest {
     @TestSetup
     static void makeData(){
         Account testAccount = TestDataGenerator.createTestAccountWithoutOwner();
-        testAccount.Potential_Total_Savings__c = '$12,956.85';
+        testAccount.Potential_Total_Savings__c = 12956.85;
         insert testAccount;
 
         Pricebook2 testPriceBook = TestDataGenerator.createTestPriceBook();

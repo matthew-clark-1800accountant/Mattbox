@@ -55,7 +55,7 @@ private class Update_Account_Owner_Test{
         //Make 5 Partner Accounts
         for (Integer i = 0; i < 5; i++) {
             Account account = TestDataGenerator.createTestAccount(testUser.Id);
-            account.Account_Status__c = 'No Sale';
+            account.Account_Status__c = 'Prospect';
             toInsertAccounts.add(account);
         }
 
@@ -64,7 +64,7 @@ private class Update_Account_Owner_Test{
             Account account = TestDataGenerator.createTestAccount(testUser.Id);
             account.Lead_Source__c = 'Bark';
             account.Pitched_Date__c = null;
-            account.Account_Status__c = 'No Sale';
+            account.Account_Status__c = 'Prospect';
             toInsertAccounts.add(account);
         }
 
@@ -72,7 +72,7 @@ private class Update_Account_Owner_Test{
         for (Integer i = 0; i < 5; i++) {
             Account account = TestDataGenerator.createTestAccount(testUser.Id);
             account.Lead_Source__c = 'Bark';
-            account.Account_Status__c = 'No Sale';
+            account.Account_Status__c = 'Prospect';
             account.X1_1_Scheduled__c = Date.today().addDays(-1);
             toInsertAccounts.add(account);
         }

@@ -21,16 +21,15 @@
 }
 
 .pinned-row-list-item {
-    max-height: fit-content; 
+    max-height: calc(0.30 * (100vh - 300px)); 
     overflow: auto;
     border-bottom: rgb(229, 229, 229) solid thick;
 }
 
 .row-list-item {
-    height: calc(0.80 * (100vh - 300px)); 
-    max-height: fit-content; 
+    max-height: calc(0.50 * (100vh - 300px)); 
+    height: fit-content; 
     overflow: auto;
-    padding-bottom: 50px;
 }
 
 .view-selector {

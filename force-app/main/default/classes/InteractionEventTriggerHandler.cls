@@ -22,7 +22,7 @@ public with sharing class InteractionEventTriggerHandler {
 
     //@future
     public static void logCallDelay(Id interactionId){
-        List<String> apptTypes = new List<String>{'BNA', 'Formation Consultation', 'Tax Savings Analysis'};
+        List<String> apptTypes = new List<String>{'BNA', 'Formation Consultation', 'Tax Savings Analysis', 'Discovery Call', 'Client Onboarding Follow-Up'};
         List<String> disposToIgnore = new List<String>{'Rescheduled', 'Cancelled'};
         NVMContactWorld__InteractionEvent__c interaction = [SELECT Id, NVMContactWorld__Who__c, CreatedDate FROM NVMContactWorld__InteractionEvent__c WHERE Id = :interactionId LIMIT 1];
         

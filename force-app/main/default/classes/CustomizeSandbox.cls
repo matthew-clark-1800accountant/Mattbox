@@ -22,11 +22,16 @@ global without sharing class CustomizeSandbox {
     }
 
     public static Set<String> getUsersToUpdate(){
-        System.debug(getEvironmentName());
-        if(getEvironmentName() == 'training'){
+        String env = getEvironmentName();
+        System.debug(env);
+        if(env == 'training'){
             return trainingUsers;
-        } else {
+        } else if(env == 'uat'){
+            return uatUsers;
+        } else if(env == 'staging'){
             return stagingUsers;
+        } else {
+            return defaultUsers;
         }
     }
 
@@ -35,6 +40,7 @@ global without sharing class CustomizeSandbox {
         'E API',
         'Eric Yunker',
         'Matthew Clark',
+        'Arundathi Acharya',
         'Portal API',
         'ChargeOver Billing',
         'Daytime Admin',
@@ -42,6 +48,26 @@ global without sharing class CustomizeSandbox {
         'Wade Hansen',
         'Elliot Kemp',
         'Marketing Analytics',
+        'Marketing Developer',
+        'Rohit Pratti',
+        'Alfredo Gago',
+        'Jovan Reyes'
+    };
+
+    public static Set<String> uatUsers = new Set<String>{
+        'Drew Troutner',
+        'E API',
+        'Eric Yunker',
+        'Matthew Clark',
+        'Arundathi Acharya',
+        'Portal API',
+        'ChargeOver Billing',
+        'Daytime Admin',
+        'Mukesh Srivastav',
+        'Wade Hansen',
+        'Elliot Kemp',
+        'Marketing Analytics',
+        'Marketing Developer',
         'Rohit Pratti',
         'Alfredo Gago',
         'Jovan Reyes'
@@ -52,6 +78,7 @@ global without sharing class CustomizeSandbox {
         'E API',
         'Eric Yunker',
         'ChargeOver Billing',
+        'Arundathi Acharya',
         'Billing User1',
         'Sales User1',
         'Sales User2',
@@ -68,8 +95,20 @@ global without sharing class CustomizeSandbox {
         'Sales User13',
         'Sales User14',
         'Sales User15',
-        'Sales User 16',
-        'Sales User 17'
+        'Sales User16',
+        'Sales User17',
+        'SDR User1',
+        'SDR User2',
+        'SDR User3',
+        'SDR User4',
+        'SDR User5'
+    };
+
+    public static Set<String> defaultUsers = new Set<String>{
+        'Drew Troutner',
+        'E API',
+        'Eric Yunker',
+        'ChargeOver Billing'
     };
 
     public static List<String> calculatorQueries = new List<String>{
@@ -112,11 +151,13 @@ global without sharing class CustomizeSandbox {
     public static String accountFields = 'Account.name, Account.Lead_Source__c, Account.Lead_Type_New__c, Account.Campaign__c, Account.Marketing_Channel__c, Account.Industry, Account.State_of_Formation__c, Account.BillingState, Account.Phone';
     public static String contactQuery = 'SELECT FirstName,LastName, email, Lead_Source__c, Lead_Type__c, CampaignID__c, Last_SF_Activity__c, Time_Zone__c, MailingState, Phone, '+accountFields+' FROM Contact WHERE Email != null AND AccountId != null ORDER BY Phone LIMIT '+batchSize+' OFFSET ';
     //public static String accountQuery = 'SELECT id, name, Lead_Source__c, Lead_Type_New__c, Campaign__c, Marketing_Channel__c, Last_SF_Activity__c, Time_Zone__c, Industry, State_of_Formation__c, BillingState, Phone FROM account limit 500';
-
-    public static void runAllUpdates(Integer size){
+    public static String eventQuery = 'SELECT Id, CreatedDate, StartDateTime, Subject, Type_Of_Appointment__c FROM Event WHERE CreatedDate = LAST_N_MONTHS:1 AND Type_of_appointment__c IN (\'Tax Savings Analysis\', \'TSA Follow-Up\', \'Advisory\', \'BNA\') ORDER BY Id LIMIT '+batchSize+' OFFSET ';
+    public static void runAllUpdates(Integer size, Boolean updateUsers){
         totalRecordCount = size;
         updateOutboundMessages();
-        //updateUsers(getUsersToUpdate());
+        if(updateUsers){
+            updateUsers(getUsersToUpdate());
+        }        
         transferCalculatorData();
         transferRollupData();
         importSeedData();
@@ -221,8 +262,10 @@ global without sharing class CustomizeSandbox {
         List<Lead> leadList = new List<Lead>();
         List<Account> accountList = new List<Account>();
         List<Contact> contactList = new List<Contact>();
+        List<Opportunity> opportunityList = new List<Opportunity>();
         User generalQueue = [SELECT Id FROM User WHERE Name = 'General Lead Queue'];
         List<User> trainingUserList = [SELECT Id FROM User WHERE Name LIKE 'Training User%'];
+        Id standardPricebookId = Test.isRunningTest() ? Test.getStandardPricebookId() : [SELECT Id FROM Pricebook2 WHERE IsStandard = true LIMIT 1][0].Id;
         String requestString = leadQuery + offset;
         String environment = getEvironmentName();
 
@@ -268,6 +311,17 @@ global without sharing class CustomizeSandbox {
             }
             //system.debug(con.Account.ownerId);
             accountList.add(con.Account);
+            Opportunity opp = new Opportunity(
+                OwnerId = con.Account.OwnerId,
+                Name = con.Account.Name,
+                CloseDate = Date.today(),
+                //Customer_Number__c = con.Account.Customer_Number__c,
+                StageName = 'New',
+                LeadSource = con.Account.Lead_Source__c,
+                Type = 'New Business',
+                Pricebook2Id = standardPricebookId
+            );
+            opportunityList.add(opp);
 
             con.Account = null;
             con.phone ='1234567890';// '111'+con.phone?.substring(3,10);
@@ -307,6 +361,11 @@ global without sharing class CustomizeSandbox {
                 contactList[i].AccountId = accountList[i].Id;
             }
             insert contactList;
+            for(Integer i=0; i<opportunityList.size(); i++){
+                opportunityList[i].ContactId = contactList[i].Id;
+                opportunityList[i].AccountId = accountList[i].Id;
+            }
+            insert opportunityList;
         } catch (CustomException ex){
             Database.rollback(sp);
             System.debug(ex.getMessage());
@@ -321,20 +380,30 @@ global without sharing class CustomizeSandbox {
         String env = getEvironmentName();
         System.debug(env);
         if(env == 'training' || Test.isRunningTest()){
-            urlSetting.Chargeover_URL__C = 'https://1800accountant-training.chargeover.com';
+            urlSetting.Chargeover_URL__c = 'https://1800accountant-training.chargeover.com';
             urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
             urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
-            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_training.php';
+            urlSetting.Scheduler_URL__c = 'https://training-external.1800accountant.com/sfapi/schedule/index.php';
         } else if(env == 'uat'){
-            urlSetting.Chargeover_URL__C = 'https://1800accountant-uat.chargeover.com';
+            urlSetting.Chargeover_URL__c = 'https://1800accountant-uat.chargeover.com';
             urlSetting.Chargeover_User__c = 'pvWrnGbt7yg2xRJU5VoC8XZDYEm4MOBi';
             urlSetting.Chargeover_Pass__c = 'u3ZQtif9s210TmXBoLzSe5rgEvJOVdCn';
-            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_uat.php';
+            urlSetting.Scheduler_URL__c = 'https://uat.1800accountant.com/sfapi/schedule/index.php';
         } else if(env == 'staging') {
-            urlSetting.Chargeover_URL__C = 'https://1800accountant-staging.chargeover.com';
+            urlSetting.Chargeover_URL__c = 'https://1800accountant-staging.chargeover.com';
             urlSetting.Chargeover_User__c = 'kRqAcM6KgPwTOpQZ0y9BtW1aNhrCEHGX';
             urlSetting.Chargeover_Pass__c = 'RSOIVMiJ60qK4seNwk7lgyxTfFBtUznv';
-            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_stage.php';
+            urlSetting.Scheduler_URL__c = 'https://staging.1800accountant.com/sfapi/schedule/index.php';
+        } else if(env == 'gsdev') {
+            urlSetting.Chargeover_URL__c = 'https://1800accountant-dev.chargeover.com';
+            urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
+            urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
+            urlSetting.Scheduler_URL__c = 'https://dev-external.1800accountant.com/sfapi/schedule/index.php';
+        } else {
+            urlSetting.Chargeover_URL__c = '';
+            urlSetting.Chargeover_User__c = '';
+            urlSetting.Chargeover_Pass__c = '';
+            urlSetting.Scheduler_URL__c = '';
         }
         
         update urlSetting;
@@ -350,53 +419,53 @@ global without sharing class CustomizeSandbox {
         ToolingApiController.printLomgString(resStr);
         ToolingApiController.OutboundMsg om = (ToolingApiController.OutboundMsg) JSON.deserialize(resStr, ToolingApiController.OutboundMsg.Class);
     
-        if(getEvironmentName() == 'training' || Test.isRunningTest()){
+        if(Test.isRunningTest()){
             List<String> idList = new List<String>();
             for(ToolingApiController.RecordWrapper rec : om.records){
                 idList.add(rec.Id);
             }
             ToolingApiController.deleteRecords(idList, 'WorkflowOutboundMessage');
         } 
-        if(getEvironmentName() != 'training') {
-            //Map<String,String> idToRecordJson = new Map<String,String>();
-            Map<String,Object> idToRecord = new Map<String,Object>();
-            List<ToolingApiController.RecordWrapper> recList = om.records;
-            String newUrl;
-            String integrationUsername;
-            List<User> integrationUsers = [SELECT Username FROM User WHERE Alias = 'API' LIMIT 1];
-            if(!integrationUsers.isEmpty()){
-                integrationUsername = integrationUsers[0].Username;
-            } else {
-                integrationUsername = 'api@1800accountant.com';
-            }
-            
-            if(getEvironmentName() == 'uat'){
-                newUrl = 'https://uat.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
-            } else if(getEvironmentName() == 'staging'){
-                newUrl = 'https://staging.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
-            } else {
-                system.debug('current environment not supported');
-                //return;
-                newUrl = Datetime.now()+'testurl.com';
-            }
-            for(ToolingApiController.RecordWrapper rec : recList){
-                String id = rec.Id;
-                String name = rec.Name;
-                rec.Id = null;
-                rec.Name = null;
-                rec.Metadata = new ToolingApiController.MetadataWrapper();
-                rec.Metadata.endpointUrl = newUrl;
-                rec.Metadata.integrationUser = integrationUsername;
-                rec.Metadata.apiVersion=35.0;
-                rec.Metadata.name = name;
-                //rec.Metadata.integrationUserId = null;
-                //idToRecordJson.put(rec.Id, JSON.serialize(rec));
-                //om.records = new List<ToolingApiController.RecordWrapper>{rec};
-                //idToRecord.put(id, rec);
-                ToolingApiController.updateObject('WorkflowOutboundMessage', id, JSON.serialize(rec, true));
-            }
-            //ToolingApiController.updateRecords(idToRecord, 'WorkflowOutboundMessage');
+        //Map<String,String> idToRecordJson = new Map<String,String>();
+        Map<String,Object> idToRecord = new Map<String,Object>();
+        List<ToolingApiController.RecordWrapper> recList = om.records;
+        String newUrl;
+        String integrationUsername;
+        List<User> integrationUsers = [SELECT Username FROM User WHERE Alias = 'API' LIMIT 1];
+        if(!integrationUsers.isEmpty()){
+            integrationUsername = integrationUsers[0].Username;
+        } else {
+            integrationUsername = 'api@1800accountant.com';
         }
+        if(getEvironmentName() == 'training'){
+            newUrl = 'https://dev.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+        } else if(getEvironmentName() == 'uat'){
+            newUrl = 'https://uat.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+        } else if(getEvironmentName() == 'staging'){
+            newUrl = 'https://staging.1800accountant.com/cbapi/app.php/salesforce/outbound-message?token=55b6943cce16e';
+        } else {
+            system.debug('current environment not supported');
+            //return;
+            newUrl = Datetime.now()+'testurl.com';
+        }
+        for(ToolingApiController.RecordWrapper rec : recList){
+            String id = rec.Id;
+            String name = rec.Name;
+            rec.Id = null;
+            rec.Name = null;
+            rec.Metadata = new ToolingApiController.MetadataWrapper();
+            rec.Metadata.endpointUrl = newUrl;
+            rec.Metadata.integrationUser = integrationUsername;
+            rec.Metadata.apiVersion=35.0;
+            rec.Metadata.name = name;
+            //rec.Metadata.integrationUserId = null;
+            //idToRecordJson.put(rec.Id, JSON.serialize(rec));
+            //om.records = new List<ToolingApiController.RecordWrapper>{rec};
+            //idToRecord.put(id, rec);
+            ToolingApiController.updateObject('WorkflowOutboundMessage', id, JSON.serialize(rec, true));
+        }
+        //ToolingApiController.updateRecords(idToRecord, 'WorkflowOutboundMessage');
+        
         
     }
 }

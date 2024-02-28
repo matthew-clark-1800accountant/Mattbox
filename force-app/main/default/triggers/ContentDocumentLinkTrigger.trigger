@@ -7,6 +7,6 @@ trigger ContentDocumentLinkTrigger on ContentDocumentLink (before insert, before
     for(ContentDocumentLink cdl : Trigger.new)
     {
         if(!'AllUsers'.equalsIgnoreCase(cdl.Visibility)){cdl.Visibility='AllUsers';}
-        if(!'I'.equalsIgnoreCase(cdl.ShareType)){cdl.ShareType='I';}
+        if('SNOTE'.equalsIgnoreCase(cdl.ContentDocument?.FileType)){cdl.ShareType='I';}
     }
 }

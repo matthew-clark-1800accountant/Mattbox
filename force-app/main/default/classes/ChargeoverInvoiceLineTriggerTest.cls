@@ -9,11 +9,15 @@ public with sharing class ChargeoverInvoiceLineTriggerTest {
     @TestSetup
     static void makeData(){
         Account acc = new Account(Name='test');
+        insert acc;
         Product2 prod = new Product2(Name='test', Billing_Frequency__c = 'Annual', Fulfillable_Product_for_Renewal__c=true, zqu__EffectiveStartDate__c=Date.today(), zqu__EffectiveEndDate__c=Date.today().addDays(1), Family='Tax Prep and Advisory');
-        Active_Subscriptions__c acSub = new Active_Subscriptions__c(Name='1-800Accountant Access', Customer_Number__c='123456');
-        Chargeover_Subscription__c chSub = new Chargeover_Subscription__c(Name='567890');
-        insert new List<sObject>{acc, prod, acSub, chSub};
-        ChargeOver_Subscription_Line_Item__c subLine = new ChargeOver_Subscription_Line_Item__c(Name='1-800Accountant Access', Status__c='Active', Active_Subscription__c=acSub.Id, Chargeover_Subscription__c=chSub.Id, Subscription_Start_Date__c=Date.today());
+        Active_Subscriptions__c acSub = new Active_Subscriptions__c(Name='1-800Accountant Access', Customer_Number__c='123456', Account__c=acc.Id);
+        Chargeover_Subscription__c chSub = new Chargeover_Subscription__c(Name='567890', Account__c = acc.Id);
+        
+        System.debug(acSub);
+        System.debug(chSub);
+        insert new List<sObject>{prod, acSub, chSub};
+        ChargeOver_Subscription_Line_Item__c subLine = new ChargeOver_Subscription_Line_Item__c(Name='1-800Accountant Access', Status__c='Active', Active_Subscription__c=acSub.Id, Chargeover_Subscription__c=chSub.Id, Subscription_Start_Date__c=Date.today(), Account__c = acc.Id);
         insert subLine;
         ChargeOver_Invoice_Line_Item__c inLine = new ChargeOver_Invoice_Line_Item__c(Name='1800', Quantity__c=2, Rate__c=123, Account__c=acc.Id, Product__c=prod.Id, ChargeOver_Subscription_Line_Item__c=subLine.Id, Payment_Type__c='Initial');
         insert inLine;

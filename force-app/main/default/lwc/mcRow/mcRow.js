@@ -224,7 +224,7 @@ export default class McRow extends LightningElement {
 
     get computedScrollValue(){
         var curTime = new Date().toISOString();
-        var hours = Number(curTime.slice(11,13)-4);
+        var hours = Number(curTime.slice(11,13)-5);
         var min = Number(curTime.slice(14,16));
         var timeslotNumber = (hours*2) + (min >= 30 ? 1 : 0);
         var pageNumber = (timeslotNumber-1) / this.slotsPerPage;
@@ -269,6 +269,10 @@ export default class McRow extends LightningElement {
 
     @api
     repDebug(ev){
+        console.log(this.rep?.Name == 'Matthew Clark');
+        // console.log('sanity');
+        // console.log(this.spinnerStyle);
+        //console.log(this.timeslotsLoaded);
         // this.refreshApexData();
         // var slotList = this.template.querySelectorAll('c-mc-time-slot');
         // slotList.forEach((slot) => {slot.updateStyle(); slot.updateAppointments();});
@@ -276,9 +280,10 @@ export default class McRow extends LightningElement {
         //console.log('repDebug: '+this.rep?.Name);
         //console.log('isBlocked: '+this.isRepBlocked);
         //console.log('rep.EndOfDay: '+this.rep?.EndOfDay);
-        console.log('scrollLeft: '+this.bottomRow?.scrollLeft);
+        //console.log('scrollLeft: '+this.bottomRow?.scrollLeft);
         //console.log(this.savedScrollVal);
         //console.log(this.computedScrollValue);
+        console.log(document.documentElement.clientHeight);
     }
 
     @api

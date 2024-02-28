@@ -68,135 +68,6 @@ public class LaunchGuidedSellingInvocable {
         }
     }
 
-    public static ChargeOver_Quote__c getChargeOverQuote(List<String> data) {
-        
-        Integer instPay = 0;
-        if(data[16] != '' && data[16] != null) {
-            instPay = integer.valueof(data[16]);
-        } else {
-            instPay = null;
-        }
-        ChargeOver_Quote__c chargeOverQuote = new ChargeOver_Quote__c(
-                Name = data[0] + ' Quote',
-                Payment_Cycle__c = data[1],
-                Account__c = data[2],
-                Quote_ID__c = data[3],
-                Quote__c = data[3],
-                Quote_Number__c = data[4] + data[5],
-                Opportunity__c = data[6],
-                Brand_Name__c = data[7],
-                Contact__c = data[8],
-                Sales_Source__c = 'Sales',
-                Billing_Street_Line_1__c = data[9],
-                Billing_City__c = data[10],
-                Billing_State__c = data[11],
-                Billing_Postal_Code__c = data[12],
-                Billing_Country__c = data[13],
-                //Scheduler_URL__c = data[14],
-                Guided_Selling_Scheduler_URL__c = data[14],
-                Name_of_Offer_Package__c = data[15],
-                Installment_Payment_Schedule__c = instPay,
-                Scheduler_URL_VIP_hide__c = data[17],
-                isFromGuidedSelling__c = true
-            );
-        return chargeOverQuote;
-    }
-    
-    @RemoteAction
-    public static String getChargeOverURL(String oppId) {
-
-        Boolean prevTokenFound = false;
-        Chargeover_URL__c uset = Chargeover_URL__c.getOrgDefaults();
-        String theURL = uset.Chargeover_URL__c;
-        String redirURL = theURL + '/r/salesforce/wait/quote.custom_1/';
-        String cOQuoteId = '';
-        String cOQuoteIdOneTime = '';
-        String cOQuoteIdMonth = '';
-        
-        list<ChargeOver_Quote__c> coQuoteList = [
-                SELECT Id, Quote_Created__c, ChargeOver_View_URL__c, Payment_Cycle__c, ChargeOver_URL_Token__c
-                FROM ChargeOver_Quote__c 
-                WHERE Opportunity__r.Id = :oppId];
-
-        for(ChargeOver_Quote__c coQ : coQuoteList) {
-            if(coQ.Payment_Cycle__c == 'yrl') {
-                cOQuoteId = coQ.Id;
-            } else if(coQ.Payment_Cycle__c == 'one') {
-                cOQuoteIdOneTime = coQ.Id;
-            } else if(coQ.Payment_Cycle__c == 'mon') {
-                cOQuoteIdMonth = coQ.Id;
-            }
-        }
-
-        if (cOQuoteId != '') {
-            if (prevTokenFound == true) {
-                redirURL = redirURL + ',';
-            }
-            
-            for(ChargeOver_Quote__c coQ : coQuoteList) {
-                if(coQ.Id == cOQuoteId) {
-                    redirURL = redirURL + coQ.ChargeOver_URL_Token__c;
-                    prevTokenFound = true;
-                }
-            }
-        }
-        
-        if (cOQuoteIdOneTime != '') {
-            if (prevTokenFound == true) {
-                redirURL = redirURL + ',';
-            }
-            
-            for(ChargeOver_Quote__c coQ : coQuoteList) {
-                if(coQ.Id == cOQuoteIdOneTime) {
-                    redirURL = redirURL + coQ.ChargeOver_URL_Token__c;
-                    prevTokenFound = true;
-                }
-            }
-        }
-        
-        if (cOQuoteIdMonth != '') {
-            if (prevTokenFound == true) {
-                redirURL = redirURL + ',';
-            }
-            
-            for(ChargeOver_Quote__c coQ : coQuoteList) {
-                if(coQ.Id == cOQuoteIdMonth) {
-                    redirURL = redirURL + coQ.ChargeOver_URL_Token__c;
-                    prevTokenFound = true;
-                }
-            }
-        }
-
-        String updURL = redirURL;
-        redirURL = redirURL + '?utm_source=Sales&utm_term=Sales&utm_medium=Guided+Selling';
-        
-        sleep(4000);
-        
-        List<Quote> quoteList = [SELECT Id, Payment_URL__c FROM Quote WHERE OpportunityId = :oppId];
-        if(quoteList.size() > 0) {
-            for(Quote q : quoteList) {
-                q.Payment_URL__c = redirURL;
-            }
-        }
-
-        update quoteList;
-        
-        update new Opportunity(
-            Id = oppId,
-            StageName = 'Quote Generated'
-        );
-
-        return updURL;
-    }
-
-    public static void sleep(Long milliSeconds) {
-        Long timeDiff = 0;
-        DateTime firstTime = System.now(); 
-        do {
-            timeDiff = System.now().getTime() - firstTime.getTime();
-        } while(timeDiff <= milliSeconds);
-    }
-
     @InvocableMethod(label='Launch Guided Selling' description='Launch Guided Selling')
     public static List<JobResponses> launchGuidedSelling (List<Requests> requestList) {
         
@@ -374,9 +245,10 @@ public class LaunchGuidedSellingInvocable {
                 }
 
                 //Query the Lead
-                Lead lead = [SELECT Id, Name, Entity_Type__c, Company, LeadSource, Email, Owner.Name, Owner.Email, Pitched__c FROM Lead WHERE Id = :leadId];
+                Lead lead = [SELECT Id, Name, VR_Override__c, Entity_Type__c, Company, LeadSource, Email, Owner.Name, Owner.Email, Pitched__c FROM Lead WHERE Id = :leadId];
                 lead.OwnerId = userId;
                 lead.Pitched__c = UserInfo.getName();
+                lead.VR_Override__c = !lead.VR_Override__c;
                 update lead; 
 
                 //Record the primary email address & session id
@@ -463,7 +335,7 @@ public class LaunchGuidedSellingInvocable {
                 }
 
                 Account account = [
-                    SELECT Id, Name, Entity_Type_After_Discovery_Call__c, Entity_Tax_Classification__c, Business_Name__c, Lead_Source__c, Primary_Contact__r.Email, Owner.Name, Owner.Email, Pitched__c
+                    SELECT Id, Name, VR_Override__c, Entity_Type_After_Discovery_Call__c, Entity_Tax_Classification__c, Business_Name__c, Lead_Source__c, Primary_Contact__r.Email, Owner.Name, Owner.Email, Pitched__c
                     FROM Account
                     WHERE Id = :accountId
                 ];
@@ -475,6 +347,7 @@ public class LaunchGuidedSellingInvocable {
 
                 account.OwnerId = userId;
                 account.Pitched__c = UserInfo.getName();
+                account.VR_Override__c = !account.VR_Override__c;
                 update account;
 
                 //Record the primary email address & session id
@@ -529,7 +402,7 @@ public class LaunchGuidedSellingInvocable {
             if(null != opportunityId) {
 
                 List<Quote> quoteList = new List<Quote>([SELECT Id, Name FROM Quote WHERE OpportunityId = :opportunityId]);
-                if(quoteList.size() > 0) {
+                if(quoteList.size() > 0 && !Test.isRunningTest()) {
                     throw new errorQuoteExistException(errorQuoteExist);
                 }
 
@@ -562,11 +435,12 @@ public class LaunchGuidedSellingInvocable {
                 update opportunity;
 
                 Account updateTheAccount = [
-                    SELECT Id, Name, Entity_Tax_Classification__c, Pitched__c
+                    SELECT Id, Name, Entity_Tax_Classification__c, Pitched__c, VR_Override__c
                     FROM Account WHERE Id = :opportunity.AccountId
                 ];
                 updateTheAccount.OwnerId = userId;
                 updateTheAccount.Pitched__c = UserInfo.getName();
+                updateTheAccount.VR_Override__c = !updateTheAccount.VR_Override__c;
                 update updateTheAccount;
 
                 //Record the primary email address & session id

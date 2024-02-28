@@ -57,6 +57,11 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         return (this.totalNumberOfCalls && this.totalNumberOfCalls > 0);
     }
 
+    @api
+    get showParts(){
+        return (this.appointment?.PartsString && this.appointment?.PartsString != '');
+    }
+
     exampleAppointment = {
         Id: 1,
         EventId: '0000231ABC0X',
@@ -95,7 +100,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Rescheduled',             {Name: "utility:event"}],
         ['Cancelled',               {Name: "utility:close", Variant: "error"}],
         ['Failure to Call',         {Name: "utility:warning", Variant: "error"}],
-        ['Blocked',                 {Name: null}],
+        ['Blocked',                 {Name: ""}],
         ['heading',                 {Name: "utility:connected_apps", Variant: "warning"}]
     ]);
     
@@ -376,7 +381,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
             var miniDetails = {
                 xco: rect.x,
                 yco: rect.y,
-                type: this.appointment.AppointmentType,
+                name: this.appointment.LeadAccountName,
                 title: this.appointment.Subject,
                 source: this.appointment.LeadSource,
                 disposition: this.headingText,
@@ -385,7 +390,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
                 eventId: this.appointment.Id,
                 rejections: this.repRejections?.data
             }
-            console.log('clickHandler');
+            console.log(miniDetails);
             this.dispatchEvent(new CustomEvent('apptclicked', {
                 'bubbles': true,
                 'composed': true,

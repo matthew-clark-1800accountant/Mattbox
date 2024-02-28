@@ -35,6 +35,10 @@ public without sharing class MulticalendarDataService {
         public String Subject;
         @auraEnabled
         public Decimal NumberOfCalls;
+        @auraEnabled 
+        public String PartsString;
+        @auraEnabled 
+        public String LeadAccountName;
 
         public Appointment(String Id,
           String Disposition,
@@ -46,7 +50,9 @@ public without sharing class MulticalendarDataService {
           String AppointmentType,
           String LeadSource,
           String Subject,
-          Decimal NumberOfCalls){
+          Decimal NumberOfCalls,
+          String PartsString,
+          String LeadAccountName){
             this.Id=Id;
             this.Disposition=Disposition;
             this.SecondaryDisposition=SecondaryDisposition;
@@ -58,6 +64,8 @@ public without sharing class MulticalendarDataService {
             this.LeadSource=LeadSource;
             this.Subject=Subject;
             this.NumberOfCalls=NumberOfCalls;
+            this.PartsString = PartsString;
+            this.LeadAccountName = LeadAccountName;
         }
     }
 
@@ -87,6 +95,8 @@ public without sharing class MulticalendarDataService {
         public Boolean IsManager;
         @AuraEnabled
         public Long EndOfDay;
+        @AuraEnabled
+        public String SalesTeam;
 
         // public Rep(String Id, String Name, List<Tag> Tags, Boolean IsManager){
         //     this.Id=Id;
@@ -100,6 +110,14 @@ public without sharing class MulticalendarDataService {
             this.Name=Name;
             this.Tags= new List<Tag>();
             this.IsManager=IsManager;
+        }
+
+        public Rep(String Id, String Name, Boolean IsManager, String SalesTeam){
+            this.Id=Id;
+            this.Name=Name;
+            this.Tags= new List<Tag>();
+            this.IsManager=IsManager;
+            this.SalesTeam = SalesTeam;
         }
     }
 
@@ -184,62 +202,6 @@ public without sharing class MulticalendarDataService {
         new List<String>{'BNA', 'Not Qualified', 'Wanted Meeting With Accountant'}
     };
 
-    // @AuraEnabled(cacheable=true)
-    // public static List<Appointment> getRepAppointments(String repId){
-    //     Datetime startTime = Datetime.now();
-    //     //set start time minutes to either :00 or :30
-    //     if(startTime.minute() < 30){
-    //         startTime = startTime.addMinutes(-startTime.minute());
-    //         startTime = startTime.addSeconds(-startTime.second());
-    //     } else {
-    //         startTime = startTime.addMinutes(30-startTime.minute());
-    //         startTime = startTime.addSeconds(-startTime.second());
-    //     }
-    //     System.debug(startTime);
-
-    //     List<Event> eventList = 
-    //     [SELECT Id,
-    //     Appointment_Disposition__c,
-    //     Secondary_Disposition_Details__c,
-    //     Type_of_Appointment__c,
-    //     Lead_Source__c,
-    //     of_Calls_for_Event__c,
-    //     StartDateTime,
-    //     EndDateTime,
-    //     Subject
-    //     FROM Event
-    //     WHERE OwnerId = :repId
-    //     AND StartDateTime >= :startTime
-    //     AND EndDateTime = today];
-
-    //     List<Appointment> appointments = new List<Appointment>();
-    //     for(Event ev : eventList){
-    //         System.debug(ev);
-    //         String initials = '';
-    //         if(ev.Type_of_Appointment__c.containsWhitespace()){
-    //             Integer index = ev.Type_of_Appointment__c.indexOf(' ');
-    //             initials = ev.Type_of_Appointment__c.substring(0,1) + ev.Type_of_Appointment__c.substring(index+1,index+2);
-    //         } else {
-    //             initials = ev.Type_of_Appointment__c.substring(0,2);
-    //         }
-    //         initials = initials.toUpperCase();
-            
-    //         appointments.add(new Appointment(ev.Id,
-    //             ev.Appointment_Disposition__c,
-    //             ev.Secondary_Disposition_Details__c,
-    //             initials,
-    //             ev.Lead_Source__c,
-    //             ev.StartDateTime.getTime(),
-    //             ev.EndDateTime.getTime(),
-    //             ev.Type_of_Appointment__c,
-    //             ev.Lead_Source__c,
-    //             ev.Subject,
-    //             ev.of_Calls_for_Event__c
-    //             ));
-    //     }
-    //     return appointments;
-    // }
-
     //todo: format time label based on user's timezone?
     @AuraEnabled(cacheable=true)
     public static List<String> getTimeslotLabels(){
@@ -282,13 +244,15 @@ public without sharing class MulticalendarDataService {
                 of_Calls_for_Event__c,
                 StartDateTime,
                 EndDateTime,
-                Subject
+                Subject,
+                Who.Name
                 FROM Event
                 WHERE OwnerId IN :managerIds
                 //AND StartDateTime = today];
                 AND StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
-                AND ShowAs != 'Free'];
+                AND ShowAs != 'Free'
+                AND Type_of_Appointment__c != 'Calendar Block'];
             } else {
                 eventList = 
                 [SELECT Id,
@@ -299,7 +263,8 @@ public without sharing class MulticalendarDataService {
                 of_Calls_for_Event__c,
                 StartDateTime,
                 EndDateTime,
-                Subject
+                Subject,
+                Who.Name
                 FROM Event
                 WHERE OwnerId = :repId
                 //AND StartDateTime = today];
@@ -318,6 +283,7 @@ public without sharing class MulticalendarDataService {
             for(Long longKey : timeslotMap.keySet()){
                 //System.debug(timeslotMap.get(longKey));
             }
+            List<String> multislotApptTypes = new List<String>{'Calendar Block', 'Discovery Call', 'Client Onboarding Follow-Up'};
             for(Event ev : eventList){
                 System.debug(ev);
                 String initials = '';
@@ -338,16 +304,25 @@ public without sharing class MulticalendarDataService {
                 Long timeslotTime;
                 //System.debug(ev.StartDateTime);
                 //System.debug(ev.StartDateTime.getTime());
+                Integer currentPart = 1;
+                Integer totalParts = 1;
+                if(ev.EndDateTime > ev.StartDateTime.addMinutes(30)){
+                    Long timeDifference = ev.EndDateTime.getTime() - ev.StartDateTime.getTime();
+                    Long minuteDifference = timeDifference / (1000*60);
+                    totalParts = Math.ceil(minuteDifference / 30.0).intValue();
+                }
 
                 //split calendar blocks
                 while(ev.EndDateTime > ev.StartDateTime.addMinutes(30) 
-                && ev.Type_of_Appointment__c == 'Calendar Block'){
+                && multislotApptTypes.contains(ev.Type_of_Appointment__c)){
                     Event ev1 = ev.clone(true);
                     ev1.EndDateTime = ev1.StartDateTime.addMinutes(30);
                     ev.StartDateTime = ev.StartDateTime.addMinutes(30);
                     //System.debug(ev1.StartDateTime);
                     timeslotTime = roundToHalfHourLong(ev1.StartDateTime);
-
+                    String parts = (ev1.Type_of_Appointment__c == 'Calendar Block' || totalParts == 1) ? '' : '('+currentPart+'/'+totalParts+')';
+                    String subject = (ev1.Type_of_Appointment__c == 'Calendar Block' || totalParts == 1) ? ev1.Subject : ev1.Subject+' '+parts;
+                    currentPart++;
                     timeslotMap.get(timeslotTime)?.Appointments.add(new Appointment(
                         ev1.Id,
                         ev1.Appointment_Disposition__c,
@@ -358,12 +333,17 @@ public without sharing class MulticalendarDataService {
                         ev1.EndDateTime.getTime(),
                         ev1.Type_of_Appointment__c,
                         ev1.Lead_Source__c,
-                        ev1.Subject,
-                        (ev1.of_Calls_for_Event__c == null ? 0 : ev1.of_Calls_for_Event__c)
+                        subject,
+                        (ev1.of_Calls_for_Event__c == null ? 0 : ev1.of_Calls_for_Event__c),
+                        parts,
+                        ev1.Who.Name
                     ));
                 }
+
+                String parts = (ev.Type_of_Appointment__c == 'Calendar Block' || totalParts == 1) ? '' : '('+currentPart+'/'+totalParts+')';
+                String subject = (ev.Type_of_Appointment__c == 'Calendar Block' || totalParts == 1) ? ev.Subject : ev.Subject+' '+parts;
                 
-                timeslotTime = roundToHalfHourLong(ev.StartDateTime);
+                timeslotTime = roundToHalfHourLong(ev.StartDateTime); 
                 timeslotMap.get(timeslotTime)?.Appointments.add(new Appointment(
                     ev.Id,
                     ev.Appointment_Disposition__c,
@@ -374,8 +354,10 @@ public without sharing class MulticalendarDataService {
                     ev.EndDateTime.getTime(),
                     ev.Type_of_Appointment__c,
                     ev.Lead_Source__c,
-                    ev.Subject,
-                    (ev.of_Calls_for_Event__c == null ? 0 : ev.of_Calls_for_Event__c)
+                    subject,
+                    (ev.of_Calls_for_Event__c == null ? 0 : ev.of_Calls_for_Event__c),
+                    parts,
+                    ev.Who.Name
                 ));
             }
 
@@ -478,6 +460,7 @@ public without sharing class MulticalendarDataService {
         try{
             List<String> profileNames = new List<String>{'InsideSalesUser - Zuora', 'Inbound User', 'Sales Manager'};
             List<Profile> salesProfiles = [SELECT Id FROM Profile WHERE Name IN :profileNames];
+            
 
             if(salesProfiles.isEmpty()){
                 System.debug('no sales profiles found');
@@ -552,7 +535,7 @@ public without sharing class MulticalendarDataService {
             //     filterList = filterMap.get(false);
             // }
             System.debug('getReps()');
-            List<String> profileNames = new List<String>{'InsideSalesUser - Zuora', 'Inbound User', 'Sales Manager', 'System Admin', 'System Administrator', 'Appointment Setter'};
+            List<String> profileNames = new List<String>{'InsideSalesUser - Zuora', 'Inbound User', 'Sales Manager', 'System Admin', 'System Administrator', 'Appointment Setter', 'Executive'};
             List<Profile> salesProfiles = [SELECT Id FROM Profile WHERE Name IN :profileNames];
 
             if(salesProfiles.isEmpty()){
@@ -561,7 +544,7 @@ public without sharing class MulticalendarDataService {
                 Set<Id> profileIds = new Map<Id, Profile>(salesProfiles).keySet();
                 Id currentUserId = UserInfo.getUserId();
                 //String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true AND Sales_Team__c!=null';
-                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE Id != :currentUserId AND IsActive=true';
+                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id != :currentUserId AND IsActive=true';
                 
                 if(filterList != null && !filterList.isEmpty()){
                 //if(filterString != null && filterString != ''){
@@ -581,8 +564,8 @@ public without sharing class MulticalendarDataService {
                 // for(Integer i=0; i<repUsers.size(); i++){
                 //     User u = repUsers[i];
                     String profileName = u.Profile.Name.toLowerCase();
-                    Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
-                    Rep r = new Rep(u.Id, u.Name, isManager);
+                    Boolean isManager = profileName.contains('manager') || profileName.contains('admin') || profileName.contains('executive');
+                    Rep r = new Rep(u.Id, u.Name, isManager, u.Sales_Team__c);
                     if(isManager){
                         r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
                     }
@@ -596,14 +579,25 @@ public without sharing class MulticalendarDataService {
                         if(u.Skills_Sales__c.contains('Paid Digital–CORE')){
                             r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
                         }
-                    }                
+                        if(!u.Skills_Sales__c.contains('Partner-Subscribed Prospects')){
+                            r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                        }
+                    } else {
+                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    }          
                     if(u.Available_Restricted_Lead_Sources__c != null){
                         if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
                             r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                         }
-                        if(u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
-                            r.Tags.add(new Tag(r.Tags.size(),'Tailor Brands'));
+                        if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
+                            r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                         }
+                        if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                            r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                        }
+                    } else {
+                        r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                        r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                     }
                     if(profileName == 'appointment setter'){
                         r.Tags.add(new Tag(r.Tags.size(),'SDR'));
@@ -655,14 +649,14 @@ public without sharing class MulticalendarDataService {
     public static Rep getCurrentUserData(){
         try{
             Id currentUserId = UserInfo.getUserId();
-            String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE Id = :currentUserId';
+            String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id = :currentUserId';
             System.debug(queryString);
             List<User> currentUsers = Database.query(queryString);
             User u = currentUsers[0];
 
             String profileName = u.Profile.Name.toLowerCase();
             Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
-            Rep r = new Rep(u.Id, u.Name, isManager);
+            Rep r = new Rep(u.Id, u.Name, isManager, u.Sales_Team__c);
 
             if(isManager){
                 r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
@@ -672,19 +666,30 @@ public without sharing class MulticalendarDataService {
             }
             if(u.Skills_Sales__c != null){
                 if(u.Skills_Sales__c.contains('Cross-Sale')){
-                    r.Tags.add(new Tag(r.Tags.size(),'BNA'));
+                    r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
                 }
                 if(u.Skills_Sales__c.contains('Paid Digital–CORE')){
                     r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
                 }
-            }                
+                if(!u.Skills_Sales__c.contains('Partner-Subscribed Prospects')){
+                    r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                }
+            } else {
+                r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+            }                 
             if(u.Available_Restricted_Lead_Sources__c != null){
                 if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
                     r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                 }
-                if(u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
-                    r.Tags.add(new Tag(r.Tags.size(),'Tailor Brands'));
+                if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
+                    r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                 }
+                if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                    r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                }
+            } else {
+                r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
             }
             
             if(profileName == 'appointment setter'){
@@ -705,9 +710,10 @@ public without sharing class MulticalendarDataService {
         try{
             //Map<String, String> viewMap = new Map<String, String>();
             List<CalendarView> viewList = new List<CalendarView>();
-            viewList.add(new CalendarView('All Reps', '(NOT (Profile.Name LIKE \'%admin%\' OR Profile.Name LIKE \'%manager%\' OR Profile.Name LIKE \'%appointment setter%\'))')); //default filter
+            viewList.add(new CalendarView('All Reps', '(NOT (Profile.Name LIKE \'%admin%\' OR Profile.Name LIKE \'%manager%\' OR Profile.Name LIKE \'%appointment setter%\' OR Profile.Name LIKE \'%executive%\'))')); //default filter
             viewList.add(new CalendarView('Queues', 'Name IN (\'Do Not Reply\', \'General Lead Queue\', \'Dead Leads Queue\')')); //default filter
             viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
+            viewList.add(new CalendarView('Client Success', 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\'')); 
             Schema.DescribeFieldResult fieldResult = User.Sales_Team__c.getDescribe();
             for(Schema.PicklistEntry ple : fieldResult.getPicklistValues()){
                 //if(fieldResult.isActive()){
