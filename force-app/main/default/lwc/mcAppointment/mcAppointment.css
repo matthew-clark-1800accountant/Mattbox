@@ -9,7 +9,8 @@
 
     position: relative;
     width: 230px;
-    height: 44px;
+    min-height: 44px;
+    height: fit-content;
     left: 0px;
     top: 0px;
 
@@ -50,7 +51,8 @@
 .text-subheading {
     /* Lead Source */
     width: 152px;
-    height: 16px;
+    min-height: 16px;
+    height: fit-content;
 
     /* v2/025 - Bike/R(400)-16 */
     font-family: 'Poppins';

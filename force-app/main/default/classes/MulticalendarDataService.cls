@@ -224,6 +224,37 @@ public without sharing class MulticalendarDataService {
        
     }
 
+    public static Map<String, String> leadTypeLabels = new Map<String, String>{
+        'BTP' => 'BTP',
+        'PTP' => 'PTP',
+        'BTPNS' => 'BTPNS',
+        'Tax Hotline' => 'Tax Hotline',
+        'Tax Hotline Monthly' => 'Tax Hotline',
+        'TaxSmart' => 'Tax Hotline',
+        'TaxSmartMonthly' => 'Tax Hotline'
+    };
+
+    public static String getLeadSourceLabel(Event ev){
+        String sourceLabel = ev.Lead_Source__c;
+        if(ev.Lead_Type_New__c == null || ev.Lead_Type_New__c == ''){ return sourceLabel; }
+        List<String> leadTypesFromEvent = ev.Lead_Type_New__c.split(';');
+
+        List<String> leadTypesToLabel = new List<String>();
+        for(String key : leadTypeLabels.keySet()){
+            if(leadTypesFromEvent.contains(key) && !leadTypesToLabel.contains(leadTypeLabels.get(key))){ leadTypesToLabel.add(leadTypeLabels.get(key)); }
+        }
+        if((leadTypesFromEvent.contains('Buyer-DUNS Creator') || leadTypesFromEvent.contains('Buyer-Credit Insights')) && ev.Lead_Source__c == 'Dun & Bradstreet'){ leadTypesToLabel.add('Buyer'); }
+        
+        if(!leadTypesToLabel.isEmpty()){
+            sourceLabel += ' - '+leadTypesToLabel[0];
+            for(Integer i=1; i < leadTypesToLabel.size(); i++){
+                sourceLabel += '/'+leadTypesToLabel[i];
+            }
+        }
+        
+        return sourceLabel; 
+    }
+
     //to-do: decide how to account for timezones
     @AuraEnabled(cacheable=true)
     public static List<Timeslot> getRepTimeslots(String repId, String dateString){
@@ -245,7 +276,8 @@ public without sharing class MulticalendarDataService {
                 StartDateTime,
                 EndDateTime,
                 Subject,
-                Who.Name
+                Who.Name,
+                Lead_Type_New__c
                 FROM Event
                 WHERE OwnerId IN :managerIds
                 //AND StartDateTime = today];
@@ -264,7 +296,8 @@ public without sharing class MulticalendarDataService {
                 StartDateTime,
                 EndDateTime,
                 Subject,
-                Who.Name
+                Who.Name,
+                Lead_Type_New__c
                 FROM Event
                 WHERE OwnerId = :repId
                 //AND StartDateTime = today];
@@ -328,11 +361,12 @@ public without sharing class MulticalendarDataService {
                         ev1.Appointment_Disposition__c,
                         ev1.Secondary_Disposition_Details__c,
                         initials,
-                        ev1.Lead_Source__c,
+                        //ev1.Lead_Source__c,
+                        getLeadSourceLabel(ev1),
                         ev1.StartDateTime.getTime(),
                         ev1.EndDateTime.getTime(),
                         ev1.Type_of_Appointment__c,
-                        ev1.Lead_Source__c,
+                        getLeadSourceLabel(ev1),
                         subject,
                         (ev1.of_Calls_for_Event__c == null ? 0 : ev1.of_Calls_for_Event__c),
                         parts,
@@ -349,11 +383,12 @@ public without sharing class MulticalendarDataService {
                     ev.Appointment_Disposition__c,
                     ev.Secondary_Disposition_Details__c,
                     initials,
-                    ev.Lead_Source__c,
+                    //ev.Lead_Source__c,
+                    getLeadSourceLabel(ev),
                     ev.StartDateTime.getTime(),
                     ev.EndDateTime.getTime(),
                     ev.Type_of_Appointment__c,
-                    ev.Lead_Source__c,
+                    getLeadSourceLabel(ev),
                     subject,
                     (ev.of_Calls_for_Event__c == null ? 0 : ev.of_Calls_for_Event__c),
                     parts,

@@ -8,17 +8,37 @@ public with sharing class NVMCallSummaryTriggerHandler {
 
     public static void updateTrackingWithIds(List<Id> summaryIds){
         List<String> ignoredQueues = new List<String>{'DID Queue', 'SMS Queue'};
-        List<NVMStatsSF__NVM_Call_Summary__c> summaries = 
+        List<NVMStatsSF__NVM_Call_Summary__c> querySummaries = 
             [SELECT Id, CreatedDate, NVMStatsSF__Queue_Name__c,
             NVMStatsSF__Ring_List__c, NVMStatsSF__Agent_List__c,
             NVMStatsSF__NVM_AgentID__c, NVMStatsSF__Agent2_ID__c,
-            NVMStatsSF__Queue_Agent_Queue_List__c
+            NVMStatsSF__Queue_Agent_Queue_List__c, NVMStatsSF__Agent__r.Profile.Name
             FROM NVMStatsSF__NVM_Call_Summary__c 
             WHERE Id IN :summaryIds
             AND NVMStatsSF__Ring_List__c != null
-            AND (NOT (NVMStatsSF__Queue_Name__c IN :ignoredQueues))
-            AND (NVMStatsSF__Queue_Agent_Queue_List__c LIKE '%live%' OR NVMStatsSF__Queue_Name__c != '')];
+            //AND (NOT (NVMStatsSF__Queue_Name__c IN :ignoredQueues))
+            //AND (NVMStatsSF__Queue_Agent_Queue_List__c LIKE '%live%' OR NVMStatsSF__Queue_Name__c != '')
+        ];
+        List<NVMStatsSF__NVM_Call_Summary__c> summaries = new List<NVMStatsSF__NVM_Call_Summary__c>();
 
+        //filter out summaries based on criteria and exceptions
+        for(NVMStatsSF__NVM_Call_Summary__c sum : querySummaries){
+            //if agent 1 is an sdr, ignore queue name
+            if(sum.NVMStatsSF__Agent__r.Profile.Name == 'Appointment Setter'){
+                summaries.add(sum);
+                continue;
+            }
+
+            //skip summaries with disallowed queue names
+            if(ignoredQueues.contains(sum.NVMStatsSF__Queue_Name__c)){
+                continue;
+            }
+            if(sum.NVMStatsSF__Queue_Name__c == '' && !sum.NVMStatsSF__Queue_Agent_Queue_List__c.toLowerCase().contains('live')){
+                continue;
+            }
+
+            summaries.add(sum);
+        }
         if(summaries.isEmpty()){
             System.debug('no valid summaries found');
             return;
