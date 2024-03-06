@@ -25,6 +25,61 @@
             float: center;
             }
              
+            .description-container{
+                flex: 1 1 0; 
+                flex-direction: column; 
+                justify-content: flex-start; 
+                align-items: flex-start; 
+                gap: 16px; 
+                display: inline-flex
+            }
+
+            .offer-heading{
+                text-align: center; color: #F15F22; font-size: 33.94px; font-family: Poppins; font-weight: 600; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word
+            }
+
+            .flex-column{
+                flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex
+            }
+
+            .amount-due{
+                text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 95.94px; font-family: Poppins; font-weight: 600; line-height: 155.23px; word-wrap: break-word
+            }
+
+            .sub-amount-due{
+                text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 60px; font-family: Poppins; font-weight: 400; word-wrap: break-word
+            }
+
+            .product-description{
+                align-self: stretch; 
+                height: fit-content; 
+                padding-left: 48px; 
+                flex-direction: column; 
+                justify-content: flex-start; 
+                align-items: flex-start; 
+                display: flex
+            }
+
+            .description-heading{
+                align-self: stretch; 
+                color: rgba(17.70, 22.61, 36.12, 0.91); 
+                font-size: 24px; 
+                font-family: Poppins; 
+                font-weight: 600; 
+                line-height: 38.83px; 
+                word-wrap: break-word
+            }
+            .description-subheading{
+                align-self: stretch; 
+                color: rgba(17.70, 22.61, 36.12, 0.91); 
+                font-size: 16.97px; 
+                font-family: Poppins; 
+                font-weight: 400; 
+                line-height: 27.46px; 
+                word-wrap: break-word; 
+                padding-left: 30px
+            }
+
             
             #businessDiscReview::-webkit-scrollbar, #presWrapUpback1::-webkit-scrollbar, #presWrapUpback2::-webkit-scrollbar, .questionSection::-webkit-scrollbar {
             display: none;
@@ -1093,10 +1148,10 @@
             position: absolute;
             background: #75777A;
             border-radius: 30px 30px 0px 0px;
+            max-height: calc(80% - 100px);
             }
             
             #portalTourMobileAppImg1, #portalTourMobileAppImg2 {
-            background: #75777A;
             border-radius: 20px;
             margin-right: 6%;
             }
@@ -1359,7 +1414,7 @@
             color: #F15F22;
             }
 
-            .slds-scope p#balanceSectionTitle {
+            .slds-scope p#balanceSectionToday {
             font-weight: 700;
             font-size: var(--step-3);
             line-height: 120%;
@@ -3251,7 +3306,7 @@
     yesMap.set('Do you currently have any rental properties?', 'do have rental properties.');
 
     var questionsAnswered = 0;
-    var useStaticPackage = false;
+    var useStaticPackage = true;
         
     //Called onload of the body to take off the linethrough if tax advisory was a part of the personalized plan
     function startPage() {
@@ -3360,6 +3415,7 @@
         document.getElementById('displayReview1-30').style.display = "none";
         document.getElementById('businessDiscReview').style.display = "none";
         document.getElementById('properEstityStrugle').style.display = "none";
+        document.getElementById('properEstityStrugleSCorp').style.display = "none";
         document.getElementById('flowThroughEntity').style.display = "none";
         document.getElementById('entityClassificationElec').style.display = "none";
         document.getElementById('selfEmploymentTax').style.display = "none";
@@ -3367,6 +3423,8 @@
         document.getElementById('reasonableSalary').style.display = "none";
         document.getElementById('selfEmploymentTaxIRS').style.display = "none";
         document.getElementById('selfEmploymentTaxSavings').style.display = "none";
+        document.getElementById('boiIntro').style.display = "none";
+        document.getElementById('properEntityStructuringReviewSCorp').style.display = "none";
         document.getElementById('properEntityStructuringReview').style.display = "none";
         document.getElementById('deductionsIntro').style.display = "none";
         document.getElementById('startUpCosts').style.display = "none";
@@ -3407,6 +3465,7 @@
         document.getElementById('mySavings1').style.display = 'none';
         document.getElementById('mySavings2').style.display = 'none';
 
+        showDueToday(false);
         progress(3);
     }
     
@@ -4129,6 +4188,25 @@
                                         <p id="propertext">Flow Through Entity</p>
                                         <p id="propertext">Entity Classification Election (ECE)</p>
                                         <p id="propertext">Self-Employment Tax (FICA)</p>
+                                        <p id="propertext">Beneficial Ownership Information (BOI)</p>
+                                    </div>
+                                </div>                          
+                            </center>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap" id="properEstityStrugleSCorp">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="properEstityStrugleSec">
+                            <center>
+                                <div id="properBackground">
+                                    <div id="properBack">
+                                        <p id="properTitle">Proper Entity Structuring</p>
+                                        <p id="propertext">Flow Through Entity</p>
+                                        <p id="propertext">Self-Employment Tax (FICA)</p>
+                                        <p id="propertext">Reasonable Salary</p>
+                                        <p id="propertext">Beneficial Ownership Information (BOI)</p>
                                     </div>
                                 </div>                          
                             </center>
@@ -4258,6 +4336,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="slds-grid slds-wrap" id="boiIntro">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="selfEmploymentTaxSec">
+                            <center>
+                                <div id="selfEmploymentTaxback">
+                                    <img id="selfEmploymentTaxImg" src="{!$Resource.boiGraphic}"/>
+                                    <p id="selfEmploymentTaxtitle">Beneficial Ownership Information (BOI)</p>
+                                    <p id="selfEmploymentTaxtxt">The process of officially documenting who owns and controls your company.</p>
+                                    <p id="selfEmploymentTaxOrange">The civil penalty for failure to file by the deadline is $500 per day up to $10,000. </p>
+                                </div>                          
+                            </center>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="slds-grid slds-wrap" id="properEntityStructuringReview">
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
@@ -4269,6 +4362,25 @@
                                         <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Flow Through Entity</b></p>
                                         <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Entity Classification Election (ECE)</b></p>
                                         <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Self-Employment Tax (FICA)</b></p>
+                                        <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Beneficial Ownership Information (BOI)</b></p>
+                                    </div>
+                                </div>                          
+                            </center>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap" id="properEntityStructuringReviewSCorp">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="properEntityStructuringReviewSec">
+                            <center>
+                                <div id="properReviewBackground">
+                                    <div id="properReviewBack">
+                                        <p id="properTitle">Proper Entity Structuring</p>
+                                        <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Flow Through Entity</b></p>
+                                        <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Self-Employment Tax (FICA)</b></p>
+                                        <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Reasonable Salary</b></p>
+                                        <p id="properReviewtext"><span class="material-icons" style="color: #3B7A80;vertical-align: middle;font-weight: bold;">task_alt</span>&nbsp;&nbsp;<b>Beneficial Ownership Information (BOI)</b></p>
                                     </div>
                                 </div>                          
                             </center>
@@ -4516,7 +4628,7 @@
                     </div>
                 </div>
                 
-                <div class="slds-grid slds-wrap" id="packages">
+                <div class="slds-grid slds-wrap" id="packages" style="display:none">
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="packagesSec">
                             <center>
@@ -4525,7 +4637,7 @@
                                     <div id="specialOfferAmount">
                                         <p class="specialOfferAmountTitle">Special Offer</p>
                                         <p class="specialOfferAmountNum" id="quoteTotal"></p>
-                                        <p class="specialOfferAmountNote"><spam id="specialOfferNum" style="text-decoration-line: line-through;">$2,999</spam>&nbsp;Save 20%</p>
+                                        <p class="specialOfferAmountNote"><span id="specialOfferNum" style="text-decoration-line: line-through;">$2,999</span>&nbsp;Save 20%</p>
                                     </div>
                                     <div id="specialOfferInfo">
                                         <div id="includedFeatures">
@@ -4546,117 +4658,61 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="slds-grid slds-wrap" id="bundle">
-                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
-                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="packagesSec">
-                            <center>
-                                <p class="packagesTitle">Based on our conversation we’ve prepared a special plan for you</p>       
-                                <div id="specialOffer">
-                                    <div id="specialOfferAmount">
-                                        <p class="specialOfferAmountTitle">Special Offer</p>
-                                        <p class="specialOfferAmountNum" id="quoteTotal">$2,789</p>
-                                        <p class="specialOfferAmountNote"><spam id="specialOfferNum" style="text-decoration-line: line-through;">$3,599</spam>&nbsp;Save 23%</p>
-                                    </div>
-                                    <div id="specialOfferInfo">
-                                        <div id="includedFeatures">
-                                            <p class="includedFeaturesTitle">Included Features</p>
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td> 
-                                                            <p class="bundleItemTitle" id="addProduct1"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp; Business and personal annual tax filings</p>
-                                                            <p class="bundleItemSubtitle">&nbsp;&nbsp;&nbsp;&nbsp; Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 
-                                                            <p class="bundleItemTitle" id="addProduct2"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp; Business tax planning and unlimited year-round consulting</p>
-                                                            <p class="bundleItemSubtitle">&nbsp;&nbsp;&nbsp;&nbsp; Enjoy a custom-built tax plan from your accounting team and get the best possible tax savings</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 
-                                                            <p class="bundleItemTitle" id="addProduct3"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp; Personal financial planning</p>
-                                                            <p class="bundleItemSubtitle">&nbsp;&nbsp;&nbsp;&nbsp; Plan for retirement while also helping your immediate tax situation</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 
-                                                            <p class="bundleItemTitle" id="addProduct4"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp; Industry leading bookkeeping and software</p>
-                                                            <p class="bundleItemSubtitle">&nbsp;&nbsp;&nbsp;&nbsp; Use our popular ClientBooks software to manage all aspects of small business accounting with automated bookkeeping, expense management, invoicing, payment processing, reporting tools, and more</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 
-                                                            <p class="bundleItemTitle" id="addProduct5"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp; Unlimited Premier Support</p>
-                                                            <p class="bundleItemSubtitle">&nbsp;&nbsp;&nbsp;&nbsp; Engage your accountant team whenever you need advice or help. Rest easy knowing you're covered by America's top small-business accounting firm</p>
-                                                        </td>
-                                                    </tr>
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </center>
-                        </div>
-                    </div>
-                </div> -->
-                <div id="bundle" style="width: 100%; height: 100%; padding-bottom: 131.17px; padding-left: 260px; padding-right: 260px; justify-content: center; align-items: center; display: inline-flex;     z-index: 1;
+                
+                <div id="bundle" style="width: 100%; height: 100%; padding-bottom: 131.17px; padding-left: 260px; padding-right: 260px; justify-content: center; align-items: center; display: inline-flex; z-index: 1;
                     position: relative;">
                     <div style="align-self: stretch; padding-top: 95.94px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 33.94px; display: inline-flex">
-                    <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 500; line-height: 38.83px; letter-spacing: 0.18px; word-wrap: break-word">Based on our conversation we’ve prepared a special plan for you</div>
-                    <div style="width: 1280px; height: 643.95px; padding: 32px; background: white; box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16); border-radius: 8px; justify-content: flex-start; align-items: flex-start; gap: 18.53px; display: inline-flex">
-                    <div style="width: 400px; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
-                    <div style="text-align: center; color: #F15F22; font-size: 33.94px; font-family: Poppins; font-weight: 600; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">Special Offer</div>
-                    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 95.94px; font-family: Poppins; font-weight: 600; line-height: 155.23px; word-wrap: break-word">$2,789</div>
+                        <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 500; line-height: 38.83px; letter-spacing: 0.18px; word-wrap: break-word">Based on our conversation we’ve prepared a special plan for you</div>
+                        <div style="width: 1300px; height: 643.95px; padding: 32px; background: white; box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.16); border-radius: 8px; justify-content: flex-start; align-items: flex-start; gap: 18.53px; display: inline-flex">
+                            <div style="width: 400px; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
+                                <div class="offer-heading">Special Offer</div>
+                                <div class="flex-column">
+                                    <div class="amount-due" id="balanceSectionTotalDue">$2,789</div>
+                                </div>
+                                <div class="flex-column">
+                                    <div style="text-align: center"><span id="originalPrice" style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23%</span></div>
+                                </div>
+                                <hr id="dueTodayLine" style="height:2px; size:2px; width:70%; margin-top:40px; margin-bottom: 40px"/>
+                                <div id="balanceSectionDueToday" class="offer-heading">Due Today</div>
+                                <div id="dueTodayContainer" class="flex-column">
+                                    <div id="balanceSectionTodayAmount" class="sub-amount-due">$920.31</div>
+                                </div>
+                                <div id="balanceSectionNote"  style="text-align: center; color:black" class="balanceSectionNote">The remaining balance will be paid through monthly installments.</div>
+                            </div>
+                            <div style="overflow: auto; max-height: 575px; width: 870px">
+                                <div id="standardBundleDescriptions" class="description-container">
+                                    <div class="product-description">
+                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business and personal annual income tax filings</div>
+                                        <!-- <div style="width: 32px; height: 32px; position: relative"></div> -->
+                                        <div class="description-subheading" id="bundleReturnDescription">Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees</div>
+                                    </div>
+                                    <div class="product-description">
+                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business tax planning and unlimited year-round consulting</div>
+                                        <div class="description-subheading">Enjoy a custom-built tax plan from your accounting team and get the best possible tax savings</div>
+                                    </div>
+                                    <div class="product-description">
+                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Personal financial planning</div>
+                                        <div class="description-subheading">Plan for retirement while also helping your immediate tax situation</div>
+                                    </div>
+                                    <div class="product-description">
+                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Industry leading bookkeeping and software</div>
+                                        <div class="description-subheading">Use our popular ClientBooks software to manage all aspects of small business accounting with automated bookkeeping, expense management, invoicing, payment processing, reporting tools, and more</div>
+                                    </div>
+                                    <div class="product-description">
+                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Unlimited Premier Support</div>
+                                        <div class="description-subheading">Engage your accountant team whenever you need advice or help. Rest easy knowing you're covered by America's top small-business accounting firm</div>
+                                    </div>
+                                </div>
+                                <div style="height: 16px"> </div>
+                                <div id="additionalItemDescriptions" class="description-container">
+                                    
+                                </div>
+                            </div>
+                            
+
+                        </div>
                     </div>
-                    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="text-align: center"><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23%</span></div>
-                    </div>
-                    </div>
-                    <div style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 16px; display: inline-flex">
-                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80;">task_alt</span>Business and personal annual tax filings</div>
-                    <div style="width: 32px; height: 32px; position: relative">
-                     
-                    </div>
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees</div>
-                    </div>
-                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business tax planning and unlimited year-round consulting</div>
-                    <div style="width: 32px; height: 32px; position: relative">
-                    
-                    </div>
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Enjoy a custom-built tax plan from your accounting team and get the best possible tax savings</div>
-                    </div>
-                    <div style="align-self: stretch; height: 66px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Personal financial planning</div>
-                    <div style="width: 32px; height: 32px; position: relative">
-                    
-                    </div>
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Plan for retirement while also helping your immediate tax situation</div>
-                    </div>
-                    <div style="align-self: stretch; height: 120px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Industry leading bookkeeping and software</div>
-                    <div style="width: 32px; height: 32px; position: relative">
-                    
-                    </div>
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Use our popular ClientBooks software to manage all aspects of small business accounting with automated bookkeeping, expense management, invoicing, payment processing, reporting tools, and more</div>
-                    </div>
-                    <div style="align-self: stretch; height: 93px; padding-left: 48px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 24px; font-family: Poppins; font-weight: 600; line-height: 38.83px; word-wrap: break-word"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Unlimited Premier Support</div>
-                    <div style="width: 32px; height: 32px; position: relative">
-                    
-                    </div>
-                    <div style="align-self: stretch; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.97px; font-family: Poppins; font-weight: 400; line-height: 27.46px; word-wrap: break-word; padding-left: 30px;">Engage your accountant team whenever you need advice or help. Rest easy knowing you're covered by America's top small-business accounting firm</div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
+                </div>
                 
                 
                     <div class="slds-grid slds-wrap" id="verifyInformation">
@@ -4947,7 +5003,7 @@
                             <center>
                                 <div id="portalTourMobileAppback">
                                     <p id="portalTourMobileAppNote"><span class="material-icons" style="vertical-align: middle;">phone_iphone</span>&nbsp;Mobile App</p>
-                                    <p id="portalTourMobileAppTitle">Scan receipts on the go and track business miles</p>
+                                    <p id="portalTourMobileAppTitle">Track business miles while on the go</p>
                                     <div id="portalTourMobileAppTables">
                                         <div id="portalTourMobileAppTable1">
                                             <div id="portalTourMobileAppImg1">
@@ -5070,6 +5126,7 @@
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;1-800Accountant Portal Access</p>
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Personal and Business Tax Preparation and Filing</p>
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Entity Classification Election</p>
+                                    <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Beneficial Ownership Information (BOI)</p>
                                 </div>                          
                             </center>
                         </div>
@@ -5109,10 +5166,10 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <p id="balanceSectionDue">Due Today</p>
+                                                    <p id="balanceSectionDueToday">Due Today</p>
                                                 </td>
                                                 <td>
-                                                    <p id="balanceSectionTitle"></p>
+                                                    <p id="balanceSectionTodayAmount"></p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -5194,13 +5251,51 @@
         </div>
     </body>
     <script>
-    
+    var prodList = [];
+
+    //gsids
+    const defaultProductNames = ['Personal Return' , 'Advisory', '1-800Accountant Access' ,  'Business Return', 'Custom Accounting Package', 'Personal Financial Planning', 'Loan Agreement'];
+    function includesStandardBundle(){
+        if(prodList.length < defaultProductNames.length){ return false; }
+        var productNames = prodList.map(x => x?.Product.Guided_Selling_Identifier__c);
+        for(var name of defaultProductNames){
+            if(!productNames.includes(name)){
+                return false;
+            }
+        }
+        return true;
+    }
+    function hasAddedItems(){
+        if(prodList.length > defaultProductNames.length){ return true; }
+        var productNames = prodList.map(x => x?.Product.Guided_Selling_Identifier__c);
+        for(var name of productNames){
+            if(!defaultProductNames.includes(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+    function getReturnQuantities(){
+        var returnQuantities = new Map([['Business Return',0], ['Personal Return',0]]);
+        var productNames = prodList.map(x => x?.Product.Guided_Selling_Identifier__c);
+        for(var prod of prodList){
+            if(prod?.Product.Guided_Selling_Identifier__c == 'Personal Return'){
+                returnQuantities.set('Personal Return', prod.currentQuantity);
+            }
+            if(prod?.Product.Guided_Selling_Identifier__c == 'Business Return'){
+                returnQuantities.set('Business Return', prod.currentQuantity);
+            }
+        }
+        return returnQuantities;
+    }
+    var bundleReturnDescription = 'Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees';
     //const socket = io('https://staging.1800accountant.com', { path: '/socket.io', autoConnect: false });
     const socket = io('{!socketBaseUrl}', { path: '/socket.io', autoConnect: false });
     socket.auth = {sessionID: '{!$CurrentPage.parameters.session}', authToken: '{!$CurrentPage.parameters.token}', source: 'presentation'}; // Pass these credentials as per actual application setup. This is just here for demo.
     socket.connect();
+    var lastProdsName = new Array();
     socket.on("private message", (e) => {
-        //console.log(e.content);
+        //console.log(JSON.stringify(e.content));
         if(null != e.content.savings && '' != e.content.savings && e.content.savings && Number.parseFloat(e.content.savings.replaceAll(',','')) >= 3000){
         //e.content.savings != 0.00 && e.content.savings != 0 && e.content.savings != '0.00' && e.content.savings != '0') {
             document.getElementById('mySavings1').style.display = 'block';
@@ -5244,7 +5339,7 @@
         if(null != e.content.agi && '' != e.content.agi && undefined != e.content.agi) {
             document.getElementById('agiAmount').innerText = '$' + e.content.agi;
         }
-        //console.log('switch '+e.content.page);
+
         switch (e.content.page) {
             case 'Partner Info':
                 clearInterval(stopFunction);
@@ -5273,10 +5368,7 @@
             break;
             
             case 'Blast':
-                console.log(e.content.bundle);
-                if(e.content.bundle == true){
-                    useStaticPackage = true;
-                }
+                //console.log(e.content.bundle);
                 progress(6);
                 hideAll();
                 document.getElementById('backgroundRest').style.display = "block";
@@ -5557,6 +5649,24 @@
                 document.getElementById('backgroundRest').style.display = "block";
                 document.getElementById('properEstityStrugle').style.display = "flex";
             break;
+
+            case 'Proper Entity Structuring LLC':
+                progress(18);
+
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('backgroundRest').style.display = "block";
+                document.getElementById('properEstityStrugle').style.display = "flex";
+            break;
+            
+            case 'Proper Entity Structuring SCorp':
+                progress(18);
+
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('backgroundRest').style.display = "block";
+                document.getElementById('properEstityStrugleSCorp').style.display = "flex";
+            break;
             
             case 'Flow Through Entity':
                 progress(21);
@@ -5590,7 +5700,7 @@
             break;
             
             case 'Reasonable Salary':
-                progress(30);
+                progress(29);
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('reasonableSalary').style.display = "flex";
@@ -5607,6 +5717,13 @@
                 hideAll();
                 document.getElementById('selfEmploymentTaxSavings').style.display = "flex";
             break;
+
+            case 'Beneficial Ownership Information (BOI)':
+                progress(30);
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('boiIntro').style.display = "flex";
+            break;
             
             case 'Proper Entity Structuring Review':
                 progress(30);
@@ -5614,6 +5731,22 @@
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('properEntityStructuringReview').style.display = "flex";
+            break;
+
+            case 'Proper Entity Structuring Review LLC':
+                progress(30);
+
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('properEntityStructuringReview').style.display = "flex";
+            break;
+
+            case 'Proper Entity Structuring Review SCorp':
+                progress(30);
+
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('properEntityStructuringReviewSCorp').style.display = "flex";
             break;
             
             case 'Deductions Intro':
@@ -5826,148 +5959,84 @@
             break;
 
             case 'Prepared Packages':
-                //console.log(e.content);
-                //console.log(e.content.question);
+                //console.log(JSON.stringify(e.content));
                 if(e.content.showProgress == true) {
                     progress(91);
                 }
 
                 clearInterval(stopFunction);
-                
+                console.log(e.content);
                 if(null == e.content.checked) {
                     hideAll();
                     document.getElementById('backgroundRest').style.display = "block"; //green cross-section of the background
-                    if(useStaticPackage){
-                        console.log('received useStaticPackage');
-                        document.getElementById('specialOfferNum').innerText = "$1234"
-                        document.getElementById('bundle').style.display = "flex"; //container for the entire packages page
-                    } else {
-                        console.log('received !useStaticPackage');
-                        document.getElementById('packages').style.display = "flex"; //container for the entire packages page
-                    }
+
+                    console.log('received useStaticPackage');
+                    document.getElementById('specialOfferNum').innerText = "$1234"
+                    document.getElementById('bundle').style.display = "flex"; //container for the entire packages page
+                    
                     
                 }
 
                 var productNumber = e.content.question;
 
-                if(null != e.content.productName && !useStaticPackage) {
-                    var tBody = document.getElementById("bodyProds");
-                    var tabBody = document.getElementById("bodyOfProds");
-                    var rowProd = getRowData(e.content.productName, e.content.productCant);
-                    var name = e.content.productName;
-                    var existingNames = tBody.rows;
-                    var existNames = tabBody.rows;
+                if(null != e.content.productListString) {
+                    var bundleDescriptions = document.getElementById("standardBundleDescriptions");
+                    var otherDescriptions = document.getElementById("additionalItemDescriptions");
+                    prodList = JSON.parse(e.content.productListString);
+                    var tableString = '';
+                    var banishedNames = ['1-800Accountant Access']; //['Business Return','Personal Return','Advisory'];
+                    var bundleIntact = includesStandardBundle();
+                    var itemsAdded = hasAddedItems();
+                    var returnQuantities = getReturnQuantities();
+                    //bundleReturnDescription
+                    if(bundleIntact){ //hide or show default descriptions
+                        console.log('displaying bundle');
+                        bundleDescriptions.style.display = 'inline-flex';
+                    } else {
+                        console.log('hiding bundle');
+                        bundleDescriptions.style.display = 'none';
+                    }
 
-                    if(e.content.checked && e.content.productCant != '' && e.content.productCant != null) {
-
-                        /// list of payment details section
-
-                        const listProdsName = new Array();
-                        if(existingNames.length > 0) {
-                            for(let j = 0; j < existingNames.length; j++) {
-                                var pName = String(existingNames[j].childNodes[0].childNodes[0].innerHTML);
-                                const text = pName.split(";");
-                                if(!listProdsName.includes(text[3])) {
-                                    listProdsName.push(text[3]);
-                                }
-                            }
+                    if(bundleIntact && returnQuantities){
+                        var appendString = '';
+                        if(returnQuantities.get('Business Return') > 1 && returnQuantities.get('Personal Return') > 1){
+                            appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns and "
+                            +returnQuantities.get('Personal Return')+" personal returns";
+                        } else if(returnQuantities.get('Business Return') > 1){
+                            appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns";
+                        } else if(returnQuantities.get('Personal Return') > 1){
+                            appendString = ". Includes "+ returnQuantities.get('Personal Return')+" personal returns";
                         }
+                        document.getElementById('bundleReturnDescription').innerHTML = bundleReturnDescription + appendString; 
+                    }
 
-                        if(!listProdsName.includes(name) && name != 'Business Return' && name != 'Personal Return' && name != 'Advisory') {
-                            if(tBody.innerHTML != null) {
-                                tBody.innerHTML = tBody.innerHTML + rowProd;
-                            } else {
-                                tBody.innerHTML = rowProd;
-                            }
-                        } 
-
-                        //list of prepared packages section
-                        
-                        const listOfProdsName = new Array();
-                        if(existNames.length > 0) {
-                            for(let j = 0; j < existNames.length; j++) {
-                                var pName = String(existNames[j].childNodes[0].childNodes[0].innerHTML);
-                                const text = pName.split(";");
-                                var rowName = text[3].replace('&nbsp','');
-                                if(!listOfProdsName.includes(rowName)) {
-                                    listOfProdsName.push(rowName);
-                                }
-                            }
-                        }
-
-                        if(!listOfProdsName.includes(name) && name != 'Business Return' && name != 'Personal Return' && name != 'Advisory') {
-                            if(tabBody.innerHTML != null) {
-                                tabBody.innerHTML = tabBody.innerHTML + rowProd;
-                            } else {
-                                tabBody.innerHTML = rowProd;
-                            }
-                        } else if(listOfProdsName.includes(name)) {
-                            if(existNames.length > 0) {
-                                for(let j = 0; j < existNames.length; j++) {
-                                    var pName = String(existNames[j].childNodes[0].childNodes[0].innerHTML);
-                                    const text = pName.split(";");
-                                    if(text[3].includes(name)) {
-                                        document.getElementById("tableOfProds").deleteRow(j);
-                                    }
-                                }
-                            }
-                            if(tabBody.innerHTML != null) {
-                                tabBody.innerHTML = tabBody.innerHTML + rowProd;
-                            } else {
-                                tabBody.innerHTML = rowProd;
-                            }
+                    if(!bundleIntact || itemsAdded){
+                        for(var prod of prodList){
+                            var prodName = prod.Product.Guided_Selling_Identifier__c;
+                            var includeProduct = (defaultProductNames.includes(prodName) && !bundleIntact) ||
+                            (!defaultProductNames.includes(prodName));
+                            if(includeProduct && !banishedNames.includes(prodName)){
+                                var rowProd = getRowData(prod.Product.Name, prod.description, prod.currentQuantity);
+                                tableString += rowProd;
+                            }                        
                         }
                     }
 
-                    /*
-                    TODO: Order to recreate: 
-                        Business Tax Return:
-                        Personal Tax Return:
-                        Tax Advisory:
-                        Payroll:
-                        Bookkeeping:
-                        LLC State Filing:
-                        Corp State Filing:
-                        Back Bookkeeping:
-                        Foreign State:
-                        Back Quarterly Payroll:
-                        Back Business Return:
-                        Back Personal Return:
-                        Non-Profit Bookkeeping:
-                        1-800Accountant Access:
-                    */
-
-                    if(!e.content.checked) {
-                        if(existingNames.length > 0) {
-                            for(let j = 0; j < existingNames.length; j++) {
-                                var pName = String(existingNames[j].childNodes[0].childNodes[0].innerHTML);
-                                const text = pName.split(";");
-                                if(text[3].includes(name)) {
-                                    document.getElementById("tableProds").deleteRow(j);
-                                }
-                            }
-                        }
-
-                        if(existNames.length > 0) {
-                            for(let j = 0; j < existNames.length; j++) {
-                                var pName = String(existNames[j].childNodes[0].childNodes[0].innerHTML);
-                                const text = pName.split(";");
-                                if(text[3].includes(name)) {
-                                    document.getElementById("tableOfProds").deleteRow(j);
-                                }
-                            }
-                        }
-                    }
-                    var quoteTotal = document.getElementById('quoteTotal');
+                    otherDescriptions.innerHTML = tableString;
+                    
+                    
+                    // lastProdsName = listProdsName;
+                    var quoteTotal = document.getElementById('balanceSectionTotalDue');
                     quoteTotal.innerText = e.content.quoteTotal; 
 
                     var amount = e.content.quoteTotal;
+                    //console.log(amount+', '+typeof(amount));
                     var fixAmount = amount.replace(/[^\d.-]/g, '');
                     var calcZero = parseFloat(fixAmount).toFixed(2);
                     // var calcOne = parseFloat(calcZero).toFixed(2) * 100;
                     // var calcTwo = parseFloat(calcOne).toFixed(2) / 36;
                     var fakeAmount = (calcZero / 80 * 100).toFixed(2);
-                    var specialOfferNum = document.getElementById('specialOfferNum');
+                    var specialOfferNum = document.getElementById('originalPrice');
                     specialOfferNum.innerText = '$' + fakeAmount; 
                     
                 }
@@ -5982,35 +6051,40 @@
             break;
     
             case 'Payment Details':
-                if(!useStaticPackage){
-                    progress(96);
+                console.log('Payment Details');
+                console.log(e.content);
+                    if(e.content.showProgress == true) {
+                        progress(94);
+                        // hideAll();
+                        // document.getElementById('backgroundRest').style.display = "block";
+                        // document.getElementById('paymentDetails').style.display = "flex";
+                    }
                     clearInterval(stopFunction);
-                    hideAll();
-                    document.getElementById('backgroundRest').style.display = "block";
-                    document.getElementById('paymentDetails').style.display = "flex";
 
                     var numTotalDue = Number.parseFloat(e.content.total.replaceAll('$','').replaceAll(',',''));
                     var numDueToday = Number.parseFloat(e.content.due.replaceAll('$','').replaceAll(',',''));
                     if(numDueToday > numTotalDue){
-                        document.getElementById('balanceSectionAmount').innerText = e.content.total;
-                        document.getElementById('balanceSectionTitle').innerText = e.content.total;
-                        document.getElementById('balanceSectionNote').style.display = "none";
-                        document.getElementById('balanceSectionTitle').style.setProperty("margin-bottom", "8%")
+                        console.log('warning: numDueToday > numTotalDue');
+                        showDueToday(true);
+                        document.getElementById('balanceSectionTotalDue').innerText = e.content.total;
+                        document.getElementById('balanceSectionTodayAmount').innerText = e.content.total;
+                        //document.getElementById('balanceSectionNote').style.display = "none";
+                        //document.getElementById('balanceSectionTodayAmount').style.setProperty("margin-bottom", "8%")
                     } else if(numDueToday < numTotalDue){
-                        document.getElementById('balanceSectionAmount').innerText = e.content.total;
-                        document.getElementById('balanceSectionTitle').innerText = e.content.due;
-                        document.getElementById('balanceSectionNote').style.display = "";
-                        document.getElementById('balanceSectionTitle').style.setProperty("margin-bottom", "")
+                        showDueToday(true);
+                        document.getElementById('balanceSectionTotalDue').innerText = e.content.total;
+                        document.getElementById('balanceSectionTodayAmount').innerText = e.content.due;
+                        //document.getElementById('balanceSectionNote').style.display = "";
+                        //document.getElementById('balanceSectionTodayAmount').style.setProperty("margin-bottom", "")
                         //document.getElementById('monthlyDue').innerText = e.content.due;
                     } else {
-                        document.getElementById('balanceSectionAmount').innerText = e.content.total;
-                        document.getElementById('balanceSectionTitle').innerText = e.content.due;
-                        document.getElementById('balanceSectionNote').style.display = "none";
-                        document.getElementById('balanceSectionTitle').style.setProperty("margin-bottom", "8%")
+                        showDueToday(false);
+                        document.getElementById('balanceSectionTotalDue').innerText = e.content.total;
+                        document.getElementById('balanceSectionTodayAmount').innerText = e.content.due;
+                        //document.getElementById('balanceSectionNote').style.display = "none";
+                        //document.getElementById('balanceSectionTodayAmount').style.setProperty("margin-bottom", "8%")
                     }
-                    console.log('total: '+numTotalDue);
-                    console.log('due: '+numDueToday);
-                }               
+                            
 
             break;
 
@@ -6068,21 +6142,31 @@
     channel.onmessage = function(e) { 
     };
 
-    function getRowData(name, cant) {
+    // function getRowData(name, cant) {
+    //     var rowData = '';
+    //     if(cant > 1) {
+    //         rowData = '<tr>'
+    //         + '<td>' 
+    //         + '<p class="includedFeaturesTxt" id="addProduct1"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp;'+ name + '&nbsp;x ' + cant +'</p>'
+    //         + '</td>'
+    //         + '</tr>';
+    //     } else {
+    //         rowData = '<tr>'
+    //         + '<td>' 
+    //         + '<p class="includedFeaturesTxt" id="addProduct1"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp;'+ name + '</p>'
+    //         + '</td>'
+    //         + '</tr>';
+    //     }
+        
+    //     return rowData;
+    // }
+
+    function getRowData(heading, subheading, quantity) {
         var rowData = '';
-        if(cant > 1) {
-            rowData = '<tr>'
-            + '<td>' 
-            + '<p class="includedFeaturesTxt" id="addProduct1"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp;'+ name + '&nbsp;x ' + cant +'</p>'
-            + '</td>'
-            + '</tr>';
-        } else {
-            rowData = '<tr>'
-            + '<td>' 
-            + '<p class="includedFeaturesTxt" id="addProduct1"><span class="material-icons" style="color: #3B7A80;">task_alt</span>&nbsp;&nbsp;'+ name + '</p>'
-            + '</td>'
-            + '</tr>';
-        }
+        rowData = '<div class="product-description">'
+        + '<div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>'+heading+(quantity > 1 ? ' (x'+quantity+')' : '')+'</div>' 
+        + '<div class="description-subheading">'+subheading+'</div>'
+        + '</div>';
         
         return rowData;
     }
@@ -6101,15 +6185,18 @@
         document.getElementById('businessDiscIntro').style.display = "none";
         document.getElementById('businessDiscParts').style.display = "none";
         document.getElementById('properEstityStrugle').style.display = "none";
+        document.getElementById('properEstityStrugleSCorp').style.display = "none";
         document.getElementById('flowThroughEntity').style.display = "none";
         document.getElementById('entityClassificationElec').style.display = "none";
         document.getElementById('selfEmploymentTax').style.display = "none";
         document.getElementById('selfEmploymentTaxSCorp').style.display = "none";
         document.getElementById('reasonableSalary').style.display = "none";
         document.getElementById('selfEmploymentTaxIRS').style.display = "none";
-        document.getElementById('selfEmploymentTaxSavings').style.display = "none";
+        document.getElementById('selfEmploymentTaxSavings').style.display = "none";        
+        document.getElementById('boiIntro').style.display = "none";
         document.getElementById('properEntityStructuringReview').style.display = "none";
         document.getElementById('deductionsIntro').style.display = "none";
+        document.getElementById('properEntityStructuringReviewSCorp').style.display = "none";
         document.getElementById('startUpCosts').style.display = "none";
         document.getElementById('medicalDeduction').style.display = "none";
         document.getElementById('vehicleDeduction').style.display = "none";
@@ -6144,6 +6231,20 @@
         document.getElementById('paymentLegal').style.display = "none";
         document.getElementById('sale').style.display = "none";
         document.getElementById('notSale').style.display = "none";
+    }
+
+    function showDueToday(val){
+        if(val){
+            document.getElementById('dueTodayLine').style.display = "block";
+            document.getElementById('balanceSectionDueToday').style.display = "block";
+            document.getElementById('dueTodayContainer').style.display = "flex";
+            document.getElementById('balanceSectionNote').style.display = "block";
+        } else {
+            document.getElementById('dueTodayLine').style.display = "none";
+            document.getElementById('balanceSectionDueToday').style.display = "none";
+            document.getElementById('dueTodayContainer').style.display = "none";
+            document.getElementById('balanceSectionNote').style.display = "none";
+        }
     }
     </script>      
 </apex:page>

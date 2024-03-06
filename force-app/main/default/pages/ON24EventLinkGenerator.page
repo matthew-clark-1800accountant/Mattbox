@@ -1,5 +1,6 @@
 <apex:page controller="ON24EventLinkGeneratorController" sidebar="false" showHeader="false">
-    <apex:form >
+    <!-- deprecated 9-11-23     -->
+<!-- <apex:form >
         <apex:pageBlock >
             
             <apex:pageBlockButtons location="top">
@@ -25,5 +26,5 @@
             </apex:pageBlockTable>
                 </apex:pageBlockSection>
         </apex:pageBlock>
-    </apex:form>
+    </apex:form> -->
 </apex:page>

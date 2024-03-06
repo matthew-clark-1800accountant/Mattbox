@@ -1,0 +1,56 @@
+<apex:component layout="none" controller="GuidedSellingProductLineController">
+    <apex:attribute name="p" description="This is the product represented by this component." type="GuidedSellingProduct" required="true" assignTo="{!productValue}"/>
+    <apex:attribute name="tab" description="This is the name of the component's tab." type="String" required="true"/>
+
+    <div id="{!p.Product.Id}" class="row {!p.Product.Name}" style="display: table-row;border-bottom: 1px solid rgba(18, 23, 36, 0.2);">
+        <div class="col" style="text-align: center;vertical-align: middle;padding-left: 17px;">
+            <input id="{!p.Product.Id}{!tab}select" type="checkbox" html-data-id="{!p.Product.Id}" data-product="{!p.Product.Name}" style="Height: 13px;margin-left: 12px;" class="{!p.Product.Id}" onchange="addRemoveProduct('{!p.Product.Id}');" value="{!p.selected}"/>
+        </div>
+        <div class="col" style="padding-left: 0px;">
+            <p class="planPackageTableProd">{!p.Product.Name}</p>
+        </div>
+        <div class="col" style="padding-left: 195px;">
+            <p class="planPackageTableCost" data-product-cost="{!p.Product.Name}" data-amount="{!p.Product.Name}">{!unitPrice}</p>
+        </div>
+        <div class="col" style="width: 160px;">
+            <apex:outputPanel rendered="{!IF(p.Product.AnnualMonthlyOption__c == true, true, false)}">
+                <div class="radio-group">
+                    <input type="checkbox" class="radiobtn {!p.Product.Id}yearly" id="{!p.Product.Id}yearly" name="selector" value="{!IF(OR('Annual' == p.currentBillingFrequency,'One-Time' == p.currentBillingFrequency), true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}', '{!p.Product.Name}', '{!p.currentBillingFrequency}', '{!p.Product.AnnualMonthlyOption__c}');"/>
+                    <label for="{!p.Product.Id}yearly" class="radioLabel"  >Yearly</label>
+                    
+                    <input type="checkbox" class="radiobtn {!p.Product.Id}monthly" id="{!p.Product.Id}monthly" name="selector" value="{!IF(p.currentBillingFrequency == 'Monthly', true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}', '{!p.Product.Name}', '{!p.currentBillingFrequency}', '{!p.Product.AnnualMonthlyOption__c}');"/>
+                    <label for="{!p.Product.Id}monthly" class="radioLabel">Monthly</label>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(p.Product.AnnualMonthlyOption__c == true, false, true)}">
+                <div class="radio-group">
+                    <output type="checkbox" class="radiobtn" id="{!p.Product.Id}yearly" name="selector" disabled="disabled">{!IF(OR('Annual' == p.currentBillingFrequency,'One-Time' == p.currentBillingFrequency), true, false)}</output>
+                    <label for="{!p.Product.Id}yearly" class="radioLabel {!p.Product.Id}yearlylabel" id="{!p.Product.Id}yearlylabel">Yearly</label>
+                        
+                    <output type="checkbox" class="radiobtn" id="{!p.Product.Id}monthly" name="selector" disabled="disabled">{!IF(p.currentBillingFrequency == 'Monthly', true, false)}</output>
+                    <label for="{!p.Product.Id}monthly" class="radioLabel {!p.Product.Id}monthlylabel" id="{!p.Product.Id}monthlylabel">Monthly</label>
+                </div>
+            </apex:outputPanel>
+        </div>
+        <div class="col" style="width: 110px;">
+            <div class="form-floating">
+                <input type="tel" data-product-qty="{!p.Product.Name}" class="form-control {!p.Product.Id}qty" id="planPackageTableQuantity" style="display: {!IF(p.Product.Disable_QTY_on_Calc__c == true, 'none', 'flex')}" value="{!p.currentQuantity}" oninput="calcQuantityChange(this, '{!p.Product.Name}', '{!p.Product.Id}', '{!p.adjustedPrice}');"/>
+                <output type="tel" data-product-qty="{!p.Product.Name}" class="form-control" id="planPackageTableQuantityOutput" style="display: {!IF(p.Product.Disable_QTY_on_Calc__c == true, 'flex', 'none')}; background: rgba(18, 23, 36, 0.2);opacity: 0.75;">{!p.currentQuantity}</output>
+            </div>
+        </div>
+        <div class="col" style="40px">
+            <p class="planPackageTableSubtotal {!p.Product.Id}subtotal" data-product-subtotal="{!p.Product.Name}" data-amount="{!p.Product.Name}">{!prodSubtotal}</p>
+        </div>
+    </div>
+    <script>
+        if({!p.selected}){
+            //console.log('line selected: {!p.Product.Name}');
+            document.getElementById("{!p.Product.Id}{!tab}select").setAttribute("checked","");
+        }
+
+        function formatMoney(amount){
+            return '$'+parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+        
+    </script>
+</apex:component>

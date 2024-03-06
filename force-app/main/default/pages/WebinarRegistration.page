@@ -1,9 +1,10 @@
 <apex:page doctype="html-5.0" standardStylesheets="false" controller="ON24EventRegistrationController" showHeader="false" sidebar="false" cache="false" applyBodyTag="false" applyHtmlTag="false" >
-    <html xmlns="http://www.w3.org/1999/xhtml">
+    <!--deprecated 9-11-23  -->
+<!-- <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>1-800Accountant - Webinar Registration</title>
-            <!--
+            
             <meta property="og:title" content="Introduction to Business Taxes" />
             <meta property="og:type" content="activity" />
             <meta property="og:url" content="http://1800accountant.com/webinar/sf1/webinar-register.php" />
@@ -14,7 +15,7 @@
             
             <meta name="keywords" content="tax webinar, business taxes webinar, " />
             <meta name="description" content="Live Webinar Intro to Business Taxes - Sign up FREE!" />
-            -->
+            
             <meta http-equiv="Pragma" content="no-cache"/>
             
             <style type="text/css">
@@ -307,12 +308,12 @@
                 
             </style>    
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <!--
+            
                 <script language="javascript" src="js/cookie.js" type="text/javascript"></script>
             <script language="javascript" src="js/dynajax.js" type="text/javascript"></script>
             <script language="javascript" src="js/gen_validatorv31.js"></script>
             <script language="javascript" src="js/detect_timezone.js"></script>
-            -->
+            
                 <script language="javascript" type="text/javascript"  charset="utf-8">
                     
                     $(document).ready(function(){
@@ -412,9 +413,9 @@
                                                     <div id="videobox" class="video" style="{!IF($CurrentPage.parameters.EventName == "Intro to Business Taxes" || $CurrentPage.parameters.EventName == null ,"","display:none")}">
                                                         
                                                         <div class="videocodebox">
-                                                            <!-- START OF THE PLAYER EMBEDDING TO COPY-PASTE -->
+                                                             START OF THE PLAYER EMBEDDING TO COPY-PASTE 
                                                                 <script type="text/javascript" src="http://1800accountant.com/webinar/sf1/player/jwplayer.js"></script>
-            <!-- END OF THE PLAYER EMBEDDING -->
+             END OF THE PLAYER EMBEDDING 
             <div id="player"></div>
             <script type="text/javascript"> 
             jwplayer('player').setup({
@@ -491,7 +492,7 @@
         
         
         
-        <!--  DISPLAYING THE DATE AND TIME DROPDOWN  -->
+          DISPLAYING THE DATE AND TIME DROPDOWN  
         
         
         
@@ -554,7 +555,7 @@
 </div>
 
 
-<!-- end google analytics code -->
+ end google analytics code 
 
 
 </div>  
@@ -562,5 +563,5 @@
 
 </body>
      
-</html>
+</html> -->
 </apex:page>

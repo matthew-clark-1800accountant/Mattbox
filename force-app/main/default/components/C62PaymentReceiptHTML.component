@@ -1,0 +1,259 @@
+<apex:component controller="C62HTMLPaymentReceiptController" access="global">
+
+<apex:attribute name="PayId" type="Id" description="Id of the Payment" assignTo="{!paymentId}" />
+
+<apex:repeat value="{!payment}" var="p"><!--something you have to do to get this to actually work-->
+</apex:repeat>
+
+<!--{!debug}-->
+
+<head>
+    <title>Invoice Email Template</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <style>
+    .alternating:nth-child(odd) {
+        background-color:#e0e6e7;
+    }f
+    .alternating:nth-child(even) {
+        background-color:#e8f0f4;
+    }
+    </style>
+</head>
+    
+
+<div>
+
+<!-- The basic header with Address Info. -->
+    
+    <div style="width:100%; max-width:600px; text-align:center; font-family: 'Roboto', sans-serif; font-size:13px; padding: 25px; color:#555c67;">
+    <div style="width:100%; max-width:600px; height:30px; background-color:#20c668; margin-bottom:10px;"></div>
+        <div style="float:left;width:275px">
+            <!--<apex:image url="{!$Resource.Logo}"/>-->
+            <img src="{!servURL}/servlet/servlet.ImageServer?id={!X1800_Logo}&oid={!$Organization.Id}"/>
+            <!--<img src="http://1800accountant.com/img/1800Accountant_Logo_Large.jpg"/>-->
+            <div style="width: 100%; margin-top: 25px; margin-bottom: 10px; text-align:left;">
+                1-800Accountant<br/>
+                260 Madison Avenue, Suite 1001<br/>
+                New York, NY, 10016<br/>
+                Phone: 1 800 222 6868<br/>
+                Customerservice@1800Accountant.com
+            </div>
+            <div style="width: 100%; max-width:255px; padding: 10px; text-align:left; background-color: #2d323b; color: #ffffff">
+                Bill To:
+            </div>
+            <div style="width: 100%; margin-top: 10px; margin-bottom: 10px; text-align:left;">
+                <apex:outputText value="{0}, {1}">
+                   <apex:param value="{!thePayment.Bill62__Payment_Method__r.Bill62__Customer__r.Name}"/>
+                   <apex:param value="{!thePayment.Bill62__Payment_Method__r.Bill62__Customer__r.Account.Company_Brand__c}"/>
+                </apex:outputText><br/>
+                <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_1__c}"/><br/>
+                <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c}" 
+                rendered="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c != null}"/>
+                <apex:outputText value="" rendered="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Street_2__c != null}"/>
+                <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__City__c}"/><span>, </span>
+                <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__State_Province__c}"/><span> </span>
+                <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Billing_Address__r.Bill62__Zip_Postal_Code__c}"/><br/>
+                Phone: {!thePayment.Bill62__Payment_Method__r.Bill62__Phone_Number__c}
+            </div>
+        </div>
+        <div style="float: right; width: 275px; margin-bottom: 10px;">
+            <div style="width: 100%; margin-bottom: 10px; text-align:right;">
+                <span style="font-size:28px;text-transform:uppercase">
+                    Receipt
+                </span>
+                <br/>
+                <!--<apex:outputText value="{0,date, MM'/'dd'/'yyy}"> 
+                <apex:outputText value="{0,date, MM.dd.yyyy HH:mm:ss z}">
+                   <apex:param value="{!NOW()}" />
+               </apex:outputText>-->
+            </div>
+            <div style="width:100%">
+                <div style="float:left;width:50%;text-align:left;padding:5px">
+                    Date:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; border: 1px solid #989da0; padding: 5px; background-color:#ecf1f3; border-bottom:none;">
+                    <apex:outputText value="{0,date, MM'/'dd'/'yyyy}">      
+                    <!--<apex:outputText value="{0,date, MM.dd.yyyy HH:mm:ss z}">-->
+                        <apex:param value="{!NOW()}" />
+                    </apex:outputText>
+                </div>
+                <div style="clear:both"></div>
+
+                <div style="float:left;width:50%;text-align:left;padding:5px">
+                    Receipt Number:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; border: 1px solid #989da0; padding: 5px; background-color:#ffffff; border-bottom:none;">
+                    <apex:outputText value="{!RIGHT(thePayment.Name, LEN(thePayment.Name)-4)}"/>
+                </div>
+                <div style="clear:both"></div>
+
+                <div style="float:left;width:50%;text-align:left;padding:5px">
+                    Payment Method:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; border: 1px solid #989da0; padding: 5px; background-color:#ecf1f3">
+                    <!--<apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Name}"/>-->
+                    <apex:outputText value="{!thePayment.Bill62__Payment_Method__r.Bill62__Card_Type__c}, {!thePayment.Bill62__Payment_Method__r.Credit_Card_Last_4__c}"/>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+
+<!-- Start the big fun table -->
+        
+        <!--<div style="width:100%;background-color:#326a7a;color:#ffffff;text-transform:uppercase;text-align:left">
+            <div style="width:15%;padding:10px;border-right:1px solid #ffffff;float:left"> </div>
+            <div style="width:25%;padding:10px;border-right:1px solid #ffffff;float:left">Product</div>
+            <div style="width:35%;padding:10px;border-right:1px solid #ffffff;float:left">Description</div>
+            <div style="width:11%;padding:10px;text-align:right;float:left">Fees</div>
+            <div style="clear:both"></div>
+        </div>
+        
+        <apex:repeat value="{!SubLines}" var="subl">
+            <div style="width:100%;background-color:#e0e6e7;text-align:left">
+                <div style="width:15%;padding:10px;border-right:1px solid #ffffff;float:left">
+                    <apex:outputText value="{0,date, MM'/'dd'/'yyy}"> 
+                        <apex:param value="{!thePayment.Bill62__Payment_Date__c}" />
+                    </apex:outputText>
+                </div>
+                <div style="width:25%;padding:10px;border-right:1px solid #ffffff;float:left">{!subl.Bill62__Subscription__r.Bill62__Product__r.Product_Receipt_Name__c}</div>
+                <div style="width:35%;padding:10px;border-right:1px solid #ffffff;float:left">{!subl.Bill62__Subscription__r.Bill62__Product__r.Description}</div>
+                <div style="width:11%;padding:10px;font-weight:bold;color:#000000;text-align:right;float:left">${!subl.Bill62__Subscription__r.Bill62__Product__r.Standard_Price__c}</div>
+                <div style="clear:both"></div>
+            </div>
+        </apex:repeat>
+        
+        <div style="clear:both"></div>-->
+            
+<!-- End the main part of table and go into summary -->
+        
+<!-- Start the Main table -->
+    
+    <apex:outputPanel >
+        <div style="width:100%; background-color:#20c668; color:#ffffff; text-transform:uppercase; text-align:left;">
+            <div style="width:15%; padding:10px; border-right: 1px solid #ffffff;float: left;">&nbsp;</div>
+            <div style="width:25%; padding:10px; border-right: 1px solid #ffffff;float: left;">Product</div>
+            <div style="width:35%; padding:10px; border-right: 1px solid #ffffff;float: left;">Description</div>
+            <div style="width:11%; padding:10px; text-align:right;float: left;">Fees</div>
+            <div style="clear:both;"></div>
+        </div>
+        
+        <apex:repeat value="{!wrapperList}" var="orapper">
+            <apex:repeat value="{!orapper.subLines}" var="rapper">
+                <div style="width:100%; background-color:#ecf1f3; text-align:left;">
+                    <div style="width:15%; padding:10px; border-right: 1px solid #ffffff;float: left;">
+                        <apex:outputText value="{0,date, MM'/'dd'/'yyy}"> 
+                            <apex:param value="{!thePayment.Bill62__Payment_Date__c}" />
+                        </apex:outputText>
+                    </div>
+                    <!--<div style="width:25%; padding:10px; border-right: 1px solid #ffffff;float: left;">{!rapper.ProductName}</div>
+                    <div style="width:35%; padding:10px; border-right: 1px solid #ffffff;float: left;">{!rapper.ProductDescription}</div>
+                    <div style="width:11%; padding:10px; font-weight: bold; color: #000000; text-align:right;float: left;">
+                    <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                        <apex:param value="{!rapper.lineAmount}"/>
+                    </apex:outputText>-->
+                    <div style="width:25%; padding:10px; border-right: 1px solid #ffffff;float: left;">{!rapper.Bill62__Subscription__r.Bill62__Product__r.Product_Receipt_Name__c}</div>
+                    <div style="width:35%; padding:10px; border-right: 1px solid #ffffff;float: left;">{!rapper.Bill62__Subscription__r.Bill62__Product__r.Description}</div>
+                    <div style="width:11%; padding:10px; font-weight: bold; color: #000000; text-align:right;float: left;">
+                    <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                        <apex:param value="{!rapper.Bill62__Amount__c}"/>
+                    </apex:outputText>
+                    </div>             
+                    <div style="clear:both"></div>
+                </div>
+            </apex:repeat>
+        </apex:repeat>
+        
+        <div style="clear:both"></div>
+        </apex:outputPanel>
+            
+<!-- End the Main table and go into summary -->
+        <!--
+        <div style="float: left; width: 235px; margin-top:5px; text-align: left; padding:20px;">
+            <span style="font-weight:bold; color: #000000;">Comments:</span>
+            <br/>
+            <br/>
+            <span style="font-weight:bold;color:#000000"> 
+            <apex:outputText value="Your "/> <apex:outputText value="{!cycleType} "/> <apex:outputText value="recurring charge is "/>
+                <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                    <apex:param value="{!monthlyCharge}"/>
+                </apex:outputText>
+            </span>
+            <br/>
+            <br/>
+            <span style="font-weight:bold;color:#000000">
+                <apex:outputText value="{!specialMessage}" rendered="{!hasSpecialMessage}"/>
+            </span>
+        </div>-->
+        <div style="float: right; width: 275px; margin-top:5px;">
+            <!--<div style="width: 255px; padding: 10px; background-color:#ecf1f3; ">
+                <div style="float: left; width: 50%; text-align: left;">
+                    Recurring Charge:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; font-weight: bold;">
+                    <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                        <apex:param value="{!monthlyCharge}"/>
+                    </apex:outputText>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div style="width: 255px; padding: 10px; background-color:#ffffff; ">
+                <div style="float: left; width: 50%; text-align: left;">
+                    Due Date:
+                </div>
+                <div style="float:right;width:35%;text-align:right">
+                    <apex:outputText value="{0, date, MM'/'dd'/'yyyy}">
+                        <apex:param value="{!dueDate }"/>
+                    </apex:outputText>
+                </div>
+                <div style="clear:both"></div>
+            </div>-->
+            <div style="width: 255px; padding: 10px; background-color:#ecf1f3; ">
+                <div style="float: left; width: 50%; text-align: left;">
+                    Amount Due:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; font-weight: bold;">
+                    <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                        <apex:param value="{!totalDue}"/>
+                    </apex:outputText>    
+                    <!--"{!thePayment.Bill62__Amount__c}"-->
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div style="width: 255px; padding: 10px;  background-color:#2d323b; color: #ffffff">
+                <div style="float: left; width: 50%; text-align: left;">
+                    Amount Paid:
+                </div>
+                <div style="float: right; width: 35%; text-align: right; font-weight: bold;">
+                    <apex:outputText value="{0, number, currency}" label="Payment Amount">
+                        <apex:param value="{!thePayment.Bill62__Amount__c}"/>
+                    </apex:outputText>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <apex:outputPanel rendered="{!hasBillingNotes}">
+            <div style="width: 255px; padding: 10px;  background-color:#ecf1f3; float: right; margin-top:10px">
+                <div style="float: left; width: 100%; text-align: left; margin-bottom:10px">
+                    Billing Schedule Notes:
+                </div>
+                <apex:repeat value="{!billingNotes}" var="billNotes">
+                    <div style="float: right; width: 100%; text-align: left; font-weight: bold;">
+                        <apex:outputText value="{!billNotes}" label="Billing Schedule Notes"></apex:outputText>
+                    </div>
+                    <div style="clear:both"></div>
+                </apex:repeat>
+            </div>
+        </apex:outputPanel>
+        <div style="width:100%; max-width:560px; margin-top: 100px; padding:20px; padding-bottom:10px;">If you have any general questions, please visit <a href="http://1800Accountant.com" style="color:#20c668" target="_blank">1800Accountant.com</a> or email us at <a href="mailto:Billing@1800Accountant.com" style="color:#20c668" target="_blank">Billing@1800Accountant.com</a><br/><br/>
+        </div>
+        <div style="width:100%; max-width:560px; padding:20px; background-color:#20c668; color:#ffffff;font-style: italic; font-size:14px;">Thank you for your business</div>
+        <div style="width:100%; max-width:560px; padding:20px; margin-top: 20px; font-size:12px; text-align:left">
+            Refunds — Upfront Fees are refundable only within 30 days of your initial purchase. We strongly encourage our customers to utilize fully our products and services in the first 30 days following their purchase to determine if they wish to remain a client of 1-800Accountant and activate their Subscription Service. We accept refund requests  ONLY by phone via our Subscription Engagement team at 646-780-1858. All refunds will be made using the same form of payment used to pay the fees:  if you paid via credit card, any refund will be credited to you the next monthly billing cycle following receipt of your cancellation notice. <br/><b>To be clear, we will not provide a refund of Upfront Fees after 30 days.</b> 
+ <br/><br/>
+Cancellations — Many of our products and services are sold on a subscription basis, which<br/> you may cancel at any time.  We accept cancellation requests ONLY by phone at 646-780-1858. Cancellation will become effective as of the next monthly billing cycle following receipt. Monthly / quarterly subscription fees are non-refundable prior to cancellation, and are NOT pro-rated for partial months. If you have paid any Subscription Fees your Subscription Services will be considered activated.  If you have activated the Subscription Services, you acknowledge that we will retain the initial Upfront Fees and charges.
+        </div>
+    </div>
+</div>
+</apex:component>

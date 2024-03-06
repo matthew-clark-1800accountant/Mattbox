@@ -103,6 +103,23 @@
             </style>
             
             <script type='text/javascript'>
+            
+                // function to hide divs containing unchecked checkboxes
+                function retractProducts() {
+                    // get all the divs with class 'form-group' and 'prodgroup'
+                    var divs = document.querySelectorAll('div.form-group.prodgroup');
+                    
+                    divs.forEach(function(div) {
+                        // get the checkbox within the div
+                        var checkbox = div.querySelector('input[type=checkbox]');
+                        
+                        // check whether the checkbox is unchecked
+                        if (checkbox && !checkbox.checked) {
+                            // hide the parent div
+                            div.style.display = 'none';
+                        }
+                    });
+                }
                 
                 function updateTotal(doAmount,element) {
                     
@@ -356,6 +373,30 @@
                     
                 }
                 
+                function isCustomAccountingPackage(){
+                    var leadType = $('[data-id="LeadType"]').val();
+                    var itemsToCheck = [
+                        'acheck', //tax advisory
+                        '01tj0000000LLamAAGcheck', //loan agreement
+                        '01tf1000003JjrwAACcheck', //online access
+                        //'01tPJ0000000L9JYAUcheck', //PFP
+                        //'01tPJ0000000LAvYAMcheck' //CAP
+                    ];
+                    if(!leadType.includes('PTP')){
+                        itemsToCheck.push('pcheck'); //PTP
+                    }
+                    if(!leadType.includes('BTP')){
+                        itemsToCheck.push('bcheck'); //BTP
+                    }
+
+                    for(var checkbox of itemsToCheck){
+                        if(!$('[data-id="'+checkbox+'"]').prop('checked')){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
                 function updateBundle() {
                 
                     //return false;
@@ -487,10 +528,16 @@
                     document.querySelector('input[data-id="hiddenStartDate"]').value = startDate;
                 }
                 
+                function updateHiddenEndDate() {
+                    var endDate = document.getElementById('BookKeepingEndDate').value;
+                    document.querySelector('input[data-id="hiddenEndDate"]').value = endDate;
+                }
+                
                 function updateBKSelection() {
                     
                     // check back bookkeeping months
                     var startDate = document.getElementById("BookKeepingStartDate").value;
+                    var endDate = document.getElementById("BookKeepingEndDate").value;
                     
                     var checkboxBK = document.querySelector('input[data-id="bkcheck"]');
                     
@@ -512,10 +559,23 @@
                 }
                 
                 function updateProductTotal() {
-                
+                    console.log('updateProductTotal');
+                    var leadType = $('[data-id="LeadType"]').val();
                     var tmpVal = '';
                     
                     document.getElementById('holdOfferTotal').value = parseFloat(0).toFixed(2);
+
+                    if(isCustomAccountingPackage()){
+                        $('[data-id="01tPJ0000000L9JYAUcheck"]').prop('checked', true); //PFP
+                        if(!leadType.includes('PTP') && !leadType.includes('BTP')){
+                            $('[data-id="01tPJ0000000LAvYAMcheck"]').prop('checked', true); //CAP
+                        } else {
+                            $('[data-id="01tPJ0000000LAvYAMcheck"]').prop('checked', false); //CAP
+                        }
+                    } else {
+                        $('[data-id="01tPJ0000000L9JYAUcheck"]').prop('checked', false);
+                        $('[data-id="01tPJ0000000LAvYAMcheck"]').prop('checked', false);
+                    }
                 
                     // link state filing and entity formation
                     if ($('[data-id="sfcheck"]').prop('checked') || $('[data-id="sfccheck"]').prop('checked')) {
@@ -536,16 +596,39 @@
                     
                     updateHiddenStartDate();
                     
+                    // if start date is populated and end date is not, then prepopulate end date with now
+                    if (document.getElementById("BookKeepingStartDate").value !== "" && document.getElementById("BookKeepingEndDate").value === "") {
+                    
+                        var defaultEnd = new Date();
+                        
+                        var formattedEndDate = defaultEnd.toISOString().split('T')[0];
+                        
+                        document.getElementById('BookKeepingEndDate').value = formattedEndDate;
+                        
+                    }
+                    
+                    updateHiddenEndDate();
+                    
                     // check back bookkeeping months
                     var dateInput = document.getElementById("BookKeepingStartDate").value.split('-');
                     var startDate = new Date(parseInt(dateInput[0]), parseInt(dateInput[1])-1, parseInt(dateInput[2]));
-                    var today = new Date();
+                    
+                    var dateEndInput = document.getElementById("BookKeepingEndDate").value.split('-');
+                    var endMonth = parseInt(dateEndInput[1]);
+                    
+                    var today = new Date(parseInt(dateEndInput[0]), endMonth-1, parseInt(dateEndInput[2]));
                     
                     // get months
                     var months;
                     months = (today.getFullYear() - startDate.getFullYear()) * 12;
                     months -= startDate.getMonth();
                     months += today.getMonth();
+                    
+                    // check if endMonth is not the current month
+                    var currentMonth = (new Date()).getMonth() + 1;  // adding 1 because getMonth() returns 0-11
+                    if (endMonth !== currentMonth) {
+                        months += 1;
+                    }
                     
                     months = months <= 0 ? 0 : months;
                     
@@ -712,6 +795,8 @@
                         }
                     
                     }
+
+                    if (!($('[data-id="01t3Z000004boGhQAIcheck"]').prop('checked')))
                     
                     
                     // calculate potential savings
@@ -3510,17 +3595,29 @@
                                     }
                                     
                                 } else {
-                                
-                                    totalPriceMonth = totalPriceMonth + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
-                                    totalFinanceTrack = totalFinanceTrack + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
                                     
-                                    if (getIsBundleDelay('{!acOne.id}check')) {
-                                    
-                                        subtractMonthlyDelayPrice = subtractMonthlyDelayPrice + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
-                                        subtractFinanceDelayPrice = subtractFinanceDelayPrice + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
+                                    if ('{!acOne.id}' == '01tf1000003JjrwAAC') {
+                                        totalPriceMonth = totalPriceMonth + ((tmpACPrice / 11) * $('[data-id="{!acOne.id}acqty"]').val());
+                                        totalFinanceTrack = totalFinanceTrack + ((tmpACPrice / 11) * $('[data-id="{!acOne.id}acqty"]').val());
                                         
+                                        if (getIsBundleDelay('{!acOne.id}check')) {
+                                        
+                                            subtractMonthlyDelayPrice = subtractMonthlyDelayPrice + ((tmpACPrice / 11) * $('[data-id="{!acOne.id}acqty"]').val());
+                                            subtractFinanceDelayPrice = subtractFinanceDelayPrice + ((tmpACPrice / 11) * $('[data-id="{!acOne.id}acqty"]').val());
+                                            
+                                        }
+                                    } else {
+                                        totalPriceMonth = totalPriceMonth + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
+                                        totalFinanceTrack = totalFinanceTrack + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
+                                        
+                                        if (getIsBundleDelay('{!acOne.id}check')) {
+                                        
+                                            subtractMonthlyDelayPrice = subtractMonthlyDelayPrice + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
+                                            subtractFinanceDelayPrice = subtractFinanceDelayPrice + ((tmpACPrice / 12) * $('[data-id="{!acOne.id}acqty"]').val());
+                                            
+                                        }
                                     }
-                                    
+
                                 }
 
                             } else {
@@ -3622,7 +3719,13 @@
                             if ($('#{!acOne.id}timedef').val() == 'Monthly') {
                                 document.getElementById('{!acOne.id}month').value = '$'+parseFloat(tmpACPrice).toFixed(2);
                             } else {
-                                document.getElementById('{!acOne.id}month').value = '$'+parseFloat(tmpACPrice / 12).toFixed(2);
+                            
+                                if ('{!acOne.id}' == '01tf1000003JjrwAAC') {
+                                    document.getElementById('{!acOne.id}month').value = '$'+parseFloat(tmpACPrice / 11).toFixed(2);
+                                } else {
+                                    document.getElementById('{!acOne.id}month').value = '$'+parseFloat(tmpACPrice / 12).toFixed(2);
+                                }
+
                             }
                         
                             document.getElementById('{!acOne.id}year').value = '-';
@@ -4198,9 +4301,15 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label style="{!IF((bookKeepingStartDateClass!=''),'color:red;','')}">Bookkeeping Start Date: &nbsp;&nbsp;</label>
+                                        <label style="{!IF((bookKeepingStartDateClass!=''),'color:red;','')}">Bookkeeping Start Date (today if dedicated only): &nbsp;&nbsp;</label>
                                         <apex:inputHidden value="{!bookKeepingStartDateInput}" id="hiddenStartDate" html-data-id="hiddenStartDate"/>
                                         <input type="date" html-data-id="BookKeepingStartDate" id="BookKeepingStartDate" class="form-control" style="width:205px;display:inline;" onchange="updateProductTotal(); updateBKSelection();" value="{!bookKeepingStartDateInput}"/>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="{!IF((bookKeepingEndDateClass!=''),'color:red;','')}">Back Bookkeeping End Date (change if in past): &nbsp;&nbsp;</label>
+                                        <apex:inputHidden value="{!bookKeepingEndDateInput}" id="hiddenEndDate" html-data-id="hiddenEndDate"/>
+                                        <input type="date" html-data-id="BookKeepingEndDate" id="BookKeepingEndDate" class="form-control" style="width:205px;display:inline;" onchange="updateProductTotal(); updateBKSelection();" value="{!bookKeepingEndDateInput}"/>
                                     </div>
 
                             
@@ -4269,7 +4378,7 @@
                     <div id="SubmitStep1" class="row">
                         <div class='col-12' style='text-align: right;'>
                         <br />
-                            <input type="button" onclick="if (validateReglementFieldsStep1()) {$('#CalcStep1').hide();$('#SubmitStep1').hide();$('#BundlePayStep2').hide();$('#ProductStep2').show();$('#SubmitStep2').show();}reCalcSavings();dynamicRules();return false" class="ui-button ui-widget ui-corner-all" style="font-size:20px;padding-left:40px;padding-right:40px;" value="Calculate" />
+                            <input type="button" onclick="if (validateReglementFieldsStep1()) {$('#CalcStep1').hide();$('#SubmitStep1').hide();$('#BundlePayStep2').hide();$('#ProductStep2').show();$('#SubmitStep2').show();$('#ProdRetract').hide();$('#ProdCust').show();$('.prodgroup').show();retractProducts();}reCalcSavings();dynamicRules();return false" class="ui-button ui-widget ui-corner-all" style="font-size:20px;padding-left:40px;padding-right:40px;" value="Calculate" />
                         </div>
                     </div>
                     
@@ -4394,11 +4503,13 @@
                             <input type='text' id='holdTotalToday2' style='border: 0px;font-weight:bold;' value='0' /><br /><br />
                         
                         </div>
-                        
-                        
+
                         
                         <div id="ProdCust" class="col-12" style="margin-bottom:20px;">
-                            <input type="button" onclick="$('#ProdCust').hide();$('.prodgroup').show();updateProductTotal();return false" class="ui-button ui-widget ui-corner-all" style="font-size:18px;padding-left:40px;padding-right:40px;" value="Customize Products" />
+                            <input type="button" onclick="$('#ProdCust').hide();$('#ProdRetract').show();$('.prodgroup').show();updateProductTotal();return false" class="ui-button ui-widget ui-corner-all" style="font-size:18px;padding-left:40px;padding-right:40px;" value="Customize Products" />
+                        </div>
+                        <div id="ProdRetract" class="col-12" style="margin-bottom:20px;display:none;">
+                            <input type="button" onclick="$('#ProdRetract').hide();$('#ProdCust').show();retractProducts();updateProductTotal();return false" class="ui-button ui-widget ui-corner-all" style="font-size:18px;padding-left:40px;padding-right:40px;" value="Retract List" />
                         </div>
                         
                         <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">

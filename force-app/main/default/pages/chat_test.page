@@ -1,0 +1,43 @@
+<apex:page >
+  <script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+
+
+                        
+            window.addEventListener("onEmbeddedMessagingReady", () => {            
+                console.log( "Inside Prechat API!!" );
+                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields( {"Scheduler_Topic" : "Tax Planning","Subject_Custom" : "Test Subject"});
+            window.embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
+                        "_firstName": {
+                          "value": "first name",
+                          "isEditableByEndUser": true
+                        },
+                        "_lastName": {
+                            "value": "last name",
+                            "isEditableByEndUser": true
+                        },
+                        "_email": {
+                            "value": "email@email.com",
+                            "isEditableByEndUser": true
+                        }
+                    });
+            });
+            
+            embeddedservice_bootstrap.init(
+                '00DO50000084kaj',
+                'Client_Support',
+                'https://1800accountant--mattbox.sandbox.my.site.com/ESWClientSupport1705485976105',
+                {
+                    scrt2URL: 'https://1800accountant--mattbox.sandbox.my.salesforce-scrt.com'
+                }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+</script>
+<script type='text/javascript' src='https://1800accountant--mattbox.sandbox.my.site.com/ESWClientSupport1705485976105/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+</apex:page>

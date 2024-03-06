@@ -3,7 +3,7 @@
         <head>
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Tax Savings Calculator</title>
+        <title>1-800Accountant Registration</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'/>
         <apex:stylesheet value="{!URLFOR( $Resource.bootstrap, 'bootstrap-5.0.1-dist/css/bootstrap.min.css' )}" />
@@ -600,7 +600,7 @@
     }
 
     var idList = [];
-    var userLead = {Entity_Type__c: 'LLC', Estimated_First_Year_Profits__c: '50000', Total_Startup_Costs__c: '5000', Estimated_Business_Mileage__c: '15000', Home_Office_Square_Feet__c: '150', Filing_Status__c: 'Single', Personal_Income__c: '50000'};
+    var userLead = {Entity_Type__c: 'LLC', Estimated_First_Year_Profits__c: '75000', Total_Startup_Costs__c: '5000', Estimated_Business_Mileage__c: '15000', Home_Office_Square_Feet__c: '150', Filing_Status__c: 'Single', Personal_Income__c: '50000'};
     var validEmailEntered = false;
     var defaultLead = '{!defaultLeadValues}';
     const queryString = window.location.search;
@@ -615,6 +615,7 @@
       if(!validateEmail(inputElement.value)){
         //make visual change
         document.getElementsByClassName('email')[0].style.border = "1px solid #dd1616"; //red outline
+          validEmailEntered = false;
         return;
       }
       document.getElementsByClassName('email')[0].style.border = "1px solid #ced4da"; //normal gray outline
@@ -664,23 +665,70 @@
 
     function finishRegistration(){
         console.log('sending lead data '+JSON.stringify(userLead));
+        var fieldNamesToValidate = ['lastname', 'companyname', 'firstname'];
+        if(!validateFields(fieldNamesToValidate) && !userLead.Id){ return; }
+
         showSpinner();
-        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.upsertAndConvertLead', JSON.stringify(userLead), function(r,e){
-            idList = [...e.result];
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.upsertAndConvertLead', JSON.stringify(userLead), function(r,e){            
             console.log(e);
-            hideSpinner();
-            goToPage3();
+            console.log(typeof(e.result));
+            leadId = e.result[0];
+            // idList = [e.result[0], e.result[1], e.result[2], e.result[3]];
+            // hideSpinner();
+            // goToPage3();
+            getConvertedIds();
         });
     }
 
+    var leadId = '';
+    function getConvertedIds(){
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.getConvertedIds', leadId, function(r,e){
+                console.log(e.result);
+                if(e.result[1]){
+                    idList = [e.result[0], e.result[1], e.result[2], e.result[3]];
+                    hideSpinner();
+                    goToPage3();
+                } else {
+                    leadId = e.result[0];
+                    getConvertedIds();
+                }
+            });
+    }
+
+    var quoteId = '';
+    var quoteUrl = null;
     function subscribeNow(){
         showSpinner();
         Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.generateQuotes', 'Standard', idList[2], idList[0], JSON.stringify(userLead), 'yrl', function(r,e){
             console.log(e.result);
-            hideSpinner();
-            window.open(e.result, _self);
+            quoteId = e.result;
+            
+            getUrl();
+
         });
     }
+    
+    function getUrl(){
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.getQuoteUrl', quoteId, function(r,e){
+                console.log(e.result);
+            if(e.result){
+                var charUrl = e.result+'?utm_term=Client&utm_source=Website&utm_campaign=Website&utm_medium=Webinar&utm_content=Webinar+-+Q4+2023';
+                hideSpinner();
+                console.log(charUrl);
+                window.open(charUrl, '_self');
+                } else {
+                    getUrl();
+                }
+                
+                //window.open(e.result, '_self');
+            });
+        }
+    
+    function checkUrl(){
+        Visualforce.remoting.Manager.invokeAction('BundleReviewControllerExtension.getQuoteUrl', quoteId, function(r,e){
+            console.log(e.result);
+        });
+        }
 
     function goToPage1(){
         console.log('gotopage1');
@@ -714,6 +762,21 @@
     function showSpinner(){
         document.getElementsByClassName('spinnerBg')[0].style.display = 'block';
         document.getElementsByClassName('spin')[0].style.display = 'block';
+    }
+
+    function validateFields(classNames){
+        var valid = true;
+        for(var className of classNames){
+            var el = document.getElementsByClassName(className)[0];
+            if(el.value != null && el.value != ''){
+                //valid
+                el.style.border = "1px solid #ced4da"; //normal gray outline
+            } else {
+                valid = false;
+                el.style.border = "1px solid #dd1616"; //red outline
+            }
+        }
+        return valid;
     }
 
 
@@ -936,12 +999,12 @@
                         <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small" id="afirst">
                             <apex:form id="aform" style="width: 80%;">
                                 <div class="form-floating">
-                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('FirstName', this.value);" size="1" id="firstname"/>
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select firstname" required="true" onchange="updateField('FirstName', this.value);" size="1" id="firstname"/>
                                     <label style="display:inline-block" for="firstname">First Name</label>
                                 </div>
                                 
                                 <div class="form-floating">
-                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('Company', this.value);" size="1" id="company"/>
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select companyname" required="true" onchange="updateField('Company', this.value);" size="1" id="company"/>
                                     <label style="display:inline-block" for="company">Company Name</label>
                                 </div>
                             </apex:form>
@@ -953,7 +1016,7 @@
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="bsecondText">
                             <apex:form id="bform" style="width: 80%;">
                                 <div class="form-floating">
-                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select" required="true" onchange="updateField('LastName', this.value);" size="1" id="lastname"/>
+                                    <apex:inputText style="background-image: none" html-data-id="bentityType" styleClass="form-select lastname" required="true" onchange="updateField('LastName', this.value);" size="1" id="lastname"/>
                                     <label style="display:inline-block" for="lastname">Last Name</label>
                                 </div>
                             </apex:form>
@@ -1014,10 +1077,12 @@
                     <div style="width: 400px; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
                     <div style="text-align: center; color: #F15F22; font-size: 33.94px; font-family: Poppins; font-weight: 600; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">Special Offer</div>
                     <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 95.94px; font-family: Poppins; font-weight: 600; line-height: 155.23px; word-wrap: break-word">$2,789</div>
+                    <div style="text-align: center; color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 95.94px; font-family: Poppins; font-weight: 600; line-height: 125.23px; word-wrap: break-word">$2,789</div>
                     </div>
                     <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-                    <div style="text-align: center"><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23%</span></div>
+                        <div style="text-align: center; margin-left: 60px;"><span style="color: rgba(17.70, 22.61, 36.12, 0.91); font-size: 16.94px; font-family: Poppins; font-weight: 400; letter-spacing: 0.25px; word-wrap: break-word"> Annual Investment</span></div>
+
+                        <div style="text-align: center"><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23% </span></div>
                     </div>
                     <div id="divBtn">
                         <button class="btnOrange" style="margin-top:30px" onclick="subscribeNow()">Subscribe Now </button>

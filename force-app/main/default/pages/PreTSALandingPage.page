@@ -515,7 +515,6 @@
             document.getElementById('secondText').style.display = "none";
         }
     }
-
     </script>
     <body class="body" id="" onload="calculateSavings()">
         <div class="slds-scope">

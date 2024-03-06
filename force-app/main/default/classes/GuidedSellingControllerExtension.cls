@@ -536,7 +536,7 @@ public without sharing class GuidedSellingControllerExtension {
 
         user = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id LIMIT 1];
 
-        account = [SELECT Id, Lead_Type_New__c, Lead_Source__c, Entity_Tax_Classification__c FROM Account WHERE Id = :opportunity.AccountId LIMIT 1];
+        account = [SELECT Id, Lead_Type_New__c, Lead_Source__c, State_of_Formation__c, Entity_Tax_Classification__c FROM Account WHERE Id = :opportunity.AccountId LIMIT 1];
         
         isNonProfit = account.Entity_Tax_Classification__c  == 'Non-Profit';
         if(!String.isBlank(business.Id)) {
@@ -662,6 +662,11 @@ public without sharing class GuidedSellingControllerExtension {
             AND Product2.ChargeOver__c = true
             ORDER BY Name
         ]);
+        
+        user = [SELECT Id, Name, Skills_Sales__c, Sell_Client_Books__c FROM User WHERE Id = :opportunity.Account.Owner.Id LIMIT 1];
+
+        account = [SELECT Id, Lead_Type_New__c, Lead_Source__c, State_of_Formation__c, Entity_Tax_Classification__c FROM Account WHERE Id = :opportunity.AccountId LIMIT 1];
+        
 
         // for(Product2 p : products.values()){
         //     productIdToDescription.put(p.Id, p.Description);

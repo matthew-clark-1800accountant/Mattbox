@@ -1,9 +1,10 @@
 <apex:page doctype="html-5.0" standardStylesheets="false" controller="ON24EventMakeLeadRegistrationController" showHeader="false" sidebar="false" cache="false" applyBodyTag="false" applyHtmlTag="false" >
-    <html xmlns="http://www.w3.org/1999/xhtml">
+    <!-- deprecated 9-11-23 -->
+<!-- <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>1-800Accountant - Webinar Registration</title>
-            <!--
+            
             <meta property="og:title" content="Introduction to Business Taxes" />
             <meta property="og:type" content="activity" />
             <meta property="og:url" content="http://1800accountant.com/webinar/sf1/webinar-register.php" />
@@ -14,7 +15,7 @@
             
             <meta name="keywords" content="tax webinar, business taxes webinar, " />
             <meta name="description" content="Live Webinar Intro to Business Taxes - Sign up FREE!" />
-            -->
+            
             <meta http-equiv="Pragma" content="no-cache"/>
             
             <style type="text/css">
@@ -351,12 +352,12 @@
                 
             </style>    
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <!--
+            
                 <script language="javascript" src="js/cookie.js" type="text/javascript"></script>
             <script language="javascript" src="js/dynajax.js" type="text/javascript"></script>
             <script language="javascript" src="js/gen_validatorv31.js"></script>
             <script language="javascript" src="js/detect_timezone.js"></script>
-            -->
+            
                 <script language="javascript" type="text/javascript"  charset="utf-8">
                     
                     $(document).ready(function(){
@@ -449,8 +450,8 @@
                                 <div class="wrapper">
                                 <h1 class="whiteheadertext">FREE Webinar : {!IF($CurrentPage.parameters.EventName != null, $CurrentPage.parameters.EventName, "Intro to Business Taxes")}</h1>
                                 <h2 class="h2">Presented by 1-800Accountant</h2>
-                                    <!-- <img src="{!URLFOR($Resource.GreenOnTransparent)}" title="1-800Accountant Logo" align="left" vertical-align="middle" height="125" width="250"/>
-                                    <img src="{!URLFOR($Resource.Kabbage3)}" title="Kabbage Logo" align="right" vertical-align="middle" height="80" width="250"/> -->
+                                     <img src="{!URLFOR($Resource.GreenOnTransparent)}" title="1-800Accountant Logo" align="left" vertical-align="middle" height="125" width="250"/>
+                                    <img src="{!URLFOR($Resource.Kabbage3)}" title="Kabbage Logo" align="right" vertical-align="middle" height="80" width="250"/> 
                                 </div>
                                 </div>
                                 
@@ -463,9 +464,9 @@
                                                     <div id="videobox" class="video" style="{!IF($CurrentPage.parameters.EventName == "Intro to Business Taxes" || $CurrentPage.parameters.EventName == null ,"","display:none")}">
                                                         
                                                         <div class="videocodebox">
-                                                            <!-- START OF THE PLAYER EMBEDDING TO COPY-PASTE -->
+                                                             START OF THE PLAYER EMBEDDING TO COPY-PASTE 
                                                                 <script type="text/javascript" src="http://1800accountant.com/webinar/sf1/player/jwplayer.js"></script>
-            <!-- END OF THE PLAYER EMBEDDING -->
+             END OF THE PLAYER EMBEDDING 
             <div id="player"></div>
             <script type="text/javascript"> 
             jwplayer('player').setup({
@@ -487,7 +488,7 @@
     <img src="http://1800accountant.com/webinar/sf1/vibrant/images/register.jpg" style="margin-bottom:20px;" />
     
     
-    <!--
+    
     
     <div style="width:100%; background:#cecece; padding:1px; margin-bottom:20px;">
         <div style="width:99%; background:#f1f1f1; border:4px solid #fff;">
@@ -502,7 +503,7 @@
                        text-align: left;
                        text-shadow:0px 0px 0px; ">Webinar Presentation</h1>
             <div style="background:url('http://1800accountant.com/webinar/sf1/webinar-files/box-pic.gif') no-repeat left top; float:left; width:100px; height:123px; padding:7px; margin:0px 10px 10px 10px;"> 
-                <!-- <img width="100" height="100" src="http://1800accountant.com/webinar/sf1/webinar-files/1800_AVATAR_fpzvccj65r_3314.png" /> 
+                 <img width="100" height="100" src="http://1800accountant.com/webinar/sf1/webinar-files/1800_AVATAR_fpzvccj65r_3314.png" /> 
                 <p style="font-size: 12px;
                           line-height: 11px;
                           color:#5c5c5c;
@@ -526,7 +527,7 @@
             <br style="clear:both;" />
         </div>
     </div>
-    -->
+    
     
     <p>All business owners should speak with a tax professional regarding their tax responsibilities at the local, state and federal levels immediately upon forming a new business. 1-800Accountant's webinar and consultation prevents a business owner from having to do hours of research, therefore saving them a lot of time. Since the webinar and consultation are free, clients also avoid having to pay billable hours to a local tax professional. Many seasoned business owners say they learned more from 1-800Accountant's webinar than their current CPA or accountant.</p>
     <ul>
@@ -542,7 +543,7 @@
         
         
         
-        <!--  DISPLAYING THE DATE AND TIME DROPDOWN  -->
+          DISPLAYING THE DATE AND TIME DROPDOWN  
         
         
         
@@ -610,7 +611,7 @@
 </div>
 
 
-<!-- end google analytics code -->
+ end google analytics code 
 
 
 </div>  
@@ -618,5 +619,5 @@
 
 </body>
      
-</html>
+</html> -->
 </apex:page>
