@@ -33,7 +33,7 @@ public with sharing class NVMCallSummaryTriggerHandler {
             if(ignoredQueues.contains(sum.NVMStatsSF__Queue_Name__c)){
                 continue;
             }
-            if(sum.NVMStatsSF__Queue_Name__c == '' && !sum.NVMStatsSF__Queue_Agent_Queue_List__c.toLowerCase().contains('live')){
+            if(isBlank(sum.NVMStatsSF__Queue_Name__c) && (isBlank(sum.NVMStatsSF__Queue_Agent_Queue_List__c) || !sum.NVMStatsSF__Queue_Agent_Queue_List__c.toLowerCase().contains('live'))){
                 continue;
             }
 
@@ -55,18 +55,20 @@ public with sharing class NVMCallSummaryTriggerHandler {
         List<String> liveSummaryIds = new List<String>();
         for(NVMStatsSF__NVM_Call_Summary__c summary : summaries){
             System.debug(summary);
-            if(summary.NVMStatsSF__Queue_Agent_Queue_List__c.toLowerCase().contains('live')){
+            if(isBlank(summary.NVMStatsSF__Queue_Agent_Queue_List__c) || !summary.NVMStatsSF__Queue_Agent_Queue_List__c.toLowerCase().contains('live')){
                 liveSummaryIds.add(summary.Id);
             }
-            if(summary.NVMStatsSF__Agent_List__c!=null && summary.NVMStatsSF__Agent_List__c!=''){
+            if(!isBlank(summary.NVMStatsSF__Agent_List__c)){
                 for(String agentId : summary.NVMStatsSF__Agent_List__c.split(',')){
+                    if(agentId.contains('+')) { continue; } //ignore external transfers
+                    agentId.replaceAll('--', '-');
                     agentIds.add(agentId.trim().split('-')[0]);
                     String index = agentId.trim().split('-')[0]+'-'+summary.Id;
                     indexToCallTime.put(index, Integer.valueOf(agentId.trim().split('-')[1]));
                     indexToCallSummary.put(index, summary);
                 }
             }
-            if(summary.NVMStatsSF__Ring_List__c!=null && summary.NVMStatsSF__Ring_List__c!=''){
+            if(!isBlank(summary.NVMStatsSF__Ring_List__c)){
                 for(String agentId : summary.NVMStatsSF__Ring_List__c.split(',')){
                     String ringTime = agentId.trim().split(':')[1];
                     if(ringTime == '0'){ continue; } //ignore ring times of 0
@@ -119,5 +121,9 @@ public with sharing class NVMCallSummaryTriggerHandler {
             recordsToUpsert.add(trackingRec);
         }
         upsert recordsToUpsert Rep_Call_Tracking__c.fields.Combined_Index__c;
+    }
+
+    public static Boolean isBlank(String fieldValue){
+        return (fieldValue == null || fieldValue == '');
     }
 }

@@ -30,12 +30,12 @@ private class ChargeOverSubLineItemTriggerHandlerTest
             insert sliSub;
 
             ChargeOver_Subscription_Line_Item__c sli = new ChargeOver_Subscription_Line_Item__c(ChargeOver_Subscription__c=sliSub.Id, Quantity__c=2, Account__c=pAccount.Id,
-                    Product__c=prod.Id, Status__c='Active',Price_Per_Unit__c=10.0,Historical_Update__c=false);
+                    Product__c=prod.Id, Status__c='Active',Price_Per_Unit__c=10,Historical_Update__c=false,Subscription_Start_Date__c = Datetime.now());
             insert sli;
 
-            sli.Price_Per_Unit__c=10;
-            sli.Subscription_Start_Date__c = Datetime.now();
-            update sli;
+            // sli.Price_Per_Unit__c=10;
+            // sli.Subscription_Start_Date__c = Datetime.now();
+            // update sli;
 
             System.debug('Sub :: ' + sliSub);
             ChargeOver_Subscription__c hasDate = [SELECT Subscription_Start_Date__c FROM ChargeOver_Subscription__c WHERE Subscription_Start_Date__c != NULL LIMIT 1];

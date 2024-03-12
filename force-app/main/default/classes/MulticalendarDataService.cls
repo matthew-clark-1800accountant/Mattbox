@@ -748,7 +748,7 @@ public without sharing class MulticalendarDataService {
             viewList.add(new CalendarView('All Reps', '(NOT (Profile.Name LIKE \'%admin%\' OR Profile.Name LIKE \'%manager%\' OR Profile.Name LIKE \'%appointment setter%\' OR Profile.Name LIKE \'%executive%\'))')); //default filter
             viewList.add(new CalendarView('Queues', 'Name IN (\'Do Not Reply\', \'General Lead Queue\', \'Dead Leads Queue\')')); //default filter
             viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
-            viewList.add(new CalendarView('Client Success', 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\'')); 
+            viewList.add(new CalendarView('Client Success', 'Userrole.Name = \'CS Agent\''));// 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\'')); 
             Schema.DescribeFieldResult fieldResult = User.Sales_Team__c.getDescribe();
             for(Schema.PicklistEntry ple : fieldResult.getPicklistValues()){
                 //if(fieldResult.isActive()){

@@ -2627,8 +2627,11 @@
     function showModalConfirmQuote() {
         console.log('showModalConfirmQuote()');
         if(flagDoSubmit == false){
-            console.log('showModalConfirmQuote');
-            document.getElementById("confirmQuoteModal").style.display = "block"; 
+            if(validateBillingAddress()){
+                document.getElementById("confirmQuoteModal").style.display = "block"; 
+            } else {
+                document.getElementById("billingAddressError").innerHTML = 'A valid billing address is required to generate a quote.';
+            }            
         } else { 
             nextSection(30, 'Payment Details', 'verifyInformation', 'paymentDetails');
             getChargeOverURL();
@@ -7744,6 +7747,15 @@
         }
     }
 
+    function validateBillingAddress(){
+        var address = document.getElementById('busOwnerAddress').innerHTML;
+        var city = document.getElementById('busOwnerCity').innerHTML;
+        var state = document.getElementById('busOwnerState').innerHTML;
+        var zip = document.getElementById('busOwnerZip').innerHTML;
+        var country = document.getElementById('busOwnerCountry').innerHTML;
+        return !(address == '' || city == '' || state == '' || zip == '' || country == '')
+    }
+
     function saveClientInfo(infoType) {
         var businessOwnerId = "{!businessOwner.Id}";
         var email = '';
@@ -7788,6 +7800,9 @@
                         document.getElementById('busOwnerState').innerHTML = state;
                         document.getElementById('busOwnerZip').innerHTML = zip;
                         document.getElementById('busOwnerCountry').innerHTML = country;
+
+                        
+                        document.getElementById("billingAddressError").innerHTML = '';
                         closeModalEditBillingAdd();
                     }
                 } else if(e.type === 'exception') {
@@ -12145,6 +12160,7 @@ console.log('searchProds '+name);
                                 <button type="button" class="yesBtn" id="editPackage" style="color: black;" onclick="showModalEditPayTerms();"><span class="material-icons">drive_file_rename_outline</span>&nbsp;Edit Payment Terms</button>
                             </div>
                             <div id="buttons" style="margin-bottom: 3%; margin-top: 5%;">
+                                <p id="billingAddressError" style="color: red;"></p>
                                 <button type="button" class="start" id="generateQuoteButton" style="color: white; opacity: 1;" onclick="showModalConfirmQuote();"><i class="fas fa-arrow-right">&nbsp;</i>Generate Quote</button>
                                 <div class="divider" />
                                 <p class="blast">Payment Details</p>

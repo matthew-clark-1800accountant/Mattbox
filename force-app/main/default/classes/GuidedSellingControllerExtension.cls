@@ -2273,7 +2273,8 @@ public without sharing class GuidedSellingControllerExtension {
                     }
                 }
             }
-            System.debug('COQuoteId result: '+COQuoteId);
+            System.debug('current:'+p.currentBillingFrequency +', default:'+p.Product.Billing_Frequency__c+',  split:'+p.Product.No_Split_Allowed__c);
+            System.debug(OLIPayCycle+', '+OLIPayInstall);
 
             OpportunityLineItem oli;
             if(oppId != null && String.valueOf(oppId) != '') {
@@ -2308,7 +2309,7 @@ public without sharing class GuidedSellingControllerExtension {
                     First_Charge_Total__c = quoteFirstChargeTotal
                 );
                 if(qli != null) {
-                    System.debug(qli);
+                    //System.debug(qli);
                     qliList.add(qli);
                 }
             }
@@ -2316,7 +2317,7 @@ public without sharing class GuidedSellingControllerExtension {
             if(COQuoteId != null && COQuoteId != '') {
                 String descrip = p.Product.Description;
                 String HTMLDesc = p.Product.HTML_Description__c;
-                System.debug(COQuoteId);
+                //System.debug(COQuoteId);
                 if(backBookkeepingIds.contains(prodId)){
                     descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
                     HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
@@ -2336,7 +2337,7 @@ public without sharing class GuidedSellingControllerExtension {
                     Date_Time_Invoice_Being_Held_Until__c = holdDateString
                 );
                 if(coli != null) {
-                    System.debug(coli);
+                    //System.debug(coli);
                     coliList.add(coli);
                 }
             }

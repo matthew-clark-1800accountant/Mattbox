@@ -4421,7 +4421,7 @@
                         
                                     <div class="form-group" style="text-align:right;">
                                         <label>Billing Street: &nbsp;&nbsp;</label>
-                                        <apex:inputText styleClass="form-control" style="width:205px;display:inline;" tabindex="1" value="{!billingStreetInput}"/>
+                                        <apex:inputText styleClass="form-control jq_req" style="width:205px;display:inline;" tabindex="1" value="{!billingStreetInput}"/>
                                         <br />
                                     </div>
                                     
@@ -4435,7 +4435,7 @@
                             
                                     <div class="form-group" style="text-align:right;">
                                         <label>Billing City: &nbsp;&nbsp;</label>
-                                        <apex:inputText styleClass="form-control" style="width:205px;display:inline;" tabindex="2" value="{!billingCityInput}"/>
+                                        <apex:inputText styleClass="form-control jq_req" style="width:205px;display:inline;" tabindex="2" value="{!billingCityInput}"/>
                                         <br />
                                     </div>
                         
@@ -4443,7 +4443,7 @@
                             
                                     <div class="form-group" style="text-align:right;">
                                         <label>Billing Zip: &nbsp;&nbsp;</label>
-                                        <apex:inputText styleClass="form-control" style="width:205px;display:inline;" tabindex="4" value="{!billingZipInput}"/>
+                                        <apex:inputText styleClass="form-control jq_req" style="width:205px;display:inline;" tabindex="4" value="{!billingZipInput}"/>
                                         <br />
                                     </div>
                             
@@ -4453,14 +4453,14 @@
                                 
                                     <div class="form-group" style="text-align:right;">
                                         <label>Billing State: &nbsp;&nbsp;</label>
-                                        <apex:selectList size="1" id="billingStateSel" html-data-id="billingStateSel" styleClass="" style="width:205px;height:35px;" tabindex="3" value="{!billingStateInput}">
+                                        <apex:selectList size="1" id="billingStateSel" html-data-id="billingStateSel" styleClass="jq_req" style="width:205px;height:35px;" tabindex="3" value="{!billingStateInput}">
                                             <apex:selectOptions value="{!billingStateItems}"/>
                                         </apex:selectList><br />
                                     </div>
                                 
                                     <div class="form-group" style="text-align:right;">
                                         <label>Billing Country: &nbsp;&nbsp;</label>
-                                        <apex:selectList size="1" styleClass="" tabindex="5" style="width:205px;height:35px;" value="{!billingCountryInput}">
+                                        <apex:selectList size="1" styleClass="jq_req" tabindex="5" style="width:205px;height:35px;" value="{!billingCountryInput}">
                                             <apex:selectOptions value="{!billingCountryItems}"/>
                                         </apex:selectList><br />
                                     </div>
