@@ -6,6 +6,7 @@ public with sharing class CreateNoteEventTriggerHandler {
             break; //todo: bulkify with future workaround
         }        
     }
+
     private static String convertLineBreaks(String input)
     {
         String returnStr = input;

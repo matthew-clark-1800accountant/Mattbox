@@ -3,6 +3,7 @@ import { api, wire, LightningElement } from "lwc";
 export default class McRep extends LightningElement {
     @api
     rep; //= {Name: 'Rep'};
+    @api currentview;
 
     exampleRep = {
         Id: '0003E2NNCL94X',
@@ -26,7 +27,7 @@ export default class McRep extends LightningElement {
     }
 
     connectedCallback(){
-        //this.rep = this.exampleRep; //testing
+        console.log('currentview: '+this.currentview);
     }
 
     // constructor(){

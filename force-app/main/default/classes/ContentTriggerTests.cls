@@ -63,7 +63,7 @@ private class ContentTriggerTests {
     @IsTest
     private static void testContactNote(){
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User' LIMIT 1];
-        User u = new User(Username = 'testguy@test.com', LastName='Beebop', Email='testguy@test.com', Alias = 'newUser', 
+        User u = new User(Username = 'testguy@1800accountant.com', LastName='Beebop', Email='testguy@1800accountant.com', Alias = 'newUser', 
         EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US', LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles');
         insert u; //needed to filter since all content notes are visible to tests
         Test.startTest();

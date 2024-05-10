@@ -114,7 +114,7 @@ global without sharing class CustomizeSandbox {
     public static List<String> calculatorQueries = new List<String>{
         'SELECT Name, Default__c, Display_Format__c, Dropdown_Value__c, Form_Field__c, Number_of_Hours__c, Price_Adjustment__c, Product__c, Setup_fee__c, Sort__c FROM Calculator_Dropdown__c',
         'SELECT Name, Required_In_Environment__c FROM Calculator_Field__c',
-        'SELECT Action__c, Active__c, Amount__c, Name, Criteria_Field_1__c, Criteria_Field_2__c, Criteria_Object__c, Environment__c, Field_1_Operator__c, Field_1_Value__c, Field_2_Operator__c, Field_2_Value__c, Message__c FROM Calculator_Rule__c WHERE Active__c = true'
+        'SELECT Action__c, Active__c, Amount__c, Name, Product__c, Criteria_Field_1__c, Criteria_Field_2__c, Criteria_Object__c, Environment__c, Field_1_Operator__c, Field_1_Value__c, Field_2_Operator__c, Field_2_Value__c, Message__c FROM Calculator_Rule__c WHERE Active__c = true'
         //'SELECT Active__c, Name, Default__c, Environment__c, Sort__c FROM Calculator_Offer__c',
         //'SELECT Active__c, Amount__c, Name, Delay_Days__c, Master_Product__c, Upsell_Product__c FROM Calculator_Offer_Product__c'
     };
@@ -157,8 +157,10 @@ global without sharing class CustomizeSandbox {
         updateOutboundMessages();
         if(updateUsers){
             updateUsers(getUsersToUpdate());
-        }        
-        transferCalculatorData();
+        }       
+        if(getEvironmentName() != 'staging'){
+            transferCalculatorData();
+        }         
         transferRollupData();
         importSeedData();
         updateCustomSettings();
@@ -176,35 +178,42 @@ global without sharing class CustomizeSandbox {
             }
         }
         update userList;
-        // for(User u : userList){
-        //     System.resetPassword(u.Id, true);
-        // }
     }
 
     @future(callout=true)
     public static void transferCalculatorData(){
-
-        //String requestString;
-        String jsonString;
-        RestResponse response;
-        List<sObject> recordList = new List<sObject>();
-
-        for(String requestString : calculatorQueries){
-            System.debug('query: '+requestString);
-            jsonString = RestApiController.runQuery(requestString);
-                response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-                recordList.addAll(response.records);
-            
-            
-            system.debug(response.nextRecordsUrl);
-            // while(response?.nextRecordsUrl != null){
-            //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
-            //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
-            //     recordList.addAll(response.records);
-            //     system.debug(response.nextRecordsUrl);
-            // }
-        }
-        insert recordList;
+        System.SavePoint sp;
+        try{
+            //String requestString;
+            String jsonString;
+            RestResponse response;
+            List<sObject> recordList = new List<sObject>();
+    
+            for(String requestString : calculatorQueries){
+                System.debug('query: '+requestString);
+                jsonString = RestApiController.runQuery(requestString);
+                    response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+                    recordList.addAll(response.records);
+                
+                
+                system.debug(response.nextRecordsUrl);
+                // while(response?.nextRecordsUrl != null){
+                //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
+                //     response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
+                //     recordList.addAll(response.records);
+                //     system.debug(response.nextRecordsUrl);
+                // }
+            }
+            sp = Database.setSavepoint();
+            delete [SELECT Id FROM Calculator_Rule__c];
+            delete [SELECT Id FROM Calculator_Field__c];
+            delete [SELECT Id FROM Calculator_Dropdown__c];
+            insert recordList;
+        }catch (Exception ex){
+            if(sp != null){Database.rollback(sp);}            
+            System.debug(ex.getMessage());
+            throw ex;
+        }        
     }
 
     @future(callout=true)
@@ -234,7 +243,7 @@ global without sharing class CustomizeSandbox {
             System.debug('**not test');
             response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
             recordList.addAll(response.records);
-        }  
+        }
         system.debug(response?.nextRecordsUrl);
         // while(response?.nextRecordsUrl != null){
         //     jsonString = RestApiController.getNextRecords(response.nextRecordsUrl);
@@ -281,10 +290,10 @@ global without sharing class CustomizeSandbox {
         //     System.debug(response.nextRecordsUrl);
         // }
         //System.debug(recordList);
-        
+        Integer phoneNumber = 1234567890 - (totalRecordCount * 5);
         for(Lead l : leadList){
-            l.email = (l.email==null) ? l.email+dateString : l.lastname.deleteWhitespace()+dateString+'@gmail.com';
-            l.phone = '1234567890';//'111'+l.phone.substring(3,10);
+            l.email = (l.email==null) ? l.email+phoneNumber : l.lastname.deleteWhitespace()+phoneNumber+'@gmail.com';
+            l.phone = String.valueOf(++phoneNumber);//'111'+l.phone.substring(3,10);
             if(environment == 'training' && Math.random() > 0.5){ //assign half of the training leads to a random training user
                 Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                 //System.debug('index: '+index);
@@ -301,7 +310,7 @@ global without sharing class CustomizeSandbox {
         jsonString = RestApiController.runQuery(requestString);
         response = (RestResponse) JSON.deserialize(jsonString, RestResponse.class);
         for(Contact con : (List<Contact>)response.records){
-            con.Account.phone ='1234567890';// '111'+ con.Account.phone?.substring(3,10);
+            con.Account.phone =String.valueOf(++phoneNumber);// '111'+ con.Account.phone?.substring(3,10);
             if(environment == 'training' && Math.random() > 0.5){ //assign half of the training accounts to a random training user
                 Integer index = Math.floor(trainingUserList.size()*Math.random()).intValue();
                 //System.debug('index: '+index);
@@ -324,8 +333,8 @@ global without sharing class CustomizeSandbox {
             opportunityList.add(opp);
 
             con.Account = null;
-            con.phone ='1234567890';// '111'+con.phone?.substring(3,10);
-            con.email = (con.email==null) ? con.email+dateString : con.lastname.deleteWhitespace()+dateString+'@gmail.com';
+            con.phone =String.valueOf(phoneNumber);// '111'+con.phone?.substring(3,10);
+            con.email = (con.email==null) ? con.email+phoneNumber : con.lastname.deleteWhitespace()+phoneNumber+'@gmail.com';
             contactList.add(con);
         }
         System.debug(response.records[0]);
@@ -383,22 +392,22 @@ global without sharing class CustomizeSandbox {
             urlSetting.Chargeover_URL__c = 'https://1800accountant-training.chargeover.com';
             urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
             urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
-            urlSetting.Scheduler_URL__c = 'https://training-external.1800accountant.com/sfapi/schedule/index.php';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_training.php';
         } else if(env == 'uat'){
             urlSetting.Chargeover_URL__c = 'https://1800accountant-uat.chargeover.com';
             urlSetting.Chargeover_User__c = 'pvWrnGbt7yg2xRJU5VoC8XZDYEm4MOBi';
             urlSetting.Chargeover_Pass__c = 'u3ZQtif9s210TmXBoLzSe5rgEvJOVdCn';
-            urlSetting.Scheduler_URL__c = 'https://uat.1800accountant.com/sfapi/schedule/index.php';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_uat.php';
         } else if(env == 'staging') {
             urlSetting.Chargeover_URL__c = 'https://1800accountant-staging.chargeover.com';
             urlSetting.Chargeover_User__c = 'kRqAcM6KgPwTOpQZ0y9BtW1aNhrCEHGX';
             urlSetting.Chargeover_Pass__c = 'RSOIVMiJ60qK4seNwk7lgyxTfFBtUznv';
-            urlSetting.Scheduler_URL__c = 'https://staging.1800accountant.com/sfapi/schedule/index.php';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_stage.php';
         } else if(env == 'gsdev') {
             urlSetting.Chargeover_URL__c = 'https://1800accountant-dev.chargeover.com';
             urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
             urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
-            urlSetting.Scheduler_URL__c = 'https://dev-external.1800accountant.com/sfapi/schedule/index.php';
+            urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_dev.php';
         } else {
             urlSetting.Chargeover_URL__c = '';
             urlSetting.Chargeover_User__c = '';

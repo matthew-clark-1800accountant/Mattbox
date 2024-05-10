@@ -2,7 +2,7 @@
 private class GuidedSellingControllerExtensionTest {
     
     /* 
-    * Tests for methods on class GuidedSellingControllerExtension 
+    * Tests for methods on apex class GuidedSellingControllerExtension 
     */
 
     @TestSetup
@@ -19,7 +19,7 @@ private class GuidedSellingControllerExtensionTest {
         }        
         Lead l = new Lead(FirstName='first',LastName='last',status='new', company='company', email='test1@gtest.com');
         insert l;
-        Account acc = new Account(Name='new account');
+        Account acc = new Account(Name='new account', Lead_Type_New__c = 'Bark');
         insert acc;
         Opportunity opp = new Opportunity(CloseDate=Date.today(), AccountId = acc.Id, Name='name', StageName='New');
         insert opp;
@@ -266,6 +266,7 @@ private class GuidedSellingControllerExtensionTest {
         ApexPages.currentPage().getParameters().put('rId',String.valueOf(l.Id));
         GuidedSellingControllerExtension gs = new GuidedSellingControllerExtension(a);
         gs.getProductData();
+        System.debug(gs.guidedSellingProducts);
         Test.stopTest();
 
     }
@@ -367,7 +368,7 @@ private class GuidedSellingControllerExtensionTest {
     @isTest
     static void doSubmitTest() {
         List<Product2> prods = [SELECT Id, Name, Calculator_Location__c, AnnualMonthlyOption__c,Billing_Frequency__c,HTML_Description__c,
-        Description,No_Split_Allowed__c,Guided_Selling_Identifier__c,sort_Order__c FROM Product2 WHERE Guided_Selling_Identifier__c != null];
+        Description,No_Split_Allowed__c,Guided_Selling_Identifier__c,sort_Order__c, Bundles__c FROM Product2 WHERE Guided_Selling_Identifier__c != null];
         List<GuidedSellingProduct> gsprods = new List<GuidedSellingProduct>();
         for(Product2 prod : prods){
             gsprods.add(new GuidedSellingProduct(prod));
@@ -479,7 +480,7 @@ private class GuidedSellingControllerExtensionTest {
         // gs.getNumberOfRentalProperties();
         // gs.getContries();
         List<Product2> prods = [SELECT Id, Name, Calculator_Location__c, AnnualMonthlyOption__c,Billing_Frequency__c,HTML_Description__c,
-        Description,No_Split_Allowed__c,Guided_Selling_Identifier__c,sort_Order__c FROM Product2 WHERE Guided_Selling_Identifier__c != null];
+        Description,No_Split_Allowed__c,Guided_Selling_Identifier__c,sort_Order__c, Bundles__c FROM Product2 WHERE Guided_Selling_Identifier__c != null];
         List<GuidedSellingProduct> gsprods = new List<GuidedSellingProduct>();
         for(Product2 prod : prods){
             gsprods.add(new GuidedSellingProduct(prod));
@@ -658,7 +659,12 @@ private class GuidedSellingControllerExtensionTest {
         System.assertNotEquals(null, LaunchGuidedSellingInvocable.environmentName);
         System.assertNotEquals(null, GetSiteUrlInvocable.getSiteBaseUrl());
     }
-
+    
+    @isTest
+    static void testQuestionWrapperClass()
+    {
+        new GuidedSellingQuestionWrapper(new Guided_Selling_Discovery_Question__mdt());
+    }
     
 
 

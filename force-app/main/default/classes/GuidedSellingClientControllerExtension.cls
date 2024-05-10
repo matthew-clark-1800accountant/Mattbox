@@ -18,7 +18,16 @@ public class GuidedSellingClientControllerExtension {
         return GuidedSellingControllerExtension.getsocketBaseUrl();
     }
 
+    public List<Guided_Selling_Bundle_Summary__mdt> bundleSummaryItems {get; set;}
+    public String bundleSummaryItemsJSON {get; set;}
+    //public List<String> listest {get; set;}
     public GuidedSellingClientControllerExtension(ApexPages.StandardController stdController) {
+        bundleSummaryItems = [SELECT Bundle_Name__c, Display_Order__c, Heading__c, Subheading__c FROM Guided_Selling_Bundle_Summary__mdt WHERE Active__c = true ORDER BY Display_Order__c ASC];
+        bundleSummaryItemsJSON = JSON.serialize(bundleSummaryItems).replaceAll('\'', '\\\\\\\'');
+        for(Integer i=0; i<bundleSummaryItemsJSON.length(); i+=200){
+            System.debug(bundleSummaryItemsJSON.substring(i, Math.min(i+100, bundleSummaryItemsJSON.length())));
+        }
+        
         //First identify the record Id passed in the parameters through the flow
         Id recordId = ApexPages.currentPage().getParameters().get('rId');
         String recordIdType = recordId?.getSObjectType().getDescribe().getName(); 

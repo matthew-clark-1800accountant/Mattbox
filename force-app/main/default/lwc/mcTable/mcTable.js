@@ -86,7 +86,7 @@ export default class McTable extends LightningElement {
     toggleValue;
     miniDetails;
 
-    dateSuffix = 'T00:00:00.000-05:00';
+    dateSuffix = 'T00:00:00.000-04:00';
 
     testId = '0055e000007Xtx2AAC';
 
@@ -126,7 +126,7 @@ export default class McTable extends LightningElement {
         //console.log({...ev.detail});
         this.filterViewValue = ev.detail.value;
         console.log('ev.detail: '+JSON.stringify(ev.detail));
-        if(ev.detail.value.includes('Queue') || ev.detail.value.includes('Customer Service')){
+        if(ev.detail.value.includes('Queue') || ev.detail.value.includes('CS Agent')){
             this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
             this.queryNonReps = true;
         } else {
@@ -134,6 +134,7 @@ export default class McTable extends LightningElement {
             this.queryNonReps = false;
         }
         //this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
+        console.log('queryNonReps '+this.queryNonReps);
         this.scrollToNow();
     }
 
@@ -525,14 +526,15 @@ export default class McTable extends LightningElement {
     }
 
     scrollToNow(){
-        console.log('scrollToNow');
         var curTime = new Date().toISOString();
-        var hours = Number(curTime.slice(11,13)-5);
+        console.log('scrollToNow '+curTime);
+        var hours = Number(curTime.slice(11,13)-4);
         var min = Number(curTime.slice(14,16));
+        console.log(hours+' '+min);
         var timeslotNumber = (hours*2) + (min >= 30 ? 1 : 0);
         //var pageNumber = Math.floor(timeslotNumber / this.slotsPerPage);
         var pageNumber = (timeslotNumber-1) / this.slotsPerPage;
-        this.pageValue = this.roundPageNumber(pageNumber);        
+        this.pageValue = this.roundPageNumber(pageNumber);
         this.scrollTo(this.computedScrollValue);
     }
 

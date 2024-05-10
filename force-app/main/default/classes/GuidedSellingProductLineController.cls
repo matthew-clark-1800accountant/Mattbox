@@ -3,6 +3,11 @@ public with sharing class GuidedSellingProductLineController {
     public String unitPrice; //{get {return formatMoney(productValue?.adjustedPrice);} set;}
     public String prodSubtotal;// {get {return formatMoney(productValue?.subtotal);} set;}
 
+    public Boolean getdisableQuantity(){
+        return (productValue.Product.Disable_QTY_on_Calc__c || !productValue.quantityEnabled);
+    }
+    public void setdisableQuantity(Boolean val){}
+
     public String getUnitPrice(){
         return formatMoney(productValue?.adjustedPrice);
     }
@@ -14,6 +19,16 @@ public with sharing class GuidedSellingProductLineController {
     }
 
     public void setprodSubtotal(String val){}
+
+    public String getdisplayRow(){
+        if(productValue.visible){
+            return 'table-row';
+        } else {
+            return 'none';
+        }
+    }
+
+    public void setdisplayRow(String val){}
 
     public GuidedSellingProductLineController() {
         

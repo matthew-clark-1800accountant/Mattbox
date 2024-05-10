@@ -13,76 +13,6 @@ export default class McTimeSlot extends LightningElement {
         this.rep = {Name: 'Rep'};
     }
 
-    exampleRep = {
-        Id: '0003E2NNCL94X',
-        Name: 'Rep McGee',
-        Tags: ["Paid Digital"]
-    }
-
-    exampleTimeslot = {
-        Id: 1,
-        TimeslotTime: '10:30 AM',
-        Appointments: [{
-            Id: 1,
-            EventId: '0000231ABC0X',
-            Disposition: 'Rescheduled',
-            SecondaryDisposition: null,
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1470443417111,
-            EndTime: 1770443417111
-        },
-        {
-            Id: 2,
-            EventId: '0000231ABC0X',
-            Disposition: 'Consulted',
-            SecondaryDisposition: 'Sale',
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1470443417111,
-            EndTime: 1770443417111
-        },
-        {
-            Id: 3,
-            EventId: '0000231ABC0X',
-            Disposition: 'Consulted',
-            SecondaryDisposition: 'Not Interested',
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1470443417111,
-            EndTime: 1770443417111
-        },
-        {
-            Id: 4,
-            EventId: '0000231ABC0X',
-            Disposition: null,
-            SecondaryDisposition: null,
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1470443417111,
-            EndTime: 1770443417111
-        },
-        {
-            Id: 5,
-            EventId: '0000231ABC0X',
-            Disposition: 'Rescheduled',
-            SecondaryDisposition: null,
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1770443417111,
-            EndTime: 1770443417111
-        },
-        {
-            Id: 6,
-            EventId: '0000231ABC0X',
-            Disposition: 'Rescheduled',
-            SecondaryDisposition: null,
-            Initials: 'MC',
-            Source: '1800Accountant',
-            StartTime: 1470443417111,
-            EndTime: 1470443417111
-        }]
-    }
 
     slotWidth = 240;
 
@@ -102,15 +32,11 @@ export default class McTimeSlot extends LightningElement {
 
     intervalId;
     connectedCallback(){
-        //console.log('timeslot.connectedCallback()');
-        //this.timeslot = this.exampleTimeslot;
-        //this.rep = this.exampleRep;
-        // var timeslotTime = new Date();
-        // timeslotTime.setMinutes(Math.floor(timeslotTime.getMinutes() / 30)*30);
-        //this.timeslot = {TimeslotTime: null, Appointments: []};
         this.showLine = Date.now() >= this.timeslotTime && Date.now() <= (this.timeslotTime + 30*60*1000);
         clearInterval(this.intervalId);
         this.intervalId = setInterval(()=>this.updateStyle(), 30*1000);
+        // var ul = this.template.querySelector("ul");
+        // ul.addEventListener("click", debugLine);
     }
 
     renderedCallback(){
@@ -135,7 +61,7 @@ export default class McTimeSlot extends LightningElement {
         }
         if(this.showLine){
             var newStyle = 'width: 2px; position:absolute; background-color: red; z-index:1; height: 100%; margin-left: '+this.lineLoc+'px;';
-            console.log('updateStyle(): '+newStyle);
+            //console.log('updateStyle(): '+newStyle);
             this.lineStyle = newStyle;
         }        
     }
@@ -225,11 +151,12 @@ export default class McTimeSlot extends LightningElement {
         //console.log(this.lineStyle);
     }
 
-    @api
-    lineDebug(){
-        if(this.showLine){
+    //@api
+    lineDebug(ev){
+        //if(this.showLine){
             console.log(this.lineLoc);
-            console.log(this.lineStyle);
-        }        
+            console.log(this.showLine);
+            console.log(new Date(this.timeslotTime).toString());
+        //}        
     }
 }

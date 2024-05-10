@@ -1,0 +1,110 @@
+@import 'c/poppinsFont';
+
+.rep-container {
+    box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 4px 5px;
+/* gap: 4px; */
+align-self: flex-start;
+
+max-width: 280px;
+height: 100%;
+
+border-width: 1px 1px 1px 0px;
+border-style: solid;
+border-color: #D9D9D9;
+background: #FFFFFF;
+border-right: 1px solid #D9D9D9;
+}
+.rep-inner{
+    display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px 5px;
+}
+
+.rep-tag-list{
+    display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px 5px;
+flex-wrap: wrap;
+}
+.rep-name {
+    /* {{Rep Name}} */
+width: 221px;
+height: 20px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+letter-spacing: 0.01em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* 00. On Light / High Emphasis */
+color: rgba(0, 0, 0, 0.87);
+}
+.menu-icon{
+    justify-content: flex-end;
+    /* padding: 8px; */
+    padding-bottom: 3px;
+    padding-top: 2px;
+    padding-right: 2px;
+    --slds-c-button-success-color-border: white;    
+}
+.rep-tag{
+    /* Paid Digital */
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 2px 8px;
+/* gap: 8px; */
+
+/* width: 89px; */
+width: fit-content;
+height: 20px;
+
+/* 03. Tertiary/Grey/100*
+
+This is the original Tertiary Grey color.
+*/
+background: #E7EAF0;
+border-radius: 20px;
+
+margin-right: 8px;
+margin-bottom: 5px;
+}
+.rep-tag-text{
+    /* Paid Digital */
+/* width: 73px; */
+width: fit-content;
+height: 16px;
+
+/* v2/050 - Moped/M(500)-16 */
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 16px;
+
+text-align:center;
+/* identical to box height, or 133% */
+
+letter-spacing: 0.045em;
+font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
+
+/* 00. On Light / High Emphasis */
+
+color: rgba(0, 0, 0, 0.87);
+}

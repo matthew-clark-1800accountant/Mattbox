@@ -5,6 +5,7 @@
         <template if:true={showLine}>
             <div class="verticalLine" style={lineStyle}></div>
         </template>
+        <!-- <lightning-button variant="base" label="debug" title="Looks like a link" onclick={lineDebug} class="slds-m-left_x-small"></lightning-button> -->
         <ul ondrop={dropHandler} ondragover={dragOverHandler} class="timeslot-container">
             <template for:each={timeslot.Appointments} for:item="appointment">
                 <!-- <lightning-layout-item key={appointment.Id} size="12"> -->

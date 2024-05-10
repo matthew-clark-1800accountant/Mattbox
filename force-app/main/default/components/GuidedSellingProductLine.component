@@ -2,7 +2,7 @@
     <apex:attribute name="p" description="This is the product represented by this component." type="GuidedSellingProduct" required="true" assignTo="{!productValue}"/>
     <apex:attribute name="tab" description="This is the name of the component's tab." type="String" required="true"/>
 
-    <div id="{!p.Product.Id}" class="row {!p.Product.Name}" style="display: table-row;border-bottom: 1px solid rgba(18, 23, 36, 0.2);">
+    <div id="{!p.Product.Id}" class="row {!p.Product.Name}" style="display: {!displayRow};border-bottom: 1px solid rgba(18, 23, 36, 0.2);">
         <div class="col" style="text-align: center;vertical-align: middle;padding-left: 17px;">
             <input id="{!p.Product.Id}{!tab}select" type="checkbox" html-data-id="{!p.Product.Id}" data-product="{!p.Product.Name}" style="Height: 13px;margin-left: 12px;" class="{!p.Product.Id}" onchange="addRemoveProduct('{!p.Product.Id}');" value="{!p.selected}"/>
         </div>
@@ -34,8 +34,8 @@
         </div>
         <div class="col" style="width: 110px;">
             <div class="form-floating">
-                <input type="tel" data-product-qty="{!p.Product.Name}" class="form-control {!p.Product.Id}qty" id="planPackageTableQuantity" style="display: {!IF(p.Product.Disable_QTY_on_Calc__c == true, 'none', 'flex')}" value="{!p.currentQuantity}" oninput="calcQuantityChange(this, '{!p.Product.Name}', '{!p.Product.Id}', '{!p.adjustedPrice}');"/>
-                <output type="tel" data-product-qty="{!p.Product.Name}" class="form-control" id="planPackageTableQuantityOutput" style="display: {!IF(p.Product.Disable_QTY_on_Calc__c == true, 'flex', 'none')}; background: rgba(18, 23, 36, 0.2);opacity: 0.75;">{!p.currentQuantity}</output>
+                <input type="tel" data-product-qty="{!p.Product.Name}" class="form-control {!p.Product.Id}qty" id="planPackageTableQuantity" style="display: {!IF(disableQuantity == true, 'none', 'flex')}" value="{!p.currentQuantity}" oninput="calcQuantityChange(this, '{!p.Product.Name}', '{!p.Product.Id}', '{!p.adjustedPrice}');"/>
+                <output type="tel" data-product-qty="{!p.Product.Name}" class="form-control" id="planPackageTableQuantityOutput" style="display: {!IF(disableQuantity == true, 'flex', 'none')}; background: rgba(18, 23, 36, 0.2);opacity: 0.75;">{!p.currentQuantity}</output>
             </div>
         </div>
         <div class="col" style="40px">

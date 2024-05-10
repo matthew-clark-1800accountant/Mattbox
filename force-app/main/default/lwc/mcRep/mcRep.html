@@ -10,9 +10,7 @@
         <template lwc:if={showTags}>
             <div class="rep-tag-list">
                 <template for:each={rep.Tags} for:item="tag">
-                    <lightning-layout-item class="rep-tag" key={tag.Id}>
-                        <div class="rep-tag-text">{tag.Text}</div>
-                    </lightning-layout-item>
+                    <c-mc-rep-tag currentview={currentview} tag={tag} key={tag.Id}></c-mc-rep-tag>
                 </template>
             </div>
         </template>

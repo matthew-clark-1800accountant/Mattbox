@@ -1063,13 +1063,15 @@
             }
             
             #expertAccountantTable {
-            width: 50%;
+            width: 80%;
             position: relative;
             flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
             }
             
             .inlineGuys {
-            width: 30%;
+            width: 25%;
             margin-top: 2%;
             display: inline-block;
             }
@@ -1315,9 +1317,6 @@
             margin-top: 5%;
             }
             
-            #expertAccountantTable {
-            width: 60%;
-            }
             
             .slds-scope p#portalTourAccountantPortalTitle {
             width: 90%;
@@ -1802,9 +1801,6 @@
             margin-left: 6%;
             }
             
-            #expertAccountantTable {
-            width: 75%;
-            }
             
             #portalTourAccountantPortalImg, #portalTourMessageCenterImg, #schedulerImg, #portalTourTaxPlannerImg, #portalTourBookkeepingImg, #portalTourDocumentCenterImg, #portalTourInvoicesImg {
             display: none;
@@ -2164,9 +2160,6 @@
             padding-right: 0%;
             }
             
-            #expertAccountantTable {
-            width: 90%;
-            }
             
             .inlineGuys {
             width: 60%;
@@ -3307,164 +3300,21 @@
 
     var questionsAnswered = 0;
     var useStaticPackage = true;
+
+    var bundleSummaries = JSON.parse('{!bundleSummaryItemsJSON}');
         
     //Called onload of the body to take off the linethrough if tax advisory was a part of the personalized plan
     function startPage() {
+
+        //console.log(JSON.parse('{!bundleSummaryItemsJSON}'));
         document.getElementById('intro').style.display = "flex";
-        document.getElementById('backgroundOne').style.display = "none";
         document.getElementById('backgroundRest').style.display = "block";
-        document.getElementById('partners').style.display = "none";
-        document.getElementById('BlastA').style.display = "none";
-        document.getElementById('BlastB').style.display = "none";
-        document.getElementById('BlastC').style.display = "none";
-        document.getElementById('BlastD').style.display = "none";
-        document.getElementById('BlastE').style.display = "none";
-        document.getElementById('BlastF').style.display = "none";
-        document.getElementById('businessDiscIntro').style.display = "none";
-        document.getElementById('businessDiscParts').style.display = "none";
-        document.getElementById('businessDiscMainQuest').style.display = "none";
-        document.getElementById('actQu1-1').style.display = "none";
-        document.getElementById('ansQu1-1').style.display = "none";
-        document.getElementById('actQu1-2').style.display = "none";
-        document.getElementById('ansQu1-2').style.display = "none";
-        document.getElementById('actQu1-3').style.display = "none";
-        document.getElementById('ansQu1-3').style.display = "none";
-        document.getElementById('actQu1-4').style.display = "none";
-        document.getElementById('ansQu1-4').style.display = "none";
-        document.getElementById('ansQu1-5').style.display = "none";
-        document.getElementById('actQu1-5').style.display = "none";
-        document.getElementById('ansQu1-6').style.display = "none";
-        document.getElementById('actQu1-6').style.display = "none";
-        document.getElementById('ansQu1-7').style.display = "none";
-        document.getElementById('actQu1-7').style.display = "none";
-        document.getElementById('ansQu1-8').style.display = "none";
-        document.getElementById('actQu1-8').style.display = "none";
-        document.getElementById('ansQu1-9').style.display = "none";
-        document.getElementById('actQu1-9').style.display = "none";
-        document.getElementById('ansQu1-10').style.display = "none";
-        document.getElementById('actQu1-10').style.display = "none";
-        document.getElementById('ansQu1-11').style.display = "none";
-        document.getElementById('actQu1-11').style.display = "none";
-        document.getElementById('ansQu1-12').style.display = "none";
-        document.getElementById('actQu1-12').style.display = "none";
-        document.getElementById('ansQu1-13').style.display = "none";
-        document.getElementById('actQu1-13').style.display = "none";
-        document.getElementById('ansQu1-14').style.display = "none";
-        document.getElementById('actQu1-14').style.display = "none";
-        document.getElementById('ansQu1-15').style.display = "none";
-        document.getElementById('actQu1-15').style.display = "none";
-        document.getElementById('ansQu1-16').style.display = "none";
-        document.getElementById('actQu1-16').style.display = "none";
-        document.getElementById('ansQu1-17').style.display = "none";
-        document.getElementById('actQu1-17').style.display = "none";
-        document.getElementById('ansQu1-18').style.display = "none";
-        document.getElementById('actQu1-18').style.display = "none";
-        document.getElementById('ansQu1-19').style.display = "none";
-        document.getElementById('actQu1-19').style.display = "none";
-        document.getElementById('ansQu1-20').style.display = "none";
-        document.getElementById('actQu1-20').style.display = "none";
-        document.getElementById('ansQu1-21').style.display = "none";
-        document.getElementById('actQu1-21').style.display = "none";
-        document.getElementById('ansQu1-22').style.display = "none";
-        document.getElementById('actQu1-22').style.display = "none";
-        document.getElementById('ansQu1-23').style.display = "none";
-        document.getElementById('actQu1-23').style.display = "none";
-        document.getElementById('ansQu1-24').style.display = "none";
-        document.getElementById('actQu1-24').style.display = "none";
-        document.getElementById('ansQu1-25').style.display = "none";
-        document.getElementById('actQu1-25').style.display = "none";
-        document.getElementById('ansQu1-26').style.display = "none";
-        document.getElementById('actQu1-26').style.display = "none";
-        document.getElementById('ansQu1-27').style.display = "none";
-        document.getElementById('actQu1-27').style.display = "none";
-        document.getElementById('ansQu1-28').style.display = "none";
-        document.getElementById('actQu1-28').style.display = "none";
-        document.getElementById('ansQu1-29').style.display = "none";
-        document.getElementById('actQu1-29').style.display = "none";
-        document.getElementById('actQu1-30').style.display = "none";
-        document.getElementById('ansQu1-30').style.display = "none";
-        document.getElementById('displayReview1-1').style.display = "none";
-        document.getElementById('displayReview1-2').style.display = "none";
-        document.getElementById('displayReview1-3').style.display = "none";
-        document.getElementById('displayReview1-4').style.display = "none";
-        document.getElementById('displayReview1-5').style.display = "none";
-        document.getElementById('displayReview1-6').style.display = "none";
-        document.getElementById('displayReview1-7').style.display = "none";
-        document.getElementById('displayReview1-8').style.display = "none";
-        document.getElementById('displayReview1-9').style.display = "none";
-        document.getElementById('displayReview1-10').style.display = "none";
-        document.getElementById('displayReview1-11').style.display = "none";
-        document.getElementById('displayReview1-12').style.display = "none";
-        document.getElementById('displayReview1-13').style.display = "none";
-        document.getElementById('displayReview1-14').style.display = "none";
-        document.getElementById('displayReview1-15').style.display = "none";
-        document.getElementById('displayReview1-16').style.display = "none";
-        document.getElementById('displayReview1-17').style.display = "none";
-        document.getElementById('displayReview1-18').style.display = "none";
-        document.getElementById('displayReview1-19').style.display = "none";
-        document.getElementById('displayReview1-20').style.display = "none";
-        document.getElementById('displayReview1-21').style.display = "none";
-        document.getElementById('displayReview1-22').style.display = "none";
-        document.getElementById('displayReview1-23').style.display = "none";
-        document.getElementById('displayReview1-24').style.display = "none";
-        document.getElementById('displayReview1-25').style.display = "none";
-        document.getElementById('displayReview1-26').style.display = "none";
-        document.getElementById('displayReview1-27').style.display = "none";
-        document.getElementById('displayReview1-28').style.display = "none";
-        document.getElementById('displayReview1-29').style.display = "none";
-        document.getElementById('displayReview1-30').style.display = "none";
-        document.getElementById('businessDiscReview').style.display = "none";
-        document.getElementById('properEstityStrugle').style.display = "none";
-        document.getElementById('properEstityStrugleSCorp').style.display = "none";
-        document.getElementById('flowThroughEntity').style.display = "none";
-        document.getElementById('entityClassificationElec').style.display = "none";
-        document.getElementById('selfEmploymentTax').style.display = "none";
-        document.getElementById('selfEmploymentTaxSCorp').style.display = "none";
-        document.getElementById('reasonableSalary').style.display = "none";
-        document.getElementById('selfEmploymentTaxIRS').style.display = "none";
-        document.getElementById('selfEmploymentTaxSavings').style.display = "none";
-        document.getElementById('boiIntro').style.display = "none";
-        document.getElementById('properEntityStructuringReviewSCorp').style.display = "none";
-        document.getElementById('properEntityStructuringReview').style.display = "none";
-        document.getElementById('deductionsIntro').style.display = "none";
-        document.getElementById('startUpCosts').style.display = "none";
-        document.getElementById('medicalDeduction').style.display = "none";
-        document.getElementById('vehicleDeduction').style.display = "none";
-        document.getElementById('homeOfficeDeduction').style.display = "none";
-        document.getElementById('codeDeduction').style.display = "none";
-        document.getElementById('reviewDeductions').style.display = "none";
-        document.getElementById('paperlossIntro').style.display = "none";
-        document.getElementById('paperlossFormula').style.display = "none";
-        document.getElementById('paperlossExample').style.display = "none";
-        document.getElementById('packages').style.display = "none";
-        document.getElementById('bundle').style.display = "none";
-        document.getElementById('verifyInformation').style.display = "none";
-        document.getElementById('postPurchase').style.display = "none";
-        document.getElementById('featuresAccountantStrategy').style.display = "none";
-        document.getElementById('featuresoOherCPAs').style.display = "none";
-        document.getElementById('featuresDifferent').style.display = "none";
-        document.getElementById('expertAccountant').style.display = "none";
-        document.getElementById('scheduler').style.display = "none";
-        document.getElementById('portalTourAccountantPortal').style.display = "none";
-        document.getElementById('portalTourMessageCenter').style.display = "none";
-        document.getElementById('portalTourTaxPlanner').style.display = "none";
-        document.getElementById('portalTourBookkeeping').style.display = "none";
-        document.getElementById('portalTourDocumentCenter').style.display = "none";
-        document.getElementById('portalTourInvoices').style.display = "none";
-        document.getElementById('portalTourMobileApp').style.display = "none";
-        document.getElementById('portalTourSummary').style.display = "none";
-        document.getElementById('filingBusinessTaxes').style.display = "none";
-        document.getElementById('filingECE').style.display = "none";
-        document.getElementById('presWrapUp').style.display = "none";
-        document.getElementById('waitingScreen').style.display = "none";
-        document.getElementById('paymentDetails').style.display = "none";
-        document.getElementById('paymentLegal').style.display = "none";
-        document.getElementById('sale').style.display = "none";
-        document.getElementById('notSale').style.display = "none";
 
-        document.getElementById('mySavings1').style.display = 'none';
-        document.getElementById('mySavings2').style.display = 'none';
-
+        var itemsToHide = ['backgroundOne', 'partners', 'BlastA', 'BlastB', 'BlastC', 'BlastD', 'BlastE', 'BlastF', 'businessDiscIntro', 'businessDiscParts', 'businessDiscMainQuest', 'actQu1-1', 'ansQu1-1', 'actQu1-2', 'ansQu1-2', 'actQu1-3', 'ansQu1-3', 'actQu1-4', 'ansQu1-4', 'ansQu1-5', 'actQu1-5', 'ansQu1-6', 'actQu1-6', 'ansQu1-7', 'actQu1-7', 'ansQu1-8', 'actQu1-8', 'ansQu1-9', 'actQu1-9', 'ansQu1-10', 'actQu1-10', 'ansQu1-11', 'actQu1-11', 'ansQu1-12', 'actQu1-12', 'ansQu1-13', 'actQu1-13', 'ansQu1-14', 'actQu1-14', 'ansQu1-15', 'actQu1-15', 'ansQu1-16', 'actQu1-16', 'ansQu1-17', 'actQu1-17', 'ansQu1-18', 'actQu1-18', 'ansQu1-19', 'actQu1-19', 'ansQu1-20', 'actQu1-20', 'ansQu1-21', 'actQu1-21', 'ansQu1-22', 'actQu1-22', 'ansQu1-23', 'actQu1-23', 'ansQu1-24', 'actQu1-24', 'ansQu1-25', 'actQu1-25', 'ansQu1-26', 'actQu1-26', 'ansQu1-27', 'actQu1-27', 'ansQu1-28', 'actQu1-28', 'ansQu1-29', 'actQu1-29', 'actQu1-30', 'ansQu1-30', 'displayReview1-1', 'displayReview1-2', 'displayReview1-3', 'displayReview1-4', 'displayReview1-5', 'displayReview1-6', 'displayReview1-7', 'displayReview1-8', 'displayReview1-9', 'displayReview1-10', 'displayReview1-11', 'displayReview1-12', 'displayReview1-13', 'displayReview1-14', 'displayReview1-15', 'displayReview1-16', 'displayReview1-17', 'displayReview1-18', 'displayReview1-19', 'displayReview1-20', 'displayReview1-21', 'displayReview1-22', 'displayReview1-23', 'displayReview1-24', 'displayReview1-25', 'displayReview1-26', 'displayReview1-27', 'displayReview1-28', 'displayReview1-29', 'displayReview1-30', 'businessDiscReview', 'properEstityStrugle', 'properEstityStrugleSCorp', 'flowThroughEntity', 'entityClassificationElec', 'selfEmploymentTax', 'selfEmploymentTaxSCorp', 'reasonableSalary', 'selfEmploymentTaxIRS', 'selfEmploymentTaxSavings', 'boiIntro', 'properEntityStructuringReviewSCorp', 'properEntityStructuringReview', 'deductionsIntro', 'startUpCosts', 'medicalDeduction', 'vehicleDeduction', 'homeOfficeDeduction', 'codeDeduction', 'reviewDeductions', 'paperlossIntro', 'paperlossFormula', 'paperlossExample', 'packages', 'bundle', 'verifyInformation', 'postPurchase', 'placeholder', 'featuresAccountantStrategy', 'featuresoOherCPAs', 'featuresDifferent', 'expertAccountant', 'scheduler', 'portalTourAccountantPortal', 'portalTourMessageCenter', 'portalTourTaxPlanner', 'portalTourBookkeeping', 'portalTourDocumentCenter', 'portalTourInvoices', 'portalTourMobileApp', 'portalTourSummary', 'filingBusinessTaxes', 'filingECE', 'presWrapUp', 'waitingScreen', 'paymentDetails', 'paymentLegal', 'sale', 'notSale', 'mySavings1', 'mySavings2'];
+        
+        for(var id of itemsToHide){
+            document.getElementById(id).style.display = "none";
+        }
         showDueToday(false);
         progress(3);
     }
@@ -3476,7 +3326,7 @@
     });
     
     function progress(newWidth) {
-
+        //console.log('progress '+newWidth);
         var elementBig = document.getElementById('myBar1');
         var elementSmall = document.getElementById('myBar2');
         var sum = newWidth;
@@ -3651,7 +3501,7 @@
                             <div id="logoComp">
                                 <img id="logo" src="{!$Resource.Logo}"/>
                             </div>
-                            <div id="myProgress">
+                            <div id="myProgress" style="display: none;">
                                 <div id="myBar1">&nbsp;0%&nbsp;&nbsp;</div>
                             </div>
                             <div id="mySavings1" class="mySavings">
@@ -3695,9 +3545,10 @@
                             </center>
                             
                             <p id="saleRepDescTitle">
-                                Hello, I’m {!opportunity.Account.Owner.Name}. 
+                                Hello, I’m {!opportunity.Account.Owner.Name}.
+                                I’m excited to meet with you today to talk about your business.
                                 <br/>
-                                {!opportunity.Account.Owner.TSA_Introduction__c}
+                                
                             </p>
                             
                             <p id="saleRepDescNote">This call will be monitored for quality and training purposes</p>
@@ -4670,7 +4521,7 @@
                                     <div class="amount-due" id="balanceSectionTotalDue">$2,789</div>
                                 </div>
                                 <div class="flex-column">
-                                    <div style="text-align: center"><span id="originalPrice" style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 23%</span></div>
+                                    <div style="text-align: center"><span id="originalPrice" style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; text-decoration: line-through; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word">$3,599</span><span style="color: rgba(18, 23, 36, 0.65); font-size: 33.94px; font-family: Poppins; font-weight: 400; line-height: 54.91px; letter-spacing: 0.25px; word-wrap: break-word"> Save 20%</span></div>
                                 </div>
                                 <hr id="dueTodayLine" style="height:2px; size:2px; width:70%; margin-top:40px; margin-bottom: 40px"/>
                                 <div id="balanceSectionDueToday" class="offer-heading">Due Today</div>
@@ -4680,28 +4531,9 @@
                                 <div id="balanceSectionNote"  style="text-align: center; color:black" class="balanceSectionNote">The remaining balance will be paid through monthly installments.</div>
                             </div>
                             <div style="overflow: auto; max-height: 575px; width: 870px">
+                                <div id="partnerDiscountText" class="description-heading" style="padding-left: 48px; margin-bottom: 20px; font-style: italic; font-size: 20px;"></div>
                                 <div id="standardBundleDescriptions" class="description-container">
-                                    <div class="product-description">
-                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business and personal annual income tax filings</div>
-                                        <!-- <div style="width: 32px; height: 32px; position: relative"></div> -->
-                                        <div class="description-subheading" id="bundleReturnDescription">Keep compliant with complicated IRS and state requirements &amp; avoid costly penalties and unnecessary fees</div>
-                                    </div>
-                                    <div class="product-description">
-                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Business tax planning and unlimited year-round consulting</div>
-                                        <div class="description-subheading">Enjoy a custom-built tax plan from your accounting team and get the best possible tax savings</div>
-                                    </div>
-                                    <div class="product-description">
-                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Personal financial planning</div>
-                                        <div class="description-subheading">Plan for retirement while also helping your immediate tax situation</div>
-                                    </div>
-                                    <div class="product-description">
-                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Industry leading bookkeeping and software</div>
-                                        <div class="description-subheading">Use our popular ClientBooks software to manage all aspects of small business accounting with automated bookkeeping, expense management, invoicing, payment processing, reporting tools, and more</div>
-                                    </div>
-                                    <div class="product-description">
-                                        <div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>Unlimited Premier Support</div>
-                                        <div class="description-subheading">Engage your accountant team whenever you need advice or help. Rest easy knowing you're covered by America's top small-business accounting firm</div>
-                                    </div>
+                                    
                                 </div>
                                 <div style="height: 16px"> </div>
                                 <div id="additionalItemDescriptions" class="description-container">
@@ -4764,6 +4596,25 @@
                                     <p class="postPurchaseMeetingNote">We're currently reviewing your unique tax situation and will assign a senior tax advisor to your account by the next business day.</p>
                                 </div>
                             </center>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap" id="placeholder">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4">
+                        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small" id="placeholderSec">
+                            <center>
+                                <div id="topSection" style="margin-top: 8%;width: 90%;">
+                                    <div id="balanceSection">
+                                        <img id="startingToday" style="width: 70%;" src="{!$Resource.startingToday}"/>
+                                    </div>
+                                    <div id="includedFeaturesSection">
+                                        <div id="" style="width: 90%;text-align: left;margin-bottom: 10%;">
+                                            <p class="startingTodayTxt"><span id="startingTodayNumOrange">1</span>&nbsp;&nbsp;Placeholder</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -4846,6 +4697,10 @@
                                         <div class="inlineGuys">
                                             <img id="expertAccountantImg" src="{!$Resource.africanamerican}"/>
                                             <p id="expertAccountanttext">Tax Analyst</p>
+                                        </div>
+                                        <div class="inlineGuys">
+                                            <img id="expertAccountantImg" src="{!$Resource.plannerphoto}"/>
+                                            <p id="expertAccountanttext">Financial Planner</p>
                                         </div>
                                         <div class="inlineGuys">
                                             <img id="expertAccountantImg" src="{!$Resource.indianbusinessman}"/>
@@ -5126,7 +4981,7 @@
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;1-800Accountant Portal Access</p>
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Personal and Business Tax Preparation and Filing</p>
                                     <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Entity Classification Election</p>
-                                    <p id="portalTourSummarytext"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Beneficial Ownership Information (BOI)</p>
+                                    <p id="portalTourSummarytext" class="wrapupItemBOI"><span class="material-icons portalTourSummaryIcon">task_alt</span>&nbsp;&nbsp;Beneficial Ownership Information (BOI)</p>
                                 </div>                          
                             </center>
                         </div>
@@ -5252,13 +5107,17 @@
     </body>
     <script>
     var prodList = [];
-
+    var bundleType;
+    var bundleStatus;
+    var leadSource;
     //gsids
-    const defaultProductNames = ['Personal Return' , 'Advisory', '1-800Accountant Access' ,  'Business Return', 'Custom Accounting Package', 'Personal Financial Planning', 'Loan Agreement'];
+    const bundleProductNames = ['Personal Return', 'Personal Tax Preparation', 'Advisory', 'Tax Advisory', 'Business Return', 'Business Tax Preparation', 'Business Tax Preparation - State Only', //core products and name variations
+    'Core Accounting Package', 'Core Accounting Package (Partner BTP)', 'Core Accounting Package (Partner BTP/BOI)', 'Core Accounting Package (Partner BTP/PTP/BOI)', 'Core Accounting Package (Partner BTPNS/BOI)', //bundle products
+    '1-800Accountant Access', 'Personal Financial Planning', 'Loan Agreement', 'Beneficial Owner Information Report'];
     function includesStandardBundle(){
-        if(prodList.length < defaultProductNames.length){ return false; }
+        if(prodList.length < bundleProductNames.length){ return false; }
         var productNames = prodList.map(x => x?.Product.Guided_Selling_Identifier__c);
-        for(var name of defaultProductNames){
+        for(var name of bundleProductNames){
             if(!productNames.includes(name)){
                 return false;
             }
@@ -5266,10 +5125,10 @@
         return true;
     }
     function hasAddedItems(){
-        if(prodList.length > defaultProductNames.length){ return true; }
+        if(prodList.length > bundleProductNames.length){ return true; }
         var productNames = prodList.map(x => x?.Product.Guided_Selling_Identifier__c);
         for(var name of productNames){
-            if(!defaultProductNames.includes(name)){
+            if(!bundleProductNames.includes(name)){
                 return true;
             }
         }
@@ -5294,7 +5153,12 @@
     socket.auth = {sessionID: '{!$CurrentPage.parameters.session}', authToken: '{!$CurrentPage.parameters.token}', source: 'presentation'}; // Pass these credentials as per actual application setup. This is just here for demo.
     socket.connect();
     var lastProdsName = new Array();
-    socket.on("private message", (e) => {
+    socket.on("private message", socketHandler);
+
+    function socketHandler(e){
+        if(e.content.showProgress && e.content.progress){
+            progress(Number.parseInt(e.content.progress));
+        }
         //console.log(JSON.stringify(e.content));
         if(null != e.content.savings && '' != e.content.savings && e.content.savings && Number.parseFloat(e.content.savings.replaceAll(',','')) >= 3000){
         //e.content.savings != 0.00 && e.content.savings != 0 && e.content.savings != '0.00' && e.content.savings != '0') {
@@ -5341,6 +5205,10 @@
         }
 
         switch (e.content.page) {
+            case 'Bundle Status':
+                bundleStatus = e.content.status;
+            break;
+
             case 'Partner Info':
                 clearInterval(stopFunction);
                 hideAll();
@@ -5369,10 +5237,17 @@
             
             case 'Blast':
                 //console.log(e.content.bundle);
-                progress(6);
+                //progress(6);
                 hideAll();
                 document.getElementById('backgroundRest').style.display = "block";
                 document.getElementById('BlastA').style.display = "flex";
+                bundleType = e.content.eligibleBundle;
+                leadSource = e.content.leadSource;
+                if(leadSource == 'Tailor Brands'){
+                    document.querySelector('.wrapupItemBOI').style.display = 'none'
+                }
+                
+                console.log('bundleType: '+bundleType);
                 var index = 1;
                 stopFunction = setInterval(
                     function() { 
@@ -5472,7 +5347,7 @@
             break;
             
             case 'Business Discovery Intro':
-                progress(9);
+                //progress(9);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5481,7 +5356,7 @@
             break;
             
             case 'Business Discovery Parts':
-                progress(12);
+                //progress(12);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5632,7 +5507,7 @@
             break;
             
             case 'Business Discovery Review':
-                progress(15);
+                //progress(15);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5642,7 +5517,7 @@
             break;
             
             case 'Proper Entity Structuring':
-                progress(18);
+                //progress(18);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5651,7 +5526,7 @@
             break;
 
             case 'Proper Entity Structuring LLC':
-                progress(18);
+                //progress(18);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5660,7 +5535,7 @@
             break;
             
             case 'Proper Entity Structuring SCorp':
-                progress(18);
+                //progress(18);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5669,7 +5544,7 @@
             break;
             
             case 'Flow Through Entity':
-                progress(21);
+                //progress(21);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5677,7 +5552,7 @@
             break;
             
             case 'Entity Classification Election (ECE)':
-                progress(24);
+                //progress(24);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5685,7 +5560,7 @@
             break;
             
             case 'Self Employment Tax (FICA) LLC':
-                progress(27);
+                //progress(27);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5693,14 +5568,14 @@
             break;
             
             case 'Self Employment Tax (FICA) S Corp':
-                progress(27);
+                //progress(27);
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('selfEmploymentTaxSCorp').style.display = "flex";
             break;
             
             case 'Reasonable Salary':
-                progress(29);
+                //progress(29);
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('reasonableSalary').style.display = "flex";
@@ -5719,14 +5594,14 @@
             break;
 
             case 'Beneficial Ownership Information (BOI)':
-                progress(30);
+                //progress(30);
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('boiIntro').style.display = "flex";
             break;
             
             case 'Proper Entity Structuring Review':
-                progress(30);
+                //progress(30);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5734,7 +5609,7 @@
             break;
 
             case 'Proper Entity Structuring Review LLC':
-                progress(30);
+                //progress(30);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5742,7 +5617,7 @@
             break;
 
             case 'Proper Entity Structuring Review SCorp':
-                progress(30);
+                //progress(30);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5750,7 +5625,7 @@
             break;
             
             case 'Deductions Intro':
-                progress(33);
+                //progress(33);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5758,7 +5633,7 @@
             break;
             
             case 'Start-up Costs':
-                progress(36);
+                //progress(36);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5790,31 +5665,31 @@
             break;
             
             case 'Review Deductions':
-                progress(39);
+                //progress(39);
 
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('reviewDeductions').style.display = "flex";
             break;
             
-            case 'Paperloss':
-                progress(42);
+            case 'Paper Loss':
+                //progress(42);
 
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('paperlossIntro').style.display = "flex";
             break;
             
-            case 'Paperloss Formula':
-                progress(45);
+            case 'Paper Loss Formula':
+                //progress(45);
 
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('paperlossFormula').style.display = "flex";
             break;
             
-            case 'Paperloss Example':
-                progress(48);
+            case 'Paper Loss Example':
+                //progress(48);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5822,7 +5697,7 @@
             break;
             
             case '1-800Accountant Introduction Part 1':
-                progress(51);
+                //progress(51);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5830,7 +5705,7 @@
             break;
     
             case '1-800Accountant Introduction Part 2':
-                progress(54);
+                //progress(54);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5838,15 +5713,24 @@
             break;
     
             case '1-800Accountant Introduction Part 3':
-                progress(57);
+                //progress(57);
 
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('featuresDifferent').style.display = "flex";
             break;
     
+            case 'Tax Advisory':
+                //progress(60);
+
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('backgroundRest').style.display = "block";
+                document.getElementById('expertAccountant').style.display = "flex";
+            break;
+
             case 'Your Expert Accountant Team':
-                progress(60);
+                //progress(60);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5855,7 +5739,7 @@
             break;
     
             case 'Features - 1-800Accountant Portal':
-                progress(63);
+                //progress(63);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5864,7 +5748,7 @@
             break;
     
             case 'Features - Appointment Scheduler':
-                progress(65);
+                //progress(65);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5873,7 +5757,7 @@
             break;
     
             case 'Features - Message Center':
-                progress(67);
+                //progress(67);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5882,7 +5766,7 @@
             break;
     
             case 'Features - Tax Planner':
-                progress(69);
+                //progress(69);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5891,7 +5775,7 @@
             break;
     
             case 'Features - Bookkeeping':
-                progress(71);
+                //progress(71);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5900,7 +5784,7 @@
             break;
     
             case 'Features - Document Center':
-                progress(73);
+                //progress(73);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5909,7 +5793,7 @@
             break;
     
             case 'Features - Invoices':
-                progress(75);
+                //progress(75);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5918,7 +5802,7 @@
             break;
     
             case 'Features - Mobile App':
-                progress(77);
+                //progress(77);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5927,7 +5811,7 @@
             break;
     
             case 'Features - Summary':
-                progress(79);
+                //progress(79);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5935,7 +5819,7 @@
             break;
     
             case 'Features - Business & Personal...':
-                progress(82);
+                //progress(82);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5943,7 +5827,7 @@
             break;
     
             case 'Features - Filing ECE':
-                progress(85);
+                //progress(85);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -5951,21 +5835,33 @@
             break;
     
             case 'Features - Wrap Up':
-                progress(88);
+                //progress(88);
 
                 clearInterval(stopFunction);
                 hideAll();
                 document.getElementById('portalTourSummary').style.display = "flex";
             break;
+    
+            case 'Verify Information':
+            //     progress(94);
+
+            //     clearInterval(stopFunction);
+            //     hideAll();
+            //     document.getElementById('verifyInformation').style.display = "flex";
+            // break;
 
             case 'Prepared Packages':
                 //console.log(JSON.stringify(e.content));
                 if(e.content.showProgress == true) {
-                    progress(91);
+                    //progress(91);
+                }
+
+                if(e.content.status){
+                    bundleStatus = e.content.status;
                 }
 
                 clearInterval(stopFunction);
-                console.log(e.content);
+                //console.log(e.content);
                 if(null == e.content.checked) {
                     hideAll();
                     document.getElementById('backgroundRest').style.display = "block"; //green cross-section of the background
@@ -5985,8 +5881,8 @@
                     prodList = JSON.parse(e.content.productListString);
                     var tableString = '';
                     var banishedNames = ['1-800Accountant Access']; //['Business Return','Personal Return','Advisory'];
-                    var bundleIntact = includesStandardBundle();
-                    var itemsAdded = hasAddedItems();
+                    var bundleIntact = (bundleStatus == 'standard' || bundleStatus == 'added');
+                    var itemsAdded = (bundleStatus == 'added');
                     var returnQuantities = getReturnQuantities();
                     //bundleReturnDescription
                     if(bundleIntact){ //hide or show default descriptions
@@ -5997,28 +5893,36 @@
                         bundleDescriptions.style.display = 'none';
                     }
 
+                    if(bundleIntact && bundleType != 'Core Accounting Package' && leadSource){
+                        document.getElementById('partnerDiscountText').innerHTML = leadSource + ' Partner Subscription Discount Applied';
+                    }
+
                     if(bundleIntact && returnQuantities){
-                        var appendString = '';
-                        if(returnQuantities.get('Business Return') > 1 && returnQuantities.get('Personal Return') > 1){
-                            appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns and "
-                            +returnQuantities.get('Personal Return')+" personal returns";
-                        } else if(returnQuantities.get('Business Return') > 1){
-                            appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns";
-                        } else if(returnQuantities.get('Personal Return') > 1){
-                            appendString = ". Includes "+ returnQuantities.get('Personal Return')+" personal returns";
+                        // var appendString = '';
+                        // if(returnQuantities.get('Business Return') > 1 && returnQuantities.get('Personal Return') > 1){
+                        //     appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns and "
+                        //     +returnQuantities.get('Personal Return')+" personal returns";
+                        // } else if(returnQuantities.get('Business Return') > 1){
+                        //     appendString = ". Includes "+ returnQuantities.get('Business Return')+" business returns";
+                        // } else if(returnQuantities.get('Personal Return') > 1){
+                        //     appendString = ". Includes "+ returnQuantities.get('Personal Return')+" personal returns";
+                        // }
+                        var bundleSummariesHTML = '';
+                        for(var summary of bundleSummaries.filter(x => x.Bundle_Name__c == bundleType)){
+                            bundleSummariesHTML += getRowData(summary.Heading__c, summary.Subheading__c, 1);
                         }
-                        document.getElementById('bundleReturnDescription').innerHTML = bundleReturnDescription + appendString; 
+                        document.getElementById('standardBundleDescriptions').innerHTML = bundleSummariesHTML;//bundleReturnDescription + appendString; 
                     }
 
                     if(!bundleIntact || itemsAdded){
                         for(var prod of prodList){
                             var prodName = prod.Product.Guided_Selling_Identifier__c;
-                            var includeProduct = (defaultProductNames.includes(prodName) && !bundleIntact) ||
-                            (!defaultProductNames.includes(prodName));
+                            //var includeProduct = (bundleProductNames.includes(prodName) && !bundleIntact) || (!bundleProductNames.includes(prodName));
+                            var includeProduct = (!bundleIntact) || (!bundleProductNames.includes(prodName));
                             if(includeProduct && !banishedNames.includes(prodName)){
                                 var rowProd = getRowData(prod.Product.Name, prod.description, prod.currentQuantity);
                                 tableString += rowProd;
-                            }                        
+                            }
                         }
                     }
 
@@ -6042,22 +5946,17 @@
                 }
             break;
     
-            case 'Verify Information':
-                progress(94);
-
-                clearInterval(stopFunction);
-                hideAll();
-                document.getElementById('verifyInformation').style.display = "flex";
-            break;
-    
             case 'Payment Details':
-                console.log('Payment Details');
-                console.log(e.content);
+                //console.log('Payment Details');
+                //console.log(e.content);
                     if(e.content.showProgress == true) {
-                        progress(94);
-                        // hideAll();
-                        // document.getElementById('backgroundRest').style.display = "block";
-                        // document.getElementById('paymentDetails').style.display = "flex";
+                        //progress(94);
+                        hideAll();
+                        //document.getElementById('backgroundRest').style.display = "block";
+                        //document.getElementById('paymentDetails').style.display = "flex";
+                        var eventClone = JSON.parse(JSON.stringify(e));
+                        eventClone.content.page = 'Prepared Packages';
+                        socketHandler(eventClone);
                     }
                     clearInterval(stopFunction);
 
@@ -6089,7 +5988,7 @@
             break;
 
             case 'Payment Legal':
-                progress(97);
+                //progress(97);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -6099,7 +5998,7 @@
             break;
     
             case 'Post Purchase':
-                progress(100);
+                //progress(100);
 
                 clearInterval(stopFunction);
                 hideAll();
@@ -6134,8 +6033,13 @@
                 clearInterval(wait);
                 //window.close();
             break;
+            case 'Placeholder':
+                clearInterval(stopFunction);
+                hideAll();
+                document.getElementById('placeholder').style.display = "flex";
+            break;
         }
-    });
+    }
     
     var channel = new BroadcastChannel('guidedSelling_channel');   
     var stopFunction;
@@ -6164,7 +6068,7 @@
     function getRowData(heading, subheading, quantity) {
         var rowData = '';
         rowData = '<div class="product-description">'
-        + '<div class="description-heading"><span class="material-icons" style="color: #3B7A80; padding-right:5px">task_alt</span>'+heading+(quantity > 1 ? ' (x'+quantity+')' : '')+'</div>' 
+        + '<div style="display: flex; flex-direction: row;"> <span class="material-icons" style="color: #3B7A80; padding-right:5px; margin-top: 8px;">task_alt</span> <div class="description-heading">'+heading+(quantity > 1 ? ' (x'+quantity+')' : '')+'</div></div>' 
         + '<div class="description-subheading">'+subheading+'</div>'
         + '</div>';
         
@@ -6210,6 +6114,7 @@
         document.getElementById('bundle').style.display = "none";
         document.getElementById('verifyInformation').style.display = "none";
         document.getElementById('postPurchase').style.display = "none";
+        document.getElementById('placeholder').style.display = "none";
         document.getElementById('featuresAccountantStrategy').style.display = "none";
         document.getElementById('featuresoOherCPAs').style.display = "none";
         document.getElementById('featuresDifferent').style.display = "none";

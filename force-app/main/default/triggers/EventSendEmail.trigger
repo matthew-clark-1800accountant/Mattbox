@@ -18,8 +18,8 @@ trigger EventSendEmail on Event (after update) {
             }
             //Get the Account to send out the Pre-Tsa email
             if(null != e.WhatId &&
-                'Account' == e.WhatId.getSObjectType().getDescribe().getName()){
-                sendEmailIdsToEvent.put(e.WhatId, e.Id);
+                'Account' == e.AccountId.getSObjectType().getDescribe().getName()){
+                sendEmailIdsToEvent.put(e.AccountId, e.Id);
             }
         }
     }

@@ -232,7 +232,10 @@ public class eventNotifier implements Database.Batchable<sObject>, Database.Stat
         mail.setSubject('Overdue Call on 1on1 Sales Appointment');
         mail.setPlainTextBody('A TSA appointment for one of your team members was not called or rejected on time. Please reassign this appointment right away.\n Sales Specialist:'+agetsname+' \n'+'Name of Lead:  '+leadsname+'\n'+eventslink);
         
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        if(!Test.isRunningTest()){
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        }
+        
         
         system.debug('a reminder email has been sent to the agent');
         system.debug('email invocations: '+Limits.getEmailInvocations());

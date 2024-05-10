@@ -2,7 +2,7 @@
     <template lwc:if={displayRow}>
         <lightning-layout vertical-align="stretch">
             <lightning-layout-item flexibility="auto">
-                <c-mc-rep onrowrefreshed={rowRefreshedHandler}  onrowpinned={rowPinnedHandler} rep={row.Rep} onclick={repDebug}></c-mc-rep>
+                <c-mc-rep onrowrefreshed={rowRefreshedHandler}  onrowpinned={rowPinnedHandler} rep={row.Rep} onclick={repDebug} currentview={currentview}></c-mc-rep>
             </lightning-layout-item>
             <lightning-layout class="slds-scrollable_x row" style={rowStyle}>
                 <template lwc:if={timeslotsLoaded}>

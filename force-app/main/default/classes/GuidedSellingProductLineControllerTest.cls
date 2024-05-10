@@ -14,5 +14,10 @@ public with sharing class GuidedSellingProductLineControllerTest {
         cont.productValue.subtotal = 123;
         cont.setUnitPrice(cont.getUnitPrice());
         cont.setProdSubtotal(cont.getProdSubtotal());
+        
+        cont.setdisableQuantity(cont.getdisableQuantity());
+        cont.setdisplayRow(cont.getdisplayRow());
+        
+        
     }
 }
