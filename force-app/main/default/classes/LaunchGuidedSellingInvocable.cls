@@ -68,6 +68,15 @@ public class LaunchGuidedSellingInvocable {
         }
     }
 
+    public static String getEvironmentName(){
+        System.Domain d = System.DomainParser.parse(URL.getOrgDomainUrl());
+        if(d.getSandboxName() == null){
+            return 'production';
+        } else {
+            return d.getSandboxName().toLowerCase();
+        }        
+    }
+
     @InvocableMethod(label='Launch Guided Selling' description='Launch Guided Selling')
     public static List<JobResponses> launchGuidedSelling (List<Requests> requestList) {
         
@@ -88,7 +97,7 @@ public class LaunchGuidedSellingInvocable {
             throw new WrongRecordIdException('Missing record Id');
         }
 
-        //Identifying the record Id coming in from the flow. The four Id types accepted are: Event, Account, Lead, Opportunity
+        //Identifying the record Id coming in from the flow. The four Id types accepted: Event, Account, Lead, Opportunity
         String recordIdType = Id.valueOf(requestList[0].recordId).getSObjectType().getDescribe().getName(); 
         Id eventId = ('Event' == recordIdType) ? requestList[0].recordId : null;
         Id leadId = ('Lead' == recordIdType) ? requestList[0].recordId : null;
@@ -151,7 +160,7 @@ public class LaunchGuidedSellingInvocable {
 
             Account getAccount = ([
                 SELECT Id, Name, Primary_Contact_First_Name__c, Primary_Contact_Last_Name__c, Primary_Contact__r.Phone, Primary_Contact__r.Email, Expected_1st_year_revenue__c,
-                Industry, Entity_Tax_Classification__c, Number_of_Owners__c, Total_Startup_Costs__c, Owned_Business_Before_new__c, Interested_in_obtaining_funding__c
+                Industry, Entity_Tax_Classification__c, Number_of_Owners__c, Total_Startup_Costs__c, Owned_Business_Before_new__c, Interested_in_obtaining_funding__c, Registration_Date__c
                 FROM Account 
                 WHERE Id = :findAccountId
             ]);
@@ -167,7 +176,8 @@ public class LaunchGuidedSellingInvocable {
                     Business_Type__c = getAccount.Entity_Tax_Classification__c,
                     Number_of_Owners__c = getAccount.Number_of_Owners__c,
                     Startup_Costs__c = getAccount.Total_Startup_Costs__c,
-                    First_Business__c = (getAccount.Owned_Business_Before_new__c == 'Yes') ? true : false
+                    First_Business__c = (getAccount.Owned_Business_Before_new__c == 'Yes') ? true : false,
+                    Date_of_incorporation__c = getAccount.Registration_Date__c
                 );
 
                 insert toInsertBusiness;
@@ -219,10 +229,23 @@ public class LaunchGuidedSellingInvocable {
 
             if(null == requestList[0].sessionId) {
                 LaunchGuidedSellingInvocable gsEx = new LaunchGuidedSellingInvocable();
-                gsEx.getSessionTokens();
-                controllerToken = gsEx.controllerToken;
-                presentationToken = gsEx.presentationToken;
-                sessionId = gsEx.sessionId;
+                try{
+                    gsEx.getSessionTokens();
+                    controllerToken = gsEx.controllerToken;
+                    presentationToken = gsEx.presentationToken;
+                    sessionId = gsEx.sessionId;
+                } catch (CalloutException e){
+                    if(getEvironmentName() != 'production' && e.getMessage() == 'Read timed out'){
+                        System.debug(e);
+                        controllerToken = 'gsEx.controllerToken';
+                        presentationToken = 'gsEx.presentationToken';
+                        sessionId = 'gsEx.sessionId';
+                    } else {
+                        throw e;
+                    }
+                }
+                
+                
             } else {
                 sessionId = requestList[0].sessionId;
                 controllerToken = requestList[0].controllerToken;
@@ -268,7 +291,7 @@ public class LaunchGuidedSellingInvocable {
                 
                 //If we are sending the email (in the second part of the flow)
                 if('Send Email' == requestList[0].action) {
-                    System.debug(requestList);
+                    
                     //Create the message with the Guided Selling email template
                     Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, lead.Id, null);
                     message.setTemplateId(emailTemplate.Id);
@@ -398,7 +421,6 @@ public class LaunchGuidedSellingInvocable {
 
                 //If we are sending the email (in the second part of the flow)
                 if('Send Email' == requestList[0].action) {
-                    System.debug(requestList);
                     Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, account.Primary_Contact__c, account.Id);
                     message.setTemplateId(emailTemplate.Id);
                     message.setTargetObjectId(account.Primary_Contact__r.Id);
@@ -417,7 +439,7 @@ public class LaunchGuidedSellingInvocable {
                             message.setToAddresses(new List<String>{toAddresses.remove(0)});
                         }
                         if(!toAddresses.isEmpty()){
-                            message.setCcAddresses(toAddresses);  
+                        message.setCcAddresses(toAddresses);    
                         }                        
                     }
 
@@ -498,7 +520,6 @@ public class LaunchGuidedSellingInvocable {
                 
                 //If we are sending the email (in the second part of the flow)
                 if('Send Email' == requestList[0].action) {
-                    System.debug(requestList);
                     Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, opportunity.Account.Primary_Contact__c, opportunity.AccountId);
                     message.setTemplateId(emailTemplate.Id);
                     message.setTargetObjectId(opportunity.Account.Primary_Contact__c);
@@ -517,7 +538,7 @@ public class LaunchGuidedSellingInvocable {
                             message.setToAddresses(new List<String>{toAddresses.remove(0)});
                         }
                         if(!toAddresses.isEmpty()){
-                            message.setCcAddresses(toAddresses);  
+                        message.setCcAddresses(toAddresses);  
                         }                        
                     }
 

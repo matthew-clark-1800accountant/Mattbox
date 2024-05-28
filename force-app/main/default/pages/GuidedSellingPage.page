@@ -62,6 +62,18 @@
             .slds-scope .slds-wrap {
             flex-wrap: nowrap;
             }
+
+            .textList li {
+                font-size: 20px !important;
+                line-height: 32px !important;
+                letter-spacing: 0.01em !important;
+                color: rgba(18, 23, 36, 0.91) !important;
+            }
+
+            .textList {
+                list-style-type: disc !important;
+                margin-left: 25px !important;
+            }
             
             #formBody, #blastBody, #menuBody, #businessDisc, #businessDiscParts, #properEstityStrugleLLC,#properEstityStrugleSCorp, #flowThroughEntitySCorp, 
             #flowThroughEntityLLC, #entityClassificationElec, #properEntityStrugReviewLLC, #boiIntroLLC, #boiIntroSCorp,
@@ -957,17 +969,31 @@
             height: 2%;
             }
             
-            #quetionsTable tr {
+            #quetionsTable > tbody > tr {
             border-bottom: 1px solid rgba(18, 23, 36, 0.2);
             }
             
-            #quetionsTable tr td.actionRow {
+            #quetionsTable > tbody > tr > td.actionRow {
             display: flex;
             margin-top: 25%;
             }
             
-            #quetionsTable tr td.questionRow {
+            #quetionsTable > tbody > tr > td.questionRow {
             width: 85%;
+            }
+
+            .checkboxes label {
+                font-size: 20px;
+                line-height: 32px;
+                letter-spacing: 0.01em;
+                color: rgba(18, 23, 36, 0.91);
+                background: none;
+            }
+
+            .checkboxes input {
+                width: 15px;
+                height: 15px;
+                margin-right: 5px;
             }
             
             #showtxt {
@@ -1236,10 +1262,10 @@
             padding: 11px 9px;
             }
         
-            input[type=checkbox]:checked + label, output[type=checkbox]:checked + label {
+            /* input[type=checkbox]:checked + label, output[type=checkbox]:checked + label {
             color: rgba(18, 23, 36, 0.91);
             background: rgba(23, 118, 182, 0.16);
-            }
+            } */
         
             label + input[type=checkbox] + label, label + output[type=checkbox] + label {
             border-left: 1px solid rgba(18, 23, 36, 0.2);
@@ -1997,8 +2023,8 @@
             //{id: 'pesForLLC', name: "Proper Entity Structuring", subpages:[{id: "properEstityStrugleLLC"}, {id: "flowThroughEntityLLC"}, {id: "entityClassificationElec"}]},
             //{id: 'pesForSCorp', name: "Proper Entity Structuring"},
             {id: 'entityClassificationElec', name: "Entity Classification Election (ECE)"},
-            {id: 'selfEmploymentTaxSCorp', name: "Self Employment Tax (FICA)", entity: 'S Corporation'},
-            {id: 'selfEmploymentTaxLLC', name: "Self Employment Tax (FICA)", entity: 'LLC'},
+            {id: 'selfEmploymentTaxSCorp', name: "Self-Employment Tax (FICA)", entity: 'S Corporation'},
+            {id: 'selfEmploymentTaxLLC', name: "Self-Employment Tax (FICA)", entity: 'LLC'},
             {id: 'reasonableSalarySCorp', name: "Reasonable Salary", entity: 'S Corporation'},
             {id: 'boiIntroLLC', name: "Beneficial Ownership Information (BOI)", entity: 'LLC'},
             {id: 'boiIntroSCorp', name: "Beneficial Ownership Information (BOI)", entity: 'S Corporation'},
@@ -2060,7 +2086,7 @@
         const defaultAnswers = new Map();
         var tempSelectedProducts = JSON.parse('{!selectedProductsJson}');
         var discoveryQuestions = JSON.parse('{!discoveryQuestionsJson}');
-        var discoveryQuestionsMap = new Map();
+        var questionNameToQuestionMap = new Map();
         var selectedProductsMap = new Map();
         var finalProducts = JSON.parse('{!finalProductsJson}');
         var finalProductsMap = new Map();
@@ -2070,6 +2096,7 @@
         var deletedProducts = new Array();
         var billingAnnualMonthly = new Map();
         var productsToPrice = JSON.parse('{!productToPrice}');
+        var questionLabelToQuestionMap = new Map();
         var pricesMap = new Map(Object.entries(productsToPrice));
         var oridinalPricesMap = new Map(Object.entries(productsToPrice));
         var productNameToId = new Map();
@@ -2153,7 +2180,7 @@
         var btpPTPHotlineIntro = 'I see you’ve purchased Tax Hotline, Business Tax Prep, and Personal Tax Prep through {!opportunity.Account.Lead_Source__c}. Congratulations! You\'ve secured a discount on our Tax Advisory services and 1800Accountant will handle the preparation and filing of your business income tax return. You\'re now a valued client, and you\'ve made great choices in enhancing your tax and accounting services with us!';
 
         var questionFilters = JSON.parse('{!questionFiltersJson}');
-        var parentNameToChildQuestions = JSON.parse('{!parentNameMapJson}');
+        //var parentNameToChildQuestions = JSON.parse('{parentNameMapJson}');
 
         function getInstallmentAmount(){
             var amount = splittableProductsTotal / numberOfPayments;
@@ -2231,12 +2258,11 @@
                 menuOpts[ind++] = new Option(page, page);
             }
 
-            filterQuestions('Required Questions');
-            document.getElementById("mainCategory").value = "Required Questions";
 
             for(var question of discoveryQuestions){
                 question.isPicklist = (question.QuestionType == 'Single Selection' || question.QuestionType == 'Multi Selection' || question.QuestionType == 'State');
-                discoveryQuestionsMap.set(question.DevName, question);
+                questionNameToQuestionMap.set(question.DevName, question);
+                questionLabelToQuestionMap.set(question.Label, question);
             }
             document.getElementById("blastBody").style.height = (newHeight - height) + 'px';
             document.getElementById("businessDisc").style.height = (newHeight - height) + 'px';
@@ -2329,6 +2355,10 @@
 
             setRequiredUnasweredFields();
             setDefaultDiscoveryAnswers(true);
+
+            
+            filterQuestions('Required Questions');
+            document.getElementById("mainCategory").value = "Required Questions";
             if(isEditQuote){
                 document.getElementById("menuOpts").value = "Discovery Questions";
                 pageObjects = pageObjects.filter(x => editPages.includes(x.name));
@@ -2337,6 +2367,15 @@
                 whatToDo();
                 //setDefaultDiscoveryAnswers();
                 getNextBtn('First Business');
+                if(checkRequiredQuestions()){
+                    document.getElementById('thirdStart').removeAttribute('disabled');
+                    document.getElementById('thirdStart').style.opacity = "1";
+                    document.getElementById('errorMessage').style.display = "none";
+                } else {
+                    document.getElementById('thirdStart').setAttribute("disabled", "disabled");
+                    document.getElementById('thirdStart').style.opacity = "0.25";
+                    document.getElementById('errorMessage').style.display = "flex"; 
+                }
                 // var indicesToRemove = [];
                 // for(var i = 0; i < document.getElementById("menuOpts").options.length; i++){
                 //     option = document.getElementById("menuOpts").options.item(i);
@@ -2389,6 +2428,8 @@
                 introText = btpIntro;
             }
             document.getElementsByClassName('dynamicIntroText')[0].innerHTML = introText;
+
+            
 
         }
 
@@ -2582,47 +2623,60 @@
             document.getElementById('noBtn' + num).style.color = "white";
             document.getElementById('noBtn' + num).style.background = "#3B7A80";
         }
+
+        function updateYesNoButtons(buttonId){
+            var buttonStyle = document.querySelector('[html-data-id='+buttonId+']').style;
+            buttonStyle.border = "1px solid #3B7A80";
+            buttonStyle.color = "white";
+            buttonStyle.background = "#3B7A80";
+
+            var oppositeButtonId = buttonId.includes('yesBtn') ? buttonId.replace('yesBtn', 'noBtn') : buttonId.replace('noBtn', 'yesBtn');
+            var oppositeButtonStyle = document.querySelector('[html-data-id='+oppositeButtonId+']').style;
+            oppositeButtonStyle.border = "1px solid #c0c0c0";
+            oppositeButtonStyle.color = "black";
+            oppositeButtonStyle.background = "white";
+        }
         
         function hideAll() {
             var idsToHide = ['formBody',
-    'blastBody',
-    'businessDisc',
-    'businessDiscParts',
-    'properEstityStrugleLLC',
-    'properEstityStrugleSCorp',
-    'placeholder',
-    //'pesForLLC',
-    //'pesForSCorp',
-    'flowThroughEntityLLC',
-    'flowThroughEntitySCorp',
-    'entityClassificationElec',
-    'selfEmploymentTaxSCorp',
-    'reasonableSalarySCorp',
-    'selfEmploymentTaxLLC',
-    'boiIntroLLC',
-    'boiIntroSCorp',
-    'properEntityStrugReviewLLC',
-    'properEntityStrugReviewSCorp',
-    'deductionsIntro',
-    'startUpCosts',
-    'medicalDeduction',
-    'vehicleDeduction',
-    'homeOfficeDeduction',
-    'codeDeduction',
-    'reviewDeduction',
-    'paperloss',
-    'preparedPackages',
-    'verifyInformation',
-    'paymentDetails',
-    'postPurchase',
-    'features',
-    'taxAdvisory',
-    'portalTour',
-    'filingBusinessTaxes',
-    'filingECE',
-    'boiSummary',
-    'presWrapUp',
-    'waitingScreen'];
+            'blastBody',
+            'businessDisc',
+            'businessDiscParts',
+            'properEstityStrugleLLC',
+            'properEstityStrugleSCorp',
+            'placeholder',
+            //'pesForLLC',
+            //'pesForSCorp',
+            'flowThroughEntityLLC',
+            'flowThroughEntitySCorp',
+            'entityClassificationElec',
+            'selfEmploymentTaxSCorp',
+            'reasonableSalarySCorp',
+            'selfEmploymentTaxLLC',
+            'boiIntroLLC',
+            'boiIntroSCorp',
+            'properEntityStrugReviewLLC',
+            'properEntityStrugReviewSCorp',
+            'deductionsIntro',
+            'startUpCosts',
+            'medicalDeduction',
+            'vehicleDeduction',
+            'homeOfficeDeduction',
+            'codeDeduction',
+            'reviewDeduction',
+            'paperloss',
+            'preparedPackages',
+            'verifyInformation',
+            'paymentDetails',
+            'postPurchase',
+            'features',
+            'taxAdvisory',
+            'portalTour',
+            'filingBusinessTaxes',
+            'filingECE',
+            'boiSummary',
+            'presWrapUp',
+            'waitingScreen'];
             for(var elId of idsToHide){
                 document.getElementById(elId).style.display = "none";
             }
@@ -2886,9 +2940,6 @@
             return '{!hasActiveHotline}' == 'true';
         }
 
-        function isActiveBundleClient(){
-            return '{!hasActiveBundle}' == 'true';
-        }
 
         function isBTPNSClient(){
             // var btpList = document.querySelectorAll("[data-product='Business Tax Preparation']");
@@ -3539,9 +3590,15 @@
                     document.getElementById("menuOpts").value = opt;
                     document.getElementById("discoveryQuestionTitle").innerHTML = "Business Discovery";
                     //document.getElementById('engagee').style.display = "none";
-                    document.getElementById('thirdStart').setAttribute("disabled", "disabled");
-                    document.getElementById('thirdStart').style.opacity = "0.25";
-                    document.getElementById('errorMessage').style.display = "flex"; 
+                    if(checkRequiredQuestions()){
+                        document.getElementById('thirdStart').removeAttribute('disabled');
+                        document.getElementById('thirdStart').style.opacity = "1";
+                        document.getElementById('errorMessage').style.display = "none";
+                    } else {
+                        document.getElementById('thirdStart').setAttribute("disabled", "disabled");
+                        document.getElementById('thirdStart').style.opacity = "0.25";
+                        document.getElementById('errorMessage').style.display = "flex"; 
+                    }
                     setDefaultDiscoveryAnswers();
 
                     document.getElementById('mainCategoryDiv').style.background = "white";
@@ -3556,7 +3613,7 @@
                     //     return;
                     // }
                     break;
-                case 'Self Employment Tax (FICA)':
+                case 'Self-Employment Tax (FICA)':
                     getSlideOne();
                     return;
                 case 'Review Proper Entity Structuring': 
@@ -3654,8 +3711,8 @@
                 case 'Post Purchase':
                     isfinalScreen = true;
 
-                //document.getElementById("menuOpts").options[pickNum]?.removeAttribute('disabled'); 
-                    document.getElementById("menuOpts").value = opt;
+                    // document.getElementById("menuOpts").options[pickNum]?.removeAttribute('disabled'); 
+                    // document.getElementById("menuOpts").value = opt;
 
                     schedulerURL = schedulerURL + '&Frame=1';
                     document.getElementById('Scheduler').src = schedulerURL;
@@ -3732,8 +3789,8 @@
                     previousPageName = "Blast";
                     break;
                 case 'Discovery Questions':
-                    previousPageName = 'Business Discovery Review';
-                    // previousPageName = 'Business Discovery Parts';
+                    //previousPageName = 'Business Discovery Review';
+                    previousPageName = 'Business Discovery Parts';
                     // setDefaultDiscoveryAnswers();
                     // //document.getElementById("menuOpts").options[pickNum]?.removeAttribute('disabled'); 
                     // document.getElementById("menuOpts").value = opt;
@@ -3751,7 +3808,7 @@
                     // document.getElementById('mainCategory').style.marginLeft = "0px";
                     // document.getElementById('showAllAnswer').style.display = "none";
                     break;
-                case 'Self Employment Tax (FICA)':
+                case 'Self-Employment Tax (FICA)':
                     getSlideOne();
                     return;
                 case 'Review Proper Entity Structuring': 
@@ -3891,7 +3948,7 @@
         }
 
         function setDefaultDiscoveryAnswers(skipSync){
-            //return;
+            return;
             var defaultYearsInBusiness = answerMap?.get('How many years have you been in business') ? answerMap?.get('How many years have you been in business') : '{!defaultYearsInBusiness}';
             var defaultEntity = answerMap?.get('What entity type is your business') ? answerMap?.get('What entity type is your business') : '{!defaultEntity}';
             var defaultIndustry = answerMap?.get('What industry is your business in') ? answerMap?.get('What industry is your business in') :'{!defaultIndustry}';
@@ -4338,7 +4395,7 @@
 
         function checkRequiredQuestions(){
             for(var question of discoveryQuestions){
-                if(question.Required && !question.Answered){
+                if(question.Visible && question.Required && !question.Answered){
                     return false;
                 }
             }
@@ -4410,8 +4467,8 @@
                 });
                 console.log(bookkeepingStartDate);
                 enableEditButton(false);
-                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.saveAnswers', answers, businessId, accId, environment, fn);
-                //Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.saveAnswers', JSON.stringify(discoveryQuestions), businessId, accId, fn);
+                //Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.saveAnswers', answers, businessId, accId, environment, fn);
+                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.saveAnswers', JSON.stringify(discoveryQuestions), businessId, accId, fn);
             }
         }
 
@@ -4459,15 +4516,15 @@
                 currentProgress = Math.max(currentProgress, getProgress());
 
 
-                socket.connect();
-                content = {
-                    page: "Business Discovery Review",
-                    showProgress: true,
-                    progress: currentProgress
-                }
-                socket.emit("private message", {
-                    content
-                });
+                // socket.connect();
+                // content = {
+                //     page: "Business Discovery Review",
+                //     showProgress: true,
+                //     progress: currentProgress
+                // }
+                // socket.emit("private message", {
+                //     content
+                // });
             } else {
                         
                 if(isEditQuote){ //skip to Verify Info page
@@ -4563,7 +4620,7 @@
                 //var tempSelectedProducts = JSON.parse('{!selectedProductsJson}');
                 //var recordId = '{!$CurrentPage.parameters.recordId}';
 
-                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.calculateSavingsGuidedSelling', entityType, profits, startup, mileage, office, filingStatus, income, industryType, accId,  function(r,e){
+                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.calculateSavingsGuidedSelling', accId,  function(r,e){
                     var dataResult = e.result;
                     const dataList = dataResult?.split(",");
                     //return;
@@ -4679,23 +4736,93 @@
         function refreshProducts(){
             rerenderProducts();
         }
+
+        function showQuestion(questionLabel, show, toggle){
+            //console.log('show '+questionLabel+' '+show);
+            var question = questionLabelToQuestionMap.get(questionLabel);
+            if(question){
+                question.Visible = show;
+                if(toggle){ question.CanBeVisible = show; }
+            }
+            var questionRow = document.getElementById(questionLabelToQuestionMap.get(questionLabel)?.DevName+'row');
+            if(questionRow){
+                questionRow.style.display = (show ? 'table-row' : 'none');
+            }
+        }
         
-        function populateAnswer(question, answer, picklist, skipSync) {
-        //function populateAnswer(questionLabel, answer, picklist, skipSync) {
-            /*
-            var question = discoveryQuestionsMap.get(questionLabel);
+        //function populateAnswer(question, answer, picklist, skipSync) {
+        function populateAnswer(questionDevName, answer, questionType, skipSync, hidePage) {
+            var checked = answer.checked;
+            var question = questionNameToQuestionMap.get(questionDevName);
             if(!question) {return;}
-            if (question.isPicklist || question.QuestionType == 'Date') {
+            if (question.isPicklist || questionType == 'Date') {
                 answer = answer.value;
-            } else if(question.QuestionType == 'Boolean'){
+            } else if(questionType == 'Boolean'){
                 answer = (answer.className == 'yesBtn' ? 'Yes' : 'No');
             }
-            question.Value = answer;
-            question.Answered = true;
-            console.log(question);
-            console.log(answer);
+            console.log(questionDevName+': '+answer+' '+typeof(answer));
+
+            if(questionType == 'Multi Selection'){
+                if(answer == 'None' && checked){
+                    //if 'none' selected, deselect all the other options
+                    for(var box of document.querySelectorAll('[data-id='+questionDevName+'question] input').values().filter(x => x.value != 'None' && x.checked)){
+                        box.checked = false;
+                        populateAnswer(questionDevName, box, 'Multi Selection');
+                    }
+                } else if (answer != 'None' && checked){
+                    //if another answer is selected, deselect 'none'
+                    for(var box of document.querySelectorAll('[data-id='+questionDevName+'question] input').values().filter(x => x.value == 'None' && x.checked)){
+                        box.checked = false;
+                        populateAnswer(questionDevName, box, 'Multi Selection');
+                    }                
+                }
+                var childLabelString = question.ChildQuestionLabel;
+                if(childLabelString){
+                    var childLabelMap = new Map(childLabelString.split(';').map(x => x.split(':')));
+                    if(childLabelMap.has(answer) && questionLabelToQuestionMap.has(childLabelMap.get(answer))){
+                        showQuestion(childLabelMap.get(answer), checked, true);
+                    }
+                }
+
+                if(question.Value?.includes(answer)){
+                    answer = question.Value.replace(answer+';','').replace(answer,'');
+                } else if(question.Value){
+                    answer = question.Value+';'+answer;
+                }
+
+                if(answer == '' || answer == null){
+                    question.Value = null;
+                    question.Answered = false;
+                } else {
+                    question.Value = answer;
+                    question.Answered = true;
+                }
+                
+                
+            } else {
+                question.Value = answer;
+                question.Answered = true;
+            }
+            
+            console.log(question.Value);
+            
             var saveQuestion = false;
             var questionNumber = "";
+            var childLabelString = question.ChildQuestionLabel;
+            if(childLabelString){
+                for(childLabel of childLabelString.split(';')){
+                    var childQuestion = questionLabelToQuestionMap.get(childLabel);
+                        
+                    if(childQuestion && questionType == 'Boolean' && answer == 'No' && document.querySelector('[data-id= '+childQuestion.DevName+'question]')?.options.item(1)?.value == '0'){
+                        document.querySelector('[data-id= '+childQuestion.DevName+'question]').value = '0';
+                        populateAnswer(childQuestion.DevName, {value: '0'}, 'Single Selection');
+                        showQuestion(childLabel, false, true);
+                    } else if(childQuestion){
+                        showQuestion(childLabel, true, true);
+                    }
+                }
+            }
+            
 
             //removeRequiredFieldAnswered(question);
             //setYesNoFields(question, answer);
@@ -4721,24 +4848,7 @@
             //linkedFields()? //sets value and updates style of parent question button
             //YesDecision()/NoDecision()? //updates styling of selected yes/no button
             //var numRequiredQuestions = parseInt('{!numRequiredFields}') + parseInt(numOptionalQAnswered);
-            */
-
-            var saveQuestion = false;
-            var questionNumber = "";
-
-            removeRequiredFieldAnswered(question);
-            setYesNoFields(question, answer);
-
-            if(null == textToQuestion.get(question)){
-                var saveQuestion = true;
-            } else {
-                questionNumber = textToQuestion.get(question);
-            }
-            if (picklist) {
-                answer = answer.value;
-            } 
-
-            var numRequiredQuestions = parseInt('{!numRequiredFields}') + parseInt(numOptionalQAnswered);
+            
             
             if(skipSync == true){
             } else {
@@ -4748,23 +4858,25 @@
                     question: questionNumber,
                     answer: answer,
                     save: saveQuestion,
-                    questionText: question
+                    questionText: question.QuestionText,
+                    hidePage: hidePage
                 }
+                console.log(content);
                 socket.emit("private message", {
                 content
                 });
             }       
 
             
-            if(question == 'How many employees do you have?') {
+            if(question.QuestionText == 'How many employees do you have?') {
                 var num = parseInt(answer);
                 num = num + 1;
-            } else if (question == 'How many monthly bookkeeping transactions do you have?'){
+            } else if (question.QuestionText == 'How many monthly bookkeeping transactions do you have?'){
                 transactionCount = answer.toString();
-            } else if(question == 'What transaction date should your bookkeeper start on?'){
+            } else if(question.QuestionText == 'What transaction date should your bookkeeper start on?'){
                 bookkeepingStartDate = answer.toString();
                 document.querySelector("[data-id='bookkeepingEnd']").min = answer.toString();
-            } else if(question == 'What transaction date should your bookkeeper end on?'){
+            } else if(question.QuestionText == 'What transaction date should your bookkeeper end on?'){
                 // if(parseDate(answer.toString()) > new Date()){
                 //     bookkeepingEndDate = new Date();
                 // } else {
@@ -4772,6 +4884,8 @@
                 // }
                 bookkeepingEndDate = answer.toString();
                 
+            } else if(question.DevName == 'Entity_Type'){
+                updateEntity({value: answer});
             }
 
             //filling up the map with the answers 
@@ -4922,7 +5036,7 @@
             socket.connect();
             if(entitySelected == 'LLC') {
                 content = {
-                    page: "Self Employment Tax (FICA) LLC",
+                    page: "Self-Employment Tax (FICA) LLC",
                     showProgress: true,
                     progress: currentProgress
                 }
@@ -4931,7 +5045,7 @@
                 });
             } else if(entitySelected == 'S Corporation') {
                 content = {
-                    page: "Self Employment Tax (FICA) S Corp",
+                    page: "Self-Employment Tax (FICA) S Corp",
                     showProgress: true,
                     progress: currentProgress
                 }
@@ -4999,7 +5113,7 @@
         const questionToProduct = new Map();
         const productToQuestion = new Map();
 
-        function hideQuestion(hideBoolean, questionText, dependentFields){
+        function hideQuestionFromClient(hideBoolean, questionText, dependentFields){
 
             var questionNumber;
             //If we are showing the question
@@ -5046,6 +5160,7 @@
         }
                 
         function validateButtons() {
+            return;
             var isTrue = document.getElementById('understands').checked;
                 
             if (isTrue == true) {
@@ -5070,6 +5185,7 @@
         }
                 
         function showDeductBtns() {
+            return;
             var isTrueMed = document.getElementById('understandsMed').checked;
             var isTrueVeh = document.getElementById('understandsVeh').checked;
             var isTrueOff = document.getElementById('understandsHome').checked;
@@ -5752,150 +5868,22 @@
 
         function filterQuestions(value) {
             console.log('filterQuestions '+value);
-            /*
-            for(var question of discoveryQuestions){
-                var showQuestion = false;
+            
+            for(var question of discoveryQuestions.filter(x => x.CanBeVisible)){
+                var show = false;
                 if(value == 'Show All Questions'){
-                    showQuestion = true;
+                    show = true;
                 } else if(value == 'Required Questions' &&  question.Required == true){
-                    showQuestion = true;
+                    show = true;
                 } else if(value == 'Unanswered Required Questions' &&  question.Required == true && question.Answered == false){
-                    showQuestion = true;
+                    show = true;
                 } else if(value != null && question.FilterTags != null && question.FilterTags.includes(value)){
-                    showQuestion = true;
+                    show = true;
                 }
-
-                document.getElementById(question.DevName+'row').style.display = (showQuestion ? 'table-row' : 'none');
+                showQuestion(question.Label, show, false);
+                //document.getElementById(question.DevName+'row').style.display = (showQuestion ? 'table-row' : 'none');
             }
-            return; //disabled while overhauling questions
-            */
-            setRequiredFields();
-
-            if('Show All Questions' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    document.getElementById(allIds[i]).style.display = "";
-                }
-            } else if('Years' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!years.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < years.length; j++) {
-                            document.getElementById(years[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Entity & Industry' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!entityIndustry.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < entityIndustry.length; j++) {
-                            document.getElementById(entityIndustry[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('State' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!state.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < state.length; j++) {
-                            document.getElementById(state[j]).style.display = ""; 
-                        }
-                    }
-                }
-            }  else if('Business Income' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!businessIncome.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < businessIncome.length; j++) {
-                            document.getElementById(businessIncome[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Bookkeeping' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!bookkeeping.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < bookkeeping.length; j++) {
-                            document.getElementById(bookkeeping[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Owners' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!owners.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < owners.length; j++) {
-                            document.getElementById(owners[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Payroll' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!payroll.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < payroll.length; j++) {
-                            document.getElementById(payroll[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Filing' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!filing.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < filing.length; j++) {
-                            document.getElementById(filing[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Personal Income' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!personalIncome.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < personalIncome.length; j++) {
-                            document.getElementById(personalIncome[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Deductions' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!deductions.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < deductions.length; j++) {
-                            document.getElementById(deductions[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Unanswered Required Questions' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!requiredUnasweredFields.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < requiredUnasweredFields.length; j++) {
-                            document.getElementById(requiredUnasweredFields[j]).style.display = ""; 
-                        }
-                    }
-                }
-            } else if('Required Questions' == value) {
-                for (let i = 0; i < allIds.length; i++) {
-                    if(!requiredFields.includes(allIds[i])) {
-                        document.getElementById(allIds[i]).style.display = "none";
-                    } else {
-                        for(let j = 0; j < requiredFields.length; j++) {
-                            document.getElementById(requiredFields[j]).style.display = ""; 
-                        }
-                    }
-                }
-            }
+            return; 
         }
 
         //sets value and updates style of parent question button
@@ -6840,7 +6828,7 @@
         }
 
         function parseDate(stringVal){
-            return new Date(Date.parse(stringVal+'T00:00:00'));
+            return new Date(Date.parse(stringVal+'T00:00:00+00:00'));
         }
 
         function monthDifference(startVal, endVal){
@@ -6914,11 +6902,7 @@
         ]);
         function autoCheckBundleAddons(val) {
             var prodId = productNameToId.get(eligibleBundle);
-            if(isActiveBundleClient()){
-                addRemoveProduct(prodId, false);
-            } else {
-                addRemoveProduct(prodId, val);
-            } 
+            addRemoveProduct(prodId, val);
 
             if(!val){
                 for(var prod of advisoryAddons){
@@ -7097,7 +7081,7 @@
 
         function getBundleDiscount(){
             if(Number.isNaN(Number.parseFloat('{!bundleDiscount}'))){
-                return 0.15;
+                return 0.191;
             } else {
                 return Number.parseFloat('{!bundleDiscount}') / 100;
             }
@@ -7123,14 +7107,14 @@
                         updateProductPrice(item.Id, 0.0);
                     } else if(item.Product.Name == 'Tax Advisory'){
                         //autoAmountAdvisory();                        
-                    } else if(false){
-
                     } else {
                         updateProductPrice(item.Id, originalPriceMap.get(item.Id)*(1.0-getBundleDiscount()));
                     }
-                } else {
+                } else {                    
                     if(item.Product.Name == 'Loan Agreement'){
-                        autoAmountLoan();
+                        autoAmountLoan(item.Id, item.Product.Setup_Fee__c);
+                    } else if(!useBundlePrice && !item.Product.Setup_Fee__c && bundleNameToFreeItems.get('Core Accounting Package')?.includes(item.Product.Name)){
+                        updateProductPrice(item.Id, 0.0);
                     } else {
                         updateProductPrice(item.Id, originalPriceMap.get(item.Id));
                     }
@@ -7205,8 +7189,8 @@
                 console.log(advisoryAddons[l]+': $'+addonPrice);
             }
             console.log('addonTotal: '+addonTotal);
-            var setupFee = finalProductsMap.get(prodId)?.Product.Setup_Fee__c;
 
+            var setupFee = finalProductsMap.get(prodId)?.Product.Setup_Fee__c;
             if(useCustomPricing){
                 var perPrice = document.querySelector("[data-amount='Personal Tax Preparation']").innerHTML;
                 var busiPrice = document.querySelector("[data-amount='Business Tax Preparation']").innerHTML;
@@ -7255,9 +7239,9 @@
             return businessTaxFlag && persoTaxPrepFlag;
         }
 
-        function autoAmountLoan(prodId){
+        function autoAmountLoan(prodId, hasSetupFee){
             console.log('autoAmountLoan');
-            var useCustomPricing = isFreeLoan();
+            var useCustomPricing = isFreeLoan(hasSetupFee);
             const advList = document.querySelectorAll("[data-amount='Loan Agreement']");
             if(advList.length == 0){
                 console.log('Loan Agreement node not found');
@@ -7280,7 +7264,7 @@
             updateProductPrice(prodId, productPrice);
         }
 
-        function isFreeLoan(){
+        function isFreeLoan(hasSetupFee){
             const taxAdvisoryList = document.querySelectorAll("[data-product='Tax Advisory']");
             const persoTaxPrepList = document.querySelectorAll("[data-product='Personal Tax Preparation']");
             var persoTaxPrepFlag = false;
@@ -7297,7 +7281,7 @@
                     break;
                 }
             }
-            return taxAdvisoryFlag && persoTaxPrepFlag;
+            return (taxAdvisoryFlag && persoTaxPrepFlag) || (taxAdvisoryFlag && !hasSetupFee && bundleNameToFreeItems.get('Core Accounting Package')?.includes('Loan Agreement'));
         }
 
 
@@ -7408,7 +7392,7 @@
             //console.log('updateProductSubtotal '+product.Product.Name);
             var subtotal = product.adjustedPrice * product.currentQuantity;
             if(product.Product.Guided_Selling_Identifier__c == '1-800Accountant Access' && product.currentBillingFrequency == 'Monthly'){
-                subtotal = (subtotal / 12) * 1.2;//subtotal = subtotal / 11;
+                subtotal = subtotal / 11;
             } else if(product.currentBillingFrequency == 'Annual' && product.Product.Billing_Frequency__c != 'Annual'){
                 subtotal = subtotal * 11;
             } else if (product.currentBillingFrequency == 'Monthly' && product.Product.Billing_Frequency__c != 'Monthly'){
@@ -7998,8 +7982,8 @@
                 document.getElementById('start').setAttribute("disabled", "disabled");
                 document.getElementById('start').style.opacity = "0.25";
             }
-
-            
+            document.querySelector('[data-id=Entity_Typequestion]').value = entitySelected;
+            document.querySelector('[data-id=entityIntro]').value = entitySelected;
             
         }
 
@@ -8245,91 +8229,91 @@
         function showAllAnswers(show) {
 
             if(requiredFields.includes("firstBusiness") && !document.getElementById('firstBusiness').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Is this your first business?');
+                hideQuestionFromClient(show, 'Is this your first business?');
             }
             if(requiredFields.includes("years") && !document.getElementById('years').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many years have you been in business?');
+                hideQuestionFromClient(show, 'How many years have you been in business?');
             }
             if(requiredFields.includes("entity") && !document.getElementById('entity').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What entity type is your business?');
+                hideQuestionFromClient(show, 'What entity type is your business?');
             }
             if(requiredFields.includes("industry") && !document.getElementById('industry').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What industry is your business in?');
+                hideQuestionFromClient(show, 'What industry is your business in?');
             }
             if(requiredFields.includes("domState") && !document.getElementById('domState').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What is your state of incorporation?');
+                hideQuestionFromClient(show, 'What is your state of incorporation?');
             }
             // if(requiredFields.includes("state") && !document.getElementById('state').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'What is your state of residence?');
+            //     hideQuestionFromClient(show, 'What is your state of residence?');
             // }
             if(requiredFields.includes("foreignState") && !document.getElementById('foreignState').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What is your foreign state of incorporation?');
+                hideQuestionFromClient(show, 'What is your foreign state of incorporation?');
             }
             if(requiredFields.includes("startup") && !document.getElementById('startup').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How much have you invested so far in start-up costs?');
+                hideQuestionFromClient(show, 'How much have you invested so far in start-up costs?');
             }
             if(requiredFields.includes("revenue") && !document.getElementById('revenue').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What do you anticipate your revenue to be over the next 12 months?');
+                hideQuestionFromClient(show, 'What do you anticipate your revenue to be over the next 12 months?');
             }
             if(requiredFields.includes("profit") && !document.getElementById('profit').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What do you project your 1st year profit to be over the next 12 months?');
+                hideQuestionFromClient(show, 'What do you project your 1st year profit to be over the next 12 months?');
             }
             // if(requiredFields.includes("investor") && !document.getElementById('investor').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'What is your total investor funding?');
+            //     hideQuestionFromClient(show, 'What is your total investor funding?');
             // }
             if(requiredFields.includes("transactions") && !document.getElementById('transactions').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many monthly bookkeeping transactions do you have?');
+                hideQuestionFromClient(show, 'How many monthly bookkeeping transactions do you have?');
             }
             if(requiredFields.includes("owners") && !document.getElementById('owners').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many owners does your business have?');
+                hideQuestionFromClient(show, 'How many owners does your business have?');
             }
             // if(requiredFields.includes("foreignOwners") && !document.getElementById('foreignOwners').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'How many owners are outside the USA?');
+            //     hideQuestionFromClient(show, 'How many owners are outside the USA?');
             // }
             if(requiredFields.includes("runPayroll") && !document.getElementById('runPayroll').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Have you run payroll before?');
+                hideQuestionFromClient(show, 'Have you run payroll before?');
             }
             if(requiredFields.includes("hasEmpContractors") && !document.getElementById('hasEmpContractors').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Do you currently have any employees?');
+                hideQuestionFromClient(show, 'Do you currently have any employees?');
             }
             if(requiredFields.includes("employees") && !document.getElementById('employees').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many employees do you have?');
+                hideQuestionFromClient(show, 'How many employees do you have?');
             }
             // if(requiredFields.includes("contractors") && !document.getElementById('contractors').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'How many contractors do you have?');
+            //     hideQuestionFromClient(show, 'How many contractors do you have?');
             // }
             if(requiredFields.includes("filingStatus") && !document.getElementById('filingStatus').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What is your tax filing status?');
+                hideQuestionFromClient(show, 'What is your tax filing status?');
             }
             if(requiredFields.includes("household") && !document.getElementById('household').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What was your household W-2 income last year?');
+                hideQuestionFromClient(show, 'What was your household W-2 income last year?');
             }
             // if(requiredFields.includes("foreignIncome") && !document.getElementById('foreignIncome').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'Do you have any foreign sourced income?');
+            //     hideQuestionFromClient(show, 'Do you have any foreign sourced income?');
             // }
             if(requiredFields.includes("hasRentals") && !document.getElementById('hasRentals').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Do you currently have any rental properties?');
+                hideQuestionFromClient(show, 'Do you currently have any rental properties?');
             }
             if(requiredFields.includes("rental") && !document.getElementById('rental').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many rental properties do you have?');
+                hideQuestionFromClient(show, 'How many rental properties do you have?');
             }
             // if(requiredFields.includes("k1s") && !document.getElementById('k1s').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'How many K-1s are from other investments?');
+            //     hideQuestionFromClient(show, 'How many K-1s are from other investments?');
             // }
             if(requiredFields.includes("workingHome") && !document.getElementById('workingHome').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Will you be working from home?');
+                hideQuestionFromClient(show, 'Will you be working from home?');
             }
             if(requiredFields.includes("footage") && !document.getElementById('footage').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'What is the approximate square footage of your home office?');
+                hideQuestionFromClient(show, 'What is the approximate square footage of your home office?');
             }
             if(requiredFields.includes("drive") && !document.getElementById('drive').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'Will you use your personal vehicle for business purposes?');
+                hideQuestionFromClient(show, 'Will you use your personal vehicle for business purposes?');
             }
             if(requiredFields.includes("miles") && !document.getElementById('miles').childNodes[1].childNodes[3].childNodes[0].checked) {
-                hideQuestion(show, 'How many business-related miles do you estimate you’ll drive per year?');
+                hideQuestionFromClient(show, 'How many business-related miles do you estimate you’ll drive per year?');
             }
             // if(requiredFields.includes("website") && !document.getElementById('website').childNodes[1].childNodes[3].childNodes[0].checked) {
-            //     hideQuestion(show, 'Will your business have a web or e-commerce presence?');
+            //     hideQuestionFromClient(show, 'Will your business have a web or e-commerce presence?');
             // }
         }
 
@@ -8528,7 +8512,7 @@
                                     <p class="modalHeaderTitle" style="display: inline-flex; padding: 0px 0px 13px 55px;">
                                         Example of what &nbsp;<span id="additionalName0">{!opportunity.Account.Primary_Contact__r.FirstName} {!opportunity.Account.Primary_Contact__r.LastName}</span>&nbsp; should be seeing
                                     </p>
-                                    <button class="modalHeaderClose" style="margin-top: 0%; padding: 0px 55px 15px 0px; color: rgba(18, 23, 36, 0.91);" onclick="closeModalClientScreen();">X</button>
+                                    <button class="modalHeaderClose" style="margin-top: 0%; padding: 0px 55px 15px 0px; color: rgba(18, 23, 36, 0.91);" onclick="closeModalClientScreen();">✖️</button>
                                 </div>
                                 <div class="clientContent">
                                     <div id="modalBody">
@@ -8603,7 +8587,7 @@
                                                 <p class="modalHeaderTitle">Add a Partner</p>
                                             </td>
                                             <td>
-                                                <button class="modalHeaderClose" onclick="closeModal();">X</button>
+                                                <button class="modalHeaderClose" onclick="closeModal();">✖️</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -8678,7 +8662,7 @@
                                                 <p class="modalHeaderTitle">Edit Package</p>
                                             </td>
                                             <td>
-                                                <button class="modalHeaderClose" id="closeOptions" onclick="closeModalEditPackage();">X</button>
+                                                <button class="modalHeaderClose" id="closeOptions" onclick="closeModalEditPackage();">✖️</button>
                                                 <button class="btnmodal" id="skiptoSale" style="float: right; margin-right: 4%;" onclick="showOptionsToClose();"><i class="fas fa-forward">&nbsp;&nbsp;</i>Skip to Quote</button>
                                                 <button class="start" style="color: white; opacity: 1; float: right; margin-right: 4%;" id="discardEditing" onclick="confimCloseModalEditPackage();">
                                                     <i class="fas fa-times">&nbsp;&nbsp;</i>Discard Changes
@@ -9199,7 +9183,7 @@
                                 id="entityIntro"
                                 html-data-id="entityIntro"
                                 value="{!defaultEntity}"
-                                onchange="getNextBtn('Entity Type');populateAnswer('What entity type is your business?', this, true, true);updateEntity(this)"
+                                onchange="populateAnswer('Entity_Type', this, 'Single Selection', false, true);"
                                 size="1"
                             >
                                 <apex:selectOptions value="{!entityType}"></apex:selectOptions>
@@ -9371,11 +9355,11 @@
                                 </div>
                             </div>
                             <table id="quetionsTable">
-                                <tr id="firstBusiness">
+                                <!-- <tr id="firstBusiness">
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxEmployees" onchange="hideQuestion(this.checked, 'Is this your first business?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxEmployees" onchange="hideQuestionFromClient(this.checked, 'Is this your first business?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9410,7 +9394,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxEntity" onchange="hideQuestion(this.checked, 'What entity type is your business?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxEntity" onchange="hideQuestionFromClient(this.checked, 'What entity type is your business?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9442,7 +9426,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxIndustry" onchange="hideQuestion(this.checked, 'What industry is your business in?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxIndustry" onchange="hideQuestionFromClient(this.checked, 'What industry is your business in?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9475,7 +9459,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxDomState" onchange="hideQuestion(this.checked, 'What is your state of incorporation?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxDomState" onchange="hideQuestionFromClient(this.checked, 'What is your state of incorporation?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9509,7 +9493,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxForeignState" onchange="hideQuestion(this.checked, 'What is your foreign state of incorporation?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxForeignState" onchange="hideQuestionFromClient(this.checked, 'What is your foreign state of incorporation?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9542,7 +9526,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxStartup" onchange="hideQuestion(this.checked, 'How much have you invested so far in start-up costs?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxStartup" onchange="hideQuestionFromClient(this.checked, 'How much have you invested so far in start-up costs?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9575,7 +9559,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxRevenue" onchange="hideQuestion(this.checked, 'What do you anticipate your revenue to be over the next 12 months?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxRevenue" onchange="hideQuestionFromClient(this.checked, 'What do you anticipate your revenue to be over the next 12 months?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9608,7 +9592,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxProfit" onchange="hideQuestion(this.checked, 'What do you project your 1st year profit to be over the next 12 months?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxProfit" onchange="hideQuestionFromClient(this.checked, 'What do you project your 1st year profit to be over the next 12 months?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9642,7 +9626,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxTransactions" onchange="hideQuestion(this.checked, 'How many monthly bookkeeping transactions do you have?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxTransactions" onchange="hideQuestionFromClient(this.checked, 'How many monthly bookkeeping transactions do you have?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9676,7 +9660,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxBookkeepingStart" onchange="hideQuestion(this.checked, 'What transaction date should your bookkeeper start on?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxBookkeepingStart" onchange="hideQuestionFromClient(this.checked, 'What transaction date should your bookkeeper start on?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9708,7 +9692,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxBookkeepingEnd" onchange="hideQuestion(this.checked, 'What transaction date should your bookkeeper end on?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxBookkeepingEnd" onchange="hideQuestionFromClient(this.checked, 'What transaction date should your bookkeeper end on?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9740,7 +9724,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxOwners" onchange="hideQuestion(this.checked, 'How many owners does your business have?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxOwners" onchange="hideQuestionFromClient(this.checked, 'How many owners does your business have?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9773,7 +9757,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxRunPayroll" onchange="hideQuestion(this.checked, 'Have you run payroll before?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxRunPayroll" onchange="hideQuestionFromClient(this.checked, 'Have you run payroll before?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9803,7 +9787,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxHasEmpContractors" onchange="hideQuestion(this.checked, 'Do you currently have any employees?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxHasEmpContractors" onchange="hideQuestionFromClient(this.checked, 'Do you currently have any employees?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9845,7 +9829,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxEmployees" onchange="hideQuestion(this.checked, 'How many employees do you have?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxEmployees" onchange="hideQuestionFromClient(this.checked, 'How many employees do you have?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9878,7 +9862,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxFilingStatus" onchange="hideQuestion(this.checked, 'What is your tax filing status?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxFilingStatus" onchange="hideQuestionFromClient(this.checked, 'What is your tax filing status?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9911,7 +9895,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxHousehold" onchange="hideQuestion(this.checked, 'What was your household W-2 income last year?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxHousehold" onchange="hideQuestionFromClient(this.checked, 'What was your household W-2 income last year?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9944,7 +9928,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxHasRentals" onchange="hideQuestion(this.checked, 'Do you currently have any rental properties?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxHasRentals" onchange="hideQuestionFromClient(this.checked, 'Do you currently have any rental properties?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -9986,7 +9970,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxRental" onchange="hideQuestion(this.checked, 'How many rental properties do you have?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxRental" onchange="hideQuestionFromClient(this.checked, 'How many rental properties do you have?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -10019,7 +10003,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxWorkingHome" onchange="hideQuestion(this.checked, 'Will you be working from home?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxWorkingHome" onchange="hideQuestionFromClient(this.checked, 'Will you be working from home?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -10061,7 +10045,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxFootage" onchange="hideQuestion(this.checked, 'What is the approximate square footage of your home office?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxFootage" onchange="hideQuestionFromClient(this.checked, 'What is the approximate square footage of your home office?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -10094,7 +10078,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxDrive" onchange="hideQuestion(this.checked, 'Will you use your personal vehicle for business purposes?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxDrive" onchange="hideQuestionFromClient(this.checked, 'Will you use your personal vehicle for business purposes?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -10136,7 +10120,7 @@
                                     <td class="actionRow">
                                         <spam id="showtxt">Show</spam>
                                         <label class="switch">
-                                            <apex:inputCheckbox html-data-id="checkboxMiles" onchange="hideQuestion(this.checked, 'How many business-related miles do you estimate you’ll drive per year?');" />
+                                            <apex:inputCheckbox html-data-id="checkboxMiles" onchange="hideQuestionFromClient(this.checked, 'How many business-related miles do you estimate you’ll drive per year?');" />
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
@@ -10160,11 +10144,11 @@
                                             </apex:selectList>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
 
-                                <!-- <apex:repeat value="{discoveryQuestions}" var="question">
-                                    <c:GuidedSellingDiscoveryQuestion q="{question}"/>
-                                </apex:repeat>                                     -->
+                                <apex:repeat value="{!discoveryQuestions}" var="question">
+                                    <c:GuidedSellingDiscoveryQuestion q="{!question}"/>
+                                </apex:repeat>                                    
                                 
                                 
                                 
@@ -10173,7 +10157,7 @@
          <td class="actionRow">
              <spam id="showtxt">Show</spam>
              <label class="switch">
-                 <apex:inputCheckbox html-data-id="checkboxWebsite" onchange="hideQuestion(this.checked, 'Will your business have a web or e-commerce presence?');"/>
+                 <apex:inputCheckbox html-data-id="checkboxWebsite" onchange="hideQuestionFromClient(this.checked, 'Will your business have a web or e-commerce presence?');"/>
                  <span class="slider round"></span>
              </label>
          </td>
@@ -10336,7 +10320,7 @@
                                         <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                     </button>
                                     <div class="divider"></div>
-                                    <p class="blast">Self Employment Tax (FICA)</p>
+                                    <p class="blast">Self-Employment Tax (FICA)</p>
                                 </div>
                             </div>
                         </div>
@@ -10358,7 +10342,7 @@
                             </div>
                             <div class="title">
                                 <p class="titleTxt">
-                                    Self Employment Tax (FICA)
+                                    Self-Employment Tax (FICA)
                                 </p>
                             </div>
                             <!-- Introduction -->
@@ -10448,7 +10432,7 @@
                                             </td>
                                             <td>
                                                 <p class="backTitle">Previous section</p>
-                                                <p class="backDesc">Self Employment Tax (FICA)</p>
+                                                <p class="backDesc">Self-Employment Tax (FICA)</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -10669,7 +10653,7 @@
                                         <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                     </button>
                                     <div class="divider"></div>
-                                    <p class="blast">Self Employment Tax (FICA)</p>
+                                    <p class="blast">Self-Employment Tax (FICA)</p>
                                 </div>
                             </div>
                         </div>
@@ -10691,7 +10675,7 @@
                             </div>
                             <div class="title">
                                 <p class="titleTxt">
-                                    Self Employment Tax (FICA)
+                                    Self-Employment Tax (FICA)
                                 </p>
                             </div>
                             <div class="formTxt">
@@ -10728,7 +10712,7 @@
                                             </td>
                                             <td>
                                                 <p class="backTitle">Previous section</p>
-                                                <p class="backDesc" id="busiDisc">Self Employment Tax (FICA)</p>
+                                                <p class="backDesc" id="busiDisc">Self-Employment Tax (FICA)</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -11054,11 +11038,11 @@
                                 Do you have a good grasp on start-up costs and organizational expenses?
                             </p>
                             <div id="engage">
-                                <p id="engageTxt" style="margin-bottom: 12px;">
+                                <p id="engageTxt">
                                     ✋ In order to proceed you must verify that the client understands startup costs.
                                 </p>
-                                <input type="checkbox" id="understands" name="understands" onchange="validateButtons()" />
-                                <label class="normalTxt formTxtbottom" for="understands">&nbsp;Client understands start-up costs (Required).</label>
+                                <!-- <input type="checkbox" id="understands" name="understands" onchange="validateButtons()" />
+                                <label class="normalTxt formTxtbottom" for="understands">&nbsp;Client understands start-up costs (Required).</label> -->
                             </div>
                             <br />
                             <p class="normalTxt formTxtbottom" id="script">
@@ -11066,16 +11050,16 @@
                             </p>
                             <br /><br />
                             <p class="normalTxt formTxtbottom" id="script"><b>You must review at least one of the following deductions:</b></p>
-                            <button type="button" class="start medicalbtn" id="medicalbtn" style="color: white; display: block; margin-bottom: 3%;" onclick="nextPage('Medical Deduction');">
+                            <button type="button" class="start medicalbtn" id="medicalbtn" style="color: white; display: block; margin-bottom: 3%;opacity: 1;" onclick="nextPage('Medical Deduction');">
                                 <i class="fas fa-arrow-right">&nbsp;</i>Go to Medical Deduction
                             </button>
-                            <button type="button" class="start vehiclebtn" id="vehiclebtn" style="color: white; display: block; margin-bottom: 3%;" onclick="nextPage('Vehicle Deduction');">
+                            <button type="button" class="start vehiclebtn" id="vehiclebtn" style="color: white; display: block; margin-bottom: 3%;opacity: 1;" onclick="nextPage('Vehicle Deduction');">
                                 <i class="fas fa-arrow-right">&nbsp;</i>Go to Vehicle Deduction
                             </button>
-                            <button type="button" class="start officebtn" id="officebtn" style="color: white; display: block; margin-bottom: 3%;" onclick="nextPage('Home Office Deduction');">
+                            <button type="button" class="start officebtn" id="officebtn" style="color: white; display: block; margin-bottom: 3%;opacity: 1;" onclick="nextPage('Home Office Deduction');">
                                 <i class="fas fa-arrow-right">&nbsp;</i>Go to Home Office Deduction
                             </button>
-                            <button type="button" class="start 199Abtn" id="199Abtn" style="color: white; display: block; margin-bottom: 3%;" onclick="nextPage('Code Section 199A Deduction');">
+                            <button type="button" class="start 199Abtn" id="199Abtn" style="color: white; display: block; margin-bottom: 3%;opacity: 1;" onclick="nextPage('Code Section 199A Deduction');">
                                 <i class="fas fa-arrow-right">&nbsp;</i>Go to Code Section 199A Deduction
                             </button>
                         </div>
@@ -11112,18 +11096,18 @@
                                 Make sense?
                             </p>
                             <div id="engage">
-                                <p id="engageTxt" style="margin-bottom: 12px;">
+                                <p id="engageTxt">
                                     ✋ In order to proceed you must verify that the client understands Medical Deduction
                                 </p>
-                                <input type="checkbox" id="understandsMed" name="understandsMed" onchange="showDeductBtns();" />
-                                <label class="normalTxt formTxtbottom" for="understandsMed">&nbsp;Client understands Medical Deductions. (Required)</label>
+                                <!-- <input type="checkbox" id="understandsMed" name="understandsMed" onchange="showDeductBtns();" />
+                                <label class="normalTxt formTxtbottom" for="understandsMed">&nbsp;Client understands Medical Deductions. (Required)</label> -->
                             </div>
                             <p class="normalTxt formTxtbottom" id="script">
                                 Alright, great.
                             </p>
                             <br /><br />
                             <div id="buttons" style="margin-bottom: 3%;">
-                                <button type="button" class="start" id="reviewDeductionNext1" style="color: white;" onclick="nextPage('Review Deductions');">
+                                <button type="button" class="start" id="reviewDeductionNext1" style="color: white; opacity: 1;" onclick="nextPage('Review Deductions');">
                                     <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                 </button>
                                 <div class="divider"></div>
@@ -11175,14 +11159,14 @@
                                 That's significant, isn't it?
                             </p>
                             <div id="engage">
-                                <p id="engageTxt" style="margin-bottom: 12px;">
+                                <p id="engageTxt">
                                     ✋ In order to proceed you must verify that the client understands vehicle deductions.
                                 </p>
-                                <input type="checkbox" id="understandsVeh" name="understandsVeh" onchange="showDeductBtns();" />
-                                <label class="normalTxt formTxtbottom" for="understandsVeh">&nbsp;The client understands vehicle deductions. (Required)</label>
+                                <!-- <input type="checkbox" id="understandsVeh" name="understandsVeh" onchange="showDeductBtns();" />
+                                <label class="normalTxt formTxtbottom" for="understandsVeh">&nbsp;The client understands vehicle deductions. (Required)</label> -->
                             </div>
                             <div id="buttons" style="margin-bottom: 3%;">
-                                <button type="button" class="start" id="reviewDeductionNext2" style="color: white;" onclick="nextPage('Review Deductions');">
+                                <button type="button" class="start" id="reviewDeductionNext2" style="color: white;opacity: 1;" onclick="nextPage('Review Deductions');">
                                     <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                 </button>
                                 <div class="divider"></div>
@@ -11234,14 +11218,14 @@
                                 Therefore, it is critical that you have a comprehensive tax strategy in place before taking advantage of the percentage deduction.
                             </p>
                             <div id="engage">
-                                <p id="engageTxt" style="margin-bottom: 12px;">
+                                <p id="engageTxt">
                                     ✋ In order to proceed you must verify that the client understands home office deductions.
                                 </p>
-                                <input type="checkbox" id="understandsHome" name="understandsHome" onchange="showDeductBtns();" />
-                                <label class="normalTxt formTxtbottom" for="understandsHome">&nbsp;The client understands home office deductions. (Required)</label>
+                                <!-- <input type="checkbox" id="understandsHome" name="understandsHome" onchange="showDeductBtns();" />
+                                <label class="normalTxt formTxtbottom" for="understandsHome">&nbsp;The client understands home office deductions. (Required)</label> -->
                             </div>
                             <div id="buttons" style="margin-bottom: 3%;">
-                                <button type="button" class="start" id="reviewDeductionNext3" style="color: white;" onclick="nextPage('Review Deductions');">
+                                <button type="button" class="start" id="reviewDeductionNext3" style="color: white;opacity: 1;" onclick="nextPage('Review Deductions');">
                                     <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                 </button>
                                 <div class="divider"></div>
@@ -11305,14 +11289,14 @@
                                 I agree completely!
                             </p>
                             <div id="engage">
-                                <p id="engageTxt" style="margin-bottom: 12px;">
+                                <p id="engageTxt">
                                     ✋ In order to proceed you must verify that the client understands Code Section 199A deduction
                                 </p>
-                                <input type="checkbox" id="understandsCode" name="understandsCode" onchange="showDeductBtns();" />
-                                <label class="normalTxt formTxtbottom" for="understandsCode">&nbsp;The client understands the Code Section 199A deduction. (Required)</label>
+                                <!-- <input type="checkbox" id="understandsCode" name="understandsCode" onchange="showDeductBtns();" />
+                                <label class="normalTxt formTxtbottom" for="understandsCode">&nbsp;The client understands the Code Section 199A deduction. (Required)</label> -->
                             </div>
                             <div id="buttons" style="margin-bottom: 3%;">
-                                <button type="button" class="start" id="reviewDeductionNext4" style="color: white;" onclick="nextPage('Review Deductions');">
+                                <button type="button" class="start" id="reviewDeductionNext4" style="color: white;opacity: 1;" onclick="nextPage('Review Deductions');">
                                     <i class="fas fa-arrow-right">&nbsp;</i>Next Section
                                 </button>
                                 <div class="divider"></div>
@@ -12270,7 +12254,7 @@
                                                 <p class="modalHeaderTitle">Edit Client Information</p>
                                             </td>
                                             <td>
-                                                <button class="modalHeaderClose" onclick="closeModalEditClientInfo();">X</button>
+                                                <button class="modalHeaderClose" onclick="closeModalEditClientInfo();">✖️</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -12302,7 +12286,7 @@
                                                 <p class="modalHeaderTitle">Edit Billing Address</p>
                                             </td>
                                             <td>
-                                                <button class="modalHeaderClose" onclick="closeModalEditBillingAdd();">X</button>
+                                                <button class="modalHeaderClose" onclick="closeModalEditBillingAdd();">✖️</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -12353,7 +12337,7 @@
                                                 <p class="modalHeaderTitle">Edit Payment Terms</p>
                                             </td>
                                             <td>
-                                                <button class="modalHeaderClose" onclick="closeModalEditPayTerms(true);">X</button>
+                                                <button class="modalHeaderClose" onclick="closeModalEditPayTerms(true);">✖️</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -12494,9 +12478,9 @@
                                 <p class="blast">Post Purchase</p>
                             </div>
 
-                            <div Id="emailSent" style="margin-bottom: 0px; margin-top: 25px;">
+                            <div Id="emailSent">
                                 <p Id="engageTxt">
-                                    Email sent to the client.
+                                    ✔️ Email sent to the client.
                                 </p>
                             </div>
 
@@ -12679,11 +12663,11 @@
                         </div>
                         <div class="formTxt">
                             <p class="normalTxt formTxtbottom" id="script">
-                                CONGRATULATIONS and WELCOME to the 1-800Accountant family! You’ve made a great decision for your business. We are so excited to be partnering with you and to help you save time, money, and energy. We want you more focused on growing your business and making money, which is what you are good at!
+                                CONGRATULATIONS and WELCOME to the 1-800Accountant family! You’ve made an excellent decision for your business. We are so excited to partner with you and help you save time, money, and energy.
                                 <br /><br />
-                                Our goal is to have a total of three introductory appointments with your team. The first meeting will be your Onboarding meeting followed by two Advisory meetings. It is important to set aside time to attend these meetings as this will begin the data collection, advisory, and planning process.
+                                We want you to be more focused on growing your business and making money, which is why you chose to work with us! 
                                 <br /><br />
-                                We have already scheduled your Onboarding meeting for [Date] at [Time].
+                                Over the next two weeks you’ll have a total of three introductory appointments: your onboarding meeting, scheduled for  [Date] at [Time], followed by two Advisory meetings. Setting aside time to attend these meetings will be important as this will begin the data collection, advisory, and planning process.
                                 <br /><br />
                                 We would like to continue sending you text message reminders for your meetings and any other action items that may be needed. 
                                 <br /><br />
@@ -12701,11 +12685,31 @@
                                 <br /><br />
                                 The first is a confirmation of your first appointment that we just scheduled.
                                 <br /><br />
-                                The second is your invoice which outlines your services purchased.
+                                The second is your invoice which outlines your services purchased:
+                            </p>
+                                <ul class="textList">
+                                    <li>Advisory</li>
+                                    <li>BTP (# of returns and list each business)</li>
+                                    <li>PTP (# of returns)</li>
+                                    <li>Online Portal Access with Bookkeeping Software</li>
+                                    <li>Personal Financial Planning</li>
+                                    <li>ECE Filing (if applicable)</li>
+                                    <li>BOI Filing (unless Tailor Brands)</li>
+                                    <li>[List any add-ons]</li>
+                                </ul>
                                 <br /><br />
-                                The last and most important email to get started is your welcome email with your login information to the portal. That is where you are going to be able to schedule future meetings, upload documents, and utilize the bookkeeping software. Getting familiar with the portal is going to be a key part of your success, I can't stress enough how important this really is!
+                            <p class="normalTxt formTxtbottom" id="script">
+                            The last and most important email to get started is your welcome email with your login information to the portal.
+
+                            </p>
+                            
+                        </div>
+
+                        <div class="formTxt">
+                            <p class="normalTxt formTxtbottom" id="script">
+                                Attending meetings with your tax advisor, logging into your portal, syncing your bank transactions in the bookkeeping software, responding to messages, and uploading any requested documents will ensure a smooth and productive experience. When you’re doing your part, that allows us to do ours.
                                 <br /><br />
-                                If you are in front of your computer or mobile device, I highly recommend logging into the portal to set up your profile NOW so you can familiarize yourself before meeting with your accountant. If for any reason you have questions, don’t worry, your accountant can address them during your appointment!
+                                If for any reason you have questions, don’t worry, your accountant can address them during your appointment!
                             </p>
                         </div>
 

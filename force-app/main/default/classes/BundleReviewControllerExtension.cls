@@ -236,7 +236,7 @@ public without sharing class BundleReviewControllerExtension {
 
     @RemoteAction
     public static List<Id> upsertAndConvertLead(String leadString){
-        System.debug(leadString);
+        //System.debug(leadString);
         Lead newLead = (Lead)JSON.deserialize(leadString, Lead.class);
         if(newLead.Id != null){
             Lead oldLead = [SELECT Id, Lead_Type_New__c, Marketing_Channel__c, Marketing_Channel_Last_Touch__c, Lead_Source_New__c,
@@ -423,7 +423,7 @@ public without sharing class BundleReviewControllerExtension {
             p.price = (prod.Guided_Selling_Identifier__c == '1-800Accountant Access' ? '29.99' : String.valueOf(price));
             p.freqPrice = String.valueOf(prod.Guided_Selling_Identifier__c == '1-800Accountant Access' ? 29.99*11 : price);
             p.subtotal = String.valueOf(price);
-            System.debug(p);
+           // System.debug(p);
             prodSelecDataList.add(p);
         }
         return prodSelecDataList;
@@ -558,12 +558,11 @@ public without sharing class BundleReviewControllerExtension {
                 }
             }
 
+            prodSelec.isInOffer = false;
             for(Product_Offer__mdt offerProductItem : offerList) {
                 if(offerProductItem.Product__c == prodSelec.sellingIdentifier) {
                     prodSelec.isInOffer = true;
                     prodSelec.delayDays = offerProductItem.Delay_Days__c;
-                } else {
-                    prodSelec.isInOffer = false;
                 }
             } 
         }
@@ -875,7 +874,7 @@ public without sharing class BundleReviewControllerExtension {
 
         if(coQuoteAnnualId != ''){
             theCOQuote = [SELECT ChargeOver_View_URL__c, Contact__c, Id, Name FROM ChargeOver_Quote__c WHERE Id = :coQuoteAnnualId LIMIT 1];
-            System.debug(theCOQuote);
+            //System.debug(theCOQuote);
             return theCOQuote.Id;
         }
         return 'oops';
@@ -884,7 +883,7 @@ public without sharing class BundleReviewControllerExtension {
     @RemoteAction
     public static String getQuoteUrl(String quoteId){
         ChargeOver_Quote__c theCOQuote = [SELECT ChargeOver_View_URL__c, Contact__c, Id, Name FROM ChargeOver_Quote__c WHERE Id = :quoteId LIMIT 1];
-        System.debug(theCOQuote);
+        //System.debug(theCOQuote);
         return theCOQuote.ChargeOver_View_URL__c;
     }
 
@@ -938,11 +937,11 @@ public without sharing class BundleReviewControllerExtension {
                 subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
 
                 OpportunityLineItem oli;
-                System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
+                // System.debug('OLI debug:');
+                //     System.debug(tmpACPrice);
+                //     System.debug(subAmount);
+                //     System.debug(financeAmount);
+                //     System.debug(subTotalAmount);
 
                 if(oppId != null && String.valueOf(oppId) != '') {
                      oli = new OpportunityLineItem(
@@ -1001,7 +1000,7 @@ public without sharing class BundleReviewControllerExtension {
                     );
                     if(coli != null) {
                         coliList.add(coli);
-                        System.debug(coli);
+                        //System.debug(coli);
                     }
                 }
             } else {
@@ -1011,11 +1010,11 @@ public without sharing class BundleReviewControllerExtension {
                     subTotalAmount = subTotalAmount.setScale(2, RoundingMode.HALF_UP);
 
                     OpportunityLineItem oli;
-                    System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
+                    // System.debug('OLI debug:');
+                    // System.debug(tmpACPrice);
+                    // System.debug(subAmount);
+                    // System.debug(financeAmount);
+                    // System.debug(subTotalAmount);
 
                     if(oppId != null && String.valueOf(oppId) != '') {
                         oli = new OpportunityLineItem(
@@ -1111,12 +1110,12 @@ public without sharing class BundleReviewControllerExtension {
                     subTotalAmount = tmpACPrice * Integer.valueOf(p.quantity);
                 
                     OpportunityLineItem oli;
-                    System.debug('OLI debug:');
-                    System.debug(tmpACPrice);
-                    System.debug(subAmount);
-                    System.debug(financeAmount);
-                    System.debug(subTotalAmount);
-                    System.debug(p.quantity);
+                    // System.debug('OLI debug:');
+                    // System.debug(tmpACPrice);
+                    // System.debug(subAmount);
+                    // System.debug(financeAmount);
+                    // System.debug(subTotalAmount);
+                    // System.debug(p.quantity);
                     if(oppId != null && oppId != '') {
                         oli = new OpportunityLineItem(
                             Description = p.name,
@@ -1331,7 +1330,7 @@ public without sharing class BundleReviewControllerExtension {
     public static String getOrCreateLead(String email){
         try{
             List<Lead> leadList = [SELECT Id, Personal_Income__c FROM Lead WHERE Email = :email];
-            System.debug(leadList.size()+' leads found with email '+email);
+            //System.debug(leadList.size()+' leads found with email '+email);
             Lead returnLead;
             if(leadList.size() > 0){
                 returnLead = leadList[0];
@@ -1339,8 +1338,8 @@ public without sharing class BundleReviewControllerExtension {
                 returnLead = new Lead(FirstName='Placeholder', LastName='Placeholder', Company='Placeholder', Status='New', Email=email);
                 insert returnLead;
             }
-            System.debug(returnLead);
-            System.debug(JSON.serialize(returnLead));
+            //System.debug(returnLead);
+            //System.debug(JSON.serialize(returnLead));
             return returnLead.Id;
         } catch (Exception ex){
             System.debug(ex.getMessage());
@@ -1352,15 +1351,15 @@ public without sharing class BundleReviewControllerExtension {
     public static String getLead(String email){
         try{
             List<Lead> leadList = [SELECT Id, Personal_Income__c FROM Lead WHERE Email = :email AND IsConverted = false];
-            System.debug(leadList.size()+' leads found with email '+email);
+            //System.debug(leadList.size()+' leads found with email '+email);
             Lead returnLead;
             if(leadList.size() > 0){
                 returnLead = leadList[0];
             } else {
                 return null;
             }
-            System.debug(returnLead);
-            System.debug(JSON.serialize(returnLead));
+            //System.debug(returnLead);
+            //System.debug(JSON.serialize(returnLead));
             return returnLead.Id;
         } catch (Exception ex){
             System.debug(ex.getMessage());
@@ -1384,9 +1383,9 @@ public without sharing class BundleReviewControllerExtension {
 
     @RemoteAction
     public static Boolean updateLead(String leadString){
-        System.debug(leadString);
+        //System.debug(leadString);
         Lead l = (Lead)JSON.deserialize(leadString, Lead.class);
-        System.debug(l);
+        //System.debug(l);
         try{
             update l;
             System.debug('lead updated');

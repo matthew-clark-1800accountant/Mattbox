@@ -204,6 +204,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         //console.log('appointment.renderedCallback');
         if(!this.rendered){
             this.rendered = true;
+            if(this.appointment.Subject == null){ this.appointment.Subject = 'No Subject'; }
             //initialize appointment heading
             this.updateStyle();
             //refreshApex(this.numberOfEndedCalls);
@@ -230,7 +231,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         // console.log(this.numberOfEndedCalls.data);
         // console.log(this.appointment.NumberOfCalls);
         const now = Date.now();
-        var isLive = this.appointment.Subject.toLowerCase().includes('live');
+        var isLive = this.appointment.Subject?.toLowerCase().includes('live');
         if(this.appointment.Disposition){
             this.headingText = this.appointment.Disposition;
             if(this.appointment.SecondaryDisposition == 'Cancelled' || this.appointment.SecondaryDisposition == 'Rescheduled' ){

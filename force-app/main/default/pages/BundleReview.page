@@ -994,7 +994,7 @@
                 </div>
 
                 <div class="slds-grid slds-wrap" id="acolumn-reverse">
-                    <!-- left column -->
+                    
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4" style="padding-left: 75px;">
                         <div class="slds-box slds-box_x-small slds-text-align_left slds-m-around--x-small" id="afirst">
                             <apex:form id="aform" style="width: 80%;">
@@ -1011,7 +1011,7 @@
                         </div>
                     </div>
                     
-                    <!-- right column -->
+                    
                     <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--2-of-4" style="padding-left: 75px;">
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small"  id="bsecondText">
                             <apex:form id="bform" style="width: 80%;">

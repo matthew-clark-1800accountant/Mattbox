@@ -30,13 +30,15 @@ public with sharing class UpdateOpportunityEventTriggerHandler {
         EmailTemplate quoteTemplate = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Quote_Sent' LIMIT 1];
         if(quoteTemplate == null) { System.debug('email template not found'); return;}
         for(Opportunity opp : oppList){
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(quoteTemplate.Id, opp.Id, opp.Id);
         
         
             //mail.setToAddresses(new List<String>{oppMap.get(opp.Id).Account.Primary_Contact__r.Email});
             mail.setReplyTo(oppMap.get(opp.Id).Owner.Email);
-            mail.setTemplateId(quoteTemplate.Id);
+            //mail.setTemplateId(quoteTemplate.Id);
             mail.setTargetObjectId(oppMap.get(opp.Id).Account.Primary_Contact__r.Id);
+            //mail.setTreatTargetObjectAsRecipient(false);
+            //mail.setToAddresses(new List<String>{oppMap.get(opp.Id).Account.Primary_Contact__r.Email});
             System.debug(mail);
             emailList.add(mail);
             //mail.setSenderDisplayName('Salesforce Support');

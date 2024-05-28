@@ -1166,6 +1166,7 @@ public without sharing class EventTriggerHandler{
                 FROM Event WHERE WhatId IN :eventsByWhatId.keySet()
                 AND Type_of_Appointment__c = 'Tax Savings Analysis'
                 AND Email_Campaign_ID__c != NULL
+                AND (NOT(Email_Campaign_ID__c LIKE '%Dialer%'))
                 AND CreatedDate = LAST_N_DAYS:60
                 ORDER BY CreatedDate DESC
         ]) {
@@ -1185,6 +1186,7 @@ public without sharing class EventTriggerHandler{
                 FROM Event WHERE WhoId IN :eventsByWhoId.keySet()
                 AND Type_of_Appointment__c = 'Tax Savings Analysis'
                 AND Email_Campaign_ID__c != NULL
+                AND (NOT(Email_Campaign_ID__c LIKE '%Dialer%'))
                 AND CreatedDate = LAST_N_DAYS:60
                 ORDER BY CreatedDate DESC
         ]) {

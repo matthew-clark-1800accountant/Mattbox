@@ -5357,12 +5357,16 @@
             
             case 'Business Discovery Parts':
                 //progress(12);
-
+                console.log(e.content);
                 clearInterval(stopFunction);
-                hideAll();
-                document.getElementById('backgroundRest').style.display = "block";
-                document.getElementById('businessDiscParts').style.display = "flex";
-                document.getElementById('businessDiscMainQuest').style.display = "flex";
+                
+                if(!e.content.hidePage){
+                    hideAll();
+                    document.getElementById('backgroundRest').style.display = "block";
+                    document.getElementById('businessDiscParts').style.display = "flex";
+                    document.getElementById('businessDiscMainQuest').style.display = "flex";
+                }
+                
 
                 if(true == e.content.save){
                     if(undefined == dynamicForm.get(e.content.questionText)){

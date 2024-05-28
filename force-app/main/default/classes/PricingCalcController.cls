@@ -3895,7 +3895,10 @@ public class PricingCalcController {
             }
             
         }
+
         
+        String bundleName = useBundlePricing() ? getEligibleBundle() : 'Core Accounting Package';
+        List<String> freeItems = bundleNameToFreeItems.get(bundleName);
         // initialize all price placeholder variables
         businessAdjustment = 0.00;
         personalAdjustment = 0.00;
@@ -5836,13 +5839,12 @@ public class PricingCalcController {
             QuoteLineItem qLIPayFee;
             
             ChargeOver_Quote_Line_Item__c coqLIPayFee;
-        	List<String> freeItems = bundleNameToFreeItems.get(getEligibleBundle());
+        	
             if(useBundlePricing() && !setupFeeItems.contains('Payroll')){
-                if(freeItems.contains('Payroll')){
-                    payrollAdjustment = 0;
-                } else {
                     payrollAdjustment *= (1-bundleDiscount);
-                }
+            }
+            if(freeItems.contains('Payroll') && !setupFeeItems.contains('Payroll')){
+                payrollAdjustment = 0;
             }
             if (payrollTime == 'Monthly') {
             
@@ -6574,15 +6576,12 @@ public class PricingCalcController {
             QuoteLineItem qLISF; 
             ChargeOver_Quote_Line_Item__c coqLISF;
             
-            List<String> freeItems = bundleNameToFreeItems.get(getEligibleBundle());
             if(useBundlePricing() && !setupFeeItems.contains('LLC State Filing')){
-                if(freeItems.contains('LLC State Filing')){
-                    stateFilingAdjustment = 0;
-                } else {
-                    stateFilingAdjustment *= (1-bundleDiscount);
-                }
+                stateFilingAdjustment *= (1-bundleDiscount);
             }
-            
+            if(freeItems.contains('LLC State Filing') && !setupFeeItems.contains('LLC State Filing')){
+                stateFilingAdjustment = 0;
+            }
             if (stateFilingTime == 'Monthly') {
             
                 if (stateFilingTimeDef == 'Monthly') {
@@ -6932,14 +6931,12 @@ public class PricingCalcController {
             QuoteLineItem qLISFC; 
             ChargeOver_Quote_Line_Item__c coqLISFC;
             
-            List<String> freeItems = bundleNameToFreeItems.get(getEligibleBundle());
             if(useBundlePricing() && !setupFeeItems.contains('Corp State Filing')){
-                if(freeItems.contains('Corp State Filing')){
-                    stateFilingCorpAdjustment = 0;
-                } else {
-                    stateFilingCorpAdjustment *= (1-bundleDiscount);
-                }
+                stateFilingCorpAdjustment *= (1-bundleDiscount);
             }
+            if(freeItems.contains('Corp State Filing') && !setupFeeItems.contains('Corp State Filing')){
+                stateFilingCorpAdjustment = 0;
+            } 
             
             if (stateFilingCorpTime == 'Monthly') {
             
@@ -7786,12 +7783,11 @@ public class PricingCalcController {
                 itemSoldInOffer = false;
                 
                 if(useBundlePricing() && !setupFeeItems.contains(acItem.name)){
-                    if(bundleNameToFreeItems.get(getEligibleBundle()).contains(acItem.name)){
-                        tmpACPrice = 0;
-                    } else {
-                        tmpACPrice = tmpACPrice * (1-bundleDiscount);
-                    }
+                    tmpACPrice = tmpACPrice * (1-bundleDiscount);
                 }
+                if(freeItems.contains(acItem.name) && !setupFeeItems.contains(acItem.name)){
+                    tmpACPrice = 0;
+                } 
                 // check for bundle price
                 for(offerProductWrapperClass opwItem : offerProductList){
                     
@@ -8567,16 +8563,19 @@ public class PricingCalcController {
         Decimal tmpACPrice2 = 0.00;
         //Decimal productPassAdjustment = 0.00;
         String OLIPayInstall = '';
-        
+        String bundleName = useBundlePricing() ? getEligibleBundle() : 'Core Accounting Package';
+        List<String> freeItems = bundleNameToFreeItems.get(bundleName);
         String productName = calculatorIdToName.get(calcIdPass);
-        List<String> freeItems = bundleNameToFreeItems.get(getEligibleBundle());
+        
+        
         if(useBundlePricing() && !setupFeeItems.contains(productName)){
-            if(freeItems.contains(productName)){
-                productPassAdjustment = 0;
-            } else {
-                productPassAdjustment *= (1-bundleDiscount);
-            }
+            productPassAdjustment *= (1-bundleDiscount);
         }
+        if(productName == 'Loan Agreement' && !doAdvisory){
+            //don't overwrite price of standalone loan agreement
+        } else if(freeItems.contains(productName) && !setupFeeItems.contains(productName)){
+            productPassAdjustment = 0;
+        } 
         if(productDescription == 'Advisory'){ System.debug('makeLineItems bundled advisory: '+productPassAdjustment); }
         
         // check for bundle price

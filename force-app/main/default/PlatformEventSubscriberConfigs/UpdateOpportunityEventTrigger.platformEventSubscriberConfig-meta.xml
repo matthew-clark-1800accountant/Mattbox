@@ -3,5 +3,5 @@
     <batchSize>100</batchSize>
     <masterLabel>UpdateOpportunityEventTrigger</masterLabel>
     <platformEventConsumer>UpdateOpportunityEventTrigger</platformEventConsumer>
-    <user>info@1800accountant.com.mattdevbox</user>
+    <user>info@1800accountant.com.mattbox</user>
 </PlatformEventSubscriberConfig>

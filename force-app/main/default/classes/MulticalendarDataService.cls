@@ -502,7 +502,7 @@ public without sharing class MulticalendarDataService {
             } else {
                 Set<Id> profileIds = new Map<Id, Profile>(salesProfiles).keySet();
                 Id currentUserId = UserInfo.getUserId();
-                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true';
+                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true';
                 if(filterList != null && !filterList.isEmpty()){
                     for(String filter : filterList){
                         if(filter != ''){
@@ -579,7 +579,7 @@ public without sharing class MulticalendarDataService {
                 Set<Id> profileIds = new Map<Id, Profile>(salesProfiles).keySet();
                 Id currentUserId = UserInfo.getUserId();
                 //String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true AND Sales_Team__c!=null';
-                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id != :currentUserId AND IsActive=true';
+                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id != :currentUserId AND IsActive=true';
                 
                 if(filterList != null && !filterList.isEmpty()){
                 //if(filterString != null && filterString != ''){
@@ -630,10 +630,23 @@ public without sharing class MulticalendarDataService {
                         if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
                             r.Tags.add(new Tag(r.Tags.size(),'UENI'));
                         }
+                        if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                            r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                        }
                     } else {
                         r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                         r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                     }
+
+                    if(u.Available_Restricted_Lead_Types__c != null){
+                        if(u.Available_Restricted_Lead_Types__c.contains('Creator')){
+                            r.Tags.add(new Tag(r.Tags.size(),'Duns Creator'));
+                        }
+                        if(u.Available_Restricted_Lead_Types__c.contains('Credit Insights')){
+                            r.Tags.add(new Tag(r.Tags.size(),'Duns Credit Insights'));
+                        }
+                    }
+
                     if(profileName == 'appointment setter'){
                         r.Tags.add(new Tag(r.Tags.size(),'SDR'));
                     }
@@ -684,7 +697,7 @@ public without sharing class MulticalendarDataService {
     public static Rep getCurrentUserData(){
         try{
             Id currentUserId = UserInfo.getUserId();
-            String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id = :currentUserId';
+            String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id = :currentUserId';
             System.debug(queryString);
             List<User> currentUsers = Database.query(queryString);
             User u = currentUsers[0];
@@ -722,9 +735,21 @@ public without sharing class MulticalendarDataService {
                 if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
                     r.Tags.add(new Tag(r.Tags.size(),'UENI'));
                 }
+                if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                    r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                }
             } else {
                 r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                 r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
+            }
+
+            if(u.Available_Restricted_Lead_Types__c != null){
+                if(u.Available_Restricted_Lead_Types__c.contains('Creator')){
+                    r.Tags.add(new Tag(r.Tags.size(),'Duns Creator'));
+                }
+                if(u.Available_Restricted_Lead_Types__c.contains('Credit Insights')){
+                    r.Tags.add(new Tag(r.Tags.size(),'Duns Credit Insights'));
+                }
             }
             
             if(profileName == 'appointment setter'){

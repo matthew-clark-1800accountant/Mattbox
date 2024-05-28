@@ -1443,7 +1443,23 @@
                         if(!setupFeeItems.includes('Back Business Tax Preparation')){backBusinessPrice *= freePriceProducts?.includes('Back Business Tax Preparation') ? 0 : (1-newBundleDiscount);}
                         if(!setupFeeItems.includes('Back Personal Tax Preparation')){backPersonalPrice *= freePriceProducts?.includes('Back Personal Tax Preparation') ? 0 : (1-newBundleDiscount);}
                         if(!setupFeeItems.includes('Non-Profit Back Bookkeeping')){nonProfitBackBookkeepingPrice  *= freePriceProducts?.includes('Non-Profit Back Bookkeeping') ? 0 : (1-newBundleDiscount);}
-                    } 
+                    } else { //quick and dirty support 
+                        freePriceProducts = bundleNameToFreeItems.get('Core Accounting Package');
+                        if(!setupFeeItems.includes('Business Tax Preparation')){businessPrice *= freePriceProducts?.includes('Business Tax Preparation') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Personal Tax Preparation')){personalPrice *= freePriceProducts?.includes('Personal Tax Preparation') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Payroll')){payrollPrice *= freePriceProducts?.includes('Payroll') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Tax Advisory')){advisoryPrice *= freePriceProducts?.includes('Tax Advisory') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Dedicated Bookkeeping')){bookkeepingPrice *= freePriceProducts?.includes('Dedicated Bookkeeping') ? 0 : 1;}
+                        if(!setupFeeItems.includes('LLC State Filing Fee')){stateFilingPrice *= freePriceProducts?.includes('LLC State Filing Fee') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Non-Profit Bookkeeping')){nonProfitBookkeepingPrice *= freePriceProducts?.includes('Non-Profit Bookkeeping') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Corp State Filing Fee')){stateFilingCorpPrice *= freePriceProducts?.includes('Corp State Filing Fee') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Back Bookkeeping')){backBookkeepingPrice *= freePriceProducts?.includes('Back Bookkeeping') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Foreign Qualification - LLC')){foreignStatePrice *= freePriceProducts?.includes('Foreign Qualification - LLC') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Back Quarterly Payroll')){backPayrollPrice *= freePriceProducts?.includes('Back Quarterly Payroll') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Back Business Tax Preparation')){backBusinessPrice *= freePriceProducts?.includes('Back Business Tax Preparation') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Back Personal Tax Preparation')){backPersonalPrice *= freePriceProducts?.includes('Back Personal Tax Preparation') ? 0 : 1;}
+                        if(!setupFeeItems.includes('Non-Profit Back Bookkeeping')){nonProfitBackBookkeepingPrice  *= freePriceProducts?.includes('Non-Profit Back Bookkeeping') ? 0 : 1;}
+                    }
                     console.log('discounted advisory: '+advisoryPrice);
                     // for consistency and to prevent regresion we place adjustments before bundle overrides
                     <apex:repeat var="adjOne" value="{!adjustPriceList}" >
@@ -3534,7 +3550,7 @@
                                 tmpACPrice = Math.ceil(Number.parseFloat('{!acOne.price}'));
                             }
                             if(setupFeeItems.includes('Loan Agreement')){
-                                tmpACPrice = acItem.price;
+                                tmpACPrice = Math.ceil(Number.parseFloat('{!acOne.price}'));
                             }
 
                         } else if ('{!acOne.id}' == '01tf1000003JjrwAAC') { //online access
@@ -3593,13 +3609,14 @@
                             }
                         
                         }
-
+                        var bundleName = newBundleIsIntact() ? getBundleType() : 'Core Accounting Package';
                         if(newBundleIsIntact() && !setupFeeItems.includes('{!acOne.name}')){
-                            if(bundleNameToFreeItems.get( getBundleType())?.includes('{!acOne.name}')){
-                                tmpACPrice = 0;
-                            } else {
-                                tmpACPrice = tmpACPrice * (1-newBundleDiscount);
-                            }
+                            tmpACPrice = tmpACPrice * (1-newBundleDiscount);                            
+                        }
+                        if('{!acOne.id}' == '01tj0000000LLamAAG' && !$('[data-id="acheck"]').prop('checked')){
+                            //don't overwrite price of standalone loan agreement
+                        } else if(bundleNameToFreeItems.get(bundleName)?.includes('{!acOne.name}')){
+                            tmpACPrice = 0;
                         }
 
                         if(advisoryAddons.includes('{!acOne.name}')){

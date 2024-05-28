@@ -3,4 +3,5 @@
     <batchSize>200</batchSize>
     <masterLabel>ConvertLeadTrigger</masterLabel>
     <platformEventConsumer>ConvertLeadTrigger</platformEventConsumer>
+    <user>matthew.clark@1800accountant.com.mattbox</user>
 </PlatformEventSubscriberConfig>
