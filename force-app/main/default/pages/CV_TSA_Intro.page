@@ -5498,8 +5498,9 @@
                             hideQuestion.set(questionNumber, true);
                             document.getElementById('displayReview1-'+ questionNumber).style.display = "none";
                             document.getElementById('review1-' + questionNumber).innerText = "";
-                            if(document.getElementById('answer1-'+ questionNumber).innerText == "{{Answer}}"){
+                            if(document.getElementById('actQu1-'+ questionNumber).innerText == e.content.questionText){
                                 document.getElementById('actQu1-'+ questionNumber).style.display = "none";
+                                document.getElementById('actQu1-'+ questionNumber).innerText = "";
                             } else {
                                 document.getElementById('ansQu1-'+ questionNumber).style.display = "none"
                             }

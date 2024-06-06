@@ -1,0 +1,109 @@
+<apex:component layout="none" controller="GuidedSellingDiscoveryQuestionController">
+    <apex:attribute name="q" description="This is the question metadata represented by this component." type="GuidedSellingQuestionWrapper" required="true" assignTo="{!questionRecord}"/>
+    <apex:attribute name="d" description="This is the default value queried from the business record." type="String" required="false" assignTo="{!defaultFromRecord}"/>
+
+
+    <tr id="{!q.DevName}row" style="display:{!IF(q.Visible == true, 'table-row', 'none')}">
+        <td class="actionRow" >
+            <spam id="showtxt">Show</spam>
+            <label class="switch">
+                <apex:inputCheckbox html-data-id="{!q.DevName}checkbox" onchange="hideQuestionFromClient(this.checked, '{!q.QuestionText}');" disabled="{!IF(q.QuestionType == 'Text Only', 'true', 'false')}"/>
+                <span class="slider round"></span>
+            </label>
+        </td>
+        <td class="questionRow">
+            <p class="normalTxt" id="script">
+                <apex:outputPanel rendered="{!q.Required}">
+                    <spam id="txtRequiredOrange">(Required) </spam>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!!q.Required}">
+                    <spam id="txtRequired">(Optional)</spam>
+                </apex:outputPanel>
+                <br />
+                {!q.QuestionText}
+            </p>
+
+            <apex:outputPanel rendered="{!isSinglePicklist}">
+                <div class="form-floating" id="buttonsDisc">
+                    <apex:selectList styleClass="form-select"
+                        style="height: auto; padding-top: 5%; padding-bottom: 5%;"
+                        multiselect="false"
+                        html-data-id="{!q.DevName}question"
+                        value="{!defaultValue}"
+                        onchange="populateAnswer('{!q.DevName}', this, '{!q.QuestionType}');"
+                        size="1">
+                        <apex:selectOptions value="{!optionList}"></apex:selectOptions>
+                    </apex:selectList>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IF(q.QuestionType == 'Multi Selection', true, false)}">
+                <div id="buttonsDisc">
+                    <!-- <apex:selectList styleClass="form-select"
+                        style="height: auto; padding-top: 5%; padding-bottom: 5%;"
+                        multiselect="true"
+                        html-data-id="{!q.DevName}question"
+                        value="{!defaultValueList}"
+                        onchange="populateAnswer('{!q.DevName}', this, true);"
+                        size="1">
+                        <apex:selectOptions value="{!optionList}"></apex:selectOptions>
+                    </apex:selectList> -->
+                    <apex:selectCheckboxes style="height: auto; padding-top: 5%; padding-bottom: 5%;"
+                        styleClass="checkboxes"
+                        html-data-id="{!q.DevName}question"
+                        layout="pageDirection"
+                        value="{!defaultValueList}"
+                        onchange="populateAnswer('{!q.DevName}', this, '{!q.QuestionType}');">
+                        <apex:selectOptions value="{!optionList}"></apex:selectOptions>
+                    </apex:selectCheckboxes>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IF(q.QuestionType == 'Boolean', true, false)}">
+                <div id="buttonsDisc">
+                    <button type="button" class="yesBtn" html-data-id="yesBtn{!q.DevName}" style="{!IF(q.Value == 'Yes', 'color: white; border: 1px solid rgb(59, 122, 128); background: rgb(59, 122, 128);', 'color: black; border: 1px solid rgb(192, 192, 192); background: white;')}" onclick="populateAnswer('{!q.DevName}', this, '{!q.QuestionType}'); updateYesNoButtons('yesBtn{!q.DevName}');">
+                        Yes
+                    </button>
+                    <div class="divider"></div>
+                    <button type="button" class="noBtn" html-data-id="noBtn{!q.DevName}" style="{!IF(q.Value == 'No', 'color: white; border: 1px solid rgb(59, 122, 128); background: rgb(59, 122, 128);', 'color: black; border: 1px solid rgb(192, 192, 192); background: white;')}" onclick="populateAnswer('{!q.DevName}', this, '{!q.QuestionType}'); updateYesNoButtons('noBtn{!q.DevName}');">
+                        No
+                    </button>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IF(q.QuestionType == 'Date', true, false)}">
+                <div class="form-floating" id="buttonsDisc">
+                    <apex:input type="date"
+                        value="{!defaultValue}"
+                        styleClass="date-select start-date"
+                        style="height: auto; padding-top: 5%; padding-bottom: 5%;"
+                        html-data-id="{!q.DevName}question"
+                        onchange="populateAnswer('{!q.DevName}', this, '{!q.QuestionType}');"
+                        size="1"
+                    ></apex:input>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!q.IncludesEngageText}">
+                <div id="engage">
+                    <p id="engageTxt">
+                        ✋ {!q.EngageText}
+                    </p>
+                </div>
+            </apex:outputPanel>
+        </td>
+    </tr>
+
+    
+    <script>
+        // if({p.selected}){
+        //     //console.log('line selected: {p.Product.DevName}');
+        //     document.getElementById("{p.Product.Id}{tab}select").setAttribute("checked","");
+        // }
+
+        // function formatMoney(amount){
+        //     return '$'+parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        // }
+        
+    </script>
+</apex:component>

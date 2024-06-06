@@ -1943,21 +1943,21 @@
         });
         
         $(document).ready(function () {
-            Inputmask("(9{3}) 9{3}-9{4}", {
+            Inputmask("+9[9] (9{3}) 9{3}-9{4}", {
                 placeholder: " ",
-                greedy: false
+                greedy: true
             }).mask('#phone');
-            Inputmask("(9{3}) 9{3}-9{4}", {
+            Inputmask("+9[9] (9{3}) 9{3}-9{4}", {
                 placeholder: " ",
-                greedy: false
+                greedy: true
             }).mask('#contphone');
-            Inputmask("(9{3}) 9{3}-9{4}", {
+            Inputmask("+9[9] (9{3}) 9{3}-9{4}", {
                 placeholder: " ",
-                greedy: false
+                greedy: true
             }).mask('#phoneEditClient');
-            Inputmask("(9{3}) 9{3}-9{4}", {
+            Inputmask("+9[9] (9{3}) 9{3}-9{4}", {
                 placeholder: " ",
-                greedy: false
+                greedy: true
             }).mask('#phoneModalEditClientInfo');
             
         });
@@ -3600,6 +3600,12 @@
                         document.getElementById('errorMessage').style.display = "flex"; 
                     }
                     setDefaultDiscoveryAnswers();
+                    for(var question of discoveryQuestions){
+                        if(question.Answered && question.QuestionType != 'Text Only'){
+                            var questionObj = {checked: true, value:question.Value, className: (question.Value == 'Yes' || question.Value == true)  ? 'yesBtn' : 'noBtn' }
+                            populateAnswer(question.DevName, questionObj, question.QuestionType, false, true);
+                        }
+                    }
 
                     document.getElementById('mainCategoryDiv').style.background = "white";
                     document.getElementById('mainCategoryDiv').style.border = "none";
@@ -4752,6 +4758,7 @@
         
         //function populateAnswer(question, answer, picklist, skipSync) {
         function populateAnswer(questionDevName, answer, questionType, skipSync, hidePage) {
+            console.log('populateAnswer '+[...arguments]);
             var checked = answer.checked;
             var question = questionNameToQuestionMap.get(questionDevName);
             if(!question) {return;}
@@ -4784,9 +4791,9 @@
                     }
                 }
 
-                if(question.Value?.includes(answer)){
+                if(question.Value?.includes(answer) && !checked){
                     answer = question.Value.replace(answer+';','').replace(answer,'');
-                } else if(question.Value){
+                } else if(question.Value && checked && !question.Value?.includes(answer)){
                     answer = question.Value+';'+answer;
                 }
 
@@ -5113,11 +5120,11 @@
         const questionToProduct = new Map();
         const productToQuestion = new Map();
 
-        function hideQuestionFromClient(hideBoolean, questionText, dependentFields){
-
+        function hideQuestionFromClient(showBoolean, questionText, dependentFields){
+            console.log('hideQuestionFromClient ' + showBoolean + ' '+questionText);
             var questionNumber;
             //If we are showing the question
-            if(true == hideBoolean){
+            if(true == showBoolean){
                 for(var i = 1; i < 31; i++) {
                     if(null == questionToText.get(i)){
                         questionNumber = i;
@@ -7309,6 +7316,11 @@
                 newPrice = autoAmount1099(qty, prodId);
             }
 
+            // if(prodName == 'Tax Advisory'){
+            //     for (let l = 0; l < advisoryAddons.length; l++){
+            //         if(productNameToId.get(advisoryAddons[l])){calcQuantityChange(quantity, advisoryAddons[l]);}                    
+            //     }
+            // }
             //sync product quantity across  tabs
             const qtyBtnList = document.querySelectorAll("[data-product-qty='" + prodName + "']");
             for(var i = 0; i < qtyBtnList.length; i++) {
@@ -7391,9 +7403,10 @@
             var product = finalProductsMap.get(prodId);
             //console.log('updateProductSubtotal '+product.Product.Name);
             var subtotal = product.adjustedPrice * product.currentQuantity;
-            if(product.Product.Guided_Selling_Identifier__c == '1-800Accountant Access' && product.currentBillingFrequency == 'Monthly'){
-                subtotal = subtotal / 11;
-            } else if(product.currentBillingFrequency == 'Annual' && product.Product.Billing_Frequency__c != 'Annual'){
+            // if(product.Product.Guided_Selling_Identifier__c == '1-800Accountant Access' && product.currentBillingFrequency == 'Monthly'){
+            //     subtotal = subtotal / 11;
+            // } else 
+            if(product.currentBillingFrequency == 'Annual' && product.Product.Billing_Frequency__c != 'Annual'){
                 subtotal = subtotal * 11;
             } else if (product.currentBillingFrequency == 'Monthly' && product.Product.Billing_Frequency__c != 'Monthly'){
                 subtotal = (subtotal / 12) * 1.2;
@@ -7736,6 +7749,7 @@
             //Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.updateQuoteTotals', quoteTotalMonthly, quoteTotalAnnual, function (a,b){console.log(a);console.log(b);});
         }
 
+        var lastTempTerms = payTerms;
         //to-do: factor in no split allowed field?
         function calcFinance(payte, showClient) {
             //lastProductData = JSON.parse(JSON.stringify(finalProducts));
@@ -7803,7 +7817,7 @@
                     }
                 }
                 //autoAmountBundleItems();                 
-            } else if (lastPayTerms == 'mon'){
+            } else if (lastPayTerms == 'mon' || lastTempTerms == 'mon'){
                 for(var prod of finalProducts){
                     if(prod.Product.Billing_Frequency__c == 'Annual' || prod.Product.Billing_Frequency__c == 'Monthly'){
                         var defaultFrequency = (prod.Product.Billing_Frequency__c == 'Annual' ? 'yearly' : 'monthly');
@@ -7813,6 +7827,8 @@
             }
             document.getElementById('planTerms').innerHTML = payte;
             document.getElementById('payTerms').value = payte;
+            
+            lastTempTerms = payTerms;
             updateQuoteTotals();
             syncProdsToClient(); 
             if(showClient == true) {
@@ -8227,6 +8243,12 @@
         }
 
         function showAllAnswers(show) {
+            for(var question of discoveryQuestions){
+                var showQuestion = show && question.Answered && question.QuestionType != 'Text Only';
+                hideQuestionFromClient(showQuestion, question.QuestionText);
+                document.querySelector('[data-id='+question.DevName+'checkbox]').checked = showQuestion;
+            }
+            return;
 
             if(requiredFields.includes("firstBusiness") && !document.getElementById('firstBusiness').childNodes[1].childNodes[3].childNodes[0].checked) {
                 hideQuestionFromClient(show, 'Is this your first business?');
@@ -9173,8 +9195,8 @@
                         <p class="normalTxt" id="script">
                             <spam id="txtRequiredOrange">(Required) </spam>
                             <br />
-                            <span id="noDefaultEntityText" style="display: {!IF(defaultEntity == 'Select an Entity Type', 'none', 'inline')}">And was your business registered as an LLC?</span>
-                            <span id="selectedEntityText" style="display: {!IF(defaultEntity == 'Select an Entity Type', 'inline', 'none')}">And your business is a(n) {!defaultEntity}, right?</span>
+                            <span id="noDefaultEntityText" style="display: {!IF(defaultEntity == 'Select an Entity Type', 'inline', 'none')}">And was your business registered as an LLC?</span>
+                            <span id="selectedEntityText" style="display: {!IF(defaultEntity == 'Select an Entity Type', 'none', 'inline')}">And your business is a(n) {!defaultEntity}, right?</span>
 
                         </p>
                         <div class="form-floating">

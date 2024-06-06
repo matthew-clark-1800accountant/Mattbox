@@ -409,6 +409,17 @@ public without sharing class GuidedSellingControllerExtension {
         return startingString;
     }
 
+    public static String normalizePhoneNumber(String phone){
+        if(phone == '' || phone == null){
+            return phone;
+        }
+        phone = phone.replace(' ', '').replace('(','').replace(')','').replace('-','');
+        if(phone.length() < 11){phone = '+1'+phone;}
+        Integer len = phone.length();
+        phone = phone.substring(0, len-10) + ' (' + phone.substring(len-10, len-7) + ') ' + phone.substring(len-7,len-4) + '-' + phone.substring(len-4, len);
+        return phone;
+    }
+
     public GuidedSellingControllerExtension(ApexPages.StandardController stdController) {
         discoveryQuestions = new List<GuidedSellingQuestionWrapper>();
         
@@ -616,7 +627,7 @@ public without sharing class GuidedSellingControllerExtension {
                 if(question.BusinessFieldMapping != null && businessField != null && (businessField.getType().name() == 'PICKLIST' || businessField.getType().name() == 'MULTIPICKLIST')){
                     
                     for(Schema.PicklistEntry entry : fieldMap.get(question.BusinessFieldMapping).getDescribe().getPicklistValues()){
-                        if(entry.isActive()){ question.PicklistValuesFromObject.add(entry.getValue()); }
+                        if(entry.isActive()){ question.PicklistMap.put(entry.getLabel(), entry.getValue()); }
                     }
                 }
                 if(question.FilterTags != null){
@@ -724,6 +735,7 @@ public without sharing class GuidedSellingControllerExtension {
                 AND Primary_Contact__c = true
                 LIMIT 1
             ];
+            businessOwner.Phone__c = normalizePhoneNumber(businessOwner.Phone__c);
         } else {
             businessOwner = new Business_Owner__c();
         }
@@ -1473,6 +1485,9 @@ public without sharing class GuidedSellingControllerExtension {
         Business__c bus = new Business__c(Id = businessId);
         Account acc = new Account(Id = accId);
         for(GuidedSellingQuestionWrapper question : questionList){
+            if(question.Value != null && question.PicklistMap?.get(question.Value) != null){
+                question.Value = question.PicklistMap?.get(question.Value); //convert label to picklist value
+            }
             Object valueToSave;
             if(question.Value != null && question.AccountFieldMapping != null){
                 String fieldType = accountFieldMap.get(question.AccountFieldMapping).getDescribe().getType().name();

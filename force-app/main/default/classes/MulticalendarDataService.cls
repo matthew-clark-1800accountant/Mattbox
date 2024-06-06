@@ -261,7 +261,10 @@ public without sharing class MulticalendarDataService {
         try {
             Datetime startTime = (datetime)json.deserialize('"'+dateString+'"', datetime.class);
             Datetime endOfDay = startTime.addDays(1);
-
+            List<String> eventTypesToInclude = new List<String>();
+            if(Multicalendar_Show_All_Events__c.getOrgDefaults()?.Enabled__c == true){
+                eventTypesToInclude = new List<String>{'Tax Savings Analysis', 'BNA', 'Formation Consultation'};
+            }
             List<Event> eventList = new List<Event>();
             if(repId == '0'){
                 List<User> salesManagers = [SELECT Id FROM User WHERE Sales_Management_Role__c = 'Manager' AND Id != :UserInfo.getUserId()];
@@ -283,7 +286,7 @@ public without sharing class MulticalendarDataService {
                 //AND StartDateTime = today];
                 AND StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
-                AND ShowAs != 'Free'
+                AND (ShowAs != 'Free' OR Type_of_Appointment__c IN :eventTypesToInclude)
                 AND Type_of_Appointment__c != 'Calendar Block'];
             } else {
                 eventList = 
@@ -303,7 +306,7 @@ public without sharing class MulticalendarDataService {
                 //AND StartDateTime = today];
                 AND StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
-                AND ShowAs != 'Free'];
+                AND (ShowAs != 'Free' OR Type_of_Appointment__c IN :eventTypesToInclude)];
             }
             //System.debug('eventList: '+eventList);
             List<Appointment> appointments = new List<Appointment>();
