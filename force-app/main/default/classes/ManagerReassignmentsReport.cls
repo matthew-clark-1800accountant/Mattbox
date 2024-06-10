@@ -24,7 +24,7 @@ public with sharing class ManagerReassignmentsReport {
         }
 
         List<Event> eventList = [
-            SELECT Id, Event_History__r.Id, Initial_Rejected_By__r.Id, Original_Assigned_to__c
+            SELECT Id, Event_History__r.Id, Initial_Rejected_By__c, Original_Assigned_to__c
             FROM Event 
             WHERE Event_History__r.Id IN :historyIdToUpdates.keySet()
             AND Type_of_appointment__c = 'Tax Savings Analysis'
@@ -46,7 +46,7 @@ public with sharing class ManagerReassignmentsReport {
         Map<String, Integer> userNameToMovedToCount = new Map<String, Integer>();
 
         for(Event ev : eventList){
-            if(ev.Original_Assigned_to__c != ev.Initial_Rejected_By__r.Id
+            if(ev.Original_Assigned_to__c != ev.Initial_Rejected_By__c
             && userIdToUser.get(ev.Original_Assigned_to__c).Profile.Name != 'Sales Manager'){
                 for(Event_Field_Update__c up : historyIdToUpdates.get(ev.Event_History__r.Id)){
                     if(up.Updated_By__r.Profile.Name == 'Sales Manager'){

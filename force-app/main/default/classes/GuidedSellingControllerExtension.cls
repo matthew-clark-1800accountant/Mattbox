@@ -1865,7 +1865,7 @@ public without sharing class GuidedSellingControllerExtension {
     //billingTime: used to determine branding (?) as well as opp/quote data
     //delProds: used to filter out input products
     @RemoteAction
-    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String bookStartDate, String useStatic, String bookEndDate, Double quoteTotal) {
+    public static String doSubmit(String environment, String listProdSelected, String oppId, String accId, String billingTime, String bookStartDate, String bookEndDate, Double quoteTotal) {
         //quoteButtonText = 'Next Section';
         // Initialize class variables
         System.debug('doSubmit');
@@ -2173,10 +2173,6 @@ public without sharing class GuidedSellingControllerExtension {
             schedulerURL = '';
             schedulerVIPURL = '';
         }
-        System.debug('useStatic: '+useStatic);
-        if(useStatic == 'true'){
-            packageName = 'Core Accounting Package';
-        }
 
         Boolean isCSA = (((leadSource == '1-800Accountant' || leadSource =='Bark' || leadSource == 'Inc. Authority' || leadSource == 'ZenBusiness') && vipAmount >= 3500) && advisory) || ((leadSource != '1-800Accountant' || leadSource != 'Bark' || leadSource != 'Inc. Authority' || leadSource != 'ZenBusiness') && vipAmount >= 7500 && advisory);
         Boolean isVIP = (!isCSA && vipAmount >= 5000);
@@ -2365,7 +2361,7 @@ public without sharing class GuidedSellingControllerExtension {
             coQuoteAnnualId = theCOQuote.Id;
         } 
 
-        createLineItems(selectedProds, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate);
+        createLineItems(selectedProds, billingTime, oppId, quoteID, accId, coQuoteMonthId, coQuoteOneTimeId, coQuoteAnnualId, bookStartDate, bookEndDate, business.Monthly_Bookkeeping_Transactions__c);
         
         sleep(3000);
         
@@ -2408,13 +2404,14 @@ public without sharing class GuidedSellingControllerExtension {
     }
 
     //Decimal productPassAdjustment, List<SelectedProduct> prodSelectedList, String calcIdPass, String bundlePass, String productDescription, String opportunityIdPass, String pricebookEntryIdPass, String productIdPass, Integer quantityPass, String timePass, String timeDefPass, String billingTimePass, String quoteIdPass, String coQuoteIdPass, String coQuoteIdMonthPass, String coQuoteIdOneTimePass, String sowDescPass, String sowDescPassHTML, String accountIdPass, Decimal sortOrderPass, Boolean doFeePass, Decimal feeAmountPass, String feeDesc, Boolean oneTimePass, Boolean noSplitPass)
-    public static void createLineItems(List<GuidedSellingProduct> prodSelectedList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId, String bookStartDate) {
+    public static void createLineItems(List<GuidedSellingProduct> prodSelectedList, String billingFinance, String oppId, String qId, String accId, String coMonthQuoteId, String coOneTimeQuoteId, String coAnnualQuoteId, String bookStartDate, String bookEndDate, String monthlyTransactions) {
         System.debug('createLineItems');
         System.debug(oppId);
         System.debug(qId);
         System.debug(coMonthQuoteId);
         System.debug(coOneTimeQuoteId);
         System.debug(coAnnualQuoteId);
+        Set<Id> bookkeepingIds = new Map<Id, Product2>([SELECT Id FROM Product2 WHERE Name LIKE '%Dedicated Bookkeeping%']).keySet();
         Set<Id> backBookkeepingIds = new Map<Id, Product2>([SELECT Id FROM Product2 WHERE Name LIKE '%Back Bookkeeping%']).keySet();
 
         Datetime holdDate;
@@ -2534,9 +2531,17 @@ public without sharing class GuidedSellingControllerExtension {
                 String descrip = p.Product.Description;
                 String HTMLDesc = p.Product.HTML_Description__c;
                 System.debug(COQuoteId);
+                if(backBookkeepingIds.contains(prodId) || bookkeepingIds.contains(prodId)){
+                    descrip += ' For ' +monthlyTransactions+ ' transactions per month.';
+                    HTMLDesc += ' For ' +monthlyTransactions+ ' transactions per month.';
+                }
                 if(backBookkeepingIds.contains(prodId)){
                     descrip += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
                     HTMLDesc += ' Back Bookkeeping services will cover the period beginning ' + bookStartDate;
+                    if(bookEndDate != null && bookEndDate != ''){
+                        descrip += ' and ending ' + bookEndDate;
+                        HTMLDesc += ' and ending ' + bookEndDate;
+                    }
                 }
                 ChargeOver_Quote_Line_Item__c coli = new ChargeOver_Quote_Line_Item__c(
                     ChargeOver_Quote__c = Id.valueOf(COQuoteId),

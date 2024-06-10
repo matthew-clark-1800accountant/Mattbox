@@ -2429,7 +2429,9 @@
             }
             document.getElementsByClassName('dynamicIntroText')[0].innerHTML = introText;
 
-            
+            for(var i of document.querySelectorAll('[type=date]')){i.addEventListener("keydown", function (e) {
+                e.preventDefault(); //disable typing into date inputs
+            })}
 
         }
 
@@ -4882,7 +4884,7 @@
                 transactionCount = answer.toString();
             } else if(question.QuestionText == 'What transaction date should your bookkeeper start on?'){
                 bookkeepingStartDate = answer.toString();
-                document.querySelector("[data-id='bookkeepingEnd']").min = answer.toString();
+                document.querySelector("[data-id='Bookkeeping_End_Datequestion']").min = answer.toString();
             } else if(question.QuestionText == 'What transaction date should your bookkeeper end on?'){
                 // if(parseDate(answer.toString()) > new Date()){
                 //     bookkeepingEndDate = new Date();
@@ -8052,7 +8054,7 @@
             if(flagDoSubmit == false) {
                 document.getElementById('waitingScreen').style.display = "flex";
                 console.log('doSubmit');
-                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.doSubmit', environment, JSON.stringify(tempSelectedProducts), oppId, accId, payTerms, bookkeepingStartDate, bookkeepingEndDate, useStaticPackage, getTotalAmountDue(), function(r,e) {
+                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.doSubmit', environment, JSON.stringify(tempSelectedProducts), oppId, accId, payTerms, bookkeepingStartDate, bookkeepingEndDate, getTotalAmountDue(), function(r,e) {
                     if(e.status) {
                         var data = e.result;
                         const dataList = data.split(",");
