@@ -41,6 +41,9 @@ public without sharing class EventTriggerHandler{
 
     public static void afterInsert(List<Event> listNewRecords){
         System.debug('EventTriggerHandler.afterInsert()');
+        
+        List<Event> eventsToSync = new List<Event>();
+        
         Event[] toProcess = new Event[0];
         if(!EventTriggerHandler.createSMSRunOnce){
             for(Event evt : listNewRecords){
@@ -53,6 +56,26 @@ public without sharing class EventTriggerHandler{
 
             createSMSScheduleRecords(toProcess);
         }
+        
+        for (Event newEvent : listNewRecords){
+            
+            if (newEvent.ShowAs != 'Free') {
+            
+                if(newEvent.StartDateTime > Datetime.now().addDays(-1) || newEvent.EndDateTime > Datetime.now().addDays(-1)){
+                    
+                    eventsToSync.add(newEvent);
+                
+                }
+                
+            }
+            
+        }
+        
+        if(!eventsToSync.isEmpty()){
+            System.debug('eventsToSync: '+eventsToSync);
+            syncToSchedulerApi(eventsToSync, false);
+        }
+        
     }
 
     /**
@@ -89,6 +112,7 @@ public without sharing class EventTriggerHandler{
         System.debug('EventTriggerHandler.afterDelete()');
         deleteSMSScheduleRecords(mapOldRecords);
         //List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+        List<Event> blocksToSync = new List<Event>();
         List<Event> eventsToSync = new List<Event>();
         for(Event oldEvent : mapOldRecords.values()){
             //if(oldEvent.CreatedDate < Datetime.now().addDays(-30) && oldEvent.Type_of_Appointment__c == 'Calendar Block'){
@@ -99,13 +123,20 @@ public without sharing class EventTriggerHandler{
                 // wrapper.eventData = new EventWrapper(oldEvent);
                 // eventWrappers.add(wrapper);
                 //syncToApi(JSON.serialize(wrapper));
+                blocksToSync.add(oldEvent);
+            }
+            if (oldEvent.ShowAs != 'Free') {
                 eventsToSync.add(oldEvent);
             }
             
         }
+        if(!blocksToSync.isEmpty()){
+            System.debug('blocksToSync: '+blocksToSync);
+            syncToApi(blocksToSync, false);
+        }
         if(!eventsToSync.isEmpty()){
             System.debug('eventsToSync: '+eventsToSync);
-            syncToApi(eventsToSync, false);
+            syncToSchedulerApi(eventsToSync, false);
         }
     }
 
@@ -125,7 +156,7 @@ public without sharing class EventTriggerHandler{
     *  Only if Event subject contains Discovery call or Advisory #1 or Advisory #2
     **/
     public static void afterUpdate(List<Event> listNewRecords, Map<Id,Event> mapOldRecords) {
-	System.debug('EventTriggerHandler.afterUpdate()');
+    System.debug('EventTriggerHandler.afterUpdate()');
         Event[] eventRecords = new Event[0];
         if(!updateInvoiceRunOnce)
         {
@@ -149,6 +180,7 @@ public without sharing class EventTriggerHandler{
         Map<Id, Id> accountIdToEventId = new Map<Id, Id>();
         Map<Id, Id> eventIdToOwnerId = new Map<Id, Id>();
         Map<Id, Event> cancelledEvents = new Map<Id, Event>();
+        List<Event> eventsToSyncToCalls = new List<Event>();
 
         
         Map<Event_Field_Update__c, Event> fieldUpdateToEventMap = new Map<Event_Field_Update__c, Event>();
@@ -156,6 +188,7 @@ public without sharing class EventTriggerHandler{
         Map<Id, String> updatedByMap = new Map<Id, String>();
         List<Event_Tracking_Fields__mdt> fieldsToTrack = [SELECT Id, Field_Name__c, IsDate__c, MasterLabel FROM Event_Tracking_Fields__mdt WHERE IsActive__c = true];
         //List<ApiCalloutWrapper> eventWrappers = new List<ApiCalloutWrapper>();
+        List<Event> blocksToSync = new List<Event>();
         List<Event> eventsToSync = new List<Event>();
         for (Event newEvent : listNewRecords){ eventIds.add(newEvent.Id); }
         for (Event ev : [SELECT Id, LastModifiedBy.Name FROM Event WHERE Id IN :eventIds]){
@@ -175,6 +208,10 @@ public without sharing class EventTriggerHandler{
                 eventIdToEventMap.put(newEvent.Id, newEvent);
                 eventsToInsert.add(newEvent);
             }
+
+            if (newEvent.Appointment_Disposition__c != oldEvent.Appointment_Disposition__c) {
+               eventsToSyncToCalls.add(newEvent);
+            }
             
             if(newEvent.CreatedDate < Datetime.now().addDays(-30) && newEvent.Type_of_Appointment__c == 'Calendar Block'){
             //if(newEvent.Type_of_Appointment__c == 'Calendar Block'){
@@ -184,7 +221,17 @@ public without sharing class EventTriggerHandler{
                 // wrapper.eventData = new EventWrapper(newEvent);
                 // //syncToApi(JSON.serialize(wrapper));
                 // eventWrappers.add(wrapper);
-                eventsToSync.add(newEvent);
+                blocksToSync.add(newEvent);
+            }
+            
+            if (newEvent.ShowAs != 'Free' || oldEvent.ShowAs != 'Free') {
+            
+                if(newEvent.StartDateTime > Datetime.now().addDays(-1) || newEvent.EndDateTime > Datetime.now().addDays(-1) || oldEvent.StartDateTime > Datetime.now().addDays(-1) || oldEvent.EndDateTime > Datetime.now().addDays(-1)){
+                    
+                    eventsToSync.add(newEvent);
+                
+                }
+                
             }
             
             for(Event_Tracking_Fields__mdt field : fieldsToTrack){
@@ -264,8 +311,16 @@ public without sharing class EventTriggerHandler{
             }
         }
 
+        if(!blocksToSync.isEmpty()){
+            syncToApi(blocksToSync, true);  
+        }
+        
         if(!eventsToSync.isEmpty()){
-            syncToApi(eventsToSync, true);  
+            syncToSchedulerApi(eventsToSync, true);  
+        }
+
+        if(!eventsToSyncToCalls.isEmpty() && !Test.isRunningTest()){
+            
         }
 
         //Insert any Event History and Event Field Update records that are needed
@@ -315,6 +370,29 @@ public without sharing class EventTriggerHandler{
                 this.ShowAs = ev.ShowAs;
                 this.Type_of_Appointment = ev.Type_of_Appointment__c;
         }
+    }
+    
+    public static void syncToSchedulerApi(List<Event> eventsToSync, Boolean isUpdate){
+    
+        List<Calendar_Event__e> events = new List<Calendar_Event__e>();
+        
+        for(Event e : eventsToSync){
+            events.add(new Calendar_Event__e(
+                Event_Record_Id__c=e.Id,
+                IsUpdate__c=isUpdate,
+                OwnerId__c=e.OwnerId,
+                StartDateTime__c=e.StartDateTime,
+                EndDateTime__c=e.EndDateTime,
+                ShowAs__c=e.ShowAs,
+                Subject__c=e.Subject,
+                Type_of_appointment__c=e.Type_of_Appointment__c
+                ));
+        }
+        
+        System.debug('events: '+events);
+        
+        EventBus.publish(events);
+        
     }
 
     public static void syncToApi(List<Event> eventsToSync, Boolean isUpdate){
@@ -547,7 +625,7 @@ public without sharing class EventTriggerHandler{
     *  Only if Event subject contains Discovery call or Advisory #1 or Advisory #2
     **/
     public static void createSMSScheduleRecords(List<Event> listEventRecords) {
-	    System.debug('EventTriggerHandler.createSMSScheduleRecords()');
+        System.debug('EventTriggerHandler.createSMSScheduleRecords()');
         EventTriggerHandler.createSMSRunOnce = true;
         System.debug(LoggingLevel.FINE, 'createSMSScheduleRecords METHOD');
         Set<Id> eventIds = new Map<Id, Event>(listEventRecords).keySet();
@@ -558,7 +636,7 @@ public without sharing class EventTriggerHandler{
 
     @future
     public static void createSMSHelper(Set<Id> eventIds) {
-	System.debug('EventTriggerHandler.createSMSHelper()');
+    System.debug('EventTriggerHandler.createSMSHelper()');
         List<Event> listEventRecords = [SELECT Id, WhatId, WhoId FROM Event WHERE Id IN :eventIds];
         EventTriggerHandler.createSMSRunOnce = true;
         System.debug(LoggingLevel.FINE, 'createSMSScheduleRecords METHOD');

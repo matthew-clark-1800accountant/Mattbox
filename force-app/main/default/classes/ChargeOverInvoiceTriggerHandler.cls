@@ -80,38 +80,31 @@
              System.debug(accountIdEventMap.get(actId));
          }
          Event[] eventsToUpdate = new Event[0];
-         for (Account[] actList : [
-                 SELECT Id, (SELECT CreatedDate, Total__c
-                 FROM ChargeOver_Invoices__r WHERE Total__c != NULL)
-                 FROM Account WHERE Id IN :accountIds ORDER BY CreatedDate DESC
-         ])
-         {
-             for(Account act : actList){
-                 System.debug('act :: ' + act);
-                 if(accountIdEventMap.containsKey(act.Id) && !act.ChargeOver_Invoices__r.isEmpty() && act.ChargeOver_Invoices__r.size() > 0)
-                 {
-                     Decimal chargeOverInvoiceTotal = 0;
-                     for(Event evt : accountIdEventMap.get(act.Id))
-                     {
-                         Boolean eventChanged = false;
-                         for(ChargeOver_Invoice__c coi : act.ChargeOver_Invoices__r)
-                         {
-                             if(evt.ActivityDate <= coi.CreatedDate && evt.ActivityDate.addDays(365) > coi.CreatedDate)
-                             {
-                                 System.debug(LoggingLevel.DEBUG, 'updating value... ' + coi.Total__c);
-                                 eventChanged = true;
-                                 chargeOverInvoiceTotal = chargeOverInvoiceTotal + coi.Total__c;
-                             }
-                         }
-                         if(eventChanged)
-                         {
-                             System.debug(LoggingLevel.FINER, 'eventChanged :: ' + eventChanged);
-                             evt.Invoice_Payment_Amount__c = chargeOverInvoiceTotal;
-                             eventsToUpdate.add(evt);
-                         }
-                     }
-                 }
-             }
+         List<ChargeOver_Invoice__c> invoices = [SELECT CreatedDate, Total__c, Account__c FROM ChargeOver_Invoice__c WHERE Total__c != NULL AND Account__c IN :accountIds];
+         for (Id accId : accountIdEventMap.keySet()){
+            Decimal chargeOverInvoiceTotal = 0;
+                
+            for(Event evt : accountIdEventMap.get(accId))
+            {
+                Boolean eventChanged = false;
+                for(ChargeOver_Invoice__c coi : invoices)
+                {
+                    if(evt.ActivityDate <= coi.CreatedDate && evt.ActivityDate.addDays(365) > coi.CreatedDate
+                    && coi.Account__c == accId)
+                    {
+                        System.debug(LoggingLevel.DEBUG, 'updating value... ' + coi.Total__c);
+                        eventChanged = true;
+                        chargeOverInvoiceTotal = chargeOverInvoiceTotal + coi.Total__c;
+                    }
+                }
+                if(eventChanged)
+                {
+                    System.debug(LoggingLevel.FINER, 'eventChanged :: ' + eventChanged);
+                    evt.Invoice_Payment_Amount__c = chargeOverInvoiceTotal;
+                    eventsToUpdate.add(evt);
+                }
+            }
+             
              
          }
  
