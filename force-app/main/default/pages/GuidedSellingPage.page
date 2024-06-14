@@ -1262,10 +1262,10 @@
             padding: 11px 9px;
             }
         
-            /* input[type=checkbox]:checked + label, output[type=checkbox]:checked + label {
+            input[type=checkbox]:checked.radiobtn + label, output[type=checkbox]:checked.radiobtn + label {
             color: rgba(18, 23, 36, 0.91);
             background: rgba(23, 118, 182, 0.16);
-            } */
+            }
         
             label + input[type=checkbox] + label, label + output[type=checkbox] + label {
             border-left: 1px solid rgba(18, 23, 36, 0.2);
@@ -2429,9 +2429,13 @@
             }
             document.getElementsByClassName('dynamicIntroText')[0].innerHTML = introText;
 
-            for(var i of document.querySelectorAll('[type=date]')){i.addEventListener("keydown", function (e) {
-                e.preventDefault(); //disable typing into date inputs
-            })}
+            setTimeout(() => {
+                console.log('disabling date input');
+                for(var i of document.querySelectorAll('[type=date]')){i.addEventListener("keydown", function (e) {
+                    e.preventDefault(); //disable typing into date inputs
+                })}
+            }, 200);
+            
 
         }
 

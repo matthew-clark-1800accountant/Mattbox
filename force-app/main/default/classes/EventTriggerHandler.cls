@@ -180,7 +180,7 @@ public without sharing class EventTriggerHandler{
         Map<Id, Id> accountIdToEventId = new Map<Id, Id>();
         Map<Id, Id> eventIdToOwnerId = new Map<Id, Id>();
         Map<Id, Event> cancelledEvents = new Map<Id, Event>();
-        List<Event> eventsToSyncToCalls = new List<Event>();
+        List<Id> eventsToSyncToCalls = new List<Id>();
 
         
         Map<Event_Field_Update__c, Event> fieldUpdateToEventMap = new Map<Event_Field_Update__c, Event>();
@@ -210,7 +210,7 @@ public without sharing class EventTriggerHandler{
             }
 
             if (newEvent.Appointment_Disposition__c != oldEvent.Appointment_Disposition__c) {
-               eventsToSyncToCalls.add(newEvent);
+               eventsToSyncToCalls.add(newEvent.Id);
             }
             
             if(newEvent.CreatedDate < Datetime.now().addDays(-30) && newEvent.Type_of_Appointment__c == 'Calendar Block'){
@@ -320,7 +320,7 @@ public without sharing class EventTriggerHandler{
         }
 
         if(!eventsToSyncToCalls.isEmpty() && !Test.isRunningTest()){
-            
+            SyncEventsToCalls.syncEvents(eventsToSyncToCalls);
         }
 
         //Insert any Event History and Event Field Update records that are needed

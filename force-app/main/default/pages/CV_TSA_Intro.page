@@ -3524,7 +3524,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4" id="logoBarSmallBotton">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-2 slds-medium-size--4-of-4" id="logoBarSmallBotton" style="display: none;">
                         <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
                             <div id="myProgress">
                                 <div id="myBar2">&nbsp;0%&nbsp;&nbsp;</div>
@@ -5498,9 +5498,8 @@
                             hideQuestion.set(questionNumber, true);
                             document.getElementById('displayReview1-'+ questionNumber).style.display = "none";
                             document.getElementById('review1-' + questionNumber).innerText = "";
-                            if(document.getElementById('actQu1-'+ questionNumber).innerText == e.content.questionText){
+                            if(document.getElementById('answer1-'+ questionNumber).innerText == "{{Answer}}"){
                                 document.getElementById('actQu1-'+ questionNumber).style.display = "none";
-                                document.getElementById('actQu1-'+ questionNumber).innerText = "";
                             } else {
                                 document.getElementById('ansQu1-'+ questionNumber).style.display = "none"
                             }
@@ -5564,7 +5563,7 @@
                 document.getElementById('entityClassificationElec').style.display = "flex";
             break;
             
-            case 'Self Employment Tax (FICA) LLC':
+            case 'Self-Employment Tax (FICA) LLC':
                 //progress(27);
 
                 clearInterval(stopFunction);
@@ -5572,7 +5571,7 @@
                 document.getElementById('selfEmploymentTax').style.display = "flex";
             break;
             
-            case 'Self Employment Tax (FICA) S Corp':
+            case 'Self-Employment Tax (FICA) S Corp':
                 //progress(27);
                 clearInterval(stopFunction);
                 hideAll();
