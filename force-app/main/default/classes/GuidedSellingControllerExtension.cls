@@ -854,7 +854,7 @@ public without sharing class GuidedSellingControllerExtension {
         //System.debug('bookkeepingStartString: '+bookkeepingStartString);
         
         Map<Id, Product2> products = new Map<Id, Product2>([
-            SELECT Id, Name, Guided_Selling_Identifier__c, Calculator_Location__c, AnnualMonthlyOption__c, Bundles__c,
+            SELECT Id, Name, Guided_Selling_Identifier__c, Calculator_Location__c, AnnualMonthlyOption__c, Bundles__c, Metered_Product__c,
             Billing_Frequency__c, Disable_QTY_on_Calc__c, sort_Order__c, No_Split_Allowed__c, HTML_Description__c, Setup_Fee__c
             FROM Product2 
             WHERE Guided_Selling_Identifier__c != null 

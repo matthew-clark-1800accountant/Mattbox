@@ -377,7 +377,7 @@ private class GuidedSellingControllerExtensionTest {
         Account ac = [SELECT Id FROM Account LIMIT 1];
         Event e = [SELECT Id FROM Event LIMIT 1];
 
-        String res = GuidedSellingControllerExtension.doSubmit('Standard', JSON.serialize(gsprods), (String)opp.Id, (String)ac.Id, 'yrl', '2023-05-03', '2023-07-03', 0);
+        String res = GuidedSellingControllerExtension.doSubmit('Standard', JSON.serialize(gsprods), (String)opp.Id, (String)ac.Id, 'yrl', '2023-05-03', '2023-07-03', 0, 'Core Accounting Package');
     }
 
     /* 

@@ -1791,6 +1791,10 @@ public class PricingCalcController {
                 }
             
             }
+            System.debug('calculatorIdToName: ');
+            for(String calcId : calculatorIdToName.keySet()){
+                System.debug(calcId + ': ' + calculatorIdToName.get(calcId));
+            }
             
             // new offer data
             bundleItems = new List<SelectOption>();
@@ -3899,6 +3903,7 @@ public class PricingCalcController {
         
         String bundleName = useBundlePricing() ? getEligibleBundle() : 'Core Accounting Package';
         List<String> freeItems = bundleNameToFreeItems.get(bundleName);
+        List<String> defaultItems = bundleToDefaultProductNames.get(bundleName);
         // initialize all price placeholder variables
         businessAdjustment = 0.00;
         personalAdjustment = 0.00;
@@ -5717,10 +5722,10 @@ public class PricingCalcController {
             }
             
             // call method to do the object creation
-            makeLineItems(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Tax Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
+            makeLineItems(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
             
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + getVIPAmount(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Tax Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
+            vipAmount = vipAmount + getVIPAmount(businessAdjustment, offerProductList, 'bcheck', bundle, 'Business Return', opportunityID, bizTaxPrepPBEID, bizTaxPrepID, businessQuantity, businessTime, businessTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, bizTaxPrepDesc, bizTaxPrepHTMLDesc, accountID, businessSort, false, 0.00, '', bizTaxPrepOT, bizTaxPrepNoSplit, '', numberOfEmployeesInput);
             
         }
         
@@ -5787,9 +5792,9 @@ public class PricingCalcController {
             }
             
             // call method to do the object creation
-            makeLineItems(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Tax Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput); 
+            makeLineItems(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput); 
             // update vipAmount for scheduler url reasons
-            vipAmount = vipAmount + getVIPAmount(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Tax Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput); 
+            vipAmount = vipAmount + getVIPAmount(personalAdjustment, offerProductList, 'pcheck', bundle, 'Personal Return', opportunityID, personalTaxPrepPBEID, personalTaxPrepID, personalQuantity, personalTime, personalTimeDef, billingTime, quoteID, cOQuoteID, cOQuoteIDMonth, cOQuoteIDOneTime, personalTaxPrepDesc, personalTaxPrepHTMLDesc, accountID, personalSort, false, 0.00, '', personalTaxPrepOT, personalTaxPrepNoSplit, '', numberOfEmployeesInput); 
         }
         
         if (doPayroll) {
@@ -5917,6 +5922,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                if(useBundlePricing() && defaultItems.contains('Payroll')){
+                    coqLIPay.Bundle_Name__c = bundleName;
+                }
                 
                 if (numberOfEmployeesInput.contains('+') == false) {
                     
@@ -5972,6 +5980,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains('Payroll Setup Fee')){
+                        coqLIPayFee.Bundle_Name__c = bundleName;
+                    }
                     
                     insert coqLIPayFee;
                     
@@ -6055,6 +6066,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains('Payroll')){
+                        coqLIPay.Bundle_Name__c = bundleName;
+                    }
                     
                     if (numberOfEmployeesInput.contains('+') == false) {
                     
@@ -6112,6 +6126,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('Payroll Setup Fee')){
+                            coqLIPayFee.Bundle_Name__c = bundleName;
+                        }
                         
                         insert coqLIPayFee;
                         
@@ -6231,6 +6248,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('Payroll')){
+                            coqLIPay.Bundle_Name__c = bundleName;
+                        }
                         
                         if (numberOfEmployeesInput.contains('+') == false) {
                     
@@ -6288,6 +6308,9 @@ public class PricingCalcController {
                                 Sold_in_Offer__c = itemSoldInOffer,
                                 Date_Time_Invoice_Being_Held_Until__c = holdDateString
                             );
+                            if(useBundlePricing() && defaultItems.contains('Payroll Setup Fee')){
+                                coqLIPayFee.Bundle_Name__c = bundleName;
+                            }
                             
                             insert coqLIPayFee;
                             
@@ -6320,6 +6343,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('Payroll')){
+                            coqLIPay.Bundle_Name__c = bundleName;
+                        }
                         
                         if (numberOfEmployeesInput.contains('+') == false) {
                     
@@ -6377,6 +6403,9 @@ public class PricingCalcController {
                                 Sold_in_Offer__c = itemSoldInOffer,
                                 Date_Time_Invoice_Being_Held_Until__c = holdDateString
                             );
+                            if(useBundlePricing() && defaultItems.contains('Payroll Setup Fee')){
+                                coqLIPayFee.Bundle_Name__c = bundleName;
+                            }
                             
                             insert coqLIPayFee;
                             
@@ -6656,6 +6685,9 @@ public class PricingCalcController {
                     Sold_in_Offer__c = itemSoldInOffer,
                     Date_Time_Invoice_Being_Held_Until__c = holdDateString
                 );
+                if(useBundlePricing() && defaultItems.contains('LLC State Filing')){
+                    coqLISF.Bundle_Name__c = bundleName;
+                }
             
             } else {
                 
@@ -6734,6 +6766,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains('LLC State Filing')){
+                        coqLISF.Bundle_Name__c = bundleName;
+                    }
                     
                 } else {
                     
@@ -6849,6 +6884,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('LLC State Filing')){
+                            coqLISF.Bundle_Name__c = bundleName;
+                        }
                         
                     } else {
                     
@@ -6877,6 +6915,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('LLC State Filing')){
+                            coqLISF.Bundle_Name__c = bundleName;
+                        }
                     
                     }
                     
@@ -7012,6 +7053,9 @@ public class PricingCalcController {
                     Sold_in_Offer__c = itemSoldInOffer,
                     Date_Time_Invoice_Being_Held_Until__c = holdDateString
                 );
+                if(useBundlePricing() && defaultItems.contains('Corp State Filing')){
+                    coqLISFC.Bundle_Name__c = bundleName;
+                }
             
             } else {
                 
@@ -7090,6 +7134,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains('Corp State Filing')){
+                        coqLISFC.Bundle_Name__c = bundleName;
+                    }
                     
                 } else {
                     
@@ -7205,6 +7252,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('Corp State Filing')){
+                            coqLISFC.Bundle_Name__c = bundleName;
+                        }
                         
                     } else {
                     
@@ -7233,6 +7283,9 @@ public class PricingCalcController {
                             Sold_in_Offer__c = itemSoldInOffer,
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
+                        if(useBundlePricing() && defaultItems.contains('Corp State Filing')){
+                            coqLISFC.Bundle_Name__c = bundleName;
+                        }
                     
                     }
                     
@@ -7922,6 +7975,9 @@ public class PricingCalcController {
                             Date_Time_Invoice_Being_Held_Until__c = holdDateString
                         );
                     }
+                    if(useBundlePricing() && defaultItems.contains(acItem.name)){
+                        coqLIA.Bundle_Name__c = bundleName;
+                    }
     
                     
                 
@@ -8025,6 +8081,9 @@ public class PricingCalcController {
                                 Date_Time_Invoice_Being_Held_Until__c = holdDateString
                             );
                         } 
+                        if(useBundlePricing() && defaultItems.contains(acItem.name)){
+                            coqLIA.Bundle_Name__c = bundleName;
+                        }
                         insert coqLIA;
                     
                     } else {
@@ -8212,6 +8271,9 @@ public class PricingCalcController {
                             
                             
                             
+                        }
+                        if(useBundlePricing() && defaultItems.contains(acItem.name)){
+                            coqLIA.Bundle_Name__c = bundleName;
                         }
                     
                         insert coqLIA;
@@ -8565,8 +8627,14 @@ public class PricingCalcController {
         String OLIPayInstall = '';
         String bundleName = useBundlePricing() ? getEligibleBundle() : 'Core Accounting Package';
         List<String> freeItems = bundleNameToFreeItems.get(bundleName);
-        String productName = calculatorIdToName.get(calcIdPass);
-        
+        List<String> defaultItems = bundleToDefaultProductNames.get(bundleName);
+
+        System.debug(calcIdPass);
+        String productName = calculatorIdToName.containsKey(calcIdPass) ? calculatorIdToName.get(calcIdPass) : calculatorIdToName.get(productDescription);
+        System.debug(productName);
+        System.debug(defaultItems);
+        System.debug(useBundlePricing());
+
         
         if(useBundlePricing() && !setupFeeItems.contains(productName)){
             productPassAdjustment *= (1-bundleDiscount);
@@ -8682,6 +8750,9 @@ public class PricingCalcController {
                 Sold_in_Offer__c = itemSoldInOffer,
                 Date_Time_Invoice_Being_Held_Until__c = holdDateString
             );
+            if(useBundlePricing() && defaultItems.contains(productName)){
+                coqLIPass.Bundle_Name__c = bundleName;
+            }
             
             if (numberOfTransactionsInputPass != '') {
                 
@@ -8765,6 +8836,9 @@ public class PricingCalcController {
                     Sold_in_Offer__c = itemSoldInOffer,
                     Date_Time_Invoice_Being_Held_Until__c = holdDateString
                 );
+                if(useBundlePricing() && defaultItems.contains(productName)){
+                    coqLIPass.Bundle_Name__c = bundleName;
+                }
                 
                 if (numberOfTransactionsInputPass != '') {
                     
@@ -8881,6 +8955,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains(productName)){
+                        coqLIPass.Bundle_Name__c = bundleName;
+                    }
                     
                     if (numberOfTransactionsInputPass != '') {
                     
@@ -8909,6 +8986,9 @@ public class PricingCalcController {
                         Sold_in_Offer__c = itemSoldInOffer,
                         Date_Time_Invoice_Being_Held_Until__c = holdDateString
                     );
+                    if(useBundlePricing() && defaultItems.contains(productName)){
+                        coqLIPass.Bundle_Name__c = bundleName;
+                    }
                     
                     if (numberOfTransactionsInputPass != '') {
                     

@@ -15,10 +15,10 @@
         <div class="col" style="width: 160px;">
             <apex:outputPanel rendered="{!IF(p.Product.AnnualMonthlyOption__c == true, true, false)}">
                 <div class="radio-group">
-                    <input type="checkbox" class="radiobtn {!p.Product.Id}yearly" id="{!p.Product.Id}yearly" name="selector" value="{!IF(OR('Annual' == p.currentBillingFrequency,'One-Time' == p.currentBillingFrequency), true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}', '{!p.Product.Name}', '{!p.currentBillingFrequency}', '{!p.Product.AnnualMonthlyOption__c}');"/>
+                    <input type="checkbox" class="radiobtn {!p.Product.Id}yearly" id="{!p.Product.Id}yearly" name="selector" value="{!IF(OR('Annual' == p.currentBillingFrequency,'One-Time' == p.currentBillingFrequency), true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}');"/>
                     <label for="{!p.Product.Id}yearly" class="radioLabel"  >Yearly</label>
                     
-                    <input type="checkbox" class="radiobtn {!p.Product.Id}monthly" id="{!p.Product.Id}monthly" name="selector" value="{!IF(p.currentBillingFrequency == 'Monthly', true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}', '{!p.Product.Name}', '{!p.currentBillingFrequency}', '{!p.Product.AnnualMonthlyOption__c}');"/>
+                    <input type="checkbox" class="radiobtn {!p.Product.Id}monthly" id="{!p.Product.Id}monthly" name="selector" value="{!IF(p.currentBillingFrequency == 'Monthly', true, false)}" onchange="calcFrecuencyChange(this, '{!p.Product.Id}');"/>
                     <label for="{!p.Product.Id}monthly" class="radioLabel">Monthly</label>
                 </div>
             </apex:outputPanel>

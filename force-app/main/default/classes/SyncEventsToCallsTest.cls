@@ -39,11 +39,56 @@ public with sharing class SyncEventsToCallsTest {
     }
 
     @IsTest 
-    static void testSync(){
+    static void testEventSync(){
+        List<Id> eventIds = new List<Id>(new Map<Id, Event>([SELECT Id FROM Event]).keySet());
+
+        Test.startTest();
+        SyncEventsToCalls.syncEventsSync(eventIds);
+        Test.stopTest();
+
+        NVMStatsSF__NVM_Call_Summary__c summary = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678901'];
+        System.assertEquals('Tax Consultation 3', summary.Event_Subject__c);
+
+        NVMStatsSF__NVM_Call_Summary__c summary2 = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678902'];
+        System.assertEquals('Tax Consultation 5', summary2.Event_Subject__c);
+    }
+
+    @IsTest
+    static void testEventSyncFuture(){
         List<Id> eventIds = new List<Id>(new Map<Id, Event>([SELECT Id FROM Event]).keySet());
 
         Test.startTest();
         SyncEventsToCalls.syncEvents(eventIds);
+        Test.stopTest();
+
+        NVMStatsSF__NVM_Call_Summary__c summary = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678901'];
+        System.assertEquals('Tax Consultation 3', summary.Event_Subject__c);
+
+        NVMStatsSF__NVM_Call_Summary__c summary2 = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678902'];
+        System.assertEquals('Tax Consultation 5', summary2.Event_Subject__c);
+    }
+
+    @IsTest 
+    static void testCallSync(){
+        List<Id> callIds = new List<Id>(new Map<Id, NVMStatsSF__NVM_Call_Summary__c>([SELECT Id FROM NVMStatsSF__NVM_Call_Summary__c]).keySet());
+
+        Test.startTest();
+        SyncEventsToCalls.syncCallsSync(callIds);
+        Test.stopTest();
+
+        NVMStatsSF__NVM_Call_Summary__c summary = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678901'];
+        System.assertEquals('Tax Consultation 3', summary.Event_Subject__c);
+
+        NVMStatsSF__NVM_Call_Summary__c summary2 = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678902'];
+        System.assertEquals('Tax Consultation 5', summary2.Event_Subject__c);
+    }
+
+    @IsTest 
+    static void testCallSyncFuture(){
+        List<Id> callIds = new List<Id>(new Map<Id, NVMStatsSF__NVM_Call_Summary__c>([SELECT Id FROM NVMStatsSF__NVM_Call_Summary__c]).keySet());
+
+        Test.startTest();
+        SyncEventsToCalls.syncCalls(callIds);
         Test.stopTest();
 
         NVMStatsSF__NVM_Call_Summary__c summary = [SELECT Event_Subject__c FROM NVMStatsSF__NVM_Call_Summary__c WHERE NVMStatsSF__CLID__c='+12345678901'];

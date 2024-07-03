@@ -1916,10 +1916,33 @@
                 } else {
                     autoCheckBundleAddons(true);
                 }
-                // autoAmount1800Acc();
-                // autoAmountAdvisory();
-                // autoAmount1099();
-                // autoAmountLoan();
+                
+                if(transactionCount != null && transactionCount != ''){
+                    var minTransactionCount = Number.parseInt(transactionCount.substring(0,transactionCount.indexOf('-')));
+                    var prodId = productNameToId.get('Dedicated Bookkeeping');
+                    if(prodId){
+                        if(minTransactionCount > 250){                    
+                            calcFrecuencyChange({checked: true, id: 'monthly'}, prodId, true);
+                            disableFrequency(true, prodId);
+                        } else {
+                            disableFrequency(false, prodId);
+                        }
+                    }                    
+                }
+
+                if(numberOfEmployeeContractors != null && numberOfEmployeeContractors != ''){
+                    var employeeNum = Number.parseInt(numberOfEmployeeContractors);
+                    var prodId = productNameToId.get('Payroll');
+                    if(prodId){
+                        if(employeeNum > 3){                    
+                            calcFrecuencyChange({checked: true, id: 'monthly'}, prodId, true);
+                            disableFrequency(true, prodId);
+                        } else {
+                            disableFrequency(false, prodId);
+                        }
+                    }
+                }
+
                 autoAmountBundleItems();
                 lastProductData = JSON.parse(JSON.stringify(finalProducts));
                 updateQuoteTotals();
@@ -2124,6 +2147,14 @@
             ['6pay', '6 Pay'],
             ['mon', 'Apply for Monthly Installments']
         ]);
+        var payTermsNumToLabel = new Map([
+            [1, 'No Financing'],
+            [2, '2 Pay'],
+            [3, '3 Pay'],
+            [4, '4 Pay'],
+            [6, '6 Pay'],
+            [12, 'Apply for Monthly Installments']
+        ]);
 
         var advisoryAddons = JSON.parse('{!advisoryAddonsJSON}');
         var quoteId = '{!quoteId}';
@@ -2145,6 +2176,7 @@
         var bookkeepingStartDate = null;
         var bookkeepingEndDate = null;
         var transactionCount = ("{!defaultNumTransactions}" == "---" ? null : "{!defaultNumTransactions}");
+        var numberOfEmployeeContractors = ("{!defaultNumEmployees}" == "---" ? null : "{!defaultNumEmployees}");
         var nonProfit = ("{!isNonProfit}" == "true");
         var billingFreqFromController;
         var bookkeepingStartFromController;
@@ -2168,6 +2200,7 @@
         var nonsplittableProductsTotal = 0;
         var monthlyProductsTotal = 0;
         var nonmonthlyProductsTotal = 0;
+        var meteredProductTotal = 0;
         var numberOfPayments = 1;
         var currentPageIndex = 0;
 
@@ -3085,6 +3118,11 @@
 
         var lastPayTerms = 'No Financing';
 
+        function getMinimumNumberOfPayments() {
+            var total = getTotalAmountDue();
+            return Math.ceil(total / 10000.0);
+        }
+
         function showModalEditPayTerms() {
             console.log('showModalEditPayTerms()');
             var total = getTotalAmountDue();
@@ -3098,31 +3136,51 @@
 
                 payList[0].removeAttribute('disabled');
 
-                if(parseInt(total) < 500) {
+                if(total < 500) {
                     document.getElementById('payTerms').setAttribute('disabled', 'disabled');
                     document.getElementById("payTerms").value = "No Financing";
                 } else {
                     document.getElementById('payTerms').removeAttribute('disabled');
-                    if(parseInt(total) >= 500 && parseInt(total) < 1000) {
+                    if(total >= 500 && total < 1000) {
                         payList[1].removeAttribute('disabled');
                         payList[2].removeAttribute('disabled');
-                    } else if(parseInt(total) >= 1000 && parseInt(total) < 1450) {
+                    } else if(total >= 1000 && total < 1450) {
                         payList[1].removeAttribute('disabled');
                         payList[2].removeAttribute('disabled');
                         payList[3].removeAttribute('disabled');
-                    } else if(parseInt(total) >= 1450 && parseInt(total) < 1790) {
+                    } else if(total >= 1450 && total < 1790) {
                         payList[1].removeAttribute('disabled');
                         payList[2].removeAttribute('disabled');
                         payList[3].removeAttribute('disabled');
                         payList[4].removeAttribute('disabled');
-                    } else if(parseInt(total) >= 1790) {
+                    } else if(total >= 1790 && total < 10000) {
                         payList[1].removeAttribute('disabled');
                         payList[2].removeAttribute('disabled');
                         payList[4].removeAttribute('disabled');
                         payList[3].removeAttribute('disabled');
                         payList[5].removeAttribute('disabled');
+                    } else {
+                        payList[5].removeAttribute('disabled');
+                        var minPayments = getMinimumNumberOfPayments();
+                        if(minPayments <= 6) { payList[4].removeAttribute('disabled'); }
+                        if(minPayments <= 4) { payList[3].removeAttribute('disabled'); }
+                        if(minPayments <= 3) { payList[2].removeAttribute('disabled'); }
+                        if(minPayments <= 2) { payList[1].removeAttribute('disabled'); }
+                        if(minPayments > 1) { payList[0].setAttribute("disabled", "disabled"); }
                     }
+                     
                 }
+            } else {
+                for (let i = 0; i < payList.length-1; i++) {
+                    payList[i].setAttribute("disabled", "disabled");
+                }
+                
+                var minPayments = getMinimumNumberOfPayments();
+                if(minPayments <= 6) { payList[4].removeAttribute('disabled'); }
+                if(minPayments <= 4) { payList[3].removeAttribute('disabled'); }
+                if(minPayments <= 3) { payList[2].removeAttribute('disabled'); }
+                if(minPayments <= 2) { payList[1].removeAttribute('disabled'); }
+                if(minPayments <= 1) { payList[0].removeAttribute('disabled'); }
             }
             
             document.getElementById("modalEditPayTerms").style.display = "block";  
@@ -3183,6 +3241,9 @@
 
         function closeAndSave() {
             console.log('closeAndSave()');
+
+            // displayTablePlan('currentPlan', {id: 'tab2-1', checked: true}, false);
+
             document.getElementById("skiptoSale").style.display = "inline";
             document.getElementById("closeOptions").style.display = "inline";
             document.getElementById("keepEditing").style.display = "none";
@@ -3206,6 +3267,8 @@
         //discard changes
         function confimCloseModalEditPackage() {
             console.log('confimCloseModalEditPackage()');
+            // displayTablePlan('currentPlan', {id: 'tab2-1', checked: true}, false);
+
             document.getElementById("skiptoSale").style.display = "inline";
             document.getElementById("closeOptions").style.display = "inline";
             document.getElementById("keepEditing").style.display = "none";
@@ -3334,7 +3397,7 @@
                 for(var oldProd of lastProductData){              
                     if(oldProd.Product.Billing_Frequency__c == 'Annual' || oldProd.Product.Billing_Frequency__c == 'Monthly'){
                         var oldFrequency = (oldProd.currentBillingFrequency == 'Annual' ? 'yearly' : 'monthly');
-                        calcFrecuencyChange({checked: true, id: oldFrequency}, oldProd.Product.Id);
+                        calcFrecuencyChange({checked: true, id: oldFrequency}, oldProd.Product.Id, true);
                     }
                 }
                 document.getElementById('payTerms').value = payTermsValueToLabel.get(lastPayTerms);
@@ -4452,7 +4515,7 @@
                 document.getElementById('waitingScreen').style.display = "flex";
                 
                 var fn = (function(r,e) {
-                if(e.status) {
+                    if(e.status) {
                         beenPastReview = true;      
                         //answerMap = new Map(Object.entries(e.result));              
                         CallApexMethod();
@@ -4460,6 +4523,7 @@
                         //processProductData();
                         calculateTaxSavings();  
                         reviewBusiDisc(false);
+                        
                         
                         //setTimeout(() => {
                             //updateBackBookkeeping();
@@ -4471,11 +4535,11 @@
                         // }
                         //currentPageIndex++;
                         
-                } else if(e.type === 'exception') {
-                    alert(e.message);
-                } else {
-                    alert(e.message);
-                }
+                    } else if(e.type === 'exception') {
+                        alert(e.message);
+                    } else {
+                        alert(e.message);
+                    }
                 });
                 console.log(bookkeepingStartDate);
                 enableEditButton(false);
@@ -4881,24 +4945,17 @@
             }       
 
             
-            if(question.QuestionText == 'How many employees do you have?') {
-                var num = parseInt(answer);
-                num = num + 1;
-            } else if (question.QuestionText == 'How many monthly bookkeeping transactions do you have?'){
+            if (question.DevName == 'Bookkeeping_Transactions'){
                 transactionCount = answer.toString();
-            } else if(question.QuestionText == 'What transaction date should your bookkeeper start on?'){
+            } else if(question.DevName == 'Bookkeeping_Start_Date'){
                 bookkeepingStartDate = answer.toString();
                 document.querySelector("[data-id='Bookkeeping_End_Datequestion']").min = answer.toString();
-            } else if(question.QuestionText == 'What transaction date should your bookkeeper end on?'){
-                // if(parseDate(answer.toString()) > new Date()){
-                //     bookkeepingEndDate = new Date();
-                // } else {
-                    
-                // }
-                bookkeepingEndDate = answer.toString();
-                
+            } else if(question.DevName == 'Bookkeeping_End_Date'){
+                bookkeepingEndDate = answer.toString();                
             } else if(question.DevName == 'Entity_Type'){
                 updateEntity({value: answer});
+            } else if(question.DevName == 'Additional_Employees'){
+                numberOfEmployeeContractors = answer.toString();
             }
 
             //filling up the map with the answers 
@@ -4937,60 +4994,26 @@
                     textElement.innerText = 'The client’s business was formed '+getDaysSinceFormation()+' days ago.';
             }
 
-            //set the text for the boi intro page
-            // if(parseDate(formationDate).getFullYear() == 2024){
-            //     for(var textElement of document.getElementsByClassName('boiIntro2024Text')){
-            //         textElement.style.display = 'block';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('boiIntro2023Text')){
-            //         textElement.style.display = 'none';
-            //     }
-            // } else {
-            //     for(var textElement of document.getElementsByClassName('boiIntro2024Text')){
-            //         textElement.style.display = 'none';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('boiIntro2023Text')){
-            //         textElement.style.display = 'block';
-            //     }
-            // }        
+          
+        }
 
-            // for(var textElement of document.getElementsByClassName('boiIntroEngageText')){
-            //         textElement.style.display = 'block';
-            // }
+        function disableFrequency(disable, prodId){
+            var product = finalProductsMap.get(prodId);
 
-            //set the text for the ece filing page
-            // if(getDaysSinceFormation() <= 75){
-            //     for(var textElement of document.getElementsByClassName('eceFilingTextDefault')){
-            //         textElement.style.display = 'block';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('eceFilingTextOverdue')){
-            //         textElement.style.display = 'none';
-            //     }
-            // } else {
-            //     for(var textElement of document.getElementsByClassName('eceFilingTextDefault')){
-            //         textElement.style.display = 'none';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('eceFilingTextOverdue')){
-            //         textElement.style.display = 'block';
-            //     }
-            // }
+            product.frequencyEnabled = !disable;
+            if(selectedProductsMap.has(prodId)) { selectedProductsMap.get(prodId).frequencyEnabled = !disable; }
 
-            //set the text for the boi summary page
-            // if(parseDate(formationDate).getFullYear() < 2023 || getDaysSinceFormation() <= 90){
-            //     for(var textElement of document.getElementsByClassName('boiFilingTextDefault')){
-            //         textElement.style.display = 'block';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('boiFilingTextOverdue')){
-            //         textElement.style.display = 'none';
-            //     }
-            // } else {
-            //     for(var textElement of document.getElementsByClassName('boiFilingTextDefault')){
-            //         textElement.style.display = 'none';
-            //     }
-            //     for(var textElement of document.getElementsByClassName('boiFilingTextOverdue')){
-            //         textElement.style.display = 'block';
-            //     }
-            // }
+            var opacity = disable ? '0.55' : '1';
+            var cursor = disable ? 'not-allowed' : '';
+
+            var monthlyOnes = document.querySelectorAll('label[for="'+prodId+'monthly"]');
+            var yearlyOnes = document.querySelectorAll('label[for="'+prodId+'yearly"]');
+            for(var r = 0; r < monthlyOnes.length; r++) {
+                monthlyOnes[r].style.opacity = opacity;
+                monthlyOnes[r].style.cursor = cursor;
+                yearlyOnes[r].style.opacity = opacity;
+                yearlyOnes[r].style.cursor = cursor;
+            }
         }
                 
         function showSlideOne(isVisible) {
@@ -7190,14 +7213,15 @@
                 console.log('advisory node not found');
                 return;
             }
-            if(!prodId){ prodId = advList[0].parentNode.parentNode.id; }
+            //if(!prodId){ prodId = advList[0].parentNode.parentNode.id; }
+            if(!prodId){ prodId =  productNameToId.get('Tax Advisory'); }
             //var id = '';
             var productPrice = 0;
             var addonTotal = 0;
             for (let l = 0; l < advisoryAddons.length; l++) {
                 if(!finalProducts.map(x => x.Product.Name).includes(advisoryAddons[l])){continue;}
-                var prodid = productNameToId.get(advisoryAddons[l]);
-                var addonPrice = finalProductsMap.get(prodid).adjustedPrice;
+                var addonId = productNameToId.get(advisoryAddons[l]);
+                var addonPrice = finalProductsMap.get(addonId).adjustedPrice;
                 addonTotal += addonPrice;
                 console.log(advisoryAddons[l]+': $'+addonPrice);
             }
@@ -7205,13 +7229,16 @@
 
             var setupFee = finalProductsMap.get(prodId)?.Product.Setup_Fee__c;
             if(useCustomPricing){
-                var perPrice = document.querySelector("[data-amount='Personal Tax Preparation']").innerHTML;
-                var busiPrice = document.querySelector("[data-amount='Business Tax Preparation']").innerHTML;
-                console.log('ptp: '+perPrice);
-                console.log('btp: '+busiPrice);
-                perPrice = perPrice.replace('$','');
-                busiPrice = busiPrice.replace('$','');
-                productPrice = (((parseInt(busiPrice) + parseInt(perPrice)) / (949 + 399)) * 1569);
+                // var perPrice = document.querySelector("[data-amount='Personal Tax Preparation']").innerHTML;
+                // var busiPrice = document.querySelector("[data-amount='Business Tax Preparation']").innerHTML;
+                // console.log('ptp: '+perPrice);
+                // console.log('btp: '+busiPrice);
+                // perPrice = perPrice.replace('$','');
+                // busiPrice = busiPrice.replace('$','');
+                var personalPrep = finalProductsMap.get(productNameToId.get('Personal Tax Preparation'));
+                var businessPrep = finalProductsMap.get(productNameToId.get('Business Tax Preparation'));
+                productPrice = (personalPrep.adjustedPrice + businessPrep.adjustedPrice) / (originalPriceMap.get(personalPrep.Id) + originalPriceMap.get(businessPrep.Id));
+                productPrice *= originalPriceMap.get(prodId);
                 console.log('advisory bundled base price: $'+productPrice);
                 //productPrice = Math.max(productPrice, (originalPriceMap.get(prodId)))*(1-getBundleDiscount());//.toFixed(2);
                 //productPrice *= (1-getBundleDiscount());
@@ -7361,14 +7388,10 @@
         }
 
         //18A access yearly click: {"0":{},"1":"01tf1000003JjrwAAC","2":"1-800Accountant Access","3":"Monthly","4":"true"}
-        function calcFrecuencyChange(frecuencyBtn, prodId) { 
+        function calcFrecuencyChange(frecuencyBtn, prodId, override) { 
             var product = finalProductsMap.get(prodId);
             var prodName = product.Product.Name;
             var thisChecked = frecuencyBtn.checked;
-            if(!thisChecked){
-                console.log('unchecked');
-                return;
-            }
             var thisId = frecuencyBtn.id;
             var isNowYearly = thisId.includes("yearly");
             var isNowMonthly = thisId.includes("monthly");
@@ -7378,6 +7401,28 @@
 
             var monthlyOnes = document.getElementsByClassName(prodId + 'monthly');
             var yearlyOnes = document.getElementsByClassName(prodId + 'yearly');
+
+            if(!thisChecked && !override){
+                console.log('unchecked');
+                for(var r = 0; r < monthlyOnes.length; r++) {
+                    monthlyOnes[r].checked = product.currentBillingFrequency == 'Monthly';
+                    monthlyOnes[r].value = product.currentBillingFrequency == 'Monthly';
+                    yearlyOnes[r].checked = product.currentBillingFrequency == 'Annual';
+                    yearlyOnes[r].value = product.currentBillingFrequency == 'Annual';
+                }
+                return;
+            }
+            if(!product.frequencyEnabled && !override){
+                console.log('product frequency disabled');
+                for(var r = 0; r < monthlyOnes.length; r++) {
+                    monthlyOnes[r].checked = product.currentBillingFrequency == 'Monthly';
+                    monthlyOnes[r].value = product.currentBillingFrequency == 'Monthly';
+                    yearlyOnes[r].checked = product.currentBillingFrequency == 'Annual';
+                    yearlyOnes[r].value = product.currentBillingFrequency == 'Annual';
+                }
+                return;
+            }
+
             for(var r = 0; r < monthlyOnes.length; r++) {
                 monthlyOnes[r].checked = isNowMonthly;
                 monthlyOnes[r].value = isNowMonthly;
@@ -7521,10 +7566,10 @@
                     + '</div>'
                     + '<div class="col" style="width: 160px;">'
                     + '<div class="radio-group">'
-                    + '<input type="checkbox" class="radiobtn ' + product.Product.Id + 'yearly" id="' + product.Product.Id + 'yearly" name="selector" value="' + pAnnualOne + '" checked=' + pAnnualOne + ' onchange="calcFrecuencyChange(this, &apos;' + product.Product.Id + '&apos;, &apos;' + product.Product.Name + '&apos;, &apos;' + product.currentBillingFrequency + '&apos;, &apos;' + pAnnualOne + '&apos;);"/>'
-                    + '<label for="' + product.Product.Id + 'yearly" class="radioLabel"  >Yearly</label>'
-                    + '<input type="checkbox" class="radiobtn ' + product.Product.Id + 'monthly" id="' + product.Product.Id + 'monthly" name="selector" value="' + pMonthly + '" checked=' + pMonthly + ' onchange="calcFrecuencyChange(this, &apos;' + product.Product.Id + '&apos;, &apos;' + product.Product.Name + '&apos;, &apos;' + product.currentBillingFrequency + '&apos;, &apos;' + pMonthly + '&apos;);"/>'
-                    + '<label for="' + product.Product.Id + 'monthly" class="radioLabel">Monthly</label>'
+                    + '<input type="checkbox" class="radiobtn ' + product.Product.Id + 'yearly" id="' + product.Product.Id + 'yearly" name="selector" value="' + pAnnualOne + '" value=' + pAnnualOne + ' onchange="calcFrecuencyChange(this, &apos;' + product.Product.Id + '&apos;, &apos;' + product.Product.Name + '&apos;, &apos;' + product.currentBillingFrequency + '&apos;, &apos;' + pAnnualOne + '&apos;);"/>'
+                    + '<label for="' + product.Product.Id + 'yearly" class="radioLabel"' + (product.frequencyEnabled ? '' : 'style="opacity: 0.55; cursor: not-allowed;"') + '>Yearly</label>'
+                    + '<input type="checkbox" class="radiobtn ' + product.Product.Id + 'monthly" id="' + product.Product.Id + 'monthly" name="selector" value="' + pMonthly + '" value=' + pMonthly + ' onchange="calcFrecuencyChange(this, &apos;' + product.Product.Id + '&apos;, &apos;' + product.Product.Name + '&apos;, &apos;' + product.currentBillingFrequency + '&apos;, &apos;' + pMonthly + '&apos;);"/>'
+                    + '<label for="' + product.Product.Id + 'monthly" class="radioLabel"' + (product.frequencyEnabled ? '' : 'style="opacity: 0.55; cursor: not-allowed;"') + '>Monthly</label>'
                     + '</div>'
                     + '</div>'
                     + '<div class="col" style="width: 110px;">'
@@ -7665,6 +7710,7 @@
             var nonsplittableTotal = 0;
             var annualAndOneTimeTotal = 0;
             var monthlyTotal = 0;
+            var meteredTotal = 0;
 
             for(var prod of tempSelectedProducts){
                 if(!prod.visible) {
@@ -7707,6 +7753,22 @@
             nonsplittableProductsTotal = nonsplittableTotal;
             monthlyProductsTotal = monthlyTotal;
             nonmonthlyProductsTotal = annualAndOneTimeTotal;
+
+            
+            var minPayments = getMinimumNumberOfPayments();
+            if(minPayments > numberOfPayments && payTerms != 'mon'){
+                //set financing to the new minimum
+                var newTerms;
+                if(minPayments > 6){
+                    newTerms = payTermsNumToLabel.get(12);
+                } else if (minPayments >= 5) {
+                    newTerms = payTermsNumToLabel.get(6);
+                } else {
+                    newTerms = payTermsNumToLabel.get(minPayments);
+                }
+                calcFinance(newTerms, true, false);
+                return;
+            }
 
             //create strings for: Annual+OneTime, Monthly, Total Due, Due Today, and Installment Amount(?)
             var dueTodayString = formatMoney(getDueToday());
@@ -7752,12 +7814,14 @@
             socket.emit("private message", {
                 content
             });
+
+            
             //Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.updateQuoteTotals', quoteTotalMonthly, quoteTotalAnnual, function (a,b){console.log(a);console.log(b);});
         }
 
         var lastTempTerms = payTerms;
         //to-do: factor in no split allowed field?
-        function calcFinance(payte, showClient) {
+        function calcFinance(payte, syncToClient, showClient) {
             //lastProductData = JSON.parse(JSON.stringify(finalProducts));
             console.log('calcFinance '+showClient+','+payte);
             //lastPayTerms = payTerms;
@@ -7819,7 +7883,7 @@
                         //     yearlyOnes[r].value = false;
                         // }
                         // updateProductSubtotal(prod.Product.Id);
-                        calcFrecuencyChange({checked: true, id: 'monthly'}, prod.Product.Id);
+                        calcFrecuencyChange({checked: true, id: 'monthly'}, prod.Product.Id, true);
                     }
                 }
                 //autoAmountBundleItems();                 
@@ -7827,7 +7891,7 @@
                 for(var prod of finalProducts){
                     if(prod.Product.Billing_Frequency__c == 'Annual' || prod.Product.Billing_Frequency__c == 'Monthly'){
                         var defaultFrequency = (prod.Product.Billing_Frequency__c == 'Annual' ? 'yearly' : 'monthly');
-                        calcFrecuencyChange({checked: true, id: defaultFrequency}, prod.Product.Id);
+                        calcFrecuencyChange({checked: true, id: defaultFrequency}, prod.Product.Id, true);
                     }
                 }
             }
@@ -7837,10 +7901,10 @@
             lastTempTerms = payTerms;
             updateQuoteTotals();
             syncProdsToClient(); 
-            if(showClient == true) {
+            if(syncToClient == true) {
                 socket.connect();
                 content = {
-                    showProgress: true,
+                    showProgress: (showClient == false)  ? false : true,
                     page: "Payment Details",
                     name: "{!businessOwner.First_Name__c} {!businessOwner.Last_Name__c}",
                     total: formatMoney(getTotalAmountDue()), //sets element with id=balanceSectionAmount
@@ -8054,11 +8118,12 @@
             //var oppId = "{!opportunity.Id}"; //generateQuoteButton
             document.getElementById('generateQuoteButton').textContent = "Next Section";
             var selectedProducts = '{!tempSelectedProducts}';
+            var bundleName = getBundleStatus() == 'removed' ? '' : eligibleBundle;
 
             if(flagDoSubmit == false) {
                 document.getElementById('waitingScreen').style.display = "flex";
                 console.log('doSubmit');
-                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.doSubmit', environment, JSON.stringify(tempSelectedProducts), oppId, accId, payTerms, bookkeepingStartDate, bookkeepingEndDate, getTotalAmountDue(), function(r,e) {
+                Visualforce.remoting.Manager.invokeAction('GuidedSellingControllerExtension.doSubmit', environment, JSON.stringify(tempSelectedProducts), oppId, accId, payTerms, bookkeepingStartDate, bookkeepingEndDate, getTotalAmountDue(), bundleName, function(r,e) {
                     if(e.status) {
                         var data = e.result;
                         const dataList = data.split(",");
@@ -8110,7 +8175,7 @@
             if(reason.value == 'notLLC') {
                 notEntityType = 'noLLC';
             } else if(reason.value == 'incomplete') {
-                secondaryDisp = 'Canceled';
+                secondaryDisp = 'Cancelled';
             } else if(reason.value == 'notInterested') {
                 secondaryDisp = 'Not Interested'; 
             }        
@@ -8706,42 +8771,42 @@
                                     <div class="tabs">
                                         <div class="tab-2">
                                             <label for="tab2-1" id="tab2-1label">Current Plan</label>
-                                            <input id="tab2-1" name="tabs-two" type="radio" checked="checked" onchange="displayTablePlan('currentPlan', this, false);" />
+                                            <input id="tab2-1" name="tabs-two" type="radio" checked="checked" onclick="displayTablePlan('currentPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-2" id="tab2-2label">All</label>
-                                            <input id="tab2-2" name="tabs-two" type="radio" onchange="displayTablePlan('AllPlan', this, false);" />
+                                            <input id="tab2-2" name="tabs-two" type="radio" onclick="displayTablePlan('AllPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-3" id="tab2-3label">Frequent</label>
-                                            <input id="tab2-3" name="tabs-two" type="radio" onchange="displayTablePlan('frequentPlan', this, false);" />
+                                            <input id="tab2-3" name="tabs-two" type="radio" onclick="displayTablePlan('frequentPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-4" id="tab2-4label">Business</label>
-                                            <input id="tab2-4" name="tabs-two" type="radio" onchange="displayTablePlan('businessPlan', this, false);" />
+                                            <input id="tab2-4" name="tabs-two" type="radio" onclick="displayTablePlan('businessPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-5" id="tab2-5label">Personal</label>
-                                            <input id="tab2-5" name="tabs-two" type="radio" onchange="displayTablePlan('personalPlan', this, false);" />
+                                            <input id="tab2-5" name="tabs-two" type="radio" onclick="displayTablePlan('personalPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-6" id="tab2-6label">Payroll</label>
-                                            <input id="tab2-6" name="tabs-two" type="radio" onchange="displayTablePlan('payrollPlan', this, false);" />
+                                            <input id="tab2-6" name="tabs-two" type="radio" onclick="displayTablePlan('payrollPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-7" id="tab2-7label">Bookkeeping</label>
-                                            <input id="tab2-7" name="tabs-two" type="radio" onchange="displayTablePlan('bookkeepingPlan', this, false);" />
+                                            <input id="tab2-7" name="tabs-two" type="radio" onclick="displayTablePlan('bookkeepingPlan', this, false);" />
                                             <div></div>
                                         </div>
                                         <div class="tab-2">
                                             <label for="tab2-8" id="tab2-8label">Entity Formation</label>
-                                            <input id="tab2-8" name="tabs-two" type="radio" onchange="displayTablePlan('entityFormationPlan', this, false);" />
+                                            <input id="tab2-8" name="tabs-two" type="radio" onclick="displayTablePlan('entityFormationPlan', this, false);" />
                                             <div></div>
                                         </div>
                                     </div>

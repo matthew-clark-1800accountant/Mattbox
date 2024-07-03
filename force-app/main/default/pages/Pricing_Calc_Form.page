@@ -667,6 +667,39 @@
                     //updateProductTotal();
                 }
 
+                var payTermsLabelToValue = new Map([
+                    ['No Financing', 'yrl'],
+                    ['2 Pay', '2pay'],
+                    ['3 Pay', '3pay'],
+                    ['4 Pay', '4pay'],
+                    ['6 Pay', '6pay'],
+                    ['Apply for Monthly Installments', 'mon']
+                ]);
+                var payTermsValueToLabel = new Map([
+                    ['yrl', 'No Financing'],
+                    ['2pay', '2 Pay'],
+                    ['3pay', '3 Pay'],
+                    ['4pay', '4 Pay'],
+                    ['6pay', '6 Pay'],
+                    ['mon', 'Apply for Monthly Installments']
+                ]);
+                var payTermsValueToNum = new Map([
+                    ['yrl', 1],
+                    ['2pay', 2],
+                    ['3pay', 3],
+                    ['4pay', 4],
+                    ['6pay', 6],
+                    ['mon', 12]
+                ]);
+                var payTermsNumToLabel = new Map([
+                    [1, 'No Financing'],
+                    [2, '2 Pay'],
+                    [3, '3 Pay'],
+                    [4, '4 Pay'],
+                    [6, '6 Pay'],
+                    [12, 'Apply for Monthly Installments']
+                ]);
+
                 function updateProductTotal() {
                     console.log('updateProductTotal');
                     console.log(newBundleIsIntact());
@@ -717,6 +750,40 @@
                     } else {
                         $('[data-id="01tf1000004sVDeAAMcontainacone"]').show();
                         $('[data-id="01tf1000004sVDeAAMcontainacone"]').css("display","block");
+                    }
+
+                    var employeeNum = parseInt(document.querySelector('[data-id="NumberOfEmployees"]')?.value);
+                    var paySpan = document.querySelector('span:has(+ [data-id="paytime"])');
+                    var paySelect = document.querySelector('[data-id="paytime"]');
+                    if(paySpan && paySelect){
+                        if(employeeNum && employeeNum > 3){
+                            //make payroll monthly
+                            paySelect.value = 'Monthly';
+                            paySelect.disabled = true;
+                            paySpan.innerHTML = 'Monthly';
+                            paySpan.classList.add('custom-form-disabled');
+                        } else {
+                            paySpan.classList.remove('custom-form-disabled');
+                            paySelect.disabled = false;
+                        }
+                    }
+                    
+
+                    var transactionNum = document.querySelector('[data-id="NumberOfTransactions"]')?.value;
+                    var bkSpan = document.querySelector('span:has(+ [data-id="bktime"])');
+                    var bkSelect = document.querySelector('[data-id="bktime"]');
+                    if(bkSpan && bkSelect && transactionNum && transactionNum != ''){
+                        var minTransactionCount = parseInt(transactionNum.substring(0,transactionNum.indexOf('-')));
+                        if(minTransactionCount > 250){
+                            //make bookkeeping monthly
+                            bkSelect.value = 'Monthly';
+                            bkSelect.disabled = true;
+                            bkSpan.innerHTML = 'Monthly';
+                            bkSpan.classList.add('custom-form-disabled');
+                        } else {
+                            bkSpan.classList.remove('custom-form-disabled');
+                            bkSelect.disabled = false;
+                        }
                     }
                     
                     updateHiddenStartDate();
@@ -4000,7 +4067,8 @@
                         holdTotalToday = holdTotalToday + payrollFee;
                         
                     }
-                    
+
+
                     document.getElementById('holdTotalTotal').value = '$'+Math.ceil(parseFloat(holdTotalTotal)).toFixed(2);
                     document.getElementById('holdTotalToday').value = '$'+Math.ceil(parseFloat(holdTotalToday)).toFixed(2);
                     document.getElementById('holdTotalToday2').value = '$'+Math.ceil(parseFloat(holdTotalToday)).toFixed(2);
@@ -4008,6 +4076,8 @@
                     document.getElementById('holdTotal').value = '$'+Math.ceil(parseFloat(totalPrice)).toFixed(2);
                     document.getElementById('holdTotalMonth').value = '$'+Math.ceil(parseFloat(totalPriceMonth)).toFixed(2);
                     
+                    var minPayments = Math.ceil(holdTotalTotal / 10000.0);
+                    $('[data-id="financecheck"] option[value="yrl"]').prop('disabled', false);
                     // disable certain options
                     if (holdTotalTotal < 500) {
                         $('[data-id="financecheck"] option[value="2pay"]').prop('disabled', true);
@@ -4053,12 +4123,19 @@
                             updateFinance();
                             return;
                         }
-                    } else {
+                    } else if (holdTotalTotal < 10000){
                         $('[data-id="financecheck"] option[value="2pay"]').prop('disabled', false);
                         $('[data-id="financecheck"] option[value="3pay"]').prop('disabled', false);
                         $('[data-id="financecheck"] option[value="4pay"]').prop('disabled', false);
                         $('[data-id="financecheck"] option[value="6pay"]').prop('disabled', false);
                         $('[data-id="financecheck"] option[value="mon"]').prop('disabled', false);
+                    } else {
+                        $('[data-id="financecheck"] option[value="mon"]').prop('disabled', false);
+                        if(minPayments > 6) { $('[data-id="financecheck"] option[value="6pay"]').prop('disabled', true); }
+                        if(minPayments > 4) { $('[data-id="financecheck"] option[value="4pay"]').prop('disabled', true); }
+                        if(minPayments > 3) { $('[data-id="financecheck"] option[value="3pay"]').prop('disabled', true); }
+                        if(minPayments > 2) { $('[data-id="financecheck"] option[value="2pay"]').prop('disabled', true); }
+                        if(minPayments > 1) { $('[data-id="financecheck"] option[value="yrl"]').prop('disabled', true); }
                     }
                     
                     if (subtractDelayPrice > 0 || subtractMonthlyDelayPrice > 0) {
@@ -4072,6 +4149,22 @@
                             updateFinance();
                             return;
                         }
+                    }
+
+                    
+                    if(minPayments > payTermsValueToNum.get(financeSel) && financeSel != 'mon'){
+                        //set financing to the new minimum
+                        var newTerms;
+                        if(minPayments > 6){
+                            newTerms = payTermsLabelToValue.get(payTermsNumToLabel.get(12));
+                        } else if (minPayments >= 5) {
+                            newTerms = payTermsLabelToValue.get(payTermsNumToLabel.get(6));
+                        } else {
+                            newTerms = payTermsLabelToValue.get(payTermsNumToLabel.get(minPayments));
+                        }
+                        $('[data-id="financecheck"]').val(newTerms);
+                        updateFinance();
+                        return;
                     }
                     
                 }
