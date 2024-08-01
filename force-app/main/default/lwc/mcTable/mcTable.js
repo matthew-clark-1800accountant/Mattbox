@@ -35,8 +35,12 @@ export default class McTable extends LightningElement {
     @api
     userId = currentUserId;
 
-    @wire(getCurrentUserData)
+    @wire(getCurrentUserData, {currentView: '$filterViewLabel'})
     currentUser;
+
+    @api
+    showBlockFlow = false;
+
     //@wire(getRecord, {recordId: '$userId', fields: ['User.Name']})
     // @wire(getCurrentUserData)
     // currentUserWired(value){
@@ -118,6 +122,7 @@ export default class McTable extends LightningElement {
     }
 
     filterViewValue = 'Sales_Team__c = \'BNA Team\'';
+    filterViewLabel = '';
 
     queryNonReps = false;
     handleViewSelection(ev){        
@@ -125,7 +130,15 @@ export default class McTable extends LightningElement {
         console.log('handleViewSelection');
         //console.log({...ev.detail});
         this.filterViewValue = ev.detail.value;
+        for(var view of this.availableViewFilters){
+            if(view.value == this.filterViewValue) {
+                this.filterViewLabel = view.label;
+                break;
+            }
+        }
         console.log('ev.detail: '+JSON.stringify(ev.detail));
+        console.log(this.filterViewLabel);
+        
         if(ev.detail.value.includes('Queue') || ev.detail.value.includes('CS Agent')){
             this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
             this.queryNonReps = true;
@@ -133,6 +146,7 @@ export default class McTable extends LightningElement {
             this.appliedFilters = [...this.basicRepFilters,this.filterViewValue, this.searchValue, this.blockedToggleFilter];
             this.queryNonReps = false;
         }
+        console.log(this.appliedFilters);
         //this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
         console.log('queryNonReps '+this.queryNonReps);
         this.scrollToNow();
@@ -179,15 +193,17 @@ export default class McTable extends LightningElement {
         return 0;
     }
 
-    @wire(getReps, {filterList: '$appliedFilters'})
+    @wire(getReps, {filterList: '$appliedFilters', selectedViewLabel: '$filterViewLabel'})
     wiredGetReps(value){
         console.log('wiredGetReps');
         console.log(this.appliedFilters);
         this.wireResults = value;
         const { data, error } = value;
         if(error){
-            console.log(error);
+            console.log('wiredGetReps error: '+error);
         } else if(data) {
+            console.log(data);
+            console.log(JSON.stringify(data));
             var rowList = [];
             var repList = [];
             var pinnedRepList = [];
@@ -199,8 +215,11 @@ export default class McTable extends LightningElement {
             }
             //push row for current user
             //rowList.push({Id:this.currentUser.data?.Id, Rep:this.currentUser.data, Timeslots:[]});
-            pinnedRepList.push({Id:this.currentUser.data?.Id, Rep:this.currentUser.data, Timeslots:[]});
-            repList.push({label: this.currentUser.data?.Name, value: this.currentUser.data?.Id});
+            if(this.currentUser?.data){
+                pinnedRepList.push({Id:this.currentUser.data?.Id, Rep:this.currentUser.data, Timeslots:[]});
+                repList.push({label: this.currentUser.data?.Name, value: this.currentUser.data?.Id});    
+            }
+            
             for(var i = 0; i < data.length; i++){
                 var curRep = data[i];
                 //rowList.push({Id:i+this.rowIndexOffset, Rep:data[i], Timeslots:[]});
@@ -248,11 +267,11 @@ export default class McTable extends LightningElement {
             //console.log(result);
             this.availableViewFilters = [...result];
             setTimeout(() => {
-                if(this.currentUser?.data.SalesTeam){
-                    console.log('searching for '+this.currentUser?.data.SalesTeam)
+                if(this.currentUser?.data?.SalesTeam){
+                    console.log('searching for '+this.currentUser?.data?.SalesTeam)
                     for(var cv of this.availableViewFilters){
                         console.log(cv.label);
-                        if(cv.label.includes(this.currentUser?.data.SalesTeam)){
+                        if(cv.label.includes(this.currentUser?.data?.SalesTeam)){
                             console.log('team found');
                             this.appliedFilters = [...this.basicRepFilters, cv.value, this.searchValue, this.blockedToggleFilter];
                             this.filterViewValue = cv.value;
@@ -579,5 +598,18 @@ export default class McTable extends LightningElement {
 
     get showTestButton(){
         return (this.environmentName?.data && this.environmentName?.data != 'production');
+    }
+
+
+    launchBlockFlow(ev){
+        this.showBlockFlow = true;
+    }
+
+    handleFlowStatusChange(ev){
+        console.log(ev.detail.status);
+        if (ev.detail.status === 'FINISHED'){
+            this.showBlockFlow = false;
+        }
+        console.log('this.showBlockFlow: '+this.showBlockFlow);
     }
 }

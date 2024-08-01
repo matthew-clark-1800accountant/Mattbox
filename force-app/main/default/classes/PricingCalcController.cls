@@ -5844,7 +5844,11 @@ public class PricingCalcController {
             QuoteLineItem qLIPayFee;
             
             ChargeOver_Quote_Line_Item__c coqLIPayFee;
-        	
+            System.debug('payrollTime: '+payrollTime);
+        	System.debug('payrollTimeDef: '+payrollTimeDef);
+            if(numberOfEmployeesInput != null && Integer.valueOf(numberOfEmployeesInput) > 3){
+                payrollTime = 'Monthly';
+            }
             if(useBundlePricing() && !setupFeeItems.contains('Payroll')){
                     payrollAdjustment *= (1-bundleDiscount);
             }
@@ -6494,6 +6498,10 @@ public class PricingCalcController {
         }
         
         if (doBookkeeping) {
+
+            if(numberOfTransactionsInput != null && Integer.valueOf(numberOfTransactionsInput.substring(0, numberOfTransactionsInput.indexOf('-'))) > 250){
+                bookkeepingTime = 'Monthly';
+            }
         
             // do i need to create a chargeover quote?
             if (bookkeepingTime == 'Monthly') {

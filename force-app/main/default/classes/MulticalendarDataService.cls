@@ -288,7 +288,7 @@ public without sharing class MulticalendarDataService {
                 AND StartDateTime < :endOfDay
                 AND (ShowAs != 'Free' OR Type_of_Appointment__c IN :eventTypesToInclude)
                 AND Type_of_Appointment__c != 'Calendar Block'];
-            } else {
+            } else if(String.valueOf(((Id)repId).getSObjectType()) == 'User'){
                 eventList = 
                 [SELECT Id,
                 Appointment_Disposition__c,
@@ -307,6 +307,26 @@ public without sharing class MulticalendarDataService {
                 AND StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
                 AND (ShowAs != 'Free' OR Type_of_Appointment__c IN :eventTypesToInclude)];
+            } else if(String.valueOf(((Id)repId).getSObjectType()) == 'Portal_Team_Member__c'){
+                Portal_Team_Member__c portalRep = [SELECT Id, Portal_Accountant_Id__c FROM Portal_Team_Member__c WHERE Id = :repId LIMIT 1];
+                eventList = 
+                [SELECT Id,
+                Appointment_Disposition__c,
+                Secondary_Disposition_Details__c,
+                Type_of_Appointment__c,
+                Lead_Source__c,
+                of_Calls_for_Event__c,
+                StartDateTime,
+                EndDateTime,
+                Subject,
+                Who.Name,
+                Lead_Type_New__c
+                FROM Event
+                WHERE StartDateTime >= :startTime
+                AND StartDateTime < :endOfDay
+                AND Accountant_Portal_ID__c = :portalRep.Portal_Accountant_Id__c];
+            } else {
+                throw new CustomException('invalid repId of type: '+((Id)repId).getSObjectType());
             }
             //System.debug('eventList: '+eventList);
             List<Appointment> appointments = new List<Appointment>();
@@ -500,6 +520,9 @@ public without sharing class MulticalendarDataService {
             List<Profile> salesProfiles = [SELECT Id FROM Profile WHERE Name IN :profileNames];
             
 
+            if(filterList.contains('Fulfillment Team')){
+                return;
+            }
             if(salesProfiles.isEmpty()){
                 System.debug('no sales profiles found');
             } else {
@@ -551,7 +574,13 @@ public without sharing class MulticalendarDataService {
     @AuraEnabled(cacheable=false)
     public static void moveAppointment(String eventId, String repId){
         try{
-            Event appointment = new Event(Id=eventId, OwnerId=repId);
+            Event appointment = new Event(Id=eventId);
+            if(String.valueOf(((Id)repId).getSObjectType()) == 'Portal_Team_Member__c'){
+                Portal_Team_Member__c rep = [SELECT Portal_Accountant_Id__c FROM Portal_Team_Member__c WHERE Id = :repId LIMIT 1];
+                appointment.Accountant_Portal_ID__c = rep.Portal_Accountant_Id__c;
+            } else {
+                appointment.OwnerId = repId;
+            }
             System.debug(appointment);
             update appointment;    
         }catch(Exception ex){
@@ -561,7 +590,7 @@ public without sharing class MulticalendarDataService {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Rep> getReps(List<String> filterList){
+    public static List<Rep> getReps(List<String> filterList, String selectedViewLabel){
         try{
             //Boolean onlyQueryReps;
             // List<String> filterList;
@@ -573,6 +602,10 @@ public without sharing class MulticalendarDataService {
             //     filterList = filterMap.get(false);
             // }
             System.debug('getReps()');
+            if(selectedViewLabel == 'Fulfillment Team'){
+                return getFulfillmentReps(filterList);
+            }
+            
             List<String> profileNames = new List<String>{'InsideSalesUser - Zuora', 'Inbound User', 'Sales Manager', 'System Admin', 'System Administrator', 'Appointment Setter', 'Executive'};
             List<Profile> salesProfiles = [SELECT Id FROM Profile WHERE Name IN :profileNames];
 
@@ -697,69 +730,222 @@ public without sharing class MulticalendarDataService {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Rep getCurrentUserData(){
+    public static List<Rep> getFulfillmentReps(List<String> filterList){
         try{
+            System.debug('getFulfillmentReps()');
+            
             Id currentUserId = UserInfo.getUserId();
-            String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id = :currentUserId';
+            //String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true AND Sales_Team__c!=null';
+            String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE Status__c = \'Active\' AND User__c != :currentUserId';
+            
+            // if(filterList != null && !filterList.isEmpty()){
+            //     for(String filter : filterList){
+            //         if(filter != '' && filter != null){
+            //             queryString += ' AND '+filter;
+            //         }
+            //     }
+            // }
+            queryString += ' ORDER BY Name';
             System.debug(queryString);
-            List<User> currentUsers = Database.query(queryString);
-            User u = currentUsers[0];
-
-            String profileName = u.Profile.Name.toLowerCase();
-            Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
-            Rep r = new Rep(u.Id, u.Name, isManager, u.Sales_Team__c);
-
-            if(isManager){
-                r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
-            }
-            if(u.Sales_Management_Role__c == 'Team Lead'){
-                r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
-            }
-            if(u.Skills_Sales__c != null){
-                if(u.Skills_Sales__c.contains('Cross-Sale')){
-                    r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+            List<Portal_Team_Member__c> portalUsers = Database.query(queryString);
+            List<Rep> repList = new List<Rep>();
+            String dayString = Datetime.now().format('EEEE');
+            for(Portal_Team_Member__c u : portalUsers){
+                String profileName = u.Role__c + u.Team_Role__c;
+                Boolean isManager = profileName.contains('manager') || profileName.contains('admin') || profileName.contains('executive');
+                Rep r = new Rep(u.Id, u.Name, isManager, 'Fulfillment Team');
+                if(isManager){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
                 }
-                if(u.Skills_Sales__c.contains('Paid Digital–CORE')){
-                    r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                if(u.Team_Role__c == 'Team Lead'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
                 }
-                if(!u.Skills_Sales__c.contains('Partner-Subscribed Prospects')){
+                if(u.Accounting_Skills__c != null){
+                    if(u.Accounting_Skills__c.contains('Cross-Sale')){
+                        r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+                    }
+                    if(u.Accounting_Skills__c.contains('Paid Digital–CORE')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                    }
+                    if(!u.Accounting_Skills__c.contains('Partner-Subscribed Prospects')){
+                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    }
+                } else {
+                    r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                }          
+                // if(u.Available_Restricted_Lead_Sources__c != null){
+                //     if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                //     }
+                //     if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
+                //     }
+                //     if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                //     }
+                //     if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                //     }
+                // } else {
+                //     r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                //     r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
+                // }
+
+                // if(u.Available_Restricted_Lead_Types__c != null){
+                //     if(u.Available_Restricted_Lead_Types__c.contains('Creator')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'Duns Creator'));
+                //     }
+                //     if(u.Available_Restricted_Lead_Types__c.contains('Credit Insights')){
+                //         r.Tags.add(new Tag(r.Tags.size(),'Duns Credit Insights'));
+                //     }
+                // }
+
+                if(profileName == 'appointment setter'){
+                    r.Tags.add(new Tag(r.Tags.size(),'SDR'));
+                }
+
+                Boolean autoBlocked = false;
+                Time t = Time.newInstance(19,30,0,0);
+                if(u.Accounting_Skills__c != null){
+                    if(u.Accounting_Skills__c.contains('Cross-Sale')){
+                        t = Time.newInstance(18,30,0,0);
+                    }
+                    if(u.Accounting_Skills__c.contains('Paid Digital–CORE')){
+                        t = Time.newInstance(20,30,0,0);
+                    }
+                }
+                if(dayString == 'Sunday'){
+                    autoBlocked = true;
+                } else if (dayString == 'Sunday'){
+                    if(u.Accounting_Skills__c != null && u.Accounting_Skills__c.contains('Paid Digital–CORE')){
+                        t = Time.newInstance(17,30,0,0);
+                    } else {
+                        autoBlocked = true;
+                    }
+                }
+
+                if(autoBlocked){
+                    r.EndOfDay = -1L;
+                } else {
+                    Datetime endOfDay = Datetime.newInstance(Date.today(), t);//.addHours(-4);//timezone offset
+                    r.EndOfDay = endOfDay.getTime();
+                }
+                
+                System.debug(r);
+                repList.add(r);
+            }
+            if(repList.isEmpty()){
+                return null;
+            } else {
+                return repList;
+            }
+                        
+        }catch(Exception ex){
+            logError(ex);
+            return null;
+        }        
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Rep getCurrentUserData(String currentView){
+        try{
+            if(currentView == 'Fulfillment Team'){
+                Id currentUserId = UserInfo.getUserId();
+                String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE User__c = :currentUserId';
+                System.debug(queryString);
+                List<Portal_Team_Member__c> currentUsers = Database.query(queryString);
+                Portal_Team_Member__c u = currentUsers[0];
+    
+                String profileName = u.Role__c + u.Team_Role__c;
+                Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
+                Rep r = new Rep(u.Id, u.Name, isManager, 'Fulfillment Team');
+
+                if(isManager){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
+                }
+                if(u.Team_Role__c == 'Team Lead'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
+                }
+                if(u.Accounting_Skills__c != null){
+                    if(u.Accounting_Skills__c.contains('Cross-Sale')){
+                        r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+                    }
+                    if(u.Accounting_Skills__c.contains('Paid Digital–CORE')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                    }
+                    if(!u.Accounting_Skills__c.contains('Partner-Subscribed Prospects')){
+                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    }
+                } else {
                     r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
                 }
+                return r;
+
             } else {
-                r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
-            }                 
-            if(u.Available_Restricted_Lead_Sources__c != null){
-                if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
-                    r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                Id currentUserId = UserInfo.getUserId();
+                String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c, Profile.Name, Sales_Management_Role__c, Sales_Team__c FROM User WHERE Id = :currentUserId';
+                System.debug(queryString);
+                System.debug(currentUserId);
+                List<User> currentUsers = Database.query(queryString);
+                User u = currentUsers[0];
+                System.debug(u);
+                String profileName = u.Profile.Name.toLowerCase();
+                Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
+                Rep r = new Rep(u.Id, u.Name, isManager, u.Sales_Team__c);
+    
+                if(isManager){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
                 }
-                if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
+                if(u.Sales_Management_Role__c == 'Team Lead'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
+                }
+                if(u.Skills_Sales__c != null){
+                    if(u.Skills_Sales__c.contains('Cross-Sale')){
+                        r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+                    }
+                    if(u.Skills_Sales__c.contains('Paid Digital–CORE')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                    }
+                    if(!u.Skills_Sales__c.contains('Partner-Subscribed Prospects')){
+                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    }
+                } else {
+                    r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                }                 
+                if(u.Available_Restricted_Lead_Sources__c != null){
+                    if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
+                        r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
+                    }
+                    if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
+                        r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
+                    }
+                    if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                        r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                    }
+                    if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                    }
+                } else {
+                    r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                     r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                 }
-                if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
-                    r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+    
+                if(u.Available_Restricted_Lead_Types__c != null){
+                    if(u.Available_Restricted_Lead_Types__c.contains('Creator')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Duns Creator'));
+                    }
+                    if(u.Available_Restricted_Lead_Types__c.contains('Credit Insights')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Duns Credit Insights'));
+                    }
                 }
-                if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
-                    r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                
+                if(profileName == 'appointment setter'){
+                    r.Tags.add(new Tag(r.Tags.size(),'SDR'));
                 }
-            } else {
-                r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
-                r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
+    
+                return r;     
             }
-
-            if(u.Available_Restricted_Lead_Types__c != null){
-                if(u.Available_Restricted_Lead_Types__c.contains('Creator')){
-                    r.Tags.add(new Tag(r.Tags.size(),'Duns Creator'));
-                }
-                if(u.Available_Restricted_Lead_Types__c.contains('Credit Insights')){
-                    r.Tags.add(new Tag(r.Tags.size(),'Duns Credit Insights'));
-                }
-            }
-            
-            if(profileName == 'appointment setter'){
-                r.Tags.add(new Tag(r.Tags.size(),'SDR'));
-            }
-
-            return r;            
+                   
         }catch(Exception ex){
             logError(ex);
             return null;
@@ -777,6 +963,7 @@ public without sharing class MulticalendarDataService {
             viewList.add(new CalendarView('Queues', 'Name IN (\'Do Not Reply\', \'General Lead Queue\', \'Dead Leads Queue\')')); //default filter
             viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
             viewList.add(new CalendarView('Client Success', 'Userrole.Name = \'CS Agent\''));// 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\'')); 
+            viewList.add(new CalendarView('Fulfillment Team', 'Fulfillment Team'));
             Schema.DescribeFieldResult fieldResult = User.Sales_Team__c.getDescribe();
             for(Schema.PicklistEntry ple : fieldResult.getPicklistValues()){
                 //if(fieldResult.isActive()){
@@ -872,6 +1059,7 @@ public without sharing class MulticalendarDataService {
     }
 
     public static void logError(Exception ex){
+        System.debug(ex.getMessage());
         if(getEnvironmentName()=='production'){
             sendEmail(ex.getMessage());
         } else {
@@ -918,4 +1106,6 @@ public without sharing class MulticalendarDataService {
         Multicalendar_Maintenance__c mm = Multicalendar_Maintenance__c.getOrgDefaults();
         return mm.IsActiveMaintenance__c;
     }
+
+    public class CustomException extends Exception{}
 }

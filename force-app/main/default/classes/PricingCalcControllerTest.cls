@@ -981,5 +981,595 @@ private class PricingCalcControllerTest {
         Test.stopTest();
         
     }
+
+    static testMethod void testPriceCalc7(){
     
+        String testID = '';
+        String ownerID = '';
+    
+        Test.startTest();
+        
+        // get account
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+            
+        for(Account aItem : accounts){
+            System.debug('found');
+            testID = aItem.Id;
+            ownerID = aItem.OwnerId;
+        
+        }
+        
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+        //System.debug(accounts.size());
+        //if (accounts.size() > 0) {
+        //    testID = accounts[0].Id;
+        //    ownerID = accounts[0].OwnerId;
+        //}
+        System.debug(testID);
+        
+        // create opportunity
+        Opportunity op = new Opportunity();
+        op.AccountId = testID;
+        op.Name = 'Test Opportunity';
+        op.StageName = 'New';
+        op.OwnerId = ownerID;
+        op.CloseDate = Date.today();
+        insert op; 
+        
+        System.debug(op.Id);
+        
+        ApexPages.currentPage().getParameters().put('A', testID);
+        ApexPages.currentPage().getParameters().put('O', op.Id);
+        ApexPages.currentPage().getParameters().put('Q', '');
+        
+        
+        //PageReference pageRef = Page.Pricing_Calc_Form;
+        
+        //Test.setCurrentPage(pageRef);
+        
+        PricingCalcController controller = new PricingCalcController();
+
+        // todo set form parameters for submission
+        controller.accountID = testID;
+        controller.accountNameInput = 'test';
+        controller.opportunityID = op.Id;
+        controller.quoteID = '';
+        controller.stateOfIncorporationInput = 'California';
+        controller.entityTypeInput = 'Single Member LLC';
+        controller.industryTypeInput = 'Other';
+        controller.totalStartupCostInput = '5000';
+        controller.projectedFirstYearRevenueInput = '5000';
+        controller.projectedFirstYearProfitInput = '0';
+        controller.numberOfTransactionsInput = '251-500';
+        controller.numberOfEmployeesInput = '4';
+        controller.numberOfOwnersInput = '1';
+        controller.personalIncomeInput = '50000';
+        controller.numberOfRentalPropertiesInput = '1';
+        //ApexPages.currentPage().getParameters().put('bundle', '');
+        controller.billingTime = 'mon';
+        controller.billingStreetInput = '123 test'; 
+        controller.billingCityInput = 'st george';
+        controller.billingZipInput = '84790';
+        controller.billingStateInput = 'UT';
+        controller.billingCountryInput = 'United States';
+        
+        controller.doBusinessReturn = true;
+        controller.businessQuantity = 1;
+        
+        controller.doPersonalReturn = true;
+        controller.personalQuantity = 1;
+        
+        controller.doPayroll = true;
+        controller.payrollQuantity = 1;
+        
+        controller.doAdvisory = true;
+        controller.taxAdvisoryQuantity = 1;
+        
+        controller.doBookkeeping = true;
+        controller.bookkeepingQuantity = 1;
+        
+        controller.doStateFiling = true;
+        controller.stateFilingQuantity = 1;
+        
+        controller.doStateFilingCorp = true;
+        controller.stateFilingCorpQuantity = 1;
+        
+        controller.doBackBookkeeping = true;
+        controller.backBookkeepingQuantity = 1;
+        
+        controller.doForeignState = true;
+        controller.foreignStateQuantity = 1;
+        
+        controller.doBackPayroll = true;
+        controller.backPayrollQuantity = 1;
+        
+        controller.doBackBusiness = true;
+        controller.backBusinessQuantity = 1;
+        
+        controller.doBackPersonal = true;
+        controller.backPersonalQuantity = 1;
+        
+        controller.doNonProfitBookkeeping = true;
+        controller.nonProfitBookkeepingQuantity = 1;
+        
+        controller.doNonProfitBackBookkeeping = true;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+        
+        controller.payrollFee = 500;
+        controller.personalTime = 'Monthly';
+        controller.businessTime = 'Monthly';
+        controller.taxAdvisoryTime = 'Monthly';
+
+        for(PricingCalcController.myWrapperClass acItem : controller.acList){
+
+            acItem.doIt = true;
+            acItem.quantity = 1;
+            
+            break;
+            
+        }
+        
+        controller.doSubmit();
+        
+        controller.sleep(1);
+        
+        // todo set form parameters and dopay submission
+        //controller.doPay();
+        //controller.doPayEmail();
+        
+        //controller.doRedirect();
+        
+        Test.stopTest();
+        //Adding some testing for the savings calculator
+        Decimal calculateSavings = PricingCalcController.calculateSavings('Startup Cost', 'Single', 150000, 150000, 200, 300, 25000);
+        Decimal calculateSavings2 = PricingCalcController.calculateSavings('QBI', 'Head of Household', 150000, 150000, 200, 300, 25000);
+        Decimal calculateSCorporationSavings = PricingCalcController.calculateSCorporationSavings(0);
+        Boolean displaySCorporationSavings = PricingCalcController.displaySCorporationSavings(0, 'S Corporation', 'S Corporation');
+        String getDiscountData = PricingCalcController.getDiscountData('S Corporation', 'Transportation', '0', '0', '0', '2', '350000', '350000', '350000', 'CA', '350000', 'formRunPayrollBefore', 'formFilingStatus', '200', '1000');
+        
+    }
+
+    static testMethod void testPriceCalc8(){
+    
+        String testID = '';
+        String ownerID = '';
+    
+        Test.startTest();
+        
+        // get account
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+            
+        for(Account aItem : accounts){
+            System.debug('found');
+            testID = aItem.Id;
+            ownerID = aItem.OwnerId;
+        
+        }
+        
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+        //System.debug(accounts.size());
+        //if (accounts.size() > 0) {
+        //    testID = accounts[0].Id;
+        //    ownerID = accounts[0].OwnerId;
+        //}
+        System.debug(testID);
+        
+        // create opportunity
+        Opportunity op = new Opportunity();
+        op.AccountId = testID;
+        op.Name = 'Test Opportunity';
+        op.StageName = 'New';
+        op.OwnerId = ownerID;
+        op.CloseDate = Date.today();
+        insert op; 
+        
+        System.debug(op.Id);
+        
+        ApexPages.currentPage().getParameters().put('A', testID);
+        ApexPages.currentPage().getParameters().put('O', op.Id);
+        ApexPages.currentPage().getParameters().put('Q', '');
+        
+        
+        //PageReference pageRef = Page.Pricing_Calc_Form;
+        
+        //Test.setCurrentPage(pageRef);
+        
+        PricingCalcController controller = new PricingCalcController();
+
+        // todo set form parameters for submission
+        controller.accountID = testID;
+        controller.accountNameInput = 'test';
+        controller.opportunityID = op.Id;
+        controller.quoteID = '';
+        controller.stateOfIncorporationInput = 'California';
+        controller.entityTypeInput = 'Single Member LLC';
+        controller.industryTypeInput = 'Other';
+        controller.totalStartupCostInput = '5000';
+        controller.projectedFirstYearRevenueInput = '5000';
+        controller.projectedFirstYearProfitInput = '0';
+        controller.numberOfTransactionsInput = '251-500';
+        controller.numberOfEmployeesInput = '4';
+        controller.numberOfOwnersInput = '1';
+        controller.personalIncomeInput = '50000';
+        controller.numberOfRentalPropertiesInput = '1';
+        //ApexPages.currentPage().getParameters().put('bundle', '');
+        controller.billingTime = 'yrl';
+        controller.billingStreetInput = '123 test';
+        controller.billingCityInput = 'st george';
+        controller.billingZipInput = '84790';
+        controller.billingStateInput = 'UT';
+        controller.billingCountryInput = 'United States';
+        
+        controller.doBusinessReturn = true;
+        controller.businessQuantity = 1;
+        
+        controller.doPersonalReturn = true;
+        controller.personalQuantity = 1;
+        
+        controller.doPayroll = true;
+        controller.payrollQuantity = 1;
+        
+        controller.doAdvisory = true;
+        controller.taxAdvisoryQuantity = 1;
+        
+        controller.doBookkeeping = true;
+        controller.bookkeepingQuantity = 1;
+        
+        controller.doStateFiling = true;
+        controller.stateFilingQuantity = 1;
+        
+        controller.doStateFilingCorp = true;
+        controller.stateFilingCorpQuantity = 1;
+        
+        controller.doBackBookkeeping = true;
+        controller.backBookkeepingQuantity = 1;
+        
+        controller.doForeignState = true;
+        controller.foreignStateQuantity = 1;
+        
+        controller.doBackPayroll = true;
+        controller.backPayrollQuantity = 1;
+        
+        controller.doBackBusiness = true;
+        controller.backBusinessQuantity = 1;
+        
+        controller.doBackPersonal = true;
+        controller.backPersonalQuantity = 1;
+        
+        controller.doNonProfitBookkeeping = true;
+        controller.nonProfitBookkeepingQuantity = 1;
+        
+        controller.doNonProfitBackBookkeeping = true;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+
+        controller.payrollFee = 500;
+        controller.personalTime = 'Monthly';
+        controller.businessTime = 'Monthly';
+        controller.taxAdvisoryTime = 'Monthly';
+        
+        Integer ind = 0;
+        for(PricingCalcController.myWrapperClass acItem : controller.acList){
+
+            acItem.doIt = true;
+            acItem.quantity = 1;
+            if(Math.mod(ind,2)==0){
+                acItem.billingTime = 'Monthly';
+            }
+            if(Math.mod(ind++,3)==0){
+                acItem.billingTimeDef = 'Monthly';
+            }
+            break;
+            
+        }
+        
+        controller.doSubmit();
+        
+        controller.sleep(1);
+        
+        // todo set form parameters and dopay submission
+        //controller.doPay();
+        //controller.doPayEmail();
+        
+        //controller.doRedirect();
+        
+        Test.stopTest();
+        //Adding some testing for the savings calculator
+        
+    }
+
+    static testMethod void testPriceCalc9(){
+    
+        String testID = '';
+        String ownerID = '';
+    
+        Test.startTest();
+        
+        // get account
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+            
+        for(Account aItem : accounts){
+            System.debug('found');
+            testID = aItem.Id;
+            ownerID = aItem.OwnerId;
+        
+        }
+        
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+        //System.debug(accounts.size());
+        //if (accounts.size() > 0) {
+        //    testID = accounts[0].Id;
+        //    ownerID = accounts[0].OwnerId;
+        //}
+        System.debug(testID);
+        
+        // create opportunity
+        Opportunity op = new Opportunity();
+        op.AccountId = testID;
+        op.Name = 'Test Opportunity';
+        op.StageName = 'New';
+        op.OwnerId = ownerID;
+        op.CloseDate = Date.today();
+        insert op; 
+        
+        System.debug(op.Id);
+        
+        ApexPages.currentPage().getParameters().put('A', testID);
+        ApexPages.currentPage().getParameters().put('O', op.Id);
+        ApexPages.currentPage().getParameters().put('Q', '');
+        
+        
+        //PageReference pageRef = Page.Pricing_Calc_Form;
+        
+        //Test.setCurrentPage(pageRef);
+        
+        PricingCalcController controller = new PricingCalcController();
+
+        // todo set form parameters for submission
+        controller.accountID = testID;
+        controller.accountNameInput = 'test';
+        controller.opportunityID = op.Id;
+        controller.quoteID = '';
+        controller.stateOfIncorporationInput = 'California';
+        controller.entityTypeInput = 'Single Member LLC';
+        controller.industryTypeInput = 'Other';
+        controller.totalStartupCostInput = '5000';
+        controller.projectedFirstYearRevenueInput = '5000';
+        controller.projectedFirstYearProfitInput = '0';
+        controller.numberOfTransactionsInput = '251-500';
+        controller.numberOfEmployeesInput = '4';
+        controller.numberOfOwnersInput = '1';
+        controller.personalIncomeInput = '50000';
+        controller.numberOfRentalPropertiesInput = '1';
+        //ApexPages.currentPage().getParameters().put('bundle', '');
+        controller.billingTime = '2pay';
+        controller.billingStreetInput = '123 test';
+        controller.billingCityInput = 'st george';
+        controller.billingZipInput = '84790';
+        controller.billingStateInput = 'UT';
+        controller.billingCountryInput = 'United States';
+        
+        controller.doBusinessReturn = true;
+        controller.businessQuantity = 1;
+        
+        controller.doPersonalReturn = true;
+        controller.personalQuantity = 1;
+        
+        controller.doPayroll = true;
+        controller.payrollQuantity = 1;
+        
+        controller.doAdvisory = true;
+        controller.taxAdvisoryQuantity = 1;
+        
+        controller.doBookkeeping = true;
+        controller.bookkeepingQuantity = 1;
+        
+        controller.doStateFiling = true;
+        controller.stateFilingQuantity = 1;
+        
+        controller.doStateFilingCorp = true;
+        controller.stateFilingCorpQuantity = 1;
+        
+        controller.doBackBookkeeping = true;
+        controller.backBookkeepingQuantity = 1;
+        
+        controller.doForeignState = true;
+        controller.foreignStateQuantity = 1;
+        
+        controller.doBackPayroll = true;
+        controller.backPayrollQuantity = 1;
+        
+        controller.doBackBusiness = true;
+        controller.backBusinessQuantity = 1;
+        
+        controller.doBackPersonal = true;
+        controller.backPersonalQuantity = 1;
+        
+        controller.doNonProfitBookkeeping = true;
+        controller.nonProfitBookkeepingQuantity = 1;
+        
+        controller.doNonProfitBackBookkeeping = true;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+
+        controller.payrollFee = 500;
+        controller.personalTime = 'Monthly';
+        controller.businessTime = 'Monthly';
+        controller.taxAdvisoryTime = 'Monthly';
+        
+        Integer ind = 0;
+        for(PricingCalcController.myWrapperClass acItem : controller.acList){
+
+            acItem.doIt = true;
+            acItem.quantity = 1;
+            if(Math.mod(ind,2)==0){
+                acItem.billingTime = 'Monthly';
+            }
+            if(Math.mod(ind++,3)==0){
+                acItem.billingTimeDef = 'Monthly';
+            }
+            break;
+            
+        }
+        
+        controller.doSubmit();
+        
+        controller.sleep(1);
+        
+        // todo set form parameters and dopay submission
+        //controller.doPay();
+        //controller.doPayEmail();
+        
+        //controller.doRedirect();
+        
+        Test.stopTest();
+        //Adding some testing for the savings calculator
+        
+    }
+
+    static testMethod void testPriceCalc10(){
+    
+        String testID = '';
+        String ownerID = '';
+    
+        Test.startTest();
+        
+        // get account
+        List<Account> accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+            
+        for(Account aItem : accounts){
+            System.debug('found');
+            testID = aItem.Id;
+            ownerID = aItem.OwnerId;
+        
+        }
+        
+        //Account[] accounts = [SELECT Id, OwnerId FROM Account WHERE Name='test' AND Owner.Name != 'Do Not Reply' LIMIT 1];
+        //System.debug(accounts.size());
+        //if (accounts.size() > 0) {
+        //    testID = accounts[0].Id;
+        //    ownerID = accounts[0].OwnerId;
+        //}
+        System.debug(testID);
+        
+        // create opportunity
+        Opportunity op = new Opportunity();
+        op.AccountId = testID;
+        op.Name = 'Test Opportunity';
+        op.StageName = 'New';
+        op.OwnerId = ownerID;
+        op.CloseDate = Date.today();
+        insert op; 
+        
+        System.debug(op.Id);
+        
+        ApexPages.currentPage().getParameters().put('A', testID);
+        ApexPages.currentPage().getParameters().put('O', op.Id);
+        ApexPages.currentPage().getParameters().put('Q', '');
+        
+        
+        //PageReference pageRef = Page.Pricing_Calc_Form;
+        
+        //Test.setCurrentPage(pageRef);
+        
+        PricingCalcController controller = new PricingCalcController();
+
+        // todo set form parameters for submission
+        controller.accountID = testID;
+        controller.accountNameInput = 'test';
+        controller.opportunityID = op.Id;
+        controller.quoteID = '';
+        controller.stateOfIncorporationInput = 'California';
+        controller.entityTypeInput = 'Single Member LLC';
+        controller.industryTypeInput = 'Other';
+        controller.totalStartupCostInput = '5000';
+        controller.projectedFirstYearRevenueInput = '5000';
+        controller.projectedFirstYearProfitInput = '0';
+        controller.numberOfTransactionsInput = '251-500';
+        controller.numberOfEmployeesInput = '4';
+        controller.numberOfOwnersInput = '1';
+        controller.personalIncomeInput = '50000';
+        controller.numberOfRentalPropertiesInput = '1';
+        //ApexPages.currentPage().getParameters().put('bundle', '');
+        controller.billingTime = '3pay';
+        controller.billingStreetInput = '123 test';
+        controller.billingCityInput = 'st george';
+        controller.billingZipInput = '84790';
+        controller.billingStateInput = 'UT';
+        controller.billingCountryInput = 'United States';
+        
+        controller.doBusinessReturn = true;
+        controller.businessQuantity = 1;
+        
+        controller.doPersonalReturn = true;
+        controller.personalQuantity = 1;
+        
+        controller.doPayroll = true;
+        controller.payrollQuantity = 1;
+        
+        controller.doAdvisory = true;
+        controller.taxAdvisoryQuantity = 1;
+        
+        controller.doBookkeeping = true;
+        controller.bookkeepingQuantity = 1;
+        
+        controller.doStateFiling = true;
+        controller.stateFilingQuantity = 1;
+        
+        controller.doStateFilingCorp = true;
+        controller.stateFilingCorpQuantity = 1;
+        
+        controller.doBackBookkeeping = true;
+        controller.backBookkeepingQuantity = 1;
+        
+        controller.doForeignState = true;
+        controller.foreignStateQuantity = 1;
+        
+        controller.doBackPayroll = true;
+        controller.backPayrollQuantity = 1;
+        
+        controller.doBackBusiness = true;
+        controller.backBusinessQuantity = 1;
+        
+        controller.doBackPersonal = true;
+        controller.backPersonalQuantity = 1;
+        
+        controller.doNonProfitBookkeeping = true;
+        controller.nonProfitBookkeepingQuantity = 1;
+        
+        controller.doNonProfitBackBookkeeping = true;
+        controller.nonProfitBackBookkeepingQuantity = 1;
+
+        controller.payrollFee = 500;
+        controller.personalTime = 'Monthly';
+        controller.businessTime = 'Monthly';
+        controller.taxAdvisoryTime = 'Monthly';
+        
+        Integer ind = 0;
+        for(PricingCalcController.myWrapperClass acItem : controller.acList){
+
+            acItem.doIt = true;
+            acItem.quantity = 1;
+            if(Math.mod(ind,2)==0){
+                acItem.billingTime = 'Monthly';
+            }
+            if(Math.mod(ind++,3)==0){
+                acItem.billingTimeDef = 'Monthly';
+            }
+            break;
+            
+        }
+        
+        controller.doSubmit();
+        
+        controller.sleep(1);
+        
+        // todo set form parameters and dopay submission
+        //controller.doPay();
+        //controller.doPayEmail();
+        
+        //controller.doRedirect();
+        
+        Test.stopTest();
+        //Adding some testing for the savings calculator
+        
+    }
 }

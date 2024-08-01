@@ -392,6 +392,9 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
                 rejections: this.repRejections?.data
             }
             console.log(miniDetails);
+            console.log('callInProgress: '+this.callInProgress);
+            console.log('numberOfEndedCalls: '+this.numberOfEndedCalls);
+            console.log('NumberOfCalls: '+this.appointment.NumberOfCalls);
             this.dispatchEvent(new CustomEvent('apptclicked', {
                 'bubbles': true,
                 'composed': true,
