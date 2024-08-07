@@ -37,6 +37,7 @@ export default class McTable extends LightningElement {
 
     @wire(getCurrentUserData, {currentView: '$filterViewLabel'})
     currentUser;
+    currentUserRetries = 0;
 
     @api
     showBlockFlow = false;
@@ -101,7 +102,8 @@ export default class McTable extends LightningElement {
     // get todaysDateISO(){
     //     return new Date().toISOString()
     // }
-    intervalId;
+    dataRefreshIntervalId;
+    styleRefreshIntervalId;
 
     get showPageButtons() {
         return true; //this.filterViewValue == '';
@@ -122,10 +124,12 @@ export default class McTable extends LightningElement {
     }
 
     filterViewValue = 'Sales_Team__c = \'BNA Team\'';
+    @api
     filterViewLabel = '';
 
     queryNonReps = false;
     handleViewSelection(ev){        
+        this.isLoading = true;
         //console.log(this.timeslotLabels);
         console.log('handleViewSelection');
         //console.log({...ev.detail});
@@ -139,7 +143,7 @@ export default class McTable extends LightningElement {
         console.log('ev.detail: '+JSON.stringify(ev.detail));
         console.log(this.filterViewLabel);
         
-        if(ev.detail.value.includes('Queue') || ev.detail.value.includes('CS Agent')){
+        if(ev.detail.value.includes('Queue') || ev.detail.value.includes('CS Agent') || this.filterViewLabel?.includes('Advisory')){
             this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
             this.queryNonReps = true;
         } else {
@@ -150,6 +154,7 @@ export default class McTable extends LightningElement {
         //this.appliedFilters = [this.filterViewValue, this.searchValue, this.blockedToggleFilter];
         console.log('queryNonReps '+this.queryNonReps);
         this.scrollToNow();
+        //this.isLoading = false;
     }
 
     searchValue;
@@ -196,19 +201,21 @@ export default class McTable extends LightningElement {
     @wire(getReps, {filterList: '$appliedFilters', selectedViewLabel: '$filterViewLabel'})
     wiredGetReps(value){
         console.log('wiredGetReps');
-        console.log(this.appliedFilters);
+        console.log(JSON.stringify(this.appliedFilters));
+        //console.log(JSON.stringify(value));
         this.wireResults = value;
         const { data, error } = value;
         if(error){
             console.log('wiredGetReps error: '+error);
         } else if(data) {
-            console.log(data);
-            console.log(JSON.stringify(data));
+            //console.log('rep data:');
+            //console.log(JSON.stringify(data));
             var rowList = [];
             var repList = [];
             var pinnedRepList = [];
             //console.log('filterViewValue: '+this.filterViewValue);
-            if(this.filterViewValue == this.availableViewFilters?.at(0)?.value){
+            //if(this.filterViewValue == this.availableViewFilters?.at(0)?.value){
+            if(this.filterViewLabel == 'All Sales Reps'){
                 //push unassigned leads row
                 //rowList.push({Id:0, Rep:{Id:0, Name:'Unassigned Leads', Tags:[]}, Timeslots:[]});
                 pinnedRepList.push({Id:0, Rep:{Id:0, Name:'Unassigned Leads', Tags:[]}, Timeslots:[]});
@@ -237,7 +244,13 @@ export default class McTable extends LightningElement {
             this.wiredRowList = [...rowList];
             this.repList = repList;
             this.pinnedRowList = [...pinnedRepList];
+            this.isLoading = false;
+            if(this.template.querySelector('.timeslot-row')){this.timeslotRow = this.template.querySelector('.timeslot-row');} else {
+                console.log('timeslotRow not found');
+            }
             
+            this.scrollToNow();
+            //this.timeslotRow.scrollLeft = this.scrollValue;
             //console.log('wiredRowList length: '+this.wiredRowList.length);            
         }
     }
@@ -259,13 +272,15 @@ export default class McTable extends LightningElement {
     
     //populate available filters?
     connectedCallback(){
-        //console.log('userId: '+this.userId);
+        console.log('userId: '+this.userId);
+        console.log(currentUserId);
         //console.log('user rec: '+this.currentUser);
         //this.wiredRowList = [this.exampleRow];
-        getViews().then(result => {
-            //console.log('**getviews');
-            //console.log(result);
+        getViews({currentUserId: this.userId}).then(result => {
+            console.log('**getviews');
+            console.log(JSON.stringify(result));
             this.availableViewFilters = [...result];
+            this.handleViewSelection({detail:{value: this.availableViewFilters[0]?.value}})
             setTimeout(() => {
                 if(this.currentUser?.data?.SalesTeam){
                     console.log('searching for '+this.currentUser?.data?.SalesTeam)
@@ -280,11 +295,14 @@ export default class McTable extends LightningElement {
                     }
                 } else {
                     console.log('no sales team found for current user');
-                    console.log(JSON.stringify(this.currentUser));
+                    //console.log(JSON.stringify(this.currentUser));
                 }
             }, 500);
-            clearInterval(this.intervalId);
-            this.intervalId = setInterval(() => this.refreshTable(), 20*1000);
+            clearInterval(this.dataRefreshIntervalId);            
+            clearInterval(this.styleRefreshIntervalId);
+            this.dataRefreshIntervalId = setInterval(() => this.refreshTable(), 20*1000);
+            this.styleRefreshIntervalId = setInterval(() => this.refreshStyles(), 20*1000);
+
             //console.log(this.availableViewFilters);
         }).catch(error => console.log(error));
         //console.log('window size: '+window.innerWidth);
@@ -308,7 +326,7 @@ export default class McTable extends LightningElement {
     }
 
     viewRightNow(){
-        //console.log('viewRightNow');
+        console.log('viewRightNow');
         this.selectedDate = new Date().toISOString().slice(0,10)+this.dateSuffix;
         this.scrollToNow();
         //this.closeMiniDetails();
@@ -343,9 +361,11 @@ export default class McTable extends LightningElement {
 
     rendered = false;
     renderedCallback(){
+        console.log('renderedCallback mcTable.js');
         if(!this.timeslotRow){
             this.timeslotRow = this.template.querySelector('.timeslot-row');
-        }        
+        }
+        this.timeslotRow.scrollLeft = this.scrollValue;
         var labelRow = this.template.querySelector('.timeslot-label');
         var tableContainer = this.template.querySelector('.table-container');
         if(labelRow && tableContainer && !this.rendered){
@@ -358,6 +378,13 @@ export default class McTable extends LightningElement {
             var pinnedListHeight = this.template.querySelector('.pinned-row-list-item').offsetHeight;// * 1.15;
             var repListHeightOffset = pinnedListHeight+300;
             this.template.querySelector('.row-list-item').style.maxHeight = 'calc(0.80 * (100vh - '+repListHeightOffset+'px))';
+        }
+        if(!this.currentUser?.data && this.currentUserRetries < 10){
+            console.log('currentUserData not found');
+            refreshApex(this.currentUser);
+            if(!this.currentUser?.data){this.currentUserRetries++;}
+        } else {
+            console.log('currentUserData: '+this.currentUser.data);
         }
         //this.template.querySelector('.minidetails').addEventListener("focusin", () => console.log('focus in'));
     }
@@ -501,7 +528,7 @@ export default class McTable extends LightningElement {
     //slotsPerPage = 6;
     
     timeslotRow;
-    colWidth;
+    colWidth = 240;
 
     get computedScrollValue(){
         return this.pageValue*this.slotsPerPage*this.colWidth;
@@ -535,11 +562,12 @@ export default class McTable extends LightningElement {
     }
 
     scrollTo(scrollVal){
-        //console.log('scrollTo '+scrollVal);
+        console.log('scrollTo '+scrollVal);
         this.scrollValue = scrollVal;
-        this.timeslotRow.scrollLeft = scrollVal;
-        // console.log('this.scrollValue: '+this.scrollValue);
-        // console.log('timslotRowScroll: '+this.timeslotRow.scrollLeft);
+        if(this.timeslotRow){this.timeslotRow.scrollLeft = scrollVal;}
+        
+        if(this.template.querySelector('.timeslot-row')){this.template.querySelector('.timeslot-row').scrollLeft = scrollVal;}
+        console.log(this.template.querySelector('.timeslot-row')?.scrollLeft);
         // console.log('pageNumber: '+this.pageValue);
         this.closeMiniDetails();
     }
@@ -549,7 +577,7 @@ export default class McTable extends LightningElement {
         console.log('scrollToNow '+curTime);
         var hours = Number(curTime.slice(11,13)-4);
         var min = Number(curTime.slice(14,16));
-        console.log(hours+' '+min);
+        //console.log(hours+' '+min);
         var timeslotNumber = (hours*2) + (min >= 30 ? 1 : 0);
         //var pageNumber = Math.floor(timeslotNumber / this.slotsPerPage);
         var pageNumber = (timeslotNumber-1) / this.slotsPerPage;
@@ -592,8 +620,25 @@ export default class McTable extends LightningElement {
         //refreshApex(this.wireResults);
     }
 
+    refreshStyles(ev){
+        var rowList = this.template.querySelectorAll('c-mc-row');        
+        rowList.forEach((thisRow) => {
+            var rowRepId = thisRow?.rep?.Id;
+            if(rowRepId || rowRepId == 0){
+                thisRow.refreshTimeslotStyles();                
+            } else {
+                console.log(JSON.stringify(thisRow?.rep));
+            }
+        });
+        
+        //console.log('table.refreshTable()');
+        //window.location.reload();
+        //refreshApex(this.wireResults);
+    }
+
     disconnectedCallback(){
-        clearInterval(this.intervalId);
+        clearInterval(this.dataRefreshIntervalId);
+        clearInterval(this.styleRefreshIntervalId);
     }
 
     get showTestButton(){

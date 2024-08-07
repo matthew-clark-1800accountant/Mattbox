@@ -33,8 +33,8 @@ export default class McTimeSlot extends LightningElement {
     intervalId;
     connectedCallback(){
         this.showLine = Date.now() >= this.timeslotTime && Date.now() <= (this.timeslotTime + 30*60*1000);
-        clearInterval(this.intervalId);
-        this.intervalId = setInterval(()=>this.updateStyle(), 30*1000);
+        //clearInterval(this.intervalId);
+        //this.intervalId = setInterval(()=>this.updateStyle(), 30*1000);
         // var ul = this.template.querySelector("ul");
         // ul.addEventListener("click", debugLine);
     }
@@ -44,7 +44,7 @@ export default class McTimeSlot extends LightningElement {
     }
 
     disconnectedCallback(){
-        clearInterval(this.intervalId);
+        //clearInterval(this.intervalId);
     }
 
     @track

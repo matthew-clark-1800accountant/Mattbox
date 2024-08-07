@@ -150,7 +150,7 @@ export default class McRow extends LightningElement {
         }
         setTimeout((() => {
             if(this.savedScrollVal){
-                console.log(this.savedScrollVal);
+                //console.log(this.savedScrollVal);
                 this.rowScrollVal = this.savedScrollVal;
             } else { 
                 //console.log('resetting scroll');
@@ -251,9 +251,14 @@ export default class McRow extends LightningElement {
     rowRefreshedHandler(ev){
         this.refreshApexData();
         //this.resetScroll();
+        this.refreshTimeslotStyles();
+        console.log('refreshed');
+    }
+
+    @api
+    refreshTimeslotStyles(){
         var slotList = this.template.querySelectorAll('c-mc-time-slot');
         slotList.forEach((slot) => {slot.updateStyle(); slot.updateAppointments();});
-        console.log('refreshed');
     }
 
     rowPinnedHandler(ev){

@@ -405,8 +405,8 @@ global without sharing class CustomizeSandbox {
             urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_stage.php';
         } else if(env == 'gsdev') {
             urlSetting.Chargeover_URL__c = 'https://1800accountant-dev.chargeover.com';
-            urlSetting.Chargeover_User__c = 'BRsZymlzMcYphijWPFIq5dUk6NtJVrL8';
-            urlSetting.Chargeover_Pass__c = 'RH8lzb3Tuvae2GI9qcmsSFkjJABQP0nt';
+            urlSetting.Chargeover_User__c = 'NgsXD5my0LBHfS2VP9WqxcUkKdRezFET';
+            urlSetting.Chargeover_Pass__c = 'L6OlgDynH7XhvjrazFNYMIcsTx4ZdQuB';
             urlSetting.Scheduler_URL__c = 'https://1800accountant.com/sfapi/schedule/index_dev.php';
         } else {
             urlSetting.Chargeover_URL__c = '';

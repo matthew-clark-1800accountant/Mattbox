@@ -259,7 +259,7 @@ public without sharing class MulticalendarDataService {
     @AuraEnabled(cacheable=true)
     public static List<Timeslot> getRepTimeslots(String repId, String dateString){
         try {
-            Datetime startTime = (datetime)json.deserialize('"'+dateString+'"', datetime.class);
+            Datetime startTime = (Datetime)json.deserialize('"'+dateString+'"', datetime.class);
             Datetime endOfDay = startTime.addDays(1);
             List<String> eventTypesToInclude = new List<String>();
             if(Multicalendar_Show_All_Events__c.getOrgDefaults()?.Enabled__c == true){
@@ -324,7 +324,7 @@ public without sharing class MulticalendarDataService {
                 FROM Event
                 WHERE StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
-                AND Accountant_Portal_ID__c = :portalRep.Portal_Accountant_Id__c];
+                AND Portal_Team_Member__c = :portalRep.Id];
             } else {
                 throw new CustomException('invalid repId of type: '+((Id)repId).getSObjectType());
             }
@@ -519,10 +519,6 @@ public without sharing class MulticalendarDataService {
             List<String> profileNames = new List<String>{'InsideSalesUser - Zuora', 'Inbound User', 'Sales Manager'};
             List<Profile> salesProfiles = [SELECT Id FROM Profile WHERE Name IN :profileNames];
             
-
-            if(filterList.contains('Fulfillment Team')){
-                return;
-            }
             if(salesProfiles.isEmpty()){
                 System.debug('no sales profiles found');
             } else {
@@ -531,6 +527,9 @@ public without sharing class MulticalendarDataService {
                 String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Available_Restricted_Lead_Types__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true';
                 if(filterList != null && !filterList.isEmpty()){
                     for(String filter : filterList){
+                        if(filter.contains('Advisory')){
+                            return;
+                        }
                         if(filter != ''){
                             queryString += ' AND '+filter;
                         }
@@ -577,7 +576,8 @@ public without sharing class MulticalendarDataService {
             Event appointment = new Event(Id=eventId);
             if(String.valueOf(((Id)repId).getSObjectType()) == 'Portal_Team_Member__c'){
                 Portal_Team_Member__c rep = [SELECT Portal_Accountant_Id__c FROM Portal_Team_Member__c WHERE Id = :repId LIMIT 1];
-                appointment.Accountant_Portal_ID__c = rep.Portal_Accountant_Id__c;
+                //appointment.Accountant_Portal_ID__c = rep.Portal_Accountant_Id__c;
+                appointment.Portal_Team_Member__c = repId;
             } else {
                 appointment.OwnerId = repId;
             }
@@ -602,7 +602,7 @@ public without sharing class MulticalendarDataService {
             //     filterList = filterMap.get(false);
             // }
             System.debug('getReps()');
-            if(selectedViewLabel == 'Fulfillment Team'){
+            if(selectedViewLabel != null && selectedViewLabel.contains('Advisory')){
                 return getFulfillmentReps(filterList);
             }
             
@@ -663,12 +663,12 @@ public without sharing class MulticalendarDataService {
                         if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
                             r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                         }
-                        if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
-                            r.Tags.add(new Tag(r.Tags.size(),'UENI'));
-                        }
-                        if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
-                            r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
-                        }
+                        // if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                        //     r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                        // }
+                        // if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                        //     r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                        // }
                     } else {
                         r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                         r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
@@ -718,7 +718,7 @@ public without sharing class MulticalendarDataService {
                     repList.add(r);
                 }
                 if(repList.isEmpty()){
-                    return null;
+                    return repList;
                 } else {
                     return repList;
                 }
@@ -736,22 +736,23 @@ public without sharing class MulticalendarDataService {
             
             Id currentUserId = UserInfo.getUserId();
             //String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true AND Sales_Team__c!=null';
-            String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE Status__c = \'Active\' AND User__c != :currentUserId';
+            String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE Status__c = \'Active\' AND User__c != :currentUserId AND Accounting_Skills__c INCLUDES (\'Multicalendar\')';
             
-            // if(filterList != null && !filterList.isEmpty()){
-            //     for(String filter : filterList){
-            //         if(filter != '' && filter != null){
-            //             queryString += ' AND '+filter;
-            //         }
-            //     }
-            // }
+            if(filterList != null && !filterList.isEmpty()){
+                for(String filter : filterList){
+                    if(filter != '' && filter != null && !filter.contains('Advisory')){
+                        queryString += ' AND '+filter;
+                    }
+                }
+            }
             queryString += ' ORDER BY Name';
             System.debug(queryString);
             List<Portal_Team_Member__c> portalUsers = Database.query(queryString);
             List<Rep> repList = new List<Rep>();
             String dayString = Datetime.now().format('EEEE');
             for(Portal_Team_Member__c u : portalUsers){
-                String profileName = u.Role__c + u.Team_Role__c;
+                String profileName = (u.Role__c + u.Team_Role__c).toLowerCase();
+                System.debug(u.Name+': '+profileName);
                 Boolean isManager = profileName.contains('manager') || profileName.contains('admin') || profileName.contains('executive');
                 Rep r = new Rep(u.Id, u.Name, isManager, 'Fulfillment Team');
                 if(isManager){
@@ -760,19 +761,29 @@ public without sharing class MulticalendarDataService {
                 if(u.Team_Role__c == 'Team Lead'){
                     r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
                 }
+                if(u.Team_Role__c == 'Tax Advisor I'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Tax Advisor I'));
+                }
+                if(u.Team_Role__c == 'Tax Advisor II'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Tax Advisor II'));
+                }
                 if(u.Accounting_Skills__c != null){
-                    if(u.Accounting_Skills__c.contains('Cross-Sale')){
-                        r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+                    if(u.Accounting_Skills__c.contains('Crypto')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Crypto'));
                     }
-                    if(u.Accounting_Skills__c.contains('Paid Digital–CORE')){
-                        r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                    if(u.Accounting_Skills__c.contains('Trucking')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Trucking'));
                     }
-                    if(!u.Accounting_Skills__c.contains('Partner-Subscribed Prospects')){
-                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    if(u.Accounting_Skills__c.contains('Real Estate')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Real Estate'));
                     }
-                } else {
-                    r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
-                }          
+                    if(u.Accounting_Skills__c.contains('Non Profit')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Non Profit'));
+                    }
+                    if(u.Accounting_Skills__c.contains('E-Commerce')){
+                        r.Tags.add(new Tag(r.Tags.size(),'E-Commerce'));
+                    }
+                }      
                 // if(u.Available_Restricted_Lead_Sources__c != null){
                 //     if(!u.Available_Restricted_Lead_Sources__c.contains('ZenBusiness')){
                 //         r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
@@ -849,35 +860,47 @@ public without sharing class MulticalendarDataService {
     @AuraEnabled(cacheable=true)
     public static Rep getCurrentUserData(String currentView){
         try{
-            if(currentView == 'Fulfillment Team'){
+            System.debug('currentView: '+currentView);
+            if(currentView != null  && currentView.contains('Advisory')){
                 Id currentUserId = UserInfo.getUserId();
                 String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE User__c = :currentUserId';
                 System.debug(queryString);
                 List<Portal_Team_Member__c> currentUsers = Database.query(queryString);
+                if(currentUsers.isEmpty()){return null;}
                 Portal_Team_Member__c u = currentUsers[0];
     
-                String profileName = u.Role__c + u.Team_Role__c;
-                Boolean isManager = profileName.contains('manager') || profileName.contains('admin');
+                String profileName = (u.Role__c + u.Team_Role__c).toLowerCase();
+                System.debug(profileName);
+                Boolean isManager = profileName.contains('manager') || profileName.contains('admin') || profileName.contains('executive');
                 Rep r = new Rep(u.Id, u.Name, isManager, 'Fulfillment Team');
-
                 if(isManager){
                     r.Tags.add(new Tag(r.Tags.size(), 'Manager'));
                 }
                 if(u.Team_Role__c == 'Team Lead'){
                     r.Tags.add(new Tag(r.Tags.size(), 'Team Lead'));
                 }
+                if(u.Team_Role__c == 'Tax Advisor I'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Tax Advisor I'));
+                }
+                if(u.Team_Role__c == 'Tax Advisor II'){
+                    r.Tags.add(new Tag(r.Tags.size(), 'Tax Advisor II'));
+                }
                 if(u.Accounting_Skills__c != null){
-                    if(u.Accounting_Skills__c.contains('Cross-Sale')){
-                        r.Tags.add(new Tag(r.Tags.size(),'BNA Rep'));
+                    if(u.Accounting_Skills__c.contains('Crypto')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Crypto'));
                     }
-                    if(u.Accounting_Skills__c.contains('Paid Digital–CORE')){
-                        r.Tags.add(new Tag(r.Tags.size(),'Paid Digital'));
+                    if(u.Accounting_Skills__c.contains('Trucking')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Trucking'));
                     }
-                    if(!u.Accounting_Skills__c.contains('Partner-Subscribed Prospects')){
-                        r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    if(u.Accounting_Skills__c.contains('Real Estate')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Real Estate'));
                     }
-                } else {
-                    r.Tags.add(new Tag(r.Tags.size(),'No Partner Sub'));
+                    if(u.Accounting_Skills__c.contains('Non Profit')){
+                        r.Tags.add(new Tag(r.Tags.size(),'Non Profit'));
+                    }
+                    if(u.Accounting_Skills__c.contains('E-Commerce')){
+                        r.Tags.add(new Tag(r.Tags.size(),'E-Commerce'));
+                    }
                 }
                 return r;
 
@@ -919,12 +942,12 @@ public without sharing class MulticalendarDataService {
                     if(!u.Available_Restricted_Lead_Sources__c.contains('Tailor Brands')){
                         r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
                     }
-                    if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
-                        r.Tags.add(new Tag(r.Tags.size(),'UENI'));
-                    }
-                    if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
-                        r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
-                    }
+                    // if(u.Available_Restricted_Lead_Sources__c.contains('UENI')){
+                    //     r.Tags.add(new Tag(r.Tags.size(),'UENI'));
+                    // }
+                    // if(u.Available_Restricted_Lead_Sources__c.contains('Mylo')){
+                    //     r.Tags.add(new Tag(r.Tags.size(),'Mylo'));
+                    // }
                 } else {
                     r.Tags.add(new Tag(r.Tags.size(),'No Zen'));
                     r.Tags.add(new Tag(r.Tags.size(),'No Tailor Brands'));
@@ -955,34 +978,53 @@ public without sharing class MulticalendarDataService {
 
     //todo: add support for custom metadata queried by the current user
     @AuraEnabled(cacheable=true)
-    public static List<CalendarView> getCalendarViews(){
+    public static List<CalendarView> getCalendarViews(String currentUserId){
         try{
+            User currentUser = [SELECT Profile.Name, Department__c FROM User WHERE ID = :currentUserId LIMIT 1];
             //Map<String, String> viewMap = new Map<String, String>();
+            String profileName = currentUser.Profile.Name.toLowerCase();
+            Boolean isManager = profileName.contains('admin');
             List<CalendarView> viewList = new List<CalendarView>();
-            viewList.add(new CalendarView('All Reps', '(NOT (Profile.Name LIKE \'%admin%\' OR Profile.Name LIKE \'%manager%\' OR Profile.Name LIKE \'%appointment setter%\' OR Profile.Name LIKE \'%executive%\'))')); //default filter
-            viewList.add(new CalendarView('Queues', 'Name IN (\'Do Not Reply\', \'General Lead Queue\', \'Dead Leads Queue\')')); //default filter
-            viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
-            viewList.add(new CalendarView('Client Success', 'Userrole.Name = \'CS Agent\''));// 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\'')); 
-            viewList.add(new CalendarView('Fulfillment Team', 'Fulfillment Team'));
-            Schema.DescribeFieldResult fieldResult = User.Sales_Team__c.getDescribe();
-            for(Schema.PicklistEntry ple : fieldResult.getPicklistValues()){
-                //if(fieldResult.isActive()){
-                    String label;
-                    String pleLabel = ple.getLabel();
-                    if(pleLabel.contains('Team')){
-                        label=pleLabel;
-                    } else if (pleLabel.contains(' ')){
-                        if(pleLabel.charAt(pleLabel.length()-1) == 115){
-                            label=(pleLabel+'\' Team');
+            System.debug(currentUser);
+            System.debug('isManager: '+isManager);
+            //viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
+
+            if(currentUser.Department__c == 'Accounting' || currentUser.Department__c == 'Fulfillment' || currentUser.Department__c == 'Customer Service' || isManager){
+                viewList.add(new CalendarView('Advisory - Central', 'Timezone__c = \'Central\''));
+                viewList.add(new CalendarView('Advisory - Pacific', 'Timezone__c = \'Pacific\''));
+                viewList.add(new CalendarView('Advisory - Eastern', 'Timezone__c = \'Eastern\''));
+                viewList.add(new CalendarView('Advisory - Other', 'Timezone__c = null'));    
+                viewList.add(new CalendarView('Client Success', 'Userrole.Name = \'CS Agent\''));// 'Team_Role__c = \'Operations Team\' AND Department__c = \'Customer Service\''));     
+            }
+            if(currentUser.Department__c == 'Sales' || isManager){
+                viewList.add(new CalendarView('All Sales Reps', '(NOT (Profile.Name LIKE \'%admin%\' OR Profile.Name LIKE \'%manager%\' OR Profile.Name LIKE \'%appointment setter%\' OR Profile.Name LIKE \'%executive%\'))')); //default filter
+                viewList.add(new CalendarView('Queues', 'Name IN (\'Do Not Reply\', \'General Lead Queue\', \'Dead Leads Queue\')')); //default filter
+                viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
+            
+                Schema.DescribeFieldResult fieldResult = User.Sales_Team__c.getDescribe();
+                for(Schema.PicklistEntry ple : fieldResult.getPicklistValues()){
+                    //if(fieldResult.isActive()){
+                        String label;
+                        String pleLabel = ple.getLabel();
+                        if(pleLabel == 'Fulfillment'){continue;}
+                        if(pleLabel.contains('Team')){
+                            label=pleLabel;
+                        } else if (pleLabel.contains(' ')){
+                            if(pleLabel.charAt(pleLabel.length()-1) == 115){
+                                label=(pleLabel+'\' Team');
+                            } else {
+                                label=(pleLabel+'\'s Team');
+                            }
                         } else {
-                            label=(pleLabel+'\'s Team');
+                            label=(pleLabel+' Team');
                         }
-                    } else {
-                        label=(pleLabel+' Team');
-                    }
-                    viewList.add(new CalendarView(label, 'Sales_Team__c = \''+pleLabel+'\''));
-                    //viewMap.put(label, 'Sales_Team__c = '+pleLabel);
-                //}                
+                        viewList.add(new CalendarView(label, 'Sales_Team__c = \''+pleLabel+'\''));
+                        //viewMap.put(label, 'Sales_Team__c = '+pleLabel);
+                    //}                
+                }
+            }
+            if(viewList.isEmpty()){
+                viewList.add(new CalendarView('No Views Found', 'Name = null'));
             }
             System.debug(viewList);
             return viewList;            

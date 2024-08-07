@@ -27,7 +27,7 @@ export default class McRep extends LightningElement {
     }
 
     connectedCallback(){
-        console.log('currentview: '+this.currentview);
+        //console.log('currentview: '+this.currentview);
     }
 
     // constructor(){

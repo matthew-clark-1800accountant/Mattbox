@@ -83,7 +83,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         Variant: "success"
     }
     //getters for field values
-    iconMap = new Map([
+    iconMap = new MapWithDefault([
         ['No-show',                 {Name: "utility:outbound_call", Variant: "error"}],
         ['Consulted/Rescheduled',   {Name: "utility:event"}],
         ['Consulted/Cancelled',     {Name: "utility:close", Variant: "error"}],
@@ -101,10 +101,12 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Cancelled',               {Name: "utility:close", Variant: "error"}],
         ['Failure to Call',         {Name: "utility:warning", Variant: "error"}],
         ['Blocked',                 {Name: ""}],
-        ['heading',                 {Name: "utility:connected_apps", Variant: "warning"}]
-    ]);
+        ['heading',                 {Name: "utility:connected_apps", Variant: "warning"}], 
+        ['Completed',               {Name: "utility:success", Variant: "success"}],
+        ['Not Completed',           {Name: "utility:close", Variant: "error"}]
+    ], {Name: "utility:question_mark", Variant: "warning"});
     
-    headingStyleMap = new Map([
+    headingStyleMap = new MapWithDefault([
         ['No-show',                 'text-heading'],
         ['Consulted/Rescheduled',   'text-heading'],
         ['Consulted/Cancelled',     'text-heading'],
@@ -123,10 +125,12 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Not Qualified',           'text-heading'],
         ['Failure to Call',         'text-heading'],
         ['Blocked',                 'text-heading'],
+        ['Completed',               'text-heading'],
+        ['Not Completed',           'text-heading'],
         ['heading',                 'text-heading']
-    ]);
+    ], 'text-heading');
 
-    subheadingStyleMap = new Map([
+    subheadingStyleMap = new MapWithDefault([
         ['No-show',                 'text-subheading'],
         ['Consulted/Rescheduled',   'text-subheading'],
         ['Consulted/Cancelled',     'text-subheading'],
@@ -145,10 +149,12 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Not Qualified',           'text-subheading'],
         ['Failure to Call',         'text-subheading'],
         ['Blocked',                 'text-subheading'],
+        ['Completed',               'text-subheading'],
+        ['Not Completed',           'text-subheading'],
         ['heading',                 'text-subheading']
-    ]);
+    ], 'text-subheading');
 
-    initialsStyleMap = new Map([
+    initialsStyleMap = new MapWithDefault([
         ['No-show',                 'text-initials'],
         ['Consulted/Rescheduled',   'text-initials'],
         ['Consulted/Cancelled',     'text-initials'],
@@ -167,10 +173,12 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Not Qualified',           'text-initials'],
         ['Failure to Call',         'text-initials'],
         ['Blocked',                 'text-initials'],
+        ['Completed',               'text-initials'],
+        ['Not Completed',           'text-initials'],
         ['heading',                 'text-initials']
-    ]);
+    ], 'text-initials');
 
-    blockStyleMap = new Map([
+    blockStyleMap = new MapWithDefault([
         ['No-show',                 'block slds-block'],
         ['Consulted/Rescheduled',   'block slds-block'],
         ['Consulted/Cancelled',     'block slds-block'],
@@ -189,8 +197,10 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         ['Not Qualified',           'block slds-block'],
         ['Failure to Call',         'soft-error-block slds-block'],
         ['Blocked',                 'blocked-block slds-block'],
+        ['Completed',               'block slds-block'],
+        ['Not Completed',           'block slds-block'],
         ['heading',                 'block slds-block']
-    ]);
+    ], 'block slds-block');
 
     connectedCallback(){
         //console.log('appointment.connectedCallback');
@@ -208,13 +218,13 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
             //initialize appointment heading
             this.updateStyle();
             //refreshApex(this.numberOfEndedCalls);
-            clearInterval(this.intervalId);
-            this.intervalId = setInterval(() => this.updateStyle(), 20*1000);
+            //clearInterval(this.intervalId);
+            //this.intervalId = setInterval(() => this.updateStyle(), 20*1000);
         }
     }
 
     disconnectedCallback(){
-        clearInterval(this.intervalId);
+        //clearInterval(this.intervalId);
     }
 
     @api
@@ -273,32 +283,29 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
             // }
         }
 
-        if(this.headingText == 'heading'){
-            // console.log('now: '+now);
-            // console.log(JSON.stringify(this.appointment));
-            // console.log('numberOfEndedCalls: '+this.numberOfEndedCalls);
-            // console.log('callInProgress: '+this.callInProgress);
-            // console.log('totalNumberOfCalls: '+this.totalNumberOfCalls);
-        }
-
-        //this.subheadingText = this.appointment?.LeadSource;
            
         //initialize icon
-        if(this.iconMap.has(this.headingText)){
-            this.icon = this.iconMap.get(this.headingText);
-        }
-        if(this.headingStyleMap.has(this.headingText)){
-            this.textHeadingStyle = this.headingStyleMap.get(this.headingText);
-        }
-        if(this.subheadingStyleMap.has(this.headingText)){
-            this.textSubheadingStyle = this.subheadingStyleMap.get(this.headingText);
-        }
-        if(this.initialsStyleMap.has(this.headingText)){
-            this.textInitialsStyle = this.initialsStyleMap.get(this.headingText);
-        }
-        if(this.blockStyleMap.has(this.headingText)){
-            this.blockStyle = this.blockStyleMap.get(this.headingText);
-        }
+        // if(this.iconMap.has(this.headingText)){
+        //     this.icon = this.iconMap.get(this.headingText);
+        // }
+        // if(this.headingStyleMap.has(this.headingText)){
+        //     this.textHeadingStyle = this.headingStyleMap.get(this.headingText);
+        // }
+        // if(this.subheadingStyleMap.has(this.headingText)){
+        //     this.textSubheadingStyle = this.subheadingStyleMap.get(this.headingText);
+        // }
+        // if(this.initialsStyleMap.has(this.headingText)){
+        //     this.textInitialsStyle = this.initialsStyleMap.get(this.headingText);
+        // }
+        // if(this.blockStyleMap.has(this.headingText)){
+        //     this.blockStyle = this.blockStyleMap.get(this.headingText);
+        // }
+
+        this.icon = this.iconMap.get(this.headingText);
+        this.textHeadingStyle = this.headingStyleMap.get(this.headingText);
+        this.textSubheadingStyle = this.subheadingStyleMap.get(this.headingText);
+        this.textInitialsStyle = this.initialsStyleMap.get(this.headingText);
+        this.blockStyle = this.blockStyleMap.get(this.headingText);
         if(this.headingText.length > 15){
             var dispoDiv = this.template.querySelector('.'+this.textHeadingStyle);
             dispoDiv?.style.setProperty('font-size', '12px')
@@ -393,7 +400,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
             }
             console.log(miniDetails);
             console.log('callInProgress: '+this.callInProgress);
-            console.log('numberOfEndedCalls: '+this.numberOfEndedCalls);
+            console.log('numberOfEndedCalls: '+this.numberOfEndedCalls.data);
             console.log('NumberOfCalls: '+this.appointment.NumberOfCalls);
             this.dispatchEvent(new CustomEvent('apptclicked', {
                 'bubbles': true,
@@ -414,5 +421,28 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         //         actionName: 'view'
         //     }
         // });
+    }
+}
+
+class MapWithDefault{
+    mapData;
+    defaultValue;
+
+    constructor(mapData, defaultValue){
+        try{
+            this.mapData = new Map(mapData);
+        }catch (e){
+            this.mapData = mapData;
+        }
+        
+        this.defaultValue = defaultValue;
+    }
+
+    get(key){
+        if(this.mapData?.has(key)){
+            return this.mapData.get(key);
+        } else {
+            return this.defaultValue;
+        }
     }
 }

@@ -64,7 +64,7 @@
                                 </div>
                             </lightning-layout-item>    
                         </template>    
-                        <lightning-layout-item>
+                        <lightning-layout-item style="margin-top:20px;">
                             <lightning-button style="margin:20px;" label="Create Calendar Blocks" title="Non-primary action" onclick={launchBlockFlow} class="slds-m-left_x-small"></lightning-button>
                         </lightning-layout-item>     
                         
@@ -83,7 +83,7 @@
         <div class="table-container">
             <c-mc-appt-mini-details class="minidetails" tabindex="0" onapptreassigned={reassignmentHandler} details={miniDetails} available-reps={repList}></c-mc-appt-mini-details>
             <template if:true={isLoading}>
-                <lightning-spinner variant="brand" size="medium"> </lightning-spinner>
+                <lightning-spinner variant="brand" size="medium" alternative-text="Loading Data"> </lightning-spinner>
             </template>
             <lightning-flow if:true={showBlockFlow}
                 flow-api-name='Create_User_Blocks'
@@ -124,7 +124,7 @@
                                     </template>     -->
                                     <c-mc-row rep={it.value.Rep} is-last-row={it.last} row-scroll-val={scrollValue} date-string={selectedDate} row-id={it.value.Id} column-width={colWidth} 
                                         onrowdraggedfrom={rowDraggedFromHandler} onupdaterow={onApptDraggedHandler} onapptclicked={apptClickedHandler} onrowscroll={rowScrollHandler}
-                                        onrowloaded={scrollToNow} hide-blocked-reps={blockToggled} onrowpinned={rowPinnedHandler} currentview={filterViewValue}></c-mc-row>
+                                         hide-blocked-reps={blockToggled} onrowpinned={rowPinnedHandler} currentview={filterViewValue}></c-mc-row>
                                                                                     
                                 </li>
                             </template>                  
