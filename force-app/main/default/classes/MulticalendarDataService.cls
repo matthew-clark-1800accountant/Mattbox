@@ -975,6 +975,23 @@ public without sharing class MulticalendarDataService {
         }
     }
 
+    @AuraEnabled(cacheable=true)
+    public static String getRepPresence(String repId){
+        String repPresence = 'no presence found';
+        if(String.valueOf(((Id)repId).getSObjectType()) == 'User'){
+            User rep = [SELECT Presence__c FROM User WHERE Id = :repId LIMIT 1]?.get(0);
+            if(rep?.Presence__c != null){
+                repPresence = rep.Presence__c;
+            }
+        } else if(String.valueOf(((Id)repId).getSObjectType()) == 'Portal_Team_Member__c'){
+            Portal_Team_Member__c rep = [SELECT Presence__c FROM Portal_Team_Member__c WHERE Id = :repId LIMIT 1]?.get(0);
+            if(rep?.Presence__c != null){
+                repPresence = rep.Presence__c;
+            }
+        }
+        return repPresence;
+    }
+
 
     //todo: add support for custom metadata queried by the current user
     @AuraEnabled(cacheable=true)
