@@ -280,7 +280,11 @@ export default class McTable extends LightningElement {
             console.log('**getviews');
             console.log(JSON.stringify(result));
             this.availableViewFilters = [...result];
-            this.handleViewSelection({detail:{value: this.availableViewFilters[0]?.value}})
+
+            var filter = this.availableViewFilters[0];
+            //if(filter?.label == 'All Sales Reps' && this.availableViewFilters.length > 1){ filter = this.availableViewFilters[1]; }
+            this.handleViewSelection({detail:{value: filter.value}});
+
             setTimeout(() => {
                 if(this.currentUser?.data?.SalesTeam){
                     console.log('searching for '+this.currentUser?.data?.SalesTeam)
@@ -566,7 +570,18 @@ export default class McTable extends LightningElement {
         this.scrollValue = scrollVal;
         if(this.timeslotRow){this.timeslotRow.scrollLeft = scrollVal;}
         
-        if(this.template.querySelector('.timeslot-row')){this.template.querySelector('.timeslot-row').scrollLeft = scrollVal;}
+        setTimeout((val) => {
+            var timeslotRow = this.template.querySelector('.timeslot-row');
+            if(timeslotRow && !this.timeslotRow){
+                this.timeslotRow = timeslotRow;
+            }
+            if(timeslotRow){
+                timeslotRow.scrollLeft = val;
+            }
+            console.log('timeslotRow: '+JSON.stringify(timeslotRow));
+            console.log('timeout val: '+val);
+        }, 200, scrollVal);
+        
         console.log(this.template.querySelector('.timeslot-row')?.scrollLeft);
         // console.log('pageNumber: '+this.pageValue);
         this.closeMiniDetails();

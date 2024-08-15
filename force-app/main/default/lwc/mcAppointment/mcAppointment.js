@@ -84,7 +84,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
     }
     //getters for field values
     iconMap = new MapWithDefault([
-        ['No-show',                 {Name: "utility:outbound_call", Variant: "error"}],
+        ['No Show',                 {Name: "utility:outbound_call", Variant: "error"}],
         ['Consulted/Rescheduled',   {Name: "utility:event"}],
         ['Consulted/Cancelled',     {Name: "utility:close", Variant: "error"}],
         ['Follow-Up',               {Name: "utility:loop"}],
@@ -107,7 +107,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
     ], {Name: "utility:question_mark", Variant: "warning"});
     
     headingStyleMap = new MapWithDefault([
-        ['No-show',                 'text-heading'],
+        ['No Show',                 'text-heading'],
         ['Consulted/Rescheduled',   'text-heading'],
         ['Consulted/Cancelled',     'text-heading'],
         ['Follow-Up',               'text-heading'],
@@ -131,7 +131,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
     ], 'text-heading');
 
     subheadingStyleMap = new MapWithDefault([
-        ['No-show',                 'text-subheading'],
+        ['No Show',                 'text-subheading'],
         ['Consulted/Rescheduled',   'text-subheading'],
         ['Consulted/Cancelled',     'text-subheading'],
         ['Follow-Up',               'text-subheading'],
@@ -155,7 +155,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
     ], 'text-subheading');
 
     initialsStyleMap = new MapWithDefault([
-        ['No-show',                 'text-initials'],
+        ['No Show',                 'text-initials'],
         ['Consulted/Rescheduled',   'text-initials'],
         ['Consulted/Cancelled',     'text-initials'],
         ['Follow-Up',               'text-initials'],
@@ -179,7 +179,7 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
     ], 'text-initials');
 
     blockStyleMap = new MapWithDefault([
-        ['No-show',                 'block slds-block'],
+        ['No Show',                 'block slds-block'],
         ['Consulted/Rescheduled',   'block slds-block'],
         ['Consulted/Cancelled',     'block slds-block'],
         ['Follow-Up',               'block slds-block'],

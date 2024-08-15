@@ -2,12 +2,12 @@
     <div id="rep-block" class="rep-container">
         <div class="rep-inner">
             <lightning-icon icon-name={icon.Name} variant={icon.Variant}
-                title="success variant x-small" style="margin-right: 6px; margin-top: 1px;" size={icon.Size}></lightning-icon>
+                title={iconTitle} style="margin-right: 6px; margin-top: 1px;" size={icon.Size}></lightning-icon>
             <div id="rep-name" class="rep-name">{repName}</div>
             <lightning-button-icon icon-name="utility:pin" class="menu-icon" onclick={pinClicked}
-                    title="success variant x-small" size="x-small"></lightning-button-icon>
+                    title="Pin" size="x-small"></lightning-button-icon>
             <lightning-button-icon icon-name="utility:refresh" class="menu-icon" onclick={refreshClicked}
-                    title="success variant x-small" size="x-small"></lightning-button-icon>
+                    title="Refresh" size="x-small"></lightning-button-icon>
         </div>        
         <template lwc:if={showTags}>
             <div class="rep-tag-list">

@@ -39,6 +39,8 @@ public without sharing class MulticalendarDataService {
         public String PartsString;
         @auraEnabled 
         public String LeadAccountName;
+        @auraEnabled 
+        public String BusinessName;
 
         public Appointment(String Id,
           String Disposition,
@@ -52,7 +54,8 @@ public without sharing class MulticalendarDataService {
           String Subject,
           Decimal NumberOfCalls,
           String PartsString,
-          String LeadAccountName){
+          String LeadAccountName,
+          String BusinessName){
             this.Id=Id;
             this.Disposition=Disposition;
             this.SecondaryDisposition=SecondaryDisposition;
@@ -66,6 +69,7 @@ public without sharing class MulticalendarDataService {
             this.NumberOfCalls=NumberOfCalls;
             this.PartsString = PartsString;
             this.LeadAccountName = LeadAccountName;
+            this.BusinessName = BusinessName;
         }
     }
 
@@ -280,6 +284,7 @@ public without sharing class MulticalendarDataService {
                 EndDateTime,
                 Subject,
                 Who.Name,
+                What.Name,
                 Lead_Type_New__c
                 FROM Event
                 WHERE OwnerId IN :managerIds
@@ -300,6 +305,7 @@ public without sharing class MulticalendarDataService {
                 EndDateTime,
                 Subject,
                 Who.Name,
+                What.Name,
                 Lead_Type_New__c
                 FROM Event
                 WHERE OwnerId = :repId
@@ -320,6 +326,7 @@ public without sharing class MulticalendarDataService {
                 EndDateTime,
                 Subject,
                 Who.Name,
+                What.Name,
                 Lead_Type_New__c
                 FROM Event
                 WHERE StartDateTime >= :startTime
@@ -393,7 +400,8 @@ public without sharing class MulticalendarDataService {
                         subject,
                         (ev1.of_Calls_for_Event__c == null ? 0 : ev1.of_Calls_for_Event__c),
                         parts,
-                        ev1.Who.Name
+                        ev1.Who?.Name,
+                        ev1.What?.Name
                     ));
                 }
 
@@ -415,7 +423,8 @@ public without sharing class MulticalendarDataService {
                     subject,
                     (ev.of_Calls_for_Event__c == null ? 0 : ev.of_Calls_for_Event__c),
                     parts,
-                    ev.Who.Name
+                    ev.Who?.Name,
+                    ev.What?.Name
                 ));
             }
 
@@ -602,7 +611,7 @@ public without sharing class MulticalendarDataService {
             //     filterList = filterMap.get(false);
             // }
             System.debug('getReps()');
-            if(selectedViewLabel != null && selectedViewLabel.contains('Advisory')){
+            if(selectedViewLabel != null && selectedViewLabel?.contains('Advisory')){
                 return getFulfillmentReps(filterList);
             }
             
@@ -735,8 +744,9 @@ public without sharing class MulticalendarDataService {
             System.debug('getFulfillmentReps()');
             
             Id currentUserId = UserInfo.getUserId();
+            System.debug('currentUserId: '+currentUserId);
             //String queryString = 'SELECT Id, Name, Skills_Sales__c, Available_Restricted_Lead_Sources__c, Profile.Name, Sales_Management_Role__c FROM User WHERE ProfileId IN :profileIds AND Id != :currentUserId AND IsActive=true AND Sales_Team__c!=null';
-            String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE Status__c = \'Active\' AND User__c != :currentUserId AND Accounting_Skills__c INCLUDES (\'Multicalendar\')';
+            String queryString = 'SELECT Id, User__c, Accounting_Skills__c, Languages__c, Name, Presence__c, Role__c, Team_Role__c FROM Portal_Team_Member__c WHERE Status__c = \'Active\' AND User__c != :currentUserId AND Accounting_Skills__c INCLUDES (\'Multicalendar\', \'Multi-calendar\' )';
             
             if(filterList != null && !filterList.isEmpty()){
                 for(String filter : filterList){
@@ -748,6 +758,7 @@ public without sharing class MulticalendarDataService {
             queryString += ' ORDER BY Name';
             System.debug(queryString);
             List<Portal_Team_Member__c> portalUsers = Database.query(queryString);
+            System.debug('queryResults:' +portalUsers);
             List<Rep> repList = new List<Rep>();
             String dayString = Datetime.now().format('EEEE');
             for(Portal_Team_Member__c u : portalUsers){
@@ -846,7 +857,7 @@ public without sharing class MulticalendarDataService {
                 repList.add(r);
             }
             if(repList.isEmpty()){
-                return null;
+                return repList;
             } else {
                 return repList;
             }

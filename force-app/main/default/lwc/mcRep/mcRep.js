@@ -49,8 +49,12 @@ export default class McRep extends LightningElement {
             console.log(error);
         } else if(data) {
             this.icon = this.statusToIconMap.get(this.presenceToStatusMap.get(data));
+            this.iconTitle = this.presenceToStatusMap.get(data);
         }
     }
+
+    @api
+    iconTitle;
 
     intervalId;
     connectedCallback(){
