@@ -283,9 +283,9 @@ public without sharing class MulticalendarDataService {
                 StartDateTime,
                 EndDateTime,
                 Subject,
-                Who.Name,
-                What.Name,
-                Lead_Type_New__c
+                TYPEOF Who WHEN Lead THEN Name, Company WHEN Contact THEN Name,Account.Name END,
+                Lead_Type_New__c,
+                Performance_Tracking_ID__c
                 FROM Event
                 WHERE OwnerId IN :managerIds
                 //AND StartDateTime = today];
@@ -304,9 +304,9 @@ public without sharing class MulticalendarDataService {
                 StartDateTime,
                 EndDateTime,
                 Subject,
-                Who.Name,
-                What.Name,
-                Lead_Type_New__c
+                TYPEOF Who WHEN Lead THEN Name, Company WHEN Contact THEN Name,Account.Name END,
+                Lead_Type_New__c,
+                Performance_Tracking_ID__c
                 FROM Event
                 WHERE OwnerId = :repId
                 //AND StartDateTime = today];
@@ -325,9 +325,9 @@ public without sharing class MulticalendarDataService {
                 StartDateTime,
                 EndDateTime,
                 Subject,
-                Who.Name,
-                What.Name,
-                Lead_Type_New__c
+                TYPEOF Who WHEN Lead THEN Name, Company WHEN Contact THEN Name,Account.Name END,
+                Lead_Type_New__c,
+                Performance_Tracking_ID__c
                 FROM Event
                 WHERE StartDateTime >= :startTime
                 AND StartDateTime < :endOfDay
@@ -350,6 +350,18 @@ public without sharing class MulticalendarDataService {
             for(Event ev : eventList){
                 System.debug(ev);
                 String initials = '';
+                String businessName;
+                String contactName;
+
+                if(ev.Who instanceof Lead){
+                    businessName = ((Lead)ev.Who).Company;
+                    contactName = ((Lead)ev.Who).Name;
+                }
+                if(ev.Who instanceof Contact){
+                    businessName = ((Contact)ev.Who).Account.Name;
+                    contactName = ((Contact)ev.Who).Name;
+                }
+
                 if(ev.Type_of_Appointment__c != null){
                     if(ev.Type_of_Appointment__c == 'Tax Savings Analysis'){
                         initials = 'TSA';
@@ -362,7 +374,10 @@ public without sharing class MulticalendarDataService {
                         initials = ev.Type_of_Appointment__c.substring(0,2);
                     }
                     initials = initials.toUpperCase();
-                }            
+                }
+                if(ev.Performance_Tracking_ID__c == 'Self-Set' || ev.Performance_Tracking_ID__c == 'Self-Rescheduled'){
+                    initials += ' (SS)';
+                }
 
                 Long timeslotTime;
                 //System.debug(ev.StartDateTime);
@@ -400,8 +415,8 @@ public without sharing class MulticalendarDataService {
                         subject,
                         (ev1.of_Calls_for_Event__c == null ? 0 : ev1.of_Calls_for_Event__c),
                         parts,
-                        ev1.Who?.Name,
-                        ev1.What?.Name
+                        contactName,
+                        businessName
                     ));
                 }
 
@@ -423,8 +438,8 @@ public without sharing class MulticalendarDataService {
                     subject,
                     (ev.of_Calls_for_Event__c == null ? 0 : ev.of_Calls_for_Event__c),
                     parts,
-                    ev.Who?.Name,
-                    ev.What?.Name
+                    contactName,
+                    businessName
                 ));
             }
 
@@ -1003,6 +1018,15 @@ public without sharing class MulticalendarDataService {
         return repPresence;
     }
 
+    public static Map<Id, String> getFulfillmentSupervisors(){
+        Map<Id, String> idToName = new Map<Id, String>();
+        for(Portal_Team_Member__c rep : [SELECT Name, Supervisor__r.Id, Supervisor__r.Name FROM Portal_Team_Member__c WHERE Status__c = 'Active' AND Accounting_Skills__c INCLUDES ('Multicalendar', 'Multi-calendar' ) AND Supervisor__c != null]){
+            if(rep.Supervisor__r?.Id != null){
+                idToName.put(rep.Supervisor__r.Id, rep.Supervisor__r.Name);
+            }
+        }
+        return idToName;
+    }
 
     //todo: add support for custom metadata queried by the current user
     @AuraEnabled(cacheable=true)
@@ -1018,6 +1042,11 @@ public without sharing class MulticalendarDataService {
             //viewList.add(new CalendarView('Paid Digital', 'Skills_Sales__c includes (\'Paid Digital–CORE\')')); //Paid Digital 
 
             if(currentUser.Department__c == 'Accounting' || currentUser.Department__c == 'Fulfillment' || currentUser.Department__c == 'Customer Service' || isManager){
+                Map<Id, String> supervisorMap = getFulfillmentSupervisors();
+                for(Id supervisorId : supervisorMap.keySet()){
+                    viewList.add(new CalendarView('Advisory - '+supervisorMap.get(supervisorId)+'\'s Team', '(Supervisor__c = \''+supervisorId+'\' OR Name = \''+supervisorMap.get(supervisorId)+'\')'));
+                }
+                
                 viewList.add(new CalendarView('Advisory - Central', 'Timezone__c = \'Central\''));
                 viewList.add(new CalendarView('Advisory - Pacific', 'Timezone__c = \'Pacific\''));
                 viewList.add(new CalendarView('Advisory - Eastern', 'Timezone__c = \'Eastern\''));

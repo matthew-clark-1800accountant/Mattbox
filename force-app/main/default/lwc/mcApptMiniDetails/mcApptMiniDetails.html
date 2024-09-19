@@ -17,13 +17,15 @@
             
             
             <div id="name">{details.name}</div>
+            <div id="businessName">{details.businessname}</div>
+            
             <div id="source">{details.source}</div>
             <!-- <div id="icon"></div>
             <div id="disposition">{details.disposition}</div> -->
             
             <div id="disposition">
             <lightning-icon icon-name={details.icon.Name} variant={details.icon.Variant}
-            title="success variant xx-small" size="x-small"></lightning-icon>
+            title="success variant xx-small" size="x-small" style="margin-right: 5px;"></lightning-icon>
             {details.disposition}</div>
             <!-- <div>{details.rep.Name}</div> -->
             <lightning-combobox class="repBox" style="width: 180px; margin-bottom:10px;"

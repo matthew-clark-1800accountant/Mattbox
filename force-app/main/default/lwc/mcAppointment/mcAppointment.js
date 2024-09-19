@@ -251,6 +251,9 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
             } else if(!this.appointment.SecondaryDisposition && (this.appointment.Disposition == 'Consulted' || this.appointment.Disposition == 'Not Qualified')){
                 this.headingTest = 'Missing Disposition';
             }
+            if(this.headingText == 'Scheduled'){
+                this.headingText = 'Upcoming';
+            }
         } else {
             if(this.appointment.AppointmentType == 'Calendar Block'){
                 this.headingText = 'Blocked'
@@ -284,22 +287,6 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
         }
 
            
-        //initialize icon
-        // if(this.iconMap.has(this.headingText)){
-        //     this.icon = this.iconMap.get(this.headingText);
-        // }
-        // if(this.headingStyleMap.has(this.headingText)){
-        //     this.textHeadingStyle = this.headingStyleMap.get(this.headingText);
-        // }
-        // if(this.subheadingStyleMap.has(this.headingText)){
-        //     this.textSubheadingStyle = this.subheadingStyleMap.get(this.headingText);
-        // }
-        // if(this.initialsStyleMap.has(this.headingText)){
-        //     this.textInitialsStyle = this.initialsStyleMap.get(this.headingText);
-        // }
-        // if(this.blockStyleMap.has(this.headingText)){
-        //     this.blockStyle = this.blockStyleMap.get(this.headingText);
-        // }
 
         this.icon = this.iconMap.get(this.headingText);
         this.textHeadingStyle = this.headingStyleMap.get(this.headingText);
@@ -396,12 +383,10 @@ export default class McAppointment extends NavigationMixin(LightningElement) {
                 icon: this.icon,
                 rep: this.rep.Id,
                 eventId: this.appointment.Id,
-                rejections: this.repRejections?.data
+                rejections: this.repRejections?.data,
+                businessname: this.appointment.BusinessName
             }
             console.log(miniDetails);
-            console.log('callInProgress: '+this.callInProgress);
-            console.log('numberOfEndedCalls: '+this.numberOfEndedCalls.data);
-            console.log('NumberOfCalls: '+this.appointment.NumberOfCalls);
             this.dispatchEvent(new CustomEvent('apptclicked', {
                 'bubbles': true,
                 'composed': true,

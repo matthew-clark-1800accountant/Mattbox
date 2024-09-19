@@ -75,13 +75,14 @@
 }
 .text-initials {
     /* Abbreviation */
-    width: 14px;
+    /* width: 14px; */
     height: 16px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
     font-size: 10px;
     line-height: 16px;
+    text-align: right;
 
     /* identical to box height, or 160% */
     letter-spacing: 0.045em;
@@ -169,7 +170,7 @@
     /* Abbreviation */
 
 
-width: 14px;
+/* width: 14px; */
 height: 16px;
 
 font-family: 'Poppins';
@@ -178,7 +179,7 @@ font-weight: 600;
 font-size: 10px;
 line-height: 16px;
 /* identical to box height, or 160% */
-
+text-align: right;
 letter-spacing: 0.045em;
 font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
 
@@ -279,7 +280,7 @@ flex-grow: 1;
     /* Abbreviation */
 
 
-width: 14px;
+/* width: 14px; */
 height: 16px;
 
 font-family: 'Poppins';
@@ -289,6 +290,7 @@ font-size: 10px;
 line-height: 16px;
 /* identical to box height, or 160% */
 
+text-align: right;
 letter-spacing: 0.045em;
 font-feature-settings: 'ss01' on, 'ss02' on, 'ss04' on;
 

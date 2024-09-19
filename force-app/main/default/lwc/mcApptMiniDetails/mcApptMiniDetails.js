@@ -36,6 +36,11 @@ export default class McApptMiniDetails extends NavigationMixin(LightningElement)
     }
 
     @api
+    get hasBusinessName(){
+      return this.details?.businessname;
+    }
+
+    @api
     availableReps;
     @api
     detailStyle = '';

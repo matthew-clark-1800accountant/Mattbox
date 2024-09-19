@@ -64,9 +64,12 @@
                                 </div>
                             </lightning-layout-item>    
                         </template>    
-                        <lightning-layout-item style="margin-top:20px;">
-                            <lightning-button style="margin:20px;" label="Create Calendar Blocks" title="Non-primary action" onclick={launchBlockFlow} class="slds-m-left_x-small"></lightning-button>
-                        </lightning-layout-item>     
+                        <template lwc:if={showCreateBlocksButton}>
+                            <lightning-layout-item style="margin-top:20px;">
+                                <lightning-button style="margin:20px;" label="Create Calendar Blocks" title="Non-primary action" onclick={launchBlockFlow} class="slds-m-left_x-small"></lightning-button>
+                            </lightning-layout-item> 
+                        </template>
+                            
                         
                         <!-- <lightning-layout-item>
                             <lightning-button-icon class="date-arrow" label="Refresh Table" onclick={refreshTable} icon-name="utility:refresh"  alternative-text="Refresh" title="Refresh"></lightning-button-icon>

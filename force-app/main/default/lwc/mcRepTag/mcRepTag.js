@@ -11,6 +11,6 @@ export default class McRepTag extends LightningElement {
     }
 
     connectedCallback(){
-        console.log(this.displayTag);
+        //console.log(this.displayTag);
     }
 }

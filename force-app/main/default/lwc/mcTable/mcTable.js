@@ -10,6 +10,7 @@ import generateData from "@salesforce/apex/MulticalendarDataService.makeDataForR
 import getTimeslotLabels from "@salesforce/apex/MulticalendarDataService.getTimeslotLabels";
 import getEnvironmentName from "@salesforce/apex/MulticalendarDataService.getEnvironmentName";
 import showMaintenanceScreenWire from "@salesforce/apex/MulticalendarDataService.showMaintenanceScreen";
+import SystemModstamp from "@salesforce/schema/AIApplication.SystemModstamp";
 
 
 export default class McTable extends LightningElement {
@@ -108,6 +109,11 @@ export default class McTable extends LightningElement {
     get showPageButtons() {
         return true; //this.filterViewValue == '';
     }
+
+    @api
+    get showCreateBlocksButton(){
+        return !this.filterViewLabel?.includes('Advisory');
+    }
     
     exampleRep = {
         Id: '0055e000007Xtx2AAC',
@@ -140,7 +146,7 @@ export default class McTable extends LightningElement {
                 break;
             }
         }
-        console.log('ev.detail: '+JSON.stringify(ev.detail));
+        //console.log('ev.detail: '+JSON.stringify(ev.detail));
         console.log(this.filterViewLabel);
         
         if(ev.detail.value.includes('Queue') || ev.detail.value.includes('CS Agent') || this.filterViewLabel?.includes('Advisory')){
@@ -169,8 +175,8 @@ export default class McTable extends LightningElement {
     }
 
     sortRepHelper(a,b){
-        console.log('a name: '+a.Name);
-        console.log('b name: '+b.Name);
+        console.log('a name: '+a.Rep.Name);
+        console.log('b name: '+b.Rep.Name);
         console.log('u name: '+this.currentUser.data?.Name);
         const nameA = a.Rep.Name.toUpperCase(); // ignore upper and lowercase
         const nameB = b.Rep.Name.toUpperCase(); // ignore upper and lowercase
@@ -248,6 +254,9 @@ export default class McTable extends LightningElement {
             if(this.template.querySelector('.timeslot-row')){this.timeslotRow = this.template.querySelector('.timeslot-row');} else {
                 console.log('timeslotRow not found');
             }
+
+            
+            
             
             this.scrollToNow();
             //this.timeslotRow.scrollLeft = this.scrollValue;
@@ -272,24 +281,22 @@ export default class McTable extends LightningElement {
     
     //populate available filters?
     connectedCallback(){
-        console.log('userId: '+this.userId);
-        console.log(currentUserId);
         //console.log('user rec: '+this.currentUser);
         //this.wiredRowList = [this.exampleRow];
         getViews({currentUserId: this.userId}).then(result => {
             console.log('**getviews');
-            console.log(JSON.stringify(result));
+            //console.log(JSON.stringify(result));
             this.availableViewFilters = [...result];
 
             var filter = this.availableViewFilters[0];
-            //if(filter?.label == 'All Sales Reps' && this.availableViewFilters.length > 1){ filter = this.availableViewFilters[1]; }
+            if(filter?.label == 'All Sales Reps' && this.availableViewFilters.length > 1){ filter = this.availableViewFilters[1]; }
             this.handleViewSelection({detail:{value: filter.value}});
 
             setTimeout(() => {
                 if(this.currentUser?.data?.SalesTeam){
                     console.log('searching for '+this.currentUser?.data?.SalesTeam)
                     for(var cv of this.availableViewFilters){
-                        console.log(cv.label);
+                        //console.log(cv.label);
                         if(cv.label.includes(this.currentUser?.data?.SalesTeam)){
                             console.log('team found');
                             this.appliedFilters = [...this.basicRepFilters, cv.value, this.searchValue, this.blockedToggleFilter];
@@ -381,14 +388,25 @@ export default class McTable extends LightningElement {
             //this.scrollToNow();
             var pinnedListHeight = this.template.querySelector('.pinned-row-list-item').offsetHeight;// * 1.15;
             var repListHeightOffset = pinnedListHeight+300;
-            this.template.querySelector('.row-list-item').style.maxHeight = 'calc(0.80 * (100vh - '+repListHeightOffset+'px))';
+            this.template.querySelector('.row-list-item').style.maxHeight = 'calc(1.0 * (100vh - '+repListHeightOffset+'px))';
         }
         if(!this.currentUser?.data && this.currentUserRetries < 10){
-            console.log('currentUserData not found');
+            //console.log('currentUserData not found');
             refreshApex(this.currentUser);
             if(!this.currentUser?.data){this.currentUserRetries++;}
         } else {
-            console.log('currentUserData: '+this.currentUser.data);
+            //console.log('currentUserData: '+this.currentUser.data);
+        }
+        if(this.template.querySelector('.pinned-row-list-item')){
+            console.log(this.wiredRowList?.length);
+            if(!this.wiredRowList || this.wiredRowList.length == 0){
+                this.template.querySelector('.pinned-row-list-item').style.maxHeight = 'calc(100vh - 300px)';
+            } else {
+                this.template.querySelector('.pinned-row-list-item').style.maxHeight = 'calc(0.3 * (100vh - 300px))'
+            }
+            console.log(this.template.querySelector('.pinned-row-list-item'));
+        } else {
+            console.log('pinned row not found');
         }
         //this.template.querySelector('.minidetails').addEventListener("focusin", () => console.log('focus in'));
     }
@@ -578,11 +596,11 @@ export default class McTable extends LightningElement {
             if(timeslotRow){
                 timeslotRow.scrollLeft = val;
             }
-            console.log('timeslotRow: '+JSON.stringify(timeslotRow));
-            console.log('timeout val: '+val);
+            //console.log('timeslotRow: '+JSON.stringify(timeslotRow));
+            //console.log('timeout val: '+val);
         }, 200, scrollVal);
         
-        console.log(this.template.querySelector('.timeslot-row')?.scrollLeft);
+        //console.log(this.template.querySelector('.timeslot-row')?.scrollLeft);
         // console.log('pageNumber: '+this.pageValue);
         this.closeMiniDetails();
     }
@@ -666,7 +684,7 @@ export default class McTable extends LightningElement {
     }
 
     handleFlowStatusChange(ev){
-        console.log(ev.detail.status);
+        //console.log(ev.detail.status);
         if (ev.detail.status === 'FINISHED'){
             this.showBlockFlow = false;
         }
